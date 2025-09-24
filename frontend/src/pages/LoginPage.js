@@ -70,7 +70,7 @@ const LoginPage = () => {
         <div className="text-center space-y-2">
           <div className="flex justify-center items-center mb-4">
             <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mr-3">
-              <span className="text-white font-bold text-xl">GAA</span>
+              <span className="text-white font-bold text-sm">GADA</span>
             </div>
             <div>
               <h1 className="text-xl font-bold text-gray-900">Gimnasio Americano</h1>
