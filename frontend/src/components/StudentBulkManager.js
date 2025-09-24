@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Textarea } from './ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Alert, AlertDescription } from './ui/alert';
 import { Badge } from './ui/badge';
 import { Checkbox } from './ui/checkbox';
@@ -20,6 +19,7 @@ import {
   CheckCircle,
   X
 } from 'lucide-react';
+import { StudentsManager } from '../utils/dataManager';
 
 const StudentBulkManager = ({ students = [], onStudentsUpdate, onClose }) => {
   const [activeTab, setActiveTab] = useState('import');
