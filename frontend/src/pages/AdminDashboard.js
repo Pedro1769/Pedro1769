@@ -37,11 +37,17 @@ const AdminDashboard = () => {
   const [showPeriodManager, setShowPeriodManager] = useState(false);
   const [showReportCard, setShowReportCard] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showTeacherModal, setShowTeacherModal] = useState(false);
+  const [showObjectivesManager, setShowObjectivesManager] = useState(false);
+  const [showCurriculumManager, setShowCurriculumManager] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
+  const [editingTeacher, setEditingTeacher] = useState(null);
+  const [isNewTeacher, setIsNewTeacher] = useState(false);
   const [selectedPeriod, setSelectedPeriod] = useState(1);
   const [students, setStudents] = useState([]);
   const [periods, setPeriods] = useState([]);
+  const [teachers, setTeachers] = useState([]);
 
   // Inicializar datos al cargar el componente
   useEffect(() => {
