@@ -235,17 +235,17 @@ const AdminDashboard = () => {
                     <Upload className="mr-2 h-4 w-4" />
                     Gestión Masiva de Estudiantes
                   </Button>
+                  <Button className="w-full justify-start" variant="outline" onClick={() => setShowObjectivesManager(true)}>
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Banco de Logros y Objetivos
+                  </Button>
+                  <Button className="w-full justify-start" variant="outline" onClick={() => setShowCurriculumManager(true)}>
+                    <FileText className="mr-2 h-4 w-4" />
+                    Mallas Curriculares
+                  </Button>
                   <Button className="w-full justify-start" variant="outline" onClick={() => setShowPeriodManager(true)}>
                     <Calendar className="mr-2 h-4 w-4" />
                     Gestionar Períodos Académicos
-                  </Button>
-                  <Button className="w-full justify-start" variant="outline">
-                    <Plus className="mr-2 h-4 w-4" />
-                    Agregar Profesor
-                  </Button>
-                  <Button className="w-full justify-start" variant="outline">
-                    <Download className="mr-2 h-4 w-4" />
-                    Generar Reportes
                   </Button>
                   <Button className="w-full justify-start" variant="outline">
                     <Settings className="mr-2 h-4 w-4" />
