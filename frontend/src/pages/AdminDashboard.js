@@ -34,12 +34,31 @@ const AdminDashboard = () => {
   const [showReportCard, setShowReportCard] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState(1);
-  const [students, setStudents] = useState(mockStudents);
-  const [periods, setPeriods] = useState(mockPeriods);
+  const [students, setStudents] = useState([]);
+  const [periods, setPeriods] = useState([]);
+
+  // Inicializar datos al cargar el componente
+  useEffect(() => {
+    initializeDefaultData();
+    setStudents(StudentsManager.getAll());
+    setPeriods(PeriodsManager.getAll());
+  }, []);
 
   if (!user || user.role !== 'admin') {
     return <Navigate to="/login" />;
   }
+
+  // Actualizar estudiantes y persistir
+  const updateStudents = (newStudents) => {
+    setStudents(newStudents);
+    StudentsManager.save(newStudents);
+  };
+
+  // Actualizar períodos y persistir
+  const updatePeriods = (newPeriods) => {
+    setPeriods(newPeriods);
+    PeriodsManager.save(newPeriods);
+  };
 
   const stats = {
     students: students.length,
