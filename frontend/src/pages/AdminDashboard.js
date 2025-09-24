@@ -453,7 +453,7 @@ const AdminDashboard = () => {
         {showBulkManager && (
           <StudentBulkManager 
             students={students}
-            onStudentsUpdate={setStudents}
+            onStudentsUpdate={updateStudents}
             onClose={() => setShowBulkManager(false)}
           />
         )}
@@ -470,7 +470,7 @@ const AdminDashboard = () => {
               <div className="p-6">
                 <PeriodManager 
                   periods={periods} 
-                  onPeriodsUpdate={setPeriods} 
+                  onPeriodsUpdate={updatePeriods} 
                 />
               </div>
             </div>
