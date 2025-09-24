@@ -190,10 +190,16 @@ const AdminDashboard = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Gestión de Estudiantes</CardTitle>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Nuevo Estudiante
-                </Button>
+                <div className="flex space-x-2">
+                  <Button onClick={() => setShowBulkManager(true)}>
+                    <Upload className="mr-2 h-4 w-4" />
+                    Gestión Masiva
+                  </Button>
+                  <Button variant="outline">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Nuevo Estudiante
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
@@ -208,7 +214,7 @@ const AdminDashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {mockStudents.map((student) => (
+                      {students.map((student) => (
                         <tr key={student.id} className="border-b hover:bg-gray-50">
                           <td className="p-3 font-medium">{student.name}</td>
                           <td className="p-3">{student.grade}</td>
@@ -219,8 +225,12 @@ const AdminDashboard = () => {
                               <Button size="sm" variant="outline">
                                 <Edit className="h-3 w-3" />
                               </Button>
-                              <Button size="sm" variant="outline">
-                                <FileText className="h-3 w-3" />
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleViewReportCard(student)}
+                              >
+                                <Eye className="h-3 w-3" />
                               </Button>
                               <Button size="sm" variant="outline">
                                 <Trash2 className="h-3 w-3" />
