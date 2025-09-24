@@ -340,7 +340,7 @@ const AdminDashboard = () => {
                           <td className="p-3">{parent.email}</td>
                           <td className="p-3">
                             {parent.children?.map(childId => {
-                              const child = mockStudents.find(s => s.id === childId);
+                              const child = students.find(s => s.id === childId);
                               return child ? child.name : '';
                             }).join(', ')}
                           </td>
