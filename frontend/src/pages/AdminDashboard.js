@@ -76,6 +76,27 @@ const AdminDashboard = () => {
     setShowReportCard(true);
   };
 
+  const handleEditStudent = (student) => {
+    setEditingStudent(student);
+    setShowEditModal(true);
+  };
+
+  const handleStudentUpdated = (updatedStudent) => {
+    // Actualizar la lista de estudiantes
+    const updatedStudents = students.map(student => 
+      student.id === updatedStudent.id ? updatedStudent : student
+    );
+    setStudents(updatedStudents);
+    StudentsManager.save(updatedStudents);
+  };
+
+  const handleDeleteStudent = (studentId) => {
+    if (window.confirm('¿Está seguro de eliminar este estudiante?')) {
+      const updatedStudents = StudentsManager.delete(studentId);
+      setStudents(updatedStudents);
+    }
+  };
+
   const getStudentGrades = (studentId, period) => {
     return mockGrades.filter(g => g.studentId === studentId && g.period === period);
   };
