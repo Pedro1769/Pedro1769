@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -19,6 +19,19 @@ import ReportCards from "./pages/ReportCards";
 import GradeManagement from "./pages/GradeManagement";
 
 function App() {
+  useEffect(() => {
+    // Asegurar el título correcto
+    document.title = "GADA - Gimnasio Americano del Atlántico | Sistema Académico";
+    
+    // Actualizar meta description si es necesario
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 
+        'Sistema Académico del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán. Desarrollado por Pedro Hurtado - Coordinador Académico.'
+      );
+    }
+  }, []);
+
   return (
     <AuthProvider>
       <div className="App min-h-screen bg-white">
