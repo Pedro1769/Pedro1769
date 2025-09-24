@@ -55,17 +55,17 @@ const Footer = () => {
               <div className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 mt-0.5 text-gray-300" />
                 <p className="text-gray-300 text-sm">
-                  Carrera 9 No. 132-32<br />
-                  Bogotá, Colombia
+                  Sede 2 Manuela Beltrán<br />
+                  Atlántico, Colombia
                 </p>
               </div>
               <div className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-gray-300" />
-                <p className="text-gray-300 text-sm">+57 (1) 274-7000</p>
+                <p className="text-gray-300 text-sm">+57 (5) 000-0000</p>
               </div>
               <div className="flex items-center">
                 <Mail className="h-5 w-5 mr-2 text-gray-300" />
-                <p className="text-gray-300 text-sm">info@cng.edu</p>
+                <p className="text-gray-300 text-sm">info@gaa.edu.co</p>
               </div>
             </div>
           </div>
