@@ -202,20 +202,20 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-blue-200">K4-12</div>
+              <div className="text-4xl font-bold text-blue-200">1°-11°</div>
               <p className="text-blue-100">Grados Académicos</p>
             </div>
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-blue-200">800+</div>
+              <div className="text-4xl font-bold text-blue-200">500+</div>
               <p className="text-blue-100">Estudiantes</p>
             </div>
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-blue-200">25+</div>
+              <div className="text-4xl font-bold text-blue-200">15+</div>
               <p className="text-blue-100">Años de Experiencia</p>
             </div>
             <div className="space-y-2">
-              <div className="text-4xl font-bold text-blue-200">100%</div>
-              <p className="text-blue-100">Graduados Universitarios</p>
+              <div className="text-4xl font-bold text-blue-200">95%</div>
+              <p className="text-blue-100">Éxito Académico</p>
             </div>
           </div>
         </div>
