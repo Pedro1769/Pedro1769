@@ -33,6 +33,19 @@ const StudentBulkManager = ({ students = [], onStudentsUpdate, onClose }) => {
 Juan Pérez García,6°,Básica Secundaria,1234567890,2010-05-15,padre.juan@gmail.com
 María López Rodríguez,3°,Básica Primaria,0987654321,2013-08-22,madre.maria@gmail.com`;
 
+  const textTemplate = `Maicol Escorcia Oliveros 10° Media
+Kelly Michell Florez Campuzano 10° Media
+Mansol Gamarra Acosta 10° Media
+Elkin David García Palencia 10° Media`;
+
+  const loadTemplate = (format) => {
+    if (format === 'csv') {
+      setImportData(csvTemplate);
+    } else {
+      setImportData(textTemplate);
+    }
+  };
+
   // Procesar importación desde CSV/texto
   const processImportData = () => {
     setProcessing(true);
