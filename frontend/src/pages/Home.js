@@ -151,9 +151,9 @@ const Home = () => {
                     <BookOpen className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Programa Bilingüe</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">Educación de Calidad</h3>
                     <p className="text-gray-600">
-                      Acreditación internacional con enfoque en inglés como segunda lengua.
+                      Metodologías pedagógicas innovadoras y personal docente calificado.
                     </p>
                   </div>
                 </div>
@@ -162,9 +162,9 @@ const Home = () => {
                     <Award className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Acreditación Internacional</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">Formación Integral</h3>
                     <p className="text-gray-600">
-                      Reconocido por organizaciones educativas de Estados Unidos y Colombia.
+                      Desarrollo académico, deportivo, artístico y de valores humanos.
                     </p>
                   </div>
                 </div>
@@ -173,9 +173,9 @@ const Home = () => {
                     <Globe className="h-6 w-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900">Perspectiva Global</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">Preparación para el Futuro</h3>
                     <p className="text-gray-600">
-                      Formamos ciudadanos globales conscientes y responsables.
+                      Formamos estudiantes preparados para los desafíos del siglo XXI.
                     </p>
                   </div>
                 </div>
