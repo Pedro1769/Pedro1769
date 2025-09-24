@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center mb-4">
               <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
-                <span className="text-blue-600 font-bold text-lg">GAA</span>
+                <span className="text-blue-600 font-bold text-sm">GADA</span>
               </div>
               <div>
                 <h1 className="text-lg font-bold text-white">Gimnasio Americano del Atlántico</h1>
