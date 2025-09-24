@@ -101,7 +101,7 @@ const LoginPage = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="usuario@gaa.edu.co"
+                    placeholder="usuario@gada.edu.co"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
