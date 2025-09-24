@@ -554,6 +554,31 @@ const AdminDashboard = () => {
           </div>
         )}
 
+        {showTeacherModal && (
+          <TeacherEditModal 
+            teacher={editingTeacher}
+            isNew={isNewTeacher}
+            onClose={() => {
+              setShowTeacherModal(false);
+              setEditingTeacher(null);
+              setIsNewTeacher(false);
+            }}
+            onUpdate={handleTeacherUpdated}
+          />
+        )}
+
+        {showObjectivesManager && (
+          <AcademicObjectivesManager 
+            onClose={() => setShowObjectivesManager(false)}
+          />
+        )}
+
+        {showCurriculumManager && (
+          <CurriculumManager 
+            onClose={() => setShowCurriculumManager(false)}
+          />
+        )}
+
         {showEditModal && editingStudent && (
           <StudentEditModal 
             student={editingStudent}
