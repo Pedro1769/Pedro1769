@@ -83,7 +83,7 @@ const AdminDashboard = () => {
 
   const stats = {
     students: students.length,
-    teachers: mockUsers.filter(u => u.role === 'teacher').length,
+    teachers: teachers.length,
     parents: mockUsers.filter(u => u.role === 'parent').length,
     grades: mockGrades.length,
     activePeriod: periods.find(p => p.isActive)?.name || 'Ninguno'
