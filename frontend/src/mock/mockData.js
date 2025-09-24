@@ -3,7 +3,7 @@ export const mockUsers = [
   // Administrators
   {
     id: 1,
-    email: 'admin@gaa.edu.co',
+    email: 'admin@gada.edu.co',
     password: 'admin123',
     name: 'Pedro Hurtado',
     role: 'admin',
@@ -13,7 +13,7 @@ export const mockUsers = [
   // Teachers
   {
     id: 2,
-    email: 'profesor1@gaa.edu.co',
+    email: 'profesor1@gada.edu.co',
     password: 'teacher123',
     name: 'Carlos Mendoza',
     role: 'teacher',
@@ -22,7 +22,7 @@ export const mockUsers = [
   },
   {
     id: 3,
-    email: 'profesora2@gaa.edu.co',
+    email: 'profesora2@gada.edu.co',
     password: 'teacher123',
     name: 'Ana Rodríguez',
     role: 'teacher',
@@ -31,7 +31,7 @@ export const mockUsers = [
   },
   {
     id: 4,
-    email: 'profesor3@gaa.edu.co',
+    email: 'profesor3@gada.edu.co',
     password: 'teacher123',
     name: 'Luis García',
     role: 'teacher',
