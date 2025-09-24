@@ -41,10 +41,20 @@ const AdminDashboard = () => {
   }
 
   const stats = {
-    students: mockStudents.length,
+    students: students.length,
     teachers: mockUsers.filter(u => u.role === 'teacher').length,
     parents: mockUsers.filter(u => u.role === 'parent').length,
-    grades: mockGrades.length
+    grades: mockGrades.length,
+    activePeriod: periods.find(p => p.isActive)?.name || 'Ninguno'
+  };
+
+  const handleViewReportCard = (student) => {
+    setSelectedStudent(student);
+    setShowReportCard(true);
+  };
+
+  const getStudentGrades = (studentId, period) => {
+    return mockGrades.filter(g => g.studentId === studentId && g.period === period);
   };
 
   return (
