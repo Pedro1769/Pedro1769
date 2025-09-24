@@ -281,15 +281,17 @@ Elkin David García Palencia 10° Media`;
                 <Alert>
                   <AlertCircle className="h-4 w-4" />
                   <AlertDescription>
-                    Use el formato CSV: Nombre,Grado,Nivel,Documento,Fecha_Nacimiento,Padre_Email
+                    <strong>Formatos aceptados:</strong><br/>
+                    • <strong>CSV:</strong> Nombre,Grado,Nivel,Documento,Fecha_Nacimiento,Padre_Email<br/>
+                    • <strong>Texto:</strong> Nombre Apellido Grado° Nivel (ej: Juan Pérez 10° Media)
                   </AlertDescription>
                 </Alert>
 
                 <div>
-                  <Label htmlFor="csvData">Datos CSV</Label>
+                  <Label htmlFor="csvData">Datos para Importar</Label>
                   <Textarea
                     id="csvData"
-                    placeholder="Pegue aquí los datos en formato CSV..."
+                    placeholder="Pegue aquí los datos en formato CSV o texto plano..."
                     value={importData}
                     onChange={(e) => setImportData(e.target.value)}
                     rows={8}
@@ -303,9 +305,14 @@ Elkin David García Palencia 10° Media`;
                     {processing ? 'Procesando...' : 'Importar Datos'}
                   </Button>
                   
-                  <Button variant="outline" onClick={() => setImportData(csvTemplate)}>
+                  <Button variant="outline" onClick={() => loadTemplate('text')}>
                     <FileSpreadsheet className="mr-2 h-4 w-4" />
-                    Cargar Plantilla
+                    Plantilla Texto
+                  </Button>
+
+                  <Button variant="outline" onClick={() => loadTemplate('csv')}>
+                    <FileSpreadsheet className="mr-2 h-4 w-4" />
+                    Plantilla CSV
                   </Button>
                 </div>
               </div>
