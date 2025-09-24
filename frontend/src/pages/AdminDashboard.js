@@ -266,17 +266,29 @@ const AdminDashboard = () => {
                           <td className="p-3">{student.document}</td>
                           <td className="p-3">
                             <div className="flex space-x-2">
-                              <Button size="sm" variant="outline">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleEditStudent(student)}
+                                title="Editar estudiante"
+                              >
                                 <Edit className="h-3 w-3" />
                               </Button>
                               <Button 
                                 size="sm" 
                                 variant="outline"
                                 onClick={() => handleViewReportCard(student)}
+                                title="Ver boletín"
                               >
                                 <Eye className="h-3 w-3" />
                               </Button>
-                              <Button size="sm" variant="outline">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleDeleteStudent(student.id)}
+                                title="Eliminar estudiante"
+                                className="hover:bg-red-50 hover:border-red-200"
+                              >
                                 <Trash2 className="h-3 w-3" />
                               </Button>
                             </div>
