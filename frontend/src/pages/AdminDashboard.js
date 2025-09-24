@@ -14,9 +14,16 @@ import {
   Download,
   Plus,
   Edit,
-  Trash2
+  Trash2,
+  Upload,
+  Eye,
+  Calendar,
+  Clock
 } from 'lucide-react';
-import { mockUsers, mockStudents, mockGrades } from '../mock/mockData';
+import { mockUsers, mockStudents, mockGrades, mockPeriods } from '../mock/mockData';
+import StudentBulkManager from '../components/StudentBulkManager';
+import PeriodManager from '../components/PeriodManager';
+import ReportCardModern from '../components/ReportCardModern';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
