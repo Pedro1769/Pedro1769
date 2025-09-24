@@ -219,7 +219,7 @@ const AdminDashboard = () => {
             <TabsTrigger value="overview">Resumen</TabsTrigger>
             <TabsTrigger value="students">Estudiantes</TabsTrigger>
             <TabsTrigger value="teachers">Profesores</TabsTrigger>
-            <TabsTrigger value="parents">Padres</TabsTrigger>
+            <TabsTrigger value="academic">Académico</TabsTrigger>
             <TabsTrigger value="periods">Períodos</TabsTrigger>
             <TabsTrigger value="reports">Boletines</TabsTrigger>
           </TabsList>
