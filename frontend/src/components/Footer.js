@@ -9,15 +9,19 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo and Description */}
           <div className="col-span-1 md:col-span-2">
-            <img 
-              src="https://resources.finalsite.net/images/v1693982454/cngedu/lpk3z7buhakp2sbsruyq/GNG-fullwhite1.svg" 
-              alt="Colegio Nueva Granada" 
-              className="h-12 w-auto mb-4"
-            />
+            <div className="flex items-center mb-4">
+              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
+                <span className="text-blue-600 font-bold text-lg">GAA</span>
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-white">Gimnasio Americano del Atlántico</h1>
+                <p className="text-xs text-gray-300">Sede 2 Manuela Beltrán</p>
+              </div>
+            </div>
             <p className="text-gray-300 mb-4 max-w-md">
-              Como una escuela internacional K4-12, CNG es una comunidad de aprendizaje 
-              comprometida con servir a una población diversa y preparar ciudadanos 
-              globales responsables.
+              Institución educativa comprometida con la formación integral de nuestros 
+              estudiantes, brindando educación de calidad desde preescolar hasta 
+              educación media.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-300 hover:text-white transition-colors">
