@@ -15,15 +15,16 @@ const Home = () => {
             <div className="space-y-8">
               <div className="space-y-4">
                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                  Tradición <span className="text-blue-200">Honrada.</span>
+                  Excelencia <span className="text-blue-200">Académica.</span>
                 </h1>
                 <h1 className="text-4xl lg:text-6xl font-bold leading-tight">
-                  Futuro <span className="text-blue-200">Visionario.</span>
+                  Formación <span className="text-blue-200">Integral.</span>
                 </h1>
               </div>
               <p className="text-xl text-blue-100 max-w-lg">
-                Como una escuela internacional K4-12, somos una comunidad de aprendizaje 
-                comprometida con preparar ciudadanos globales responsables.
+                Gimnasio Americano del Atlántico - Sede 2 Manuela Beltrán. 
+                Institución educativa comprometida con la formación integral desde 
+                preescolar hasta educación media.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/login">
