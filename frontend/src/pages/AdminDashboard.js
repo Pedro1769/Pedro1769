@@ -54,6 +54,15 @@ const AdminDashboard = () => {
     initializeDefaultData();
     setStudents(StudentsManager.getAll());
     setPeriods(PeriodsManager.getAll());
+    // Cargar teachers del localStorage o usar mock data
+    const storedTeachers = JSON.parse(localStorage.getItem('gada_teachers') || '[]');
+    if (storedTeachers.length === 0) {
+      const defaultTeachers = mockUsers.filter(user => user.role === 'teacher');
+      localStorage.setItem('gada_teachers', JSON.stringify(defaultTeachers));
+      setTeachers(defaultTeachers);
+    } else {
+      setTeachers(storedTeachers);
+    }
   }, []);
 
   if (!user || user.role !== 'admin') {
