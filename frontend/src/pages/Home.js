@@ -60,7 +60,7 @@ const Home = () => {
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Ofrecemos una educación integral desde preescolar hasta bachillerato, 
-              con programas acreditados internacionalmente.
+              formando estudiantes competentes y con valores sólidos.
             </p>
           </div>
 
