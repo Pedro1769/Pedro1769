@@ -358,7 +358,7 @@ const AdminDashboard = () => {
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle>Gestión de Profesores</CardTitle>
-                <Button>
+                <Button onClick={handleNewTeacher}>
                   <Plus className="mr-2 h-4 w-4" />
                   Nuevo Profesor
                 </Button>
@@ -376,18 +376,29 @@ const AdminDashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {mockUsers.filter(user => user.role === 'teacher').map((teacher) => (
+                      {teachers.map((teacher) => (
                         <tr key={teacher.id} className="border-b hover:bg-gray-50">
                           <td className="p-3 font-medium">{teacher.name}</td>
                           <td className="p-3">{teacher.email}</td>
-                          <td className="p-3">{teacher.subjects?.join(', ')}</td>
-                          <td className="p-3">{teacher.grades?.join(', ')}</td>
+                          <td className="p-3">{teacher.subjects?.slice(0, 2).join(', ')}{teacher.subjects?.length > 2 ? '...' : ''}</td>
+                          <td className="p-3">{teacher.grades?.slice(0, 3).join(', ')}{teacher.grades?.length > 3 ? '...' : ''}</td>
                           <td className="p-3">
                             <div className="flex space-x-2">
-                              <Button size="sm" variant="outline">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleEditTeacher(teacher)}
+                                title="Editar profesor"
+                              >
                                 <Edit className="h-3 w-3" />
                               </Button>
-                              <Button size="sm" variant="outline">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleDeleteTeacher(teacher.id)}
+                                title="Eliminar profesor"
+                                className="hover:bg-red-50 hover:border-red-200"
+                              >
                                 <Trash2 className="h-3 w-3" />
                               </Button>
                             </div>
@@ -401,54 +412,32 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="parents" className="mt-6">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Gestión de Padres de Familia</CardTitle>
-                <Button>
-                  <Plus className="mr-2 h-4 w-4" />
-                  Nuevo Padre
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left p-3">Nombre</th>
-                        <th className="text-left p-3">Email</th>
-                        <th className="text-left p-3">Hijos</th>
-                        <th className="text-left p-3">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {mockUsers.filter(user => user.role === 'parent').map((parent) => (
-                        <tr key={parent.id} className="border-b hover:bg-gray-50">
-                          <td className="p-3 font-medium">{parent.name}</td>
-                          <td className="p-3">{parent.email}</td>
-                          <td className="p-3">
-                            {parent.children?.map(childId => {
-                              const child = students.find(s => s.id === childId);
-                              return child ? child.name : '';
-                            }).join(', ')}
-                          </td>
-                          <td className="p-3">
-                            <div className="flex space-x-2">
-                              <Button size="sm" variant="outline">
-                                <Edit className="h-3 w-3" />
-                              </Button>
-                              <Button size="sm" variant="outline">
-                                <Trash2 className="h-3 w-3" />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
+          <TabsContent value="academic" className="mt-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setShowObjectivesManager(true)}>
+                <CardContent className="p-6 text-center">
+                  <Target className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+                  <h3 className="text-lg font-semibold mb-2">Banco de Logros</h3>
+                  <p className="text-gray-600 text-sm">Gestionar objetivos y logros académicos para boletines</p>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setShowCurriculumManager(true)}>
+                <CardContent className="p-6 text-center">
+                  <Grid className="h-12 w-12 mx-auto mb-4 text-green-600" />
+                  <h3 className="text-lg font-semibold mb-2">Mallas Curriculares</h3>
+                  <p className="text-gray-600 text-sm">Administrar mallas por asignaturas y áreas académicas</p>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <FileText className="h-12 w-12 mx-auto mb-4 text-purple-600" />
+                  <h3 className="text-lg font-semibold mb-2">Proyectos Institucionales</h3>
+                  <p className="text-gray-600 text-sm">Gestionar proyectos y actividades institucionales</p>
+                </CardContent>
+              </Card>
+            </div>
           </TabsContent>
 
           <TabsContent value="periods" className="mt-6">
