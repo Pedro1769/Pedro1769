@@ -246,7 +246,8 @@ Elkin David García Palencia 10° Media`;
     if (selectedStudents.length === 0) return;
     
     if (window.confirm(`¿Está seguro de eliminar ${selectedStudents.length} estudiante(s)?`)) {
-      const updatedStudents = students.filter(student => !selectedStudents.includes(student.id));
+      // Usar el manager para persistir la eliminación
+      const updatedStudents = StudentsManager.deleteBulk(selectedStudents);
       onStudentsUpdate(updatedStudents);
       setSelectedStudents([]);
       setResults({
