@@ -29,7 +29,7 @@ const ReportCardComponent = ({ student, period, grades }) => {
       <div className="text-center border-b-2 border-gray-800 pb-4 mb-6">
         <div className="flex justify-center items-center mb-2">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mr-4">
-            <span className="text-white font-bold text-lg">GAA</span>
+            <span className="text-white font-bold text-sm">GADA</span>
           </div>
           <div>
             <h1 className="text-lg font-bold uppercase">{schoolInfo.name}</h1>
