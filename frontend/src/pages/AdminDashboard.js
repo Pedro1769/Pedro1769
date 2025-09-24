@@ -119,11 +119,12 @@ const AdminDashboard = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Resumen</TabsTrigger>
             <TabsTrigger value="students">Estudiantes</TabsTrigger>
             <TabsTrigger value="teachers">Profesores</TabsTrigger>
             <TabsTrigger value="parents">Padres</TabsTrigger>
+            <TabsTrigger value="periods">Períodos</TabsTrigger>
             <TabsTrigger value="reports">Boletines</TabsTrigger>
           </TabsList>
 
