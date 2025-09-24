@@ -343,36 +343,143 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="periods" className="mt-6">
+            <PeriodManager 
+              periods={periods} 
+              onPeriodsUpdate={setPeriods} 
+            />
+          </TabsContent>
+
           <TabsContent value="reports" className="mt-6">
             <Card>
               <CardHeader>
-                <CardTitle>Generación de Boletines</CardTitle>
+                <CardTitle>Gestión de Boletines Académicos</CardTitle>
+                <p className="text-sm text-gray-600">
+                  Visualice, edite y descargue boletines de calificaciones por estudiante y período
+                </p>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {mockStudents.map((student) => (
-                    <Card key={student.id} className="border">
-                      <CardContent className="p-4">
-                        <h4 className="font-semibold">{student.name}</h4>
-                        <p className="text-sm text-gray-600">{student.grade} - {student.level}</p>
-                        <div className="mt-3 space-y-2">
-                          <Button size="sm" className="w-full">
-                            <Download className="mr-2 h-3 w-3" />
-                            Descargar Boletín
-                          </Button>
-                          <Button size="sm" variant="outline" className="w-full">
-                            <FileText className="mr-2 h-3 w-3" />
-                            Ver Boletín
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  {students.map((student) => {
+                    const studentGrades = getStudentGrades(student.id, selectedPeriod);
+                    const average = studentGrades.length > 0 
+                      ? (studentGrades.reduce((sum, g) => sum + g.grade, 0) / studentGrades.length).toFixed(1)
+                      : 'N/A';
+                    
+                    return (
+                      <Card key={student.id} className="border hover:shadow-md transition-shadow">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between mb-2">
+                            <div className="flex-1">
+                              <h4 className="font-semibold text-sm">{student.name}</h4>
+                              <p className="text-xs text-gray-600">{student.grade} - {student.level}</p>
+                            </div>
+                            <Badge variant={average !== 'N/A' && parseFloat(average) >= 8 ? 'default' : 'secondary'} className="text-xs">
+                              {average}
+                            </Badge>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <Button 
+                              size="sm" 
+                              className="w-full text-xs"
+                              onClick={() => handleViewReportCard(student)}
+                            >
+                              <Eye className="mr-1 h-3 w-3" />
+                              Ver Boletín
+                            </Button>
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className="w-full text-xs"
+                            >
+                              <Download className="mr-1 h-3 w-3" />
+                              Descargar PDF
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+                
+                <div className="flex justify-between items-center pt-4 border-t">
+                  <div className="flex items-center space-x-2">
+                    <label className="text-sm font-medium">Período:</label>
+                    <select 
+                      value={selectedPeriod}
+                      onChange={(e) => setSelectedPeriod(parseInt(e.target.value))}
+                      className="border rounded px-2 py-1 text-sm"
+                    >
+                      {periods.map(period => (
+                        <option key={period.id} value={period.id}>
+                          {period.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  
+                  <Button variant="outline">
+                    <Download className="mr-2 h-4 w-4" />
+                    Exportar Todos los Boletines
+                  </Button>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* Modales */}
+        {showBulkManager && (
+          <StudentBulkManager 
+            students={students}
+            onStudentsUpdate={setStudents}
+            onClose={() => setShowBulkManager(false)}
+          />
+        )}
+
+        {showPeriodManager && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-6xl max-h-[90vh] overflow-auto w-full">
+              <div className="p-4 border-b flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Gestión de Períodos Académicos</h3>
+                <Button variant="ghost" onClick={() => setShowPeriodManager(false)}>
+                  ✕
+                </Button>
+              </div>
+              <div className="p-6">
+                <PeriodManager 
+                  periods={periods} 
+                  onPeriodsUpdate={setPeriods} 
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showReportCard && selectedStudent && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] overflow-auto">
+              <div className="p-4 border-b flex justify-between items-center">
+                <h3 className="text-lg font-semibold">Boletín de {selectedStudent.name}</h3>
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-1" />
+                    PDF
+                  </Button>
+                  <Button variant="ghost" onClick={() => setShowReportCard(false)}>
+                    ✕
+                  </Button>
+                </div>
+              </div>
+              <ReportCardModern 
+                student={selectedStudent}
+                period={selectedPeriod}
+                grades={getStudentGrades(selectedStudent.id, selectedPeriod)}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
