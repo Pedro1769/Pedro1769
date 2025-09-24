@@ -241,10 +241,46 @@ export const mockGrades = [
 
 // Academic periods
 export const mockPeriods = [
-  { id: 1, name: 'Primer Período', startDate: '2025-01-15', endDate: '2025-03-30' },
-  { id: 2, name: 'Segundo Período', startDate: '2025-04-01', endDate: '2025-06-15' },
-  { id: 3, name: 'Tercer Período', startDate: '2025-07-01', endDate: '2025-09-15' },
-  { id: 4, name: 'Cuarto Período', startDate: '2025-09-16', endDate: '2025-11-30' }
+  { 
+    id: 1, 
+    name: 'Primer Período', 
+    startDate: '2025-01-15', 
+    endDate: '2025-03-30',
+    gradeEntryStart: '2025-03-20T08:00',
+    gradeEntryEnd: '2025-03-30T18:00',
+    isActive: true,
+    isGradeEntryOpen: true
+  },
+  { 
+    id: 2, 
+    name: 'Segundo Período', 
+    startDate: '2025-04-01', 
+    endDate: '2025-06-15',
+    gradeEntryStart: '2025-06-05T08:00',
+    gradeEntryEnd: '2025-06-15T18:00',
+    isActive: false,
+    isGradeEntryOpen: false
+  },
+  { 
+    id: 3, 
+    name: 'Tercer Período', 
+    startDate: '2025-07-01', 
+    endDate: '2025-09-15',
+    gradeEntryStart: '2025-09-05T08:00',
+    gradeEntryEnd: '2025-09-15T18:00',
+    isActive: false,
+    isGradeEntryOpen: false
+  },
+  { 
+    id: 4, 
+    name: 'Cuarto Período', 
+    startDate: '2025-09-16', 
+    endDate: '2025-11-30',
+    gradeEntryStart: '2025-11-20T08:00',
+    gradeEntryEnd: '2025-11-30T18:00',
+    isActive: false,
+    isGradeEntryOpen: false
+  }
 ];
 
 // Performance scale
