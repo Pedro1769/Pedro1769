@@ -33,7 +33,9 @@ const AdminDashboard = () => {
   const [showBulkManager, setShowBulkManager] = useState(false);
   const [showPeriodManager, setShowPeriodManager] = useState(false);
   const [showReportCard, setShowReportCard] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [editingStudent, setEditingStudent] = useState(null);
   const [selectedPeriod, setSelectedPeriod] = useState(1);
   const [students, setStudents] = useState([]);
   const [periods, setPeriods] = useState([]);
