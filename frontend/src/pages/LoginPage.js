@@ -58,8 +58,8 @@ const LoginPage = () => {
   };
 
   const demoCredentials = [
-    { role: 'Administrador', email: 'admin@gaa.edu.co', password: 'admin123' },
-    { role: 'Profesor', email: 'profesor1@gaa.edu.co', password: 'teacher123' },
+    { role: 'Administrador', email: 'admin@gada.edu.co', password: 'admin123' },
+    { role: 'Profesor', email: 'profesor1@gada.edu.co', password: 'teacher123' },
     { role: 'Padre de Familia', email: 'padre1@gmail.com', password: 'parent123' }
   ];
 
