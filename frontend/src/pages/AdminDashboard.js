@@ -115,6 +115,40 @@ const AdminDashboard = () => {
     }
   };
 
+  // Funciones para gestión de docentes
+  const handleEditTeacher = (teacher) => {
+    setEditingTeacher(teacher);
+    setIsNewTeacher(false);
+    setShowTeacherModal(true);
+  };
+
+  const handleNewTeacher = () => {
+    setEditingTeacher(null);
+    setIsNewTeacher(true);
+    setShowTeacherModal(true);
+  };
+
+  const handleTeacherUpdated = (teacherData) => {
+    let updatedTeachers;
+    if (isNewTeacher) {
+      updatedTeachers = [...teachers, teacherData];
+    } else {
+      updatedTeachers = teachers.map(teacher => 
+        teacher.id === teacherData.id ? teacherData : teacher
+      );
+    }
+    setTeachers(updatedTeachers);
+    localStorage.setItem('gada_teachers', JSON.stringify(updatedTeachers));
+  };
+
+  const handleDeleteTeacher = (teacherId) => {
+    if (window.confirm('¿Está seguro de eliminar este docente?')) {
+      const updatedTeachers = teachers.filter(teacher => teacher.id !== teacherId);
+      setTeachers(updatedTeachers);
+      localStorage.setItem('gada_teachers', JSON.stringify(updatedTeachers));
+    }
+  };
+
   const getStudentGrades = (studentId, period) => {
     return mockGrades.filter(g => g.studentId === studentId && g.period === period);
   };
