@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -20,7 +20,8 @@ import {
   Calendar,
   Clock
 } from 'lucide-react';
-import { mockUsers, mockStudents, mockGrades, mockPeriods } from '../mock/mockData';
+import { mockUsers, mockGrades } from '../mock/mockData';
+import { StudentsManager, PeriodsManager, GradesManager, initializeDefaultData } from '../utils/dataManager';
 import StudentBulkManager from '../components/StudentBulkManager';
 import PeriodManager from '../components/PeriodManager';
 import ReportCardModern from '../components/ReportCardModern';
