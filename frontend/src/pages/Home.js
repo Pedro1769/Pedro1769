@@ -43,7 +43,7 @@ const Home = () => {
             <div className="hidden lg:block">
               <img 
                 src="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_6/v1693919082/cngedu/ytp9jrmlmh2kw2ykhy3i/PS.jpg"
-                alt="Estudiantes CNG"
+                alt="Estudiantes GAA"
                 className="rounded-lg shadow-2xl"
               />
             </div>
@@ -78,7 +78,7 @@ const Home = () => {
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Básica Primaria</h3>
                 <p className="text-gray-600 mb-6">
                   Fundamentos sólidos para el aprendizaje. Grados 1° a 5° con enfoque 
-                  en desarrollo integral y bilingüismo.
+                  en desarrollo integral y formación en valores.
                 </p>
                 <Link to="/academics/elementary">
                   <Button variant="outline" className="w-full group-hover:bg-blue-600 group-hover:text-white">
@@ -123,8 +123,8 @@ const Home = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">Media Vocacional</h3>
                 <p className="text-gray-600 mb-6">
-                  Preparación universitaria con enfoque en liderazgo global. 
-                  Grados 10° y 11° con doble titulación.
+                  Preparación para la educación superior y el mundo laboral. 
+                  Grados 10° y 11° con énfasis académico.
                 </p>
                 <Link to="/academics/high">
                   <Button variant="outline" className="w-full group-hover:bg-blue-600 group-hover:text-white">
@@ -225,11 +225,11 @@ const Home = () => {
       <section className="py-20 bg-gray-100">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-            ¿Listo para Ser Parte de Nuestra Comunidad?
+            ¿Listo para Ser Parte de Nuestra Comunidad Educativa?
           </h2>
           <p className="text-xl text-gray-600 mb-8">
             Descubre cómo podemos ayudar a tu hijo a alcanzar su máximo potencial 
-            académico y personal en un ambiente internacional de excelencia.
+            académico y personal en el Gimnasio Americano del Atlántico.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/admissions">
@@ -243,6 +243,18 @@ const Home = () => {
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Developer Credits */}
+      <section className="py-8 bg-gray-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-sm text-gray-400">
+            Sistema desarrollado por <span className="font-semibold text-white">Pedro Hurtado - Coordinador Académico</span>
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            Derechos reservados a Pedro Hurtado - Coordinador Académico © 2025
+          </p>
         </div>
       </section>
     </div>

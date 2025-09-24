@@ -58,8 +58,8 @@ const LoginPage = () => {
   };
 
   const demoCredentials = [
-    { role: 'Administrador', email: 'admin@cng.edu', password: 'admin123' },
-    { role: 'Profesor', email: 'profesor1@cng.edu', password: 'teacher123' },
+    { role: 'Administrador', email: 'admin@gaa.edu.co', password: 'admin123' },
+    { role: 'Profesor', email: 'profesor1@gaa.edu.co', password: 'teacher123' },
     { role: 'Padre de Familia', email: 'padre1@gmail.com', password: 'parent123' }
   ];
 
@@ -68,13 +68,17 @@ const LoginPage = () => {
       <div className="w-full max-w-md space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <img 
-            src="https://resources.finalsite.net/images/v1693982454/cngedu/lpk3z7buhakp2sbsruyq/GNG-fullwhite1.svg" 
-            alt="CNG Logo" 
-            className="h-16 w-auto mx-auto filter invert"
-          />
+          <div className="flex justify-center items-center mb-4">
+            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+              <span className="text-white font-bold text-xl">GAA</span>
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">Gimnasio Americano</h1>
+              <p className="text-sm text-gray-600">del Atlántico</p>
+            </div>
+          </div>
           <h1 className="text-3xl font-bold text-gray-900">Sistema Académico</h1>
-          <p className="text-gray-600">Acceso al portal educativo</p>
+          <p className="text-gray-600">Sede 2 Manuela Beltrán</p>
         </div>
 
         {/* Login Form */}
@@ -97,7 +101,7 @@ const LoginPage = () => {
                   <Input
                     id="email"
                     type="email"
-                    placeholder="usuario@cng.edu"
+                    placeholder="usuario@gaa.edu.co"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
@@ -176,6 +180,11 @@ const LoginPage = () => {
           >
             ← Volver al inicio
           </Link>
+        </div>
+
+        {/* Developer Credits */}
+        <div className="text-center text-xs text-gray-500">
+          <p>Desarrollado por Pedro Hurtado - Coordinador Académico</p>
         </div>
       </div>
     </div>

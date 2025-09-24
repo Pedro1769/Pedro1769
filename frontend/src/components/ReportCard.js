@@ -29,7 +29,7 @@ const ReportCardComponent = ({ student, period, grades }) => {
       <div className="text-center border-b-2 border-gray-800 pb-4 mb-6">
         <div className="flex justify-center items-center mb-2">
           <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mr-4">
-            <span className="text-white font-bold text-lg">CNG</span>
+            <span className="text-white font-bold text-lg">GAA</span>
           </div>
           <div>
             <h1 className="text-lg font-bold uppercase">{schoolInfo.name}</h1>
@@ -141,6 +141,7 @@ const ReportCardComponent = ({ student, period, grades }) => {
         <div className="text-center">
           <div className="border-t border-gray-800 mt-16 pt-2">
             <p className="text-xs font-bold">DIRECTOR DE GRUPO</p>
+            <p className="text-xs">{schoolInfo.coordinator}</p>
           </div>
         </div>
       </div>
@@ -149,6 +150,7 @@ const ReportCardComponent = ({ student, period, grades }) => {
       <div className="text-center mt-6 text-xs text-gray-600">
         <p>Este documento es válido con la firma y sello de la institución</p>
         <p>Generado el: {new Date().toLocaleDateString('es-CO')}</p>
+        <p className="mt-2 font-semibold">{schoolInfo.developer}</p>
       </div>
     </div>
   );
