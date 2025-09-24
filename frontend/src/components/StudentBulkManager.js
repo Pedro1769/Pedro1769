@@ -37,48 +37,130 @@ María López Rodríguez,3°,Básica Primaria,0987654321,2013-08-22,madre.maria@
   const processImportData = () => {
     setProcessing(true);
     try {
-      const lines = importData.trim().split('\n');
-      const headers = lines[0].split(',').map(h => h.trim());
+      const lines = importData.trim().split('\n').filter(line => line.trim());
       const newStudents = [];
       const errors = [];
 
-      for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim());
-        if (values.length !== headers.length) {
-          errors.push(`Línea ${i + 1}: Número incorrecto de campos`);
+      // Detectar si es formato CSV (con comas) o texto plano (con espacios)
+      const isCSV = lines.some(line => line.includes(','));
+      
+      let startIndex = 0;
+      let headers = [];
+
+      if (isCSV) {
+        // Formato CSV tradicional
+        headers = lines[0].split(',').map(h => h.trim());
+        startIndex = 1;
+      }
+
+      for (let i = startIndex; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (!line) continue;
+
+        let studentData = {};
+
+        if (isCSV) {
+          // Procesamiento CSV
+          const values = line.split(',').map(v => v.trim());
+          if (values.length !== headers.length) {
+            errors.push(`Línea ${i + 1}: Número incorrecto de campos`);
+            continue;
+          }
+
+          headers.forEach((header, index) => {
+            switch (header.toLowerCase()) {
+              case 'nombre':
+                studentData.name = values[index];
+                break;
+              case 'grado':
+                studentData.grade = values[index];
+                break;
+              case 'nivel':
+                studentData.level = values[index];
+                break;
+              case 'documento':
+                studentData.document = values[index];
+                break;
+              case 'fecha_nacimiento':
+                studentData.birthDate = values[index];
+                break;
+              case 'padre_email':
+                studentData.parentEmail = values[index];
+                break;
+              default:
+                studentData[header] = values[index];
+            }
+          });
+        } else {
+          // Procesamiento de texto plano (como el formato mostrado en la imagen)
+          const parts = line.split(/\s+/);
+          if (parts.length < 3) {
+            errors.push(`Línea ${i + 1}: Formato incorrecto. Debe incluir al menos nombre, grado y nivel`);
+            continue;
+          }
+
+          // Extraer grado (buscar patrón como "10°", "11°", etc.)
+          let gradeIndex = -1;
+          let grade = '';
+          
+          for (let j = 0; j < parts.length; j++) {
+            if (parts[j].match(/^\d{1,2}°?$/)) {
+              grade = parts[j].replace('°', '') + '°';
+              gradeIndex = j;
+              break;
+            }
+          }
+
+          if (gradeIndex === -1) {
+            errors.push(`Línea ${i + 1}: No se pudo identificar el grado`);
+            continue;
+          }
+
+          // Extraer nivel (buscar "Media", "Básica", etc.)
+          let level = 'Básica Secundaria'; // Por defecto
+          const levelKeywords = ['Media', 'Básica', 'Primaria', 'Secundaria'];
+          for (const keyword of levelKeywords) {
+            if (line.toLowerCase().includes(keyword.toLowerCase())) {
+              if (keyword === 'Media') {
+                level = 'Media Vocacional';
+              } else if (keyword === 'Primaria') {
+                level = 'Básica Primaria';
+              }
+              break;
+            }
+          }
+
+          // Extraer nombre (todo lo que está antes del grado)
+          const nameeParts = parts.slice(0, gradeIndex);
+          const name = nameeParts.join(' ');
+
+          if (!name.trim()) {
+            errors.push(`Línea ${i + 1}: No se pudo extraer el nombre`);
+            continue;
+          }
+
+          // Generar documento automáticamente si no se proporciona
+          const document = `DOC${Date.now()}${Math.floor(Math.random() * 1000)}`;
+
+          studentData = {
+            name: name.trim(),
+            grade: grade,
+            level: level,
+            document: document,
+            birthDate: '',
+            parentEmail: ''
+          };
+        }
+
+        // Validaciones básicas
+        if (!studentData.name || !studentData.grade) {
+          errors.push(`Línea ${i + 1}: Faltan campos obligatorios (nombre, grado)`);
           continue;
         }
 
-        const studentData = {};
-        headers.forEach((header, index) => {
-          switch (header.toLowerCase()) {
-            case 'nombre':
-              studentData.name = values[index];
-              break;
-            case 'grado':
-              studentData.grade = values[index];
-              break;
-            case 'nivel':
-              studentData.level = values[index];
-              break;
-            case 'documento':
-              studentData.document = values[index];
-              break;
-            case 'fecha_nacimiento':
-              studentData.birthDate = values[index];
-              break;
-            case 'padre_email':
-              studentData.parentEmail = values[index];
-              break;
-            default:
-              studentData[header] = values[index];
-          }
-        });
-
-        // Validaciones básicas
-        if (!studentData.name || !studentData.grade || !studentData.document) {
-          errors.push(`Línea ${i + 1}: Faltan campos obligatorios (nombre, grado, documento)`);
-          continue;
+        // Asegurar que el documento exista
+        if (!studentData.document) {
+          studentData.document = `DOC${Date.now()}${Math.floor(Math.random() * 1000)}`;
         }
 
         studentData.id = Date.now() + Math.random();
