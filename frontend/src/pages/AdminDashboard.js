@@ -25,6 +25,7 @@ import { StudentsManager, PeriodsManager, GradesManager, initializeDefaultData }
 import StudentBulkManager from '../components/StudentBulkManager';
 import PeriodManager from '../components/PeriodManager';
 import ReportCardModern from '../components/ReportCardModern';
+import StudentEditModal from '../components/StudentEditModal';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
