@@ -3,17 +3,17 @@ export const mockUsers = [
   // Administrators
   {
     id: 1,
-    email: 'admin@cng.edu',
+    email: 'admin@gaa.edu.co',
     password: 'admin123',
-    name: 'Maria González',
+    name: 'Pedro Hurtado',
     role: 'admin',
-    position: 'Directora Académica'
+    position: 'Coordinador Académico'
   },
   
   // Teachers
   {
     id: 2,
-    email: 'profesor1@cng.edu',
+    email: 'profesor1@gaa.edu.co',
     password: 'teacher123',
     name: 'Carlos Mendoza',
     role: 'teacher',
@@ -22,7 +22,7 @@ export const mockUsers = [
   },
   {
     id: 3,
-    email: 'profesora2@cng.edu',
+    email: 'profesora2@gaa.edu.co',
     password: 'teacher123',
     name: 'Ana Rodríguez',
     role: 'teacher',
@@ -31,7 +31,7 @@ export const mockUsers = [
   },
   {
     id: 4,
-    email: 'profesor3@cng.edu',
+    email: 'profesor3@gaa.edu.co',
     password: 'teacher123',
     name: 'Luis García',
     role: 'teacher',
