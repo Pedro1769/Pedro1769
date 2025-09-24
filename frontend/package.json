@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "gada-sistema-academico",
+  "version": "1.0.0",
+  "description": "Sistema Académico del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán",
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
