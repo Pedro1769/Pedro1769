@@ -74,7 +74,7 @@ const Footer = () => {
         <div className="mt-8 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              © 2025 Colegio Nueva Granada. Todos los derechos reservados.
+              © 2025 Gimnasio Americano del Atlántico. {schoolInfo?.copyright || 'Derechos reservados a Pedro Hurtado - Coordinador Académico'}.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link to="/privacy" className="text-gray-400 hover:text-white text-sm transition-colors">
