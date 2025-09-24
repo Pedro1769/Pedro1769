@@ -165,6 +165,10 @@ const AdminDashboard = () => {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex items-center text-sm">
+                      <Badge variant="outline" className="mr-2">Período</Badge>
+                      Período activo: {stats.activePeriod}
+                    </div>
+                    <div className="flex items-center text-sm">
                       <Badge variant="outline" className="mr-2">Nuevo</Badge>
                       Se agregó el estudiante Gabriel Antón
                     </div>
