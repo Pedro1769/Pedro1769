@@ -43,7 +43,7 @@ const Home = () => {
             <div className="hidden lg:block">
               <img 
                 src="https://resources.finalsite.net/images/f_auto,q_auto,t_image_size_6/v1693919082/cngedu/ytp9jrmlmh2kw2ykhy3i/PS.jpg"
-                alt="Estudiantes GAA"
+                alt="Estudiantes GADA"
                 className="rounded-lg shadow-2xl"
               />
             </div>
