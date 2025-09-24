@@ -1,10 +1,14 @@
 {
-  "name": "gada-sistema-academico",
+  "name": "sistema-academico-gada",
   "version": "1.0.0",
   "description": "Sistema Académico del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán - Desarrollado por Pedro Hurtado",
-  "homepage": "https://gada-sistema.emergentagent.com",
-  "keywords": ["gimnasio-americano-del-atlantico", "gada", "sistema-academico", "pedro-hurtado", "atlantico-colombia"],
+  "homepage": "https://gimnasio-americano-atlantico.emergentagent.com",
+  "keywords": ["gimnasio-americano-atlantico", "gada", "sistema-academico", "pedro-hurtado", "atlantico-colombia", "sede-2-manuela-beltran"],
   "author": "Pedro Hurtado - Coordinador Académico <pedro_12hurbe@hotmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "sistema-academico-gimnasio-americano-atlantico"
+  },
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
