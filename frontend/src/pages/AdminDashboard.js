@@ -28,6 +28,13 @@ import ReportCardModern from '../components/ReportCardModern';
 const AdminDashboard = () => {
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
+  const [showBulkManager, setShowBulkManager] = useState(false);
+  const [showPeriodManager, setShowPeriodManager] = useState(false);
+  const [showReportCard, setShowReportCard] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState(1);
+  const [students, setStudents] = useState(mockStudents);
+  const [periods, setPeriods] = useState(mockPeriods);
 
   if (!user || user.role !== 'admin') {
     return <Navigate to="/login" />;
