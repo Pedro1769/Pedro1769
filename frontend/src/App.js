@@ -21,14 +21,20 @@ import GradeManagement from "./pages/GradeManagement";
 function App() {
   useEffect(() => {
     // Asegurar el título correcto
-    document.title = "GADA - Gimnasio Americano del Atlántico | Sistema Académico";
+    document.title = "Sistema Académico - Gimnasio Americano del Atlántico Sede 2";
     
     // Actualizar meta description si es necesario
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content', 
-        'Sistema Académico del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán. Desarrollado por Pedro Hurtado - Coordinador Académico.'
+        'Sistema Académico del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán. Gestión integral de estudiantes, docentes y calificaciones. Desarrollado por Pedro Hurtado - Coordinador Académico.'
       );
+    }
+
+    // Actualizar Open Graph title
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', 'Sistema Académico - Gimnasio Americano del Atlántico Sede 2');
     }
   }, []);
 
