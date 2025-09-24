@@ -265,12 +265,16 @@ export const performanceScale = {
 
 // School information
 export const schoolInfo = {
-  name: 'GIMNASIO AMERICANO DEL ATLÁNTICO',
+  name: 'GIMNASIO AMERICANO DEL ATLÁNTICO SEDE 2 MANUELA BELTRÁN',
   levels: {
     preescolar: 'PREESCOLAR - BÁSICA PRIMARIA BÁSICA SECUNDARIA',
     license: 'LICENCIA DE FUNCIONAMIENTO RES. 1544 DEL 31 DE DICIEMBRE DE 2.002',
     vocational: 'LICENCIA DE FUNCIONAMIENTO RES. 1257 DEL 7 DE SEPTIEMBRE DE 1.999',
     dane: 'REGISTRO DANE 308758-001703 NIT 830.503.934-4'
   },
-  academicYear: 2025
+  academicYear: 2025,
+  coordinator: 'Pedro Hurtado',
+  position: 'Coordinador Académico',
+  developer: 'Pedro Hurtado - Coordinador Académico',
+  copyright: 'Derechos reservados a Pedro Hurtado - Coordinador Académico'
 };
