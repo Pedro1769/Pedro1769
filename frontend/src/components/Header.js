@@ -20,11 +20,15 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img 
-              src="https://resources.finalsite.net/images/v1693982454/cngedu/lpk3z7buhakp2sbsruyq/GNG-fullwhite1.svg" 
-              alt="Colegio Nueva Granada" 
-              className="h-12 w-auto filter invert"
-            />
+            <div className="flex items-center">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+                <span className="text-white font-bold text-lg">GAA</span>
+              </div>
+              <div>
+                <h1 className="text-lg font-bold text-gray-900">Gimnasio Americano</h1>
+                <p className="text-xs text-gray-600">del Atlántico</p>
+              </div>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
