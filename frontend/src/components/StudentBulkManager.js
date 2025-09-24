@@ -187,8 +187,12 @@ Elkin David García Palencia 10° Media`;
         students: newStudents
       });
 
-      if (newStudents.length > 0 && onStudentsUpdate) {
-        onStudentsUpdate([...students, ...newStudents]);
+      if (newStudents.length > 0) {
+        // Usar el manager para persistir los datos
+        const savedStudents = StudentsManager.addBulk(newStudents);
+        if (onStudentsUpdate) {
+          onStudentsUpdate([...students, ...savedStudents]);
+        }
       }
     } catch (error) {
       setResults({
