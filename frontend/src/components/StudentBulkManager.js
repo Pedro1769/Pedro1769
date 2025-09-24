@@ -361,15 +361,18 @@ Elkin David García Palencia 10° Media`;
               <Alert>
                 <Copy className="h-4 w-4" />
                 <AlertDescription>
-                  Copie y pegue datos desde Excel o Google Sheets. Asegúrese de incluir los encabezados.
+                  <strong>Formatos flexibles:</strong><br/>
+                  • Copie desde Excel/Sheets (automáticamente detecta el formato)<br/>
+                  • Texto plano: "Nombre Apellido Grado° Nivel"<br/>
+                  • CSV: "Nombre,Grado,Nivel,Documento"
                 </AlertDescription>
               </Alert>
 
               <div>
-                <Label htmlFor="pasteData">Datos desde Excel/Sheets</Label>
+                <Label htmlFor="pasteData">Datos desde Excel/Sheets o Texto Plano</Label>
                 <Textarea
                   id="pasteData"
-                  placeholder="Pegue aquí los datos copiados desde Excel o Google Sheets..."
+                  placeholder="Pegue aquí los datos copiados desde Excel, Google Sheets o como texto plano..."
                   value={importData}
                   onChange={(e) => setImportData(e.target.value)}
                   rows={10}
@@ -377,10 +380,17 @@ Elkin David García Palencia 10° Media`;
                 />
               </div>
 
-              <Button onClick={processImportData} disabled={processing || !importData.trim()}>
-                <Upload className="mr-2 h-4 w-4" />
-                {processing ? 'Procesando...' : 'Importar Datos Pegados'}
-              </Button>
+              <div className="flex space-x-2">
+                <Button onClick={processImportData} disabled={processing || !importData.trim()}>
+                  <Upload className="mr-2 h-4 w-4" />
+                  {processing ? 'Procesando...' : 'Importar Datos Pegados'}
+                </Button>
+                
+                <Button variant="outline" onClick={() => loadTemplate('text')}>
+                  <FileSpreadsheet className="mr-2 h-4 w-4" />
+                  Ejemplo Texto
+                </Button>
+              </div>
             </TabsContent>
 
             {/* Eliminar */}
