@@ -1,7 +1,7 @@
 {
   "short_name": "GADA Sistema",
-  "name": "GADA - Gimnasio Americano del Atlántico Sistema Académico",
-  "description": "Sistema Académico del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán",
+  "name": "Sistema Académico - Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán",
+  "description": "Sistema integral de gestión académica del Gimnasio Americano del Atlántico Sede 2 Manuela Beltrán. Desarrollado por Pedro Hurtado - Coordinador Académico.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -13,7 +13,9 @@
   "display": "standalone",
   "theme_color": "#2563eb",
   "background_color": "#ffffff",
-  "categories": ["education", "productivity"],
-  "lang": "es",
-  "orientation": "portrait-primary"
+  "categories": ["education", "productivity", "academic-management"],
+  "lang": "es-CO",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "id": "sistema-academico-gada-sede2"
 }
