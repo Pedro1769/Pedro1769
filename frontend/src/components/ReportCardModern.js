@@ -4,15 +4,21 @@ import { schoolInfo, performanceScale } from '../mock/mockData';
 const ReportCardModern = ({ student, period, grades, level = 'Básica Secundaria' }) => {
   if (!student) return null;
 
-  const getPerformanceLevel = (grade, studentLevel) => {
-    const scale = performanceScale[studentLevel] || performanceScale['Básica Secundaria'];
+  const getPerformanceLevel = (grade, student) => {
+    // Determinar qué escala usar basada en el grado del estudiante
+    let scale;
+    if (student.grade === '11°') {
+      scale = performanceScale['grado_11'];
+    } else {
+      scale = performanceScale['default'];
+    }
     
     for (const [performance, range] of Object.entries(scale)) {
       if (grade >= range.min && grade <= range.max) {
         return { level: performance, code: range.code };
       }
     }
-    return { level: 'Bajo', code: 'Bj' };
+    return { level: 'DESEMPEÑO BAJO', code: 'Bj' };
   };
 
   const calculateAverage = () => {
