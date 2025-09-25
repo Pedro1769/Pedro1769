@@ -110,54 +110,249 @@ export const mockStudents = [
   }
 ];
 
-// Mock subjects for different educational levels
-export const mockSubjects = {
-  'Básica Primaria': [
-    'Humanidades - Español',
-    'Humanidades - Inglés',
-    'Matemáticas',
-    'Ciencias Naturales',
-    'Ciencias Sociales',
-    'Educación Artística',
-    'Educación Física',
-    'Tecnología',
-    'Ética',
-    'Religión'
-  ],
-  'Básica Secundaria': [
-    'Humanidades - Español',
-    'Humanidades - Inglés',
-    'Matemáticas',
-    'Geometría',
-    'Ciencias Naturales - Biología',
-    'Ciencias Naturales - Física',
-    'Ciencias Naturales - Química',
-    'Ciencias Sociales',
-    'Geografía',
-    'Historia',
-    'Educación Artística',
-    'Educación Física',
-    'Tecnología e Informática',
-    'Ética y Valores',
-    'Educación Religiosa',
-    'Filosofía'
-  ],
-  'Media Vocacional': [
-    'Español',
-    'Inglés',
-    'Matemáticas',
-    'Física',
-    'Química',
-    'Biología',
-    'Ciencias Sociales',
-    'Filosofía',
-    'Educación Física',
-    'Informática',
-    'Ética',
-    'Religión',
-    'Cátedra de la Paz',
-    'Emprendimiento'
-  ]
+// Mock subjects for different educational levels with correct structure
+export const mockSubjectsByLevel = {
+  'Transición': {
+    areas: [
+      {
+        area: 'HUMANIDADES',
+        subjects: [
+          { name: 'ESPAÑOL', hours: 5 },
+          { name: 'INGLES', hours: 2 }
+        ]
+      },
+      {
+        area: 'MATEMATICAS',
+        subjects: [
+          { name: 'MATEMATICAS', hours: 5 }
+        ]
+      },
+      {
+        area: 'INTEGRADA',
+        subjects: [
+          { name: 'SOCIALES-NATURALES', hours: 3 }
+        ]
+      },
+      {
+        area: 'ED. RELIGIOSA Y MORAL',
+        subjects: [
+          { name: 'ETICA Y RELIGION', hours: 1 }
+        ]
+      },
+      {
+        area: 'TECNOLOGIA',
+        subjects: [
+          { name: 'INFORMATICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'ARTISTICA',
+        subjects: [
+          { name: 'ARTE', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. FIS, RECR Y DEP',
+        subjects: [
+          { name: 'ED. FISICA', hours: 2 }
+        ]
+      }
+    ],
+    specialSections: ['CONVIVENCIA ESCOLAR', 'ACOMPAÑAMIENTO DEL ACUDIENTE']
+  },
+  
+  'Básica Primaria': {
+    areas: [
+      {
+        area: 'HUMANIDADES',
+        subjects: [
+          { name: 'ESPAÑOL', hours: 5 },
+          { name: 'CALIGRAFIA', hours: 1 },
+          { name: 'INGLES', hours: 3 }
+        ]
+      },
+      {
+        area: 'MATEMATICAS',
+        subjects: [
+          { name: 'MATEMATICAS', hours: 5 }
+        ]
+      },
+      {
+        area: 'C. NATURALES Y EDUCACION AMBIENTAL',
+        subjects: [
+          { name: 'NATURALES', hours: 3 }
+        ]
+      },
+      {
+        area: 'CIENCIAS SOCIALES',
+        subjects: [
+          { name: 'SOCIALES', hours: 2 },
+          { name: 'CATEDRA DE PAZ', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. RELIGIOSA Y MORAL',
+        subjects: [
+          { name: 'ETICA Y RELIGION', hours: 1 }
+        ]
+      },
+      {
+        area: 'TECNOLOGIA',
+        subjects: [
+          { name: 'INFORMATICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'ARTISTICA',
+        subjects: [
+          { name: 'ARTE', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. FIS, RECR Y DEP',
+        subjects: [
+          { name: 'ED. FISICA', hours: 2 }
+        ]
+      }
+    ],
+    specialSections: ['CONVIVENCIA ESCOLAR', 'ACOMPAÑAMIENTO DEL ACUDIENTE']
+  },
+
+  'Básica Secundaria': {
+    areas: [
+      {
+        area: 'HUMANIDADES',
+        subjects: [
+          { name: 'ESPAÑOL', hours: 5 },
+          { name: 'INGLES', hours: 4 }
+        ]
+      },
+      {
+        area: 'CIENCIAS MATEMATICAS',
+        subjects: [
+          { name: 'MATEMATICA', hours: 3 },
+          { name: 'GEOMETRIA', hours: 1 },
+          { name: 'ESTADISTICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'CIENCIAS NATURALES Y EDUCACIÓN AMBIENTAL',
+        subjects: [
+          { name: 'BIOLOGIA', hours: 2 },
+          { name: 'ED. SEXUAL', hours: 1 },
+          { name: 'QUIMICA', hours: 1 },
+          { name: 'FISICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'CIENCIAS SOCIALES',
+        subjects: [
+          { name: 'HISTORIA', hours: 2 },
+          { name: 'GEOGRAFIA', hours: 2 },
+          { name: 'CATEDRA DE LA PAZ', hours: 1 }
+        ]
+      },
+      {
+        area: 'VOCACIONAL',
+        subjects: [
+          { name: 'EMPRENDIMIENTO', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. RELIGIOSA Y MORAL',
+        subjects: [
+          { name: 'ETICA Y RELIGION', hours: 1 }
+        ]
+      },
+      {
+        area: 'TECNOLOGIA',
+        subjects: [
+          { name: 'INFORMATICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'ARTISTICA',
+        subjects: [
+          { name: 'ARTE', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. FIS, RECR Y DEP',
+        subjects: [
+          { name: 'ED. FISICA', hours: 2 }
+        ]
+      }
+    ],
+    specialSections: ['CONVIVENCIA ESCOLAR', 'ACOMPAÑAMIENTO DEL ACUDIENTE']
+  },
+
+  'Media Vocacional': {
+    areas: [
+      {
+        area: 'HUMANIDADES',
+        subjects: [
+          { name: 'ESPAÑOL', hours: 5 },
+          { name: 'INGLES', hours: 4 }
+        ]
+      },
+      {
+        area: 'CIENCIAS MATEMATICAS',
+        subjects: [
+          { name: 'MATEMATICA', hours: 3 },
+          { name: 'GEOMETRIA', hours: 1 },
+          { name: 'ESTADISTICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'CIENCIAS NATURALES Y EDUCACIÓN AMBIENTAL',
+        subjects: [
+          { name: 'BIOLOGIA', hours: 2 },
+          { name: 'ED. SEXUAL', hours: 1 },
+          { name: 'QUIMICA', hours: 1 },
+          { name: 'FISICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'CIENCIAS SOCIALES',
+        subjects: [
+          { name: 'HISTORIA', hours: 2 },
+          { name: 'GEOGRAFIA', hours: 2 },
+          { name: 'CATEDRA DE LA PAZ', hours: 1 }
+        ]
+      },
+      {
+        area: 'VOCACIONAL',
+        subjects: [
+          { name: 'EMPRENDIMIENTO', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. RELIGIOSA Y MORAL',
+        subjects: [
+          { name: 'ETICA Y RELIGION', hours: 1 }
+        ]
+      },
+      {
+        area: 'TECNOLOGIA',
+        subjects: [
+          { name: 'INFORMATICA', hours: 1 }
+        ]
+      },
+      {
+        area: 'ARTISTICA',
+        subjects: [
+          { name: 'ARTE', hours: 1 }
+        ]
+      },
+      {
+        area: 'ED. FIS, RECR Y DEP',
+        subjects: [
+          { name: 'ED. FISICA', hours: 2 }
+        ]
+      }
+    ],
+    specialSections: ['CONVIVENCIA ESCOLAR', 'ACOMPAÑAMIENTO DEL ACUDIENTE']
+  }
 };
 
 // Mock grades data
