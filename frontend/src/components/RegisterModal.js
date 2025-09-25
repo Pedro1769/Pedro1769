@@ -241,6 +241,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <SelectContent>
                     <SelectItem value="teacher">Docente</SelectItem>
                     <SelectItem value="parent">Padre de Familia</SelectItem>
+                    <SelectItem value="coordinadora_convivencia">Coordinadora de Convivencia</SelectItem>
                   </SelectContent>
                 </Select>
                 {errors.role && <p className="text-red-500 text-sm mt-1">{errors.role}</p>}
