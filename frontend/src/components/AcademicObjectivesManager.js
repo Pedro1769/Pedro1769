@@ -111,32 +111,35 @@ const AcademicObjectivesManager = ({ onClose }) => {
       return;
     }
 
-    const newAchievement = {
-      id: editingItem?.id || Date.now() + Math.random(),
-      ...formData,
-      createdAt: editingItem?.createdAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+    try {
+      const newAchievement = {
+        id: editingItem?.id || Date.now() + Math.random(),
+        ...formData,
+        createdAt: editingItem?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
 
-    if (editingItem) {
-      setAchievements(prev => prev.map(ach => ach.id === editingItem.id ? newAchievement : ach));
-    } else {
-      setAchievements(prev => [...prev, newAchievement]);
+      if (editingItem) {
+        setAchievements(prev => prev.map(ach => ach.id === editingItem.id ? newAchievement : ach));
+      } else {
+        setAchievements(prev => [...prev, newAchievement]);
+      }
+
+      setEditingItem(null);
+      setFormData({
+        subject: '',
+        grade: '',
+        level: '',
+        period: '',
+        objective: '',
+        achievement: '',
+        type: 'cognitive',
+        category: ''
+      });
+    } catch (error) {
+      console.error('Error saving achievement:', error);
+      alert('Error al guardar el logro');
     }
-
-    setEditingItem(null);
-    setFormData({
-      subject: '',
-      grade: '',
-      level: '',
-      period: '',
-      objective: '',
-      achievement: '',
-      type: 'cognitive',
-      category: ''
-    });
-    
-    saveToStorage();
   };
 
   const handleEdit = (item, type) => {
