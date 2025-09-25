@@ -8,61 +8,6 @@ export const mockUsers = [
     name: 'Pedro Hurtado',
     role: 'admin',
     position: 'Coordinador Académico'
-  },
-  
-  // Teachers
-  {
-    id: 2,
-    email: 'profesor1@gada.edu.co',
-    password: 'teacher123',
-    name: 'Carlos Mendoza',
-    role: 'teacher',
-    subjects: ['Matemáticas', 'Física'],
-    grades: ['6°', '7°', '8°']
-  },
-  {
-    id: 3,
-    email: 'profesora2@gada.edu.co',
-    password: 'teacher123',
-    name: 'Ana Rodríguez',
-    role: 'teacher',
-    subjects: ['Español', 'Literatura'],
-    grades: ['9°', '10°', '11°']
-  },
-  {
-    id: 4,
-    email: 'profesor3@gada.edu.co',
-    password: 'teacher123',
-    name: 'Luis García',
-    role: 'teacher',
-    subjects: ['Ciencias Naturales', 'Biología'],
-    grades: ['1°', '2°', '3°', '4°', '5°']
-  },
-  
-  // Parents
-  {
-    id: 5,
-    email: 'padre1@gmail.com',
-    password: 'parent123',
-    name: 'Roberto Salas',
-    role: 'parent',
-    children: [1, 2] // student IDs
-  },
-  {
-    id: 6,
-    email: 'madre1@gmail.com',
-    password: 'parent123',
-    name: 'Patricia Muñoz',
-    role: 'parent',
-    children: [3] // student IDs
-  },
-  {
-    id: 7,
-    email: 'padre2@gmail.com',
-    password: 'parent123',
-    name: 'Gabriel Antón',
-    role: 'parent',
-    children: [4] // student IDs
   }
 ];
 
