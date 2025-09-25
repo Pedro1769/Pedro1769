@@ -7,7 +7,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Label } from '../components/ui/label';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { mockUsers } from '../mock/mockData';
-import { Eye, EyeOff, User, Lock } from 'lucide-react';
+import { Eye, EyeOff, User, Lock, UserPlus } from 'lucide-react';
+import RegisterModal from '../components/RegisterModal';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -15,6 +16,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showRegisterModal, setShowRegisterModal] = useState(false);
   
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -25,8 +27,11 @@ const LoginPage = () => {
     setError('');
 
     try {
-      // Mock authentication
-      const user = mockUsers.find(
+      // Get all users (mock + registered)
+      const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+      const allUsers = [...mockUsers, ...registeredUsers.filter(u => u.approved)];
+      
+      const user = allUsers.find(
         (u) => u.email === email && u.password === password
       );
 
@@ -57,11 +62,30 @@ const LoginPage = () => {
     }
   };
 
-  const demoCredentials = [
-    { role: 'Administrador', email: 'admin@gada.edu.co', password: 'admin123' },
-    { role: 'Profesor', email: 'profesor1@gada.edu.co', password: 'teacher123' },
-    { role: 'Padre de Familia', email: 'padre1@gmail.com', password: 'parent123' }
-  ];
+  const handleRegister = (userData) => {
+    try {
+      const existingUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+      
+      // Check if email already exists
+      const allUsers = [...mockUsers, ...existingUsers];
+      if (allUsers.some(u => u.email === userData.email)) {
+        alert('Este email ya está registrado');
+        return;
+      }
+      
+      const updatedUsers = [...existingUsers, userData];
+      localStorage.setItem('gada_registered_users', JSON.stringify(updatedUsers));
+      
+      if (userData.role === 'admin') {
+        alert('Usuario registrado exitosamente');
+      } else {
+        alert('Registro enviado. Su cuenta será revisada por el administrador.');
+      }
+    } catch (error) {
+      console.error('Error registering user:', error);
+      alert('Error al registrar usuario');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
@@ -142,33 +166,25 @@ const LoginPage = () => {
               </Button>
             </form>
 
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <Link 
                 to="/forgot-password" 
                 className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
               >
                 ¿Olvidaste tu contraseña?
               </Link>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Demo Credentials */}
-        <Card className="bg-gray-50 border-gray-200">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-gray-700">
-              Credenciales de Demostración
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {demoCredentials.map((cred, index) => (
-              <div key={index} className="text-xs space-y-1">
-                <div className="font-medium text-gray-600">{cred.role}:</div>
-                <div className="text-gray-500">
-                  {cred.email} / {cred.password}
-                </div>
+              
+              <div className="border-t pt-4">
+                <Button 
+                  variant="outline" 
+                  className="w-full" 
+                  onClick={() => setShowRegisterModal(true)}
+                >
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Registrarse
+                </Button>
               </div>
-            ))}
+            </div>
           </CardContent>
         </Card>
 
@@ -187,6 +203,14 @@ const LoginPage = () => {
           <p>Desarrollado por Pedro Hurtado - Coordinador Académico</p>
         </div>
       </div>
+
+      {/* Register Modal */}
+      {showRegisterModal && (
+        <RegisterModal 
+          onClose={() => setShowRegisterModal(false)}
+          onRegister={handleRegister}
+        />
+      )}
     </div>
   );
 };
