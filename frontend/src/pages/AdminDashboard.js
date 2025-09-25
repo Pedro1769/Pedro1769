@@ -18,7 +18,9 @@ import {
   Upload,
   Eye,
   Calendar,
-  Clock
+  Clock,
+  Target,
+  Grid
 } from 'lucide-react';
 import { mockUsers, mockGrades } from '../mock/mockData';
 import { StudentsManager, PeriodsManager, GradesManager, initializeDefaultData } from '../utils/dataManager';
