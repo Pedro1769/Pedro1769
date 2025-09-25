@@ -47,8 +47,12 @@ const AcademicObjectivesManager = ({ onClose }) => {
   }, []);
 
   const saveToStorage = () => {
-    localStorage.setItem('gada_objectives', JSON.stringify(objectives));
-    localStorage.setItem('gada_achievements', JSON.stringify(achievements));
+    try {
+      localStorage.setItem('gada_objectives', JSON.stringify(objectives));
+      localStorage.setItem('gada_achievements', JSON.stringify(achievements));
+    } catch (error) {
+      console.error('Error saving to storage:', error);
+    }
   };
 
   const handleSaveObjective = () => {
