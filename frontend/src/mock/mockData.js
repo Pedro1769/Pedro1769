@@ -183,7 +183,7 @@ export const mockSubjectsByLevel = {
         ]
       },
       {
-        area: 'CIENCIAS MATEMATICAS',
+        area: 'MATEMÁTICAS',
         subjects: [
           { name: 'MATEMATICA', hours: 3 },
           { name: 'GEOMETRIA', hours: 1 },
