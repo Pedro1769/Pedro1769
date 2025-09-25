@@ -18,7 +18,9 @@ import {
   BookOpen,
   FileText,
   Grid,
-  List
+  List,
+  X,
+  AlertCircle
 } from 'lucide-react';
 
 const CurriculumManager = ({ onClose }) => {
