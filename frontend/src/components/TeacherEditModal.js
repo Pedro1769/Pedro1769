@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Alert, AlertDescription } from './ui/alert';
 import { Checkbox } from './ui/checkbox';
-import { X, Save, AlertCircle, Plus, Minus } from 'lucide-react';
+import { X, Save, AlertCircle, Plus, Minus, User } from 'lucide-react';
 
 const TeacherEditModal = ({ teacher, onClose, onUpdate, isNew = false }) => {
   const [formData, setFormData] = useState({
