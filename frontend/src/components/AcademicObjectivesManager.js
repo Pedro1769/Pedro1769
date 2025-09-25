@@ -17,7 +17,9 @@ import {
   Download,
   Target,
   BookOpen,
-  FileText
+  FileText,
+  X,
+  AlertCircle
 } from 'lucide-react';
 
 const AcademicObjectivesManager = ({ onClose }) => {
