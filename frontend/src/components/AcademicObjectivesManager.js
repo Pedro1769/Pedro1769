@@ -74,32 +74,35 @@ const AcademicObjectivesManager = ({ onClose }) => {
       return;
     }
 
-    const newObjective = {
-      id: editingItem?.id || Date.now() + Math.random(),
-      ...formData,
-      createdAt: editingItem?.createdAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+    try {
+      const newObjective = {
+        id: editingItem?.id || Date.now() + Math.random(),
+        ...formData,
+        createdAt: editingItem?.createdAt || new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
 
-    if (editingItem) {
-      setObjectives(prev => prev.map(obj => obj.id === editingItem.id ? newObjective : obj));
-    } else {
-      setObjectives(prev => [...prev, newObjective]);
+      if (editingItem) {
+        setObjectives(prev => prev.map(obj => obj.id === editingItem.id ? newObjective : obj));
+      } else {
+        setObjectives(prev => [...prev, newObjective]);
+      }
+
+      setEditingItem(null);
+      setFormData({
+        subject: '',
+        grade: '',
+        level: '',
+        period: '',
+        objective: '',
+        achievement: '',
+        type: 'cognitive',
+        category: ''
+      });
+    } catch (error) {
+      console.error('Error saving objective:', error);
+      alert('Error al guardar el objetivo');
     }
-
-    setEditingItem(null);
-    setFormData({
-      subject: '',
-      grade: '',
-      level: '',
-      period: '',
-      objective: '',
-      achievement: '',
-      type: 'cognitive',
-      category: ''
-    });
-    
-    saveToStorage();
   };
 
   const handleSaveAchievement = () => {
