@@ -40,11 +40,24 @@ const AcademicObjectivesManager = ({ onClose }) => {
 
   // Cargar datos del localStorage
   useEffect(() => {
-    const storedObjectives = JSON.parse(localStorage.getItem('gada_objectives') || '[]');
-    const storedAchievements = JSON.parse(localStorage.getItem('gada_achievements') || '[]');
-    setObjectives(storedObjectives);
-    setAchievements(storedAchievements);
+    try {
+      const storedObjectives = JSON.parse(localStorage.getItem('gada_objectives') || '[]');
+      const storedAchievements = JSON.parse(localStorage.getItem('gada_achievements') || '[]');
+      setObjectives(storedObjectives);
+      setAchievements(storedAchievements);
+    } catch (error) {
+      console.error('Error loading data from storage:', error);
+      setObjectives([]);
+      setAchievements([]);
+    }
   }, []);
+
+  // Guardar automáticamente cuando cambian los datos
+  useEffect(() => {
+    if (objectives.length > 0 || achievements.length > 0) {
+      saveToStorage();
+    }
+  }, [objectives, achievements]);
 
   const saveToStorage = () => {
     try {
