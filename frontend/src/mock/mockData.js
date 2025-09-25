@@ -423,19 +423,21 @@ export const mockPeriods = [
   }
 ];
 
-// Performance scale
+// Performance scale with correct GADA scales
 export const performanceScale = {
-  'Básica Primaria': {
-    'Superior': { min: 4.6, max: 5.0, code: 'S' },
-    'Alto': { min: 4.0, max: 4.5, code: 'A' },
-    'Básico': { min: 3.0, max: 3.9, code: 'Bs' },
-    'Bajo': { min: 1.0, max: 2.9, code: 'Bj' }
+  // Para Transición hasta 10° grado
+  'default': {
+    'DESEMPEÑO SUPERIOR': { min: 4.8, max: 5.0, code: 'S' },
+    'DESEMPEÑO ALTO': { min: 4.1, max: 4.7, code: 'A' },
+    'DESEMPEÑO BÁSICO': { min: 3.3, max: 4.0, code: 'Bs' },
+    'DESEMPEÑO BAJO': { min: 0.1, max: 3.2, code: 'Bj' }
   },
-  'Básica Secundaria': {
-    'Superior': { min: 9.0, max: 10.0, code: 'S' },
-    'Alto': { min: 8.0, max: 8.9, code: 'A' },
-    'Básico': { min: 6.0, max: 7.9, code: 'Bs' },
-    'Bajo': { min: 1.0, max: 5.9, code: 'Bj' }
+  // Solo para 11° grado
+  'grado_11': {
+    'DESEMPEÑO SUPERIOR': { min: 9.6, max: 10.0, code: 'S' },
+    'DESEMPEÑO ALTO': { min: 7.8, max: 9.5, code: 'A' },
+    'DESEMPEÑO BÁSICO': { min: 6.6, max: 7.7, code: 'Bs' },
+    'DESEMPEÑO BAJO': { min: 1.0, max: 6.5, code: 'Bj' }
   }
 };
 
