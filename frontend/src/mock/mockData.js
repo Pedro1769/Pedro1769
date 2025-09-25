@@ -11,13 +11,13 @@ export const mockUsers = [
   }
 ];
 
-// Mock students data
+// Mock students data with correct grade structure (0° to 11°)
 export const mockStudents = [
   {
     id: 1,
     name: 'Geovanny Erick Salas Pérez',
     grade: '11°',
-    level: 'Básica Secundaria',
+    level: 'Media Vocacional',
     academicYear: 2025,
     parentId: 5,
     document: '1087585001426',
@@ -52,6 +52,16 @@ export const mockStudents = [
     parentId: 7,
     document: '1087585001429',
     birthDate: '2010-11-25'
+  },
+  {
+    id: 5,
+    name: 'Ana Sofia Torres',
+    grade: '0°',
+    level: 'Transición',
+    academicYear: 2025,
+    parentId: 8,
+    document: '1087585001430',
+    birthDate: '2018-04-12'
   }
 ];
 
