@@ -150,7 +150,7 @@ const ParentDashboard = () => {
                     ? 'ring-2 ring-blue-500 shadow-lg' 
                     : 'hover:shadow-md'
                 }`}
-                onClick={() => setSelectedChild(child.id.toString())}
+                onClick={() => setSelectedChild(child?.id?.toString())}
               >
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
