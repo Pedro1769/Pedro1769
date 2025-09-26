@@ -146,7 +146,7 @@ const ParentDashboard = () => {
               <Card 
                 key={child.id} 
                 className={`cursor-pointer transition-all duration-300 card-institutional hover-gradient ${
-                  selectedChild === child.id.toString() 
+                  selectedChild === child?.id?.toString() 
                     ? 'ring-2 ring-blue-500 shadow-lg' 
                     : 'hover:shadow-md'
                 }`}
