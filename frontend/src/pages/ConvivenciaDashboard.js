@@ -39,11 +39,16 @@ const ConvivenciaDashboard = () => {
   const [showNoteModal, setShowNoteModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [convivenceNotes, setConvivenceNotes] = useState({});
+  const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
     // Cargar períodos desde localStorage
     const loadedPeriods = PeriodsManager.getAll();
     setPeriods(loadedPeriods);
+    
+    // Cargar todos los estudiantes (mock + registrados)
+    const students = [...mockStudents, ...StudentsManager.getAll()];
+    setAllStudents(students);
     
     // Cargar notas de convivencia existentes
     const savedNotes = localStorage.getItem('gada_convivence_notes');
