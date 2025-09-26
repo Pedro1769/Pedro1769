@@ -289,7 +289,15 @@ const RegisterModal = ({ onClose, onRegister }) => {
                       <Label htmlFor="teachingLevel">Nivel Educativo *</Label>
                       <Select 
                         value={formData.teachingLevel} 
-                        onValueChange={(value) => setFormData({ ...formData, teachingLevel: value, subjects: [], grades: [], tutorGrade: '' })}
+                        onValueChange={(value) => {
+                          setFormData(prevState => ({ 
+                            ...prevState, 
+                            teachingLevel: value, 
+                            subjects: [], 
+                            grades: [], 
+                            tutorGrade: '' 
+                          }));
+                        }}
                       >
                         <SelectTrigger className={errors.teachingLevel ? 'border-red-500' : ''}>
                           <SelectValue placeholder="Seleccionar nivel" />
@@ -306,7 +314,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         checked={formData.isTutor}
-                        onCheckedChange={(checked) => setFormData({ ...formData, isTutor: checked, tutorGrade: checked ? formData.tutorGrade : '' })}
+                        onCheckedChange={handleCheckboxChange('isTutor')}
                       />
                       <Label>¿Es tutor de grado?</Label>
                     </div>
