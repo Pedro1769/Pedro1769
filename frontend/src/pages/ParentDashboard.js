@@ -30,15 +30,37 @@ const ParentDashboard = () => {
   const [selectedChild, setSelectedChild] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('1');
   const [showReportCard, setShowReportCard] = useState(false);
+  const [children, setChildren] = useState([]);
+  const [periods, setPeriods] = useState([]);
+  const [allStudents, setAllStudents] = useState([]);
+
+  useEffect(() => {
+    // Cargar períodos
+    const loadedPeriods = PeriodsManager.getAll();
+    setPeriods(loadedPeriods);
+    
+    // Cargar todos los estudiantes (mock + registrados)
+    const students = [...mockStudents, ...StudentsManager.getAll()];
+    setAllStudents(students);
+    
+    // Para efectos de demostración, mostrar algunos estudiantes como hijos
+    // En un sistema real, esto se basaría en la relación padre-estudiante
+    const demoChildren = students.slice(0, 3).map(student => ({
+      ...student,
+      parentId: user.id // Simular relación padre-hijo
+    }));
+    
+    setChildren(demoChildren);
+    
+    // Seleccionar el primer hijo por defecto
+    if (demoChildren.length > 0 && !selectedChild) {
+      setSelectedChild(demoChildren[0].id.toString());
+    }
+  }, [user, selectedChild]);
 
   if (!user || user.role !== 'parent') {
     return <Navigate to="/login" />;
   }
-
-  // Get children data
-  const children = mockStudents.filter(student => 
-    user.children?.includes(student.id)
-  );
 
   const selectedChildData = children.find(child => child.id === parseInt(selectedChild));
 
