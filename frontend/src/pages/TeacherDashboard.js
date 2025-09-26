@@ -196,11 +196,10 @@ const TeacherDashboard = () => {
                         <SelectValue placeholder="Seleccionar período" />
                       </SelectTrigger>
                       <SelectContent>
-                        {periods.map((period) => (
-                          <SelectItem key={period.id} value={period.id.toString()}>
-                            {period.name}
-                          </SelectItem>
-                        ))}
+                        <SelectItem value="1">Primer Período</SelectItem>
+                        <SelectItem value="2">Segundo Período</SelectItem>
+                        <SelectItem value="3">Tercer Período</SelectItem>
+                        <SelectItem value="4">Cuarto Período</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
