@@ -24,6 +24,13 @@ const TeacherDashboard = () => {
   const [selectedGrade, setSelectedGrade] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('1');
+  const [periods, setPeriods] = useState([]);
+
+  // Cargar períodos desde localStorage
+  React.useEffect(() => {
+    const loadedPeriods = PeriodsManager.getAll();
+    setPeriods(loadedPeriods);
+  }, []);
 
   if (!user || user.role !== 'teacher') {
     return <Navigate to="/login" />;
