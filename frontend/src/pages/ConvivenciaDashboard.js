@@ -72,6 +72,190 @@ const ConvivenciaDashboard = () => {
 
   const grades = ['all', '0°', '1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'];
 
+  // Función para guardar nota de convivencia
+  const saveConvivenceNote = (gradeData) => {
+    const noteKey = `${gradeData.grade}_${gradeData.period}`;
+    const updatedNotes = {
+      ...convivenceNotes,
+      [noteKey]: {
+        ...gradeData,
+        createdBy: user.name,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    };
+    
+    setConvivenceNotes(updatedNotes);
+    localStorage.setItem('gada_convivence_notes', JSON.stringify(updatedNotes));
+    setShowNoteModal(false);
+  };
+
+  // Componente Modal para Nota de Convivencia
+  const ConvivenceNoteModal = () => {
+    const [noteData, setNoteData] = useState({
+      grade: selectedGrade !== 'all' ? selectedGrade : '1°',
+      period: selectedPeriod,
+      behaviorNote: '',
+      accompanimentNote: '',
+      attachments: []
+    });
+
+    const handleInputChange = (field) => (e) => {
+      setNoteData(prev => ({
+        ...prev,
+        [field]: e.target.value
+      }));
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      saveConvivenceNote(noteData);
+    };
+
+    const handleFileUpload = (e) => {
+      const files = Array.from(e.target.files);
+      setNoteData(prev => ({
+        ...prev,
+        attachments: [...prev.attachments, ...files.map(file => file.name)]
+      }));
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-purple-50 to-blue-50">
+            <CardTitle className="flex items-center">
+              <BookOpen className="mr-2 h-5 w-5 text-purple-600" />
+              Nota de Convivencia y Acompañamiento
+            </CardTitle>
+            <Button variant="ghost" onClick={() => setShowNoteModal(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+          
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="grade">Grado *</Label>
+                  <Select value={noteData.grade} onValueChange={(value) => setNoteData(prev => ({...prev, grade: value}))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar grado" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {grades.slice(1).map((grade) => (
+                        <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="period">Período *</Label>
+                  <Select value={noteData.period} onValueChange={(value) => setNoteData(prev => ({...prev, period: value}))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar período" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {periods.map((period) => (
+                        <SelectItem key={period.id} value={period.id.toString()}>
+                          {period.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="behaviorNote">Nota de Convivencia *</Label>
+                <Textarea
+                  id="behaviorNote"
+                  value={noteData.behaviorNote}
+                  onChange={handleInputChange('behaviorNote')}
+                  placeholder="Escriba la nota de convivencia para el grado seleccionado..."
+                  className="min-h-[120px]"
+                  required
+                />
+                <p className="text-sm text-gray-500 mt-1">
+                  Esta nota aparecerá en el boletín de todos los estudiantes del grado {noteData.grade}
+                </p>
+              </div>
+
+              <div>
+                <Label htmlFor="accompanimentNote">Nota de Acompañamiento *</Label>
+                <Textarea
+                  id="accompanimentNote"
+                  value={noteData.accompanimentNote}
+                  onChange={handleInputChange('accompanimentNote')}
+                  placeholder="Escriba la nota de acompañamiento y seguimiento..."
+                  className="min-h-[120px]"
+                  required
+                />
+                <p className="text-sm text-gray-500 mt-1">
+                  Nota sobre el proceso de acompañamiento psicopedagógico del grado
+                </p>
+              </div>
+
+              <div>
+                <Label htmlFor="attachments">Archivos Adjuntos</Label>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                  <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                  <p className="text-sm text-gray-600 mb-2">Arrastra archivos aquí o haz clic para seleccionar</p>
+                  <Input
+                    type="file"
+                    multiple
+                    onChange={handleFileUpload}
+                    className="hidden"
+                    id="file-upload"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => document.getElementById('file-upload').click()}
+                  >
+                    Seleccionar Archivos
+                  </Button>
+                  {noteData.attachments.length > 0 && (
+                    <div className="mt-4 text-left">
+                      <p className="text-sm font-medium text-gray-700 mb-2">Archivos seleccionados:</p>
+                      {noteData.attachments.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between bg-gray-50 p-2 rounded">
+                          <span className="text-sm">{file}</span>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setNoteData(prev => ({
+                              ...prev,
+                              attachments: prev.attachments.filter((_, i) => i !== index)
+                            }))}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4 border-t">
+                <Button type="button" variant="outline" onClick={() => setShowNoteModal(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit" className="bg-gradient-gada text-white">
+                  <Save className="mr-2 h-4 w-4" />
+                  Guardar Nota
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
