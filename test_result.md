@@ -195,8 +195,18 @@ test_plan:
         agent: "main"
         comment: "Changed default tab to 'approved users', improved UI for approved users, added informational alerts, and better action buttons"
 
+  - task: "Fix teacher grades assignment and period access"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/RegisterModal.js, /app/frontend/src/pages/TeacherDashboard.js, /app/frontend/src/utils/dataManager.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed: 1) Auto-assign grades to teachers based on teaching level during registration, 2) Enable all periods for teacher access, 3) Update existing teacher users with missing grades, 4) Load periods dynamically in TeacherDashboard"
+
 agent_communication:
   - agent: "main"
-    message: "Implemented complete auto-approval system. All users now register with immediate access. Added comprehensive user management interface in AdminDashboard with dedicated 'Users' tab. Admin can view all registered users, their details, and manage them as needed. No 'academo granada' text found - all institutional references are correct."
-  - agent: "testing"
-    message: "Backend infrastructure testing completed successfully. Fixed critical missing environment variables (.env files) that were preventing backend startup. All core backend functionality verified: server health, MongoDB connectivity, API endpoints, and CORS configuration. Created comprehensive backend_test.py for future testing. Backend is fully operational and ready to support frontend user registration and authentication features."
+    message: "COMPLETED: Fixed critical teacher dashboard issues. 1) Teachers now get grades auto-assigned during registration based on their teaching level (transicion=0°, primaria=1°-5°, bachillerato=6°-11°). 2) All periods are now enabled (isGradeEntryOpen: true) for teacher access. 3) Added automatic grade assignment for existing teacher users. 4) Added visual confirmation that all periods are available. Teachers can now see their students and access all academic periods without restrictions."
