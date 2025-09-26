@@ -26,9 +26,6 @@ const RegisterModal = ({ onClose, onRegister }) => {
     // Student specific
     studentGrade: '',
     birthDate: '',
-    // Student specific
-    studentGrade: '',
-    birthDate: '',
     // Parent specific
     studentDocument: '',
     relationshipType: ''
