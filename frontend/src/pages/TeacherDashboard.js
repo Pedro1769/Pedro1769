@@ -65,7 +65,7 @@ const TeacherDashboard = () => {
               Materias: {teacherSubjects.join(', ')}
             </Badge>
             <Badge variant="outline">
-              Grados: {user.grades?.join(', ')}
+              Grados: {availableGrades.join(', ')}
             </Badge>
           </div>
         </div>
