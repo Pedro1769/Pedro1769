@@ -289,6 +289,189 @@ const ConvivenciaDashboard = () => {
     );
   };
 
+  // Componente Modal para Nota Individual de Estudiante
+  const StudentConvivenceNoteModal = () => {
+    const [noteData, setNoteData] = useState({
+      studentId: selectedStudent?.id || '',
+      studentName: selectedStudent?.name || '',
+      grade: selectedStudent?.grade || '',
+      period: selectedPeriod,
+      behaviorNote: '',
+      accompanimentNote: '',
+      parentNote: '',
+      recommendations: '',
+      attachments: []
+    });
+
+    const handleInputChange = (field) => (e) => {
+      setNoteData(prev => ({
+        ...prev,
+        [field]: e.target.value
+      }));
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (!noteData.behaviorNote.trim() && !noteData.accompanimentNote.trim()) {
+        alert('Debe completar al menos una nota (convivencia o acompañamiento)');
+        return;
+      }
+      saveStudentConvivenceNote(noteData);
+    };
+
+    const handleFileUpload = (e) => {
+      const files = Array.from(e.target.files);
+      setNoteData(prev => ({
+        ...prev,
+        attachments: [...prev.attachments, ...files.map(file => file.name)]
+      }));
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <Card className="w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+          <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-green-50 to-blue-50">
+            <CardTitle className="flex items-center">
+              <UserCheck className="mr-2 h-5 w-5 text-green-600" />
+              Nota Individual de Convivencia - {selectedStudent?.name}
+            </CardTitle>
+            <Button variant="ghost" onClick={() => setShowStudentNoteModal(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+          
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <Label className="text-sm font-medium text-gray-700">Estudiante:</Label>
+                  <p className="text-sm font-semibold">{selectedStudent?.name}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-700">Grado:</Label>
+                  <p className="text-sm font-semibold">{selectedStudent?.grade}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-700">Período:</Label>
+                  <Select value={noteData.period} onValueChange={(value) => setNoteData(prev => ({...prev, period: value}))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {periods.map((period) => (
+                        <SelectItem key={period.id} value={period.id.toString()}>
+                          {period.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="behaviorNote">Nota de Convivencia</Label>
+                <Textarea
+                  id="behaviorNote"
+                  value={noteData.behaviorNote}
+                  onChange={handleInputChange('behaviorNote')}
+                  placeholder="Describa el comportamiento del estudiante, logros o aspectos a mejorar..."
+                  className="min-h-[100px]"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="accompanimentNote">Nota de Acompañamiento</Label>
+                <Textarea
+                  id="accompanimentNote"
+                  value={noteData.accompanimentNote}
+                  onChange={handleInputChange('accompanimentNote')}
+                  placeholder="Describa el proceso de acompañamiento y seguimiento realizado..."
+                  className="min-h-[100px]"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="parentNote">Nota para Acudientes</Label>
+                <Textarea
+                  id="parentNote"
+                  value={noteData.parentNote}
+                  onChange={handleInputChange('parentNote')}
+                  placeholder="Información específica para los padres de familia o acudientes..."
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="recommendations">Recomendaciones</Label>
+                <Textarea
+                  id="recommendations"
+                  value={noteData.recommendations}
+                  onChange={handleInputChange('recommendations')}
+                  placeholder="Recomendaciones y estrategias de apoyo para el estudiante..."
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="attachments">Archivos Adjuntos</Label>
+                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                  <Upload className="h-8 w-8 mx-auto mb-2 text-gray-400" />
+                  <p className="text-sm text-gray-600 mb-2">Arrastra archivos aquí o selecciona</p>
+                  <Input
+                    type="file"
+                    multiple
+                    onChange={handleFileUpload}
+                    className="hidden"
+                    id="student-file-upload"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => document.getElementById('student-file-upload').click()}
+                  >
+                    Seleccionar Archivos
+                  </Button>
+                  {noteData.attachments.length > 0 && (
+                    <div className="mt-3 text-left">
+                      <p className="text-xs font-medium text-gray-700 mb-1">Archivos:</p>
+                      {noteData.attachments.map((file, index) => (
+                        <div key={index} className="flex items-center justify-between bg-white p-1 rounded text-xs">
+                          <span>{file}</span>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => setNoteData(prev => ({
+                              ...prev,
+                              attachments: prev.attachments.filter((_, i) => i !== index)
+                            }))}
+                          >
+                            <X className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4 border-t">
+                <Button type="button" variant="outline" onClick={() => setShowStudentNoteModal(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit" className="bg-gradient-to-r from-green-500 to-teal-500 text-white">
+                  <Save className="mr-2 h-4 w-4" />
+                  Guardar Nota Individual
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
