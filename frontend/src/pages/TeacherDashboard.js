@@ -425,7 +425,7 @@ const TeacherDashboard = () => {
                       ))}
                     </SelectContent>
                   </Select>
-                  <Button onClick={() => setShowAddStudentModal(true)}>
+                  <Button onClick={() => setShowAddStudentModal(true)} className="bg-gradient-gada text-white hover:shadow-lg hover:scale-105 transition-all duration-300">
                     <UserPlus className="mr-2 h-4 w-4" />
                     Agregar Estudiante
                   </Button>
