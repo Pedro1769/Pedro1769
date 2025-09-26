@@ -361,9 +361,9 @@ const ParentDashboard = () => {
                     <Card className="p-4 border-2 border-blue-200">
                       <h4 className="font-medium text-blue-800 mb-3">Evolución por Períodos</h4>
                       <div className="space-y-2">
-                        {periods.map((period, index) => (
+                        {periods && periods.length > 0 ? periods.map((period, index) => (
                           <div key={period.id} className="flex items-center justify-between">
-                            <span className="text-sm">{period.name}</span>
+                            <span className="text-sm">{period.name || `Período ${period.id}`}</span>
                             <div className="flex items-center space-x-2">
                               <div className="w-24 bg-gray-200 rounded-full h-2">
                                 <div 
@@ -374,7 +374,9 @@ const ParentDashboard = () => {
                               <span className="text-sm font-medium">{(7.5 + index * 0.5).toFixed(1)}</span>
                             </div>
                           </div>
-                        ))}
+                        )) : (
+                          <p className="text-sm text-gray-500">No hay períodos disponibles</p>
+                        )}
                       </div>
                     </Card>
                     
