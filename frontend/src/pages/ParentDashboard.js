@@ -22,7 +22,7 @@ import {
   Clock
 } from 'lucide-react';
 import { mockStudents, mockGrades, performanceScale, schoolInfo } from '../mock/mockData';
-import { StudentsManager, PeriodsManager } from '../utils/dataManager';
+import { StudentsManager, PeriodsManager, DownloadCodesManager } from '../utils/dataManager';
 import ReportCardComponent from '../components/ReportCard';
 
 const ParentDashboard = () => {
