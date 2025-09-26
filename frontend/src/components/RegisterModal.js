@@ -202,7 +202,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setFormData(prev => ({ ...prev, email: newValue }));
+                    }}
                     placeholder="correo@ejemplo.com"
                     className={errors.email ? 'border-red-500' : ''}
                   />
