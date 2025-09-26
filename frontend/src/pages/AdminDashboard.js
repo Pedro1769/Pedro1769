@@ -41,6 +41,7 @@ const AdminDashboard = () => {
   const [showReportCard, setShowReportCard] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showTeacherModal, setShowTeacherModal] = useState(false);
+  const [showUserManager, setShowUserManager] = useState(false);
   const [showObjectivesManager, setShowObjectivesManager] = useState(false);
   const [showCurriculumManager, setShowCurriculumManager] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
