@@ -359,6 +359,52 @@ const RegisterModal = ({ onClose, onRegister }) => {
               </div>
             )}
 
+            {/* Student specific fields */}
+            {formData.role === 'student' && (
+              <div className="space-y-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                <h3 className="font-medium text-green-800">Información del Estudiante</h3>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="studentGrade">Grado *</Label>
+                    <Select value={formData.studentGrade || ''} onValueChange={handleSelectChange('studentGrade')}>
+                      <SelectTrigger className={errors.studentGrade ? 'border-red-500' : ''}>
+                        <SelectValue placeholder="Seleccionar grado" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0°">Transición</SelectItem>
+                        <SelectItem value="1°">Primero</SelectItem>
+                        <SelectItem value="2°">Segundo</SelectItem>
+                        <SelectItem value="3°">Tercero</SelectItem>
+                        <SelectItem value="4°">Cuarto</SelectItem>
+                        <SelectItem value="5°">Quinto</SelectItem>
+                        <SelectItem value="6°">Sexto</SelectItem>
+                        <SelectItem value="7°">Séptimo</SelectItem>
+                        <SelectItem value="8°">Octavo</SelectItem>
+                        <SelectItem value="9°">Noveno</SelectItem>
+                        <SelectItem value="10°">Décimo</SelectItem>
+                        <SelectItem value="11°">Once</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    {errors.studentGrade && <p className="text-red-500 text-sm mt-1">{errors.studentGrade}</p>}
+                  </div>
+
+                  <div>
+                    <Label htmlFor="birthDate">Fecha de Nacimiento *</Label>
+                    <Input
+                      id="birthDate"
+                      type="date"
+                      value={formData.birthDate}
+                      onChange={handleInputChange('birthDate')}
+                      className={errors.birthDate ? 'border-red-500' : ''}
+                    />
+                    {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Parent specific fields */}
             {formData.role === 'parent' && (
               <div>
                 <h3 className="text-lg font-semibold mb-4">Información del Acudiente</h3>
