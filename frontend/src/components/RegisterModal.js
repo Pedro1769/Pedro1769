@@ -251,73 +251,95 @@ const RegisterModal = ({ onClose, onRegister }) => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="name">Nombre Completo *</Label>
-                  <Input
+                  <input
                     id="name"
+                    type="text"
                     value={formData.name}
-                    onChange={handleInputChange('name')}
+                    onChange={(e) => {
+                      console.log('Name input change:', e.target.value);
+                      handleInputChange('name')(e);
+                    }}
                     placeholder="Nombres y apellidos"
-                    className={errors.name ? 'border-red-500' : ''}
+                    className={`w-full px-3 py-2 border rounded-md ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="document">Documento de Identidad *</Label>
-                  <Input
+                  <input
                     id="document"
+                    type="text"
                     value={formData.document}
-                    onChange={handleInputChange('document')}
+                    onChange={(e) => {
+                      console.log('Document input change:', e.target.value);
+                      handleInputChange('document')(e);
+                    }}
                     placeholder="Número de documento"
-                    className={errors.document ? 'border-red-500' : ''}
+                    className={`w-full px-3 py-2 border rounded-md ${errors.document ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.document && <p className="text-red-500 text-sm mt-1">{errors.document}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="email">Email *</Label>
-                  <Input
+                  <input
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={handleInputChange('email')}
+                    onChange={(e) => {
+                      console.log('Email input change:', e.target.value);
+                      handleInputChange('email')(e);
+                    }}
                     placeholder="correo@ejemplo.com"
-                    className={errors.email ? 'border-red-500' : ''}
+                    className={`w-full px-3 py-2 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="phone">Teléfono</Label>
-                  <Input
+                  <input
                     id="phone"
+                    type="text"
                     value={formData.phone}
-                    onChange={handleInputChange('phone')}
+                    onChange={(e) => {
+                      console.log('Phone input change:', e.target.value);
+                      handleInputChange('phone')(e);
+                    }}
                     placeholder="Número de contacto"
+                    className="w-full px-3 py-2 border rounded-md border-gray-300"
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="password">Contraseña *</Label>
-                  <Input
+                  <input
                     id="password"
                     type="password"
                     value={formData.password}
-                    onChange={handleInputChange('password')}
+                    onChange={(e) => {
+                      console.log('Password input change - length:', e.target.value.length);
+                      handleInputChange('password')(e);
+                    }}
                     placeholder="Mínimo 6 caracteres"
-                    className={errors.password ? 'border-red-500' : ''}
+                    className={`w-full px-3 py-2 border rounded-md ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="confirmPassword">Confirmar Contraseña *</Label>
-                  <Input
+                  <input
                     id="confirmPassword"
                     type="password"
                     value={formData.confirmPassword}
-                    onChange={handleInputChange('confirmPassword')}
+                    onChange={(e) => {
+                      console.log('Confirm password input change - length:', e.target.value.length);
+                      handleInputChange('confirmPassword')(e);
+                    }}
                     placeholder="Repetir contraseña"
-                    className={errors.confirmPassword ? 'border-red-500' : ''}
+                    className={`w-full px-3 py-2 border rounded-md ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
                 </div>
