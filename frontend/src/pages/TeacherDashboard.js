@@ -26,6 +26,15 @@ const TeacherDashboard = () => {
   const [selectedGrade, setSelectedGrade] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedPeriod, setSelectedPeriod] = useState('1');
+  const [showAddStudentModal, setShowAddStudentModal] = useState(false);
+  const [students, setStudents] = useState([]);
+  const [selectedGradeForStudents, setSelectedGradeForStudents] = useState('');
+
+  useEffect(() => {
+    // Cargar estudiantes desde localStorage
+    const allStudents = StudentsManager.getAll();
+    setStudents(allStudents);
+  }, []);
 
   if (!user || user.role !== 'teacher') {
     return <Navigate to="/login" />;
