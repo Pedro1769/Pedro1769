@@ -507,6 +507,8 @@ const StudentDashboard = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="reports" className="space-y-6">
             <Card className="shadow-lg border-0 card-institutional">
               <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
                 <div className="flex justify-between items-center">
