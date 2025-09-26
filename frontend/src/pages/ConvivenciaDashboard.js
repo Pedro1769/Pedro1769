@@ -325,8 +325,11 @@ const ConvivenciaDashboard = () => {
         </div>
 
         {/* Tabs */}
-        <Tabs defaultValue="incidents" className="space-y-6">
+        <Tabs defaultValue="notes" className="space-y-6">
           <TabsList className="bg-white/80 backdrop-blur-sm border border-gray-200">
+            <TabsTrigger value="notes" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+              Notas de Convivencia
+            </TabsTrigger>
             <TabsTrigger value="incidents" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Incidentes
             </TabsTrigger>
@@ -337,6 +340,182 @@ const ConvivenciaDashboard = () => {
               Reportes
             </TabsTrigger>
           </TabsList>
+
+          <TabsContent value="notes" className="space-y-6">
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="flex items-center">
+                      <BookOpen className="mr-2 h-5 w-5 text-blue-600" />
+                      Gestión de Notas de Convivencia para Boletín
+                    </CardTitle>
+                    <p className="text-sm text-gray-600 mt-2">
+                      Administre las notas de convivencia y acompañamiento que aparecerán en los boletines por grado y período.
+                      <span className="text-green-600 font-medium"> Todas las sesiones están habilitadas.</span>
+                    </p>
+                  </div>
+                  <Button 
+                    onClick={() => setShowNoteModal(true)}
+                    className="bg-gradient-gada text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Nueva Nota
+                  </Button>
+                </div>
+                
+                <div className="flex space-x-4 mt-4">
+                  <div>
+                    <Label htmlFor="grade">Filtrar por Grado</Label>
+                    <Select value={selectedGrade} onValueChange={setSelectedGrade}>
+                      <SelectTrigger className="w-40">
+                        <SelectValue placeholder="Seleccionar grado" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Todos los grados</SelectItem>
+                        {grades.slice(1).map((grade) => (
+                          <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="period">Filtrar por Período</Label>
+                    <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                      <SelectTrigger className="w-40">
+                        <SelectValue placeholder="Seleccionar período" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {periods.map((period) => (
+                          <SelectItem key={period.id} value={period.id.toString()}>
+                            {period.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {/* Indicador de períodos habilitados */}
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                      <span className="text-green-800 font-medium">Todas las sesiones académicas están habilitadas</span>
+                    </div>
+                    <p className="text-sm text-green-700 mt-1">
+                      Puede crear y editar notas de convivencia para cualquier período académico sin restricciones.
+                    </p>
+                  </div>
+
+                  {/* Grid de notas existentes */}
+                  <div className="grid gap-4">
+                    {Object.entries(convivenceNotes)
+                      .filter(([key]) => {
+                        if (selectedGrade === 'all' && selectedPeriod === '1') return true;
+                        const [grade, period] = key.split('_');
+                        if (selectedGrade !== 'all' && grade !== selectedGrade) return false;
+                        if (period !== selectedPeriod) return false;
+                        return true;
+                      })
+                      .map(([key, note]) => (
+                        <Card key={key} className="border border-blue-200 hover:shadow-md transition-shadow">
+                          <CardHeader className="pb-3">
+                            <div className="flex justify-between items-center">
+                              <div className="flex items-center space-x-2">
+                                <Badge className="bg-blue-100 text-blue-800">
+                                  Grado {note.grade}
+                                </Badge>
+                                <Badge className="bg-purple-100 text-purple-800">
+                                  {periods.find(p => p.id.toString() === note.period)?.name || `Período ${note.period}`}
+                                </Badge>
+                                <Badge variant="outline" className="text-green-600 border-green-600">
+                                  Activo
+                                </Badge>
+                              </div>
+                              <div className="flex space-x-2">
+                                <Button 
+                                  size="sm" 
+                                  variant="outline"
+                                  onClick={() => {
+                                    // Editar nota existente
+                                    setShowNoteModal(true);
+                                  }}
+                                >
+                                  <Eye className="mr-1 h-3 w-3" />
+                                  Editar
+                                </Button>
+                                <Button 
+                                  size="sm"
+                                  className="bg-gradient-to-r from-teal-500 to-blue-500 text-white"
+                                >
+                                  <Download className="mr-1 h-3 w-3" />
+                                  Aplicar
+                                </Button>
+                              </div>
+                            </div>
+                          </CardHeader>
+                          <CardContent>
+                            <div className="space-y-3">
+                              <div>
+                                <h4 className="font-medium text-sm text-gray-700 mb-1">Convivencia:</h4>
+                                <p className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                                  {note.behaviorNote.length > 150 
+                                    ? `${note.behaviorNote.substring(0, 150)}...` 
+                                    : note.behaviorNote
+                                  }
+                                </p>
+                              </div>
+                              <div>
+                                <h4 className="font-medium text-sm text-gray-700 mb-1">Acompañamiento:</h4>
+                                <p className="text-sm text-gray-600 bg-gray-50 p-2 rounded">
+                                  {note.accompanimentNote.length > 150 
+                                    ? `${note.accompanimentNote.substring(0, 150)}...` 
+                                    : note.accompanimentNote
+                                  }
+                                </p>
+                              </div>
+                              {note.attachments && note.attachments.length > 0 && (
+                                <div>
+                                  <h4 className="font-medium text-sm text-gray-700 mb-1">Adjuntos:</h4>
+                                  <div className="flex flex-wrap gap-1">
+                                    {note.attachments.map((file, index) => (
+                                      <Badge key={index} variant="outline" className="text-xs">
+                                        {file}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                              <div className="text-xs text-gray-500 border-t pt-2">
+                                Creado por {note.createdBy} • {new Date(note.createdAt).toLocaleDateString('es-CO')}
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    
+                    {Object.keys(convivenceNotes).length === 0 && (
+                      <div className="text-center py-12 text-gray-500">
+                        <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+                        <p className="text-lg">No hay notas de convivencia registradas</p>
+                        <p className="text-sm mb-4">Comience creando la primera nota para un grado y período</p>
+                        <Button 
+                          onClick={() => setShowNoteModal(true)}
+                          className="bg-gradient-gada text-white"
+                        >
+                          <Plus className="mr-2 h-4 w-4" />
+                          Crear Primera Nota
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           <TabsContent value="incidents" className="space-y-6">
             <Card className="shadow-lg border-0 card-institutional">
