@@ -244,7 +244,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="confirmPassword"
                     type="password"
                     value={formData.confirmPassword}
-                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setFormData(prev => ({ ...prev, confirmPassword: newValue }));
+                    }}
                     placeholder="Repetir contraseña"
                     className={errors.confirmPassword ? 'border-red-500' : ''}
                   />
