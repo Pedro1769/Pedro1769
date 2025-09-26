@@ -31,27 +31,76 @@ export const loadFromStorage = (key, defaultValue = []) => {
   }
 };
 
-// Gestores específicos para cada tipo de dato
+// Gestores específicos para cada tipo de dato con integración de usuarios registrados
 export const StudentsManager = {
-  getAll: () => loadFromStorage(STORAGE_KEYS.STUDENTS, []),
+  getAll: () => {
+    try {
+      // Obtener estudiantes del localStorage (creados manualmente)
+      const manualStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+      
+      // Obtener usuarios registrados que sean estudiantes
+      const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+      const studentUsers = registeredUsers
+        .filter(user => user.role === 'student' && user.approved)
+        .map(user => ({
+          id: user.studentId || user.id,
+          name: user.name,
+          document: user.document,
+          birthDate: user.birthDate,
+          grade: user.grade,
+          level: user.level,
+          academicYear: 2025,
+          isRegisteredUser: true, // Marca para identificar origen
+          userId: user.id // Referencia al usuario original
+        }));
+      
+      // Combinar ambos arrays evitando duplicados
+      const allStudents = [...manualStudents, ...studentUsers];
+      
+      // Remover duplicados basado en documento
+      const uniqueStudents = allStudents.reduce((acc, current) => {
+        const existingStudent = acc.find(student => student.document === current.document);
+        if (!existingStudent) {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
+      
+      return uniqueStudents;
+    } catch (error) {
+      console.error('Error loading students:', error);
+      return [];
+    }
+  },
   
   save: (students) => saveToStorage(STORAGE_KEYS.STUDENTS, students),
   
   add: (student) => {
-    const students = StudentsManager.getAll();
-    const newStudent = {
-      ...student,
-      id: Date.now() + Math.random(),
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
-    students.push(newStudent);
-    StudentsManager.save(students);
-    return newStudent;
+    try {
+      const newStudent = {
+        ...student,
+        id: Date.now() + Math.random(),
+        academicYear: student.academicYear || 2025,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      };
+      
+      // Solo agregar a estudiantes manuales si no es un usuario registrado
+      if (!student.isRegisteredUser) {
+        const manualStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+        manualStudents.push(newStudent);
+        StudentsManager.save(manualStudents);
+      }
+      
+      return newStudent;
+    } catch (error) {
+      console.error('Error adding student:', error);
+      return null;
+    }
   },
   
   addBulk: (newStudents) => {
-    const existingStudents = StudentsManager.getAll();
+    const existingStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
     const studentsWithIds = newStudents.map(student => ({
       ...student,
       id: Date.now() + Math.random(),
@@ -64,32 +113,47 @@ export const StudentsManager = {
   },
   
   update: (id, updatedData) => {
-    const students = StudentsManager.getAll();
-    const index = students.findIndex(s => s.id === id);
-    if (index !== -1) {
-      students[index] = {
-        ...students[index],
-        ...updatedData,
-        updatedAt: new Date().toISOString()
-      };
-      StudentsManager.save(students);
-      return students[index];
+    try {
+      const manualStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+      const index = manualStudents.findIndex(s => s.id === id);
+      if (index !== -1) {
+        manualStudents[index] = {
+          ...manualStudents[index],
+          ...updatedData,
+          updatedAt: new Date().toISOString()
+        };
+        StudentsManager.save(manualStudents);
+        return manualStudents[index];
+      }
+      return null;
+    } catch (error) {
+      console.error('Error updating student:', error);
+      return null;
     }
-    return null;
   },
   
   delete: (id) => {
-    const students = StudentsManager.getAll();
-    const filtered = students.filter(s => s.id !== id);
-    StudentsManager.save(filtered);
-    return filtered;
+    try {
+      const manualStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+      const filtered = manualStudents.filter(s => s.id !== id);
+      StudentsManager.save(filtered);
+      return filtered;
+    } catch (error) {
+      console.error('Error deleting student:', error);
+      return [];
+    }
   },
   
   deleteBulk: (ids) => {
-    const students = StudentsManager.getAll();
-    const filtered = students.filter(s => !ids.includes(s.id));
-    StudentsManager.save(filtered);
-    return filtered;
+    try {
+      const manualStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+      const filtered = manualStudents.filter(s => !ids.includes(s.id));
+      StudentsManager.save(filtered);
+      return filtered;
+    } catch (error) {
+      console.error('Error deleting students:', error);
+      return [];
+    }
   }
 };
 
