@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -13,9 +13,16 @@ import {
   Download,
   Eye,
   Calendar,
-  User
+  User,
+  Star,
+  Trophy,
+  MessageSquare,
+  FileText,
+  CheckCircle,
+  Clock
 } from 'lucide-react';
 import { mockStudents, mockGrades, performanceScale, schoolInfo } from '../mock/mockData';
+import { StudentsManager, PeriodsManager } from '../utils/dataManager';
 import ReportCardComponent from '../components/ReportCard';
 
 const ParentDashboard = () => {
