@@ -30,7 +30,43 @@ const TeacherDashboard = () => {
   React.useEffect(() => {
     const loadedPeriods = PeriodsManager.getAll();
     setPeriods(loadedPeriods);
-  }, []);
+    
+    // Verificar y actualizar grados del usuario si es necesario
+    if (user && user.role === 'teacher' && user.teachingLevel && (!user.grades || user.grades.length === 0)) {
+      const gradesForLevel = getGradesByLevel(user.teachingLevel);
+      if (gradesForLevel.length > 0) {
+        // Actualizar el usuario en localStorage con los grados
+        const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+        const updatedUsers = registeredUsers.map(u => {
+          if (u.id === user.id) {
+            return { ...u, grades: gradesForLevel };
+          }
+          return u;
+        });
+        localStorage.setItem('gada_registered_users', JSON.stringify(updatedUsers));
+        
+        // También actualizar el usuario en el contexto si es posible
+        const updatedUser = { ...user, grades: gradesForLevel };
+        if (window.localStorage) {
+          localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+        }
+      }
+    }
+  }, [user]);
+
+  // Función para obtener grados por nivel educativo
+  const getGradesByLevel = (level) => {
+    switch (level) {
+      case 'transicion':
+        return ['0°'];
+      case 'primaria':
+        return ['1°', '2°', '3°', '4°', '5°'];
+      case 'bachillerato':
+        return ['6°', '7°', '8°', '9°', '10°', '11°'];
+      default:
+        return [];
+    }
+  };
 
   if (!user || user.role !== 'teacher') {
     return <Navigate to="/login" />;
