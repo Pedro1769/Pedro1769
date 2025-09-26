@@ -332,6 +332,18 @@ test_plan:
         agent: "main"
         comment: "COMPLETE DASHBOARD ENABLEMENT: 1) Enhanced ParentDashboard with 5 comprehensive tabs: Calificaciones, Progreso, Convivencia, Boletín, Comunicaciones, 2) Enhanced StudentDashboard with 6 tabs: Calificaciones, Progreso, Logros, Convivencia, Boletín, Tareas, 3) All tabs fully functional with rich content, 4) Integrated with periods management, 5) Added visual indicators for enabled sessions, 6) Dynamic content loading with real data integration"
 
+  - task: "Fix ParentDashboard null/undefined errors"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/pages/ParentDashboard.js"
+    stuck_count: 1
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL NULL/UNDEFINED ERRORS STILL PRESENT: Testing revealed that ParentDashboard still has null safety issues. SPECIFIC ERRORS FOUND: 1) 'Cannot read properties of null (reading 'id')' - This error appears multiple times in console, 2) React error boundary triggered with message 'An error occurred in the <ParentDashboard> component', 3) Red error screen displayed showing TypeError stack trace, 4) Dashboard fails to render properly due to null reference errors. ANALYSIS: The null safety fixes applied are incomplete. The error 'Cannot read properties of null (reading 'id')' suggests that somewhere in the component, an object is null/undefined when trying to access its 'id' property. This could be related to: user object, selectedChild, children array, periods array, or other data structures. URGENT FIX NEEDED: Main agent must implement more comprehensive null safety checks, especially around object property access patterns like 'object.id'."
+
 agent_communication:
   - agent: "main"
     message: "🎯 PARENT & STUDENT DASHBOARDS FULLY ENABLED: Implemented comprehensive session enablement for all roles. PARENT FEATURES: Full access to grades, academic progress, behavioral tracking, report cards, and school communications for all children across all periods. STUDENT FEATURES: Complete access to personal grades, progress tracking, achievements, behavioral notes, report cards, and homework management across all academic sessions. Both dashboards now feature rich interactive content, dynamic period selection, and full integration with the academic system. All sessions permanently enabled with visual confirmation throughout the interface."
@@ -341,3 +353,5 @@ agent_communication:
     message: "SELECTITEM ERROR FIX TESTING COMPLETE: Successfully verified that the SelectItem error in Teacher Dashboard has been fixed. The main issue was SelectItem components with empty string values causing runtime errors. Fix implemented correctly: 1) Changed value='' to value='all' for 'Todos' option, 2) Updated state logic to handle 'all' value, 3) Added fallbacks for empty arrays. No 'value prop that is not an empty string' errors detected. Teacher Dashboard SelectItem components now work properly without runtime errors. Fix is production-ready."
   - agent: "testing"
     message: "✅ USERAPPROVALMANAGER FIX VERIFIED: Successfully confirmed that the 'X is not defined' error in UserApprovalManager has been FIXED. TESTING RESULTS: 1) X and Trash2 icons are properly imported from lucide-react (lines 18-19 in UserApprovalManager.js), 2) Icons render correctly without runtime errors, 3) No 'X is not defined' or 'Trash2 is not defined' console errors detected, 4) Lucide-react library is properly available and functional, 5) Icon components work as expected in the browser environment. The fix applied by main agent is working correctly and the UserApprovalManager component is now error-free."
+  - agent: "testing"
+    message: "❌ PARENT DASHBOARD NULL/UNDEFINED ERRORS STILL PRESENT: Comprehensive testing revealed that the ParentDashboard null safety fixes are INCOMPLETE. CRITICAL FINDINGS: 1) 'Cannot read properties of null (reading 'id')' error still occurs multiple times, 2) React error boundary triggered indicating component crash, 3) Red error screen displayed with TypeError stack trace, 4) Dashboard fails to render properly. The error suggests null objects when accessing 'id' property - likely in user object, children array, or other data structures. URGENT: Main agent needs to implement more comprehensive null safety checks, especially around object property access patterns. The current fixes are insufficient to prevent runtime crashes."
