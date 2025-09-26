@@ -61,8 +61,8 @@ const TeacherDashboard = () => {
     availableGrades.includes(student.grade)
   );
 
-  // Get subjects for the teacher
-  const teacherSubjects = user.subjects || [];
+  // Get subjects for the teacher - ensure it's never empty
+  const teacherSubjects = user.subjects && user.subjects.length > 0 ? user.subjects : ['Todas las materias'];
 
   // Group students by grade
   const studentsByGrade = availableGrades.reduce((acc, grade) => {
