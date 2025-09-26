@@ -87,6 +87,20 @@ const StudentDashboard = () => {
               <Badge variant="outline" className="border-teal-200 text-teal-700 hover:bg-teal-50 transition-colors">
                 Documento: {user.document}
               </Badge>
+              <Badge className="bg-green-100 text-green-800 border-green-200">
+                ✅ Acceso Total Habilitado
+              </Badge>
+            </div>
+            
+            {/* Mensaje de acceso total */}
+            <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg border border-blue-200">
+              <div className="flex items-center">
+                <Star className="h-5 w-5 text-blue-600 mr-2" />
+                <span className="text-blue-800 font-medium">🎓 ACCESO ESTUDIANTIL COMPLETO</span>
+              </div>
+              <p className="text-sm text-blue-700 mt-1">
+                Tienes acceso completo a todas tus calificaciones, reportes, boletines, logros y progreso académico en todos los períodos sin restricciones.
+              </p>
             </div>
           </div>
         </div>
