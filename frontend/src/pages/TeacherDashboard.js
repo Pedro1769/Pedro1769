@@ -238,37 +238,37 @@ const TeacherDashboard = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-gradient-to-br from-blue-50 via-blue-100 to-blue-50 border-blue-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
                 <Users className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-blue-600">Estudiantes</p>
+                  <p className="text-sm font-medium text-blue-700">Estudiantes</p>
                   <p className="text-2xl font-bold text-blue-900">{teacherStudents.length}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-green-50 border-green-200">
+          <Card className="bg-gradient-to-br from-teal-50 via-teal-100 to-teal-50 border-teal-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <BookOpen className="h-8 w-8 text-green-600" />
+                <BookOpen className="h-8 w-8 text-teal-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-green-600">Materias</p>
-                  <p className="text-2xl font-bold text-green-900">{teacherSubjects.length}</p>
+                  <p className="text-sm font-medium text-teal-700">Materias</p>
+                  <p className="text-2xl font-bold text-teal-900">{teacherSubjects.length}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-purple-50 border-purple-200">
+          <Card className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 border-slate-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <GraduationCap className="h-8 w-8 text-purple-600" />
+                <GraduationCap className="h-8 w-8 text-slate-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-purple-600">Grados</p>
-                  <p className="text-2xl font-bold text-purple-900">{availableGrades.length}</p>
+                  <p className="text-sm font-medium text-slate-700">Grados</p>
+                  <p className="text-2xl font-bold text-slate-900">{availableGrades.length}</p>
                 </div>
               </div>
             </CardContent>
