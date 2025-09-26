@@ -235,7 +235,11 @@ const AdminDashboard = () => {
                   <CardTitle>Acciones Rápidas</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Button className="w-full justify-start" onClick={() => setShowBulkManager(true)}>
+                  <Button className="w-full justify-start" onClick={() => setShowUserManager(true)}>
+                    <Users className="mr-2 h-4 w-4" />
+                    Gestión de Usuarios Registrados
+                  </Button>
+                  <Button className="w-full justify-start" variant="outline" onClick={() => setShowBulkManager(true)}>
                     <Upload className="mr-2 h-4 w-4" />
                     Gestión Masiva de Estudiantes
                   </Button>
