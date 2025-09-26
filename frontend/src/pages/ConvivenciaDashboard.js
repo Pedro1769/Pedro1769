@@ -39,7 +39,9 @@ const ConvivenciaDashboard = () => {
   const [showNoteModal, setShowNoteModal] = useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
   const [convivenceNotes, setConvivenceNotes] = useState({});
-  const [allStudents, setAllStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [showStudentNoteModal, setShowStudentNoteModal] = useState(false);
+  const [studentNotes, setStudentNotes] = useState({});
 
   useEffect(() => {
     // Cargar períodos desde localStorage
