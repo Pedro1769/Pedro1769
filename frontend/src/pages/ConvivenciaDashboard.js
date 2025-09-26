@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
+import { Textarea } from '../components/ui/textarea';
 import { Badge } from '../components/ui/badge';
 import { 
   Shield, 
@@ -18,9 +19,17 @@ import {
   UserCheck,
   MessageSquare,
   TrendingUp,
-  Eye
+  Eye,
+  Save,
+  Upload,
+  Download,
+  BookOpen,
+  GraduationCap,
+  Plus,
+  X
 } from 'lucide-react';
 import { mockStudents } from '../mock/mockData';
+import { PeriodsManager } from '../utils/dataManager';
 
 const ConvivenciaDashboard = () => {
   const { user } = useAuth();
