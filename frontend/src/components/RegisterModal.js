@@ -163,6 +163,29 @@ const RegisterModal = ({ onClose, onRegister }) => {
     }
   };
 
+  const getStudentLevel = (grade) => {
+    switch (grade) {
+      case '0°':
+        return 'Transición';
+      case '1°':
+      case '2°':
+      case '3°':
+      case '4°':
+      case '5°':
+        return 'Básica Primaria';
+      case '6°':
+      case '7°':
+      case '8°':
+      case '9°':
+        return 'Básica Secundaria';
+      case '10°':
+      case '11°':
+        return 'Media Vocacional';
+      default:
+        return 'N/A';
+    }
+  };
+
   const toggleSubject = (subject) => {
     setFormData(prevState => ({
       ...prevState,
