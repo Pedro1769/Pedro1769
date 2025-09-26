@@ -102,7 +102,7 @@ const TeacherDashboard = () => {
                 <GraduationCap className="h-8 w-8 text-purple-600" />
                 <div className="ml-4">
                   <p className="text-sm font-medium text-purple-600">Grados</p>
-                  <p className="text-2xl font-bold text-purple-900">{user.grades?.length || 0}</p>
+                  <p className="text-2xl font-bold text-purple-900">{availableGrades.length}</p>
                 </div>
               </div>
             </CardContent>
