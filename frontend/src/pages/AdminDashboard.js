@@ -239,7 +239,7 @@ const AdminDashboard = () => {
                   <CardTitle>Acciones Rápidas</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <Button className="w-full justify-start" onClick={() => setShowUserManager(true)}>
+                  <Button onClick={() => setShowUserManager(true)} className="bg-gradient-gada text-white hover:shadow-lg hover:scale-105 transition-all duration-300">
                     <Users className="mr-2 h-4 w-4" />
                     Gestión de Usuarios Registrados
                   </Button>
