@@ -501,19 +501,20 @@ const TeacherDashboard = () => {
                   // Mostrar resumen por grados
                   <div className="space-y-6">
                     {availableGrades.map((grade) => (
-                      <Card key={grade} className="border border-gray-200">
+                      <Card key={grade} className="border border-blue-200 hover-gradient card-institutional transition-all duration-300">
                         <CardHeader className="pb-3">
                           <div className="flex justify-between items-center">
                             <div className="flex items-center">
-                              <GraduationCap className="mr-2 h-5 w-5" />
-                              <h3 className="text-lg font-semibold">Grado {grade}</h3>
-                              <Badge className="ml-2">{studentsByGrade[grade]?.length || 0} estudiantes</Badge>
+                              <GraduationCap className="mr-2 h-5 w-5 text-blue-600" />
+                              <h3 className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">Grado {grade}</h3>
+                              <Badge className="ml-2 bg-gradient-to-r from-blue-500 to-teal-500 text-white">{studentsByGrade[grade]?.length || 0} estudiantes</Badge>
                             </div>
                             <div className="flex space-x-2">
                               <Button 
                                 size="sm" 
                                 variant="outline" 
                                 onClick={() => setSelectedGradeForStudents(grade)}
+                                className="border-blue-200 text-blue-600 hover:bg-blue-50"
                               >
                                 Ver Todos
                               </Button>
@@ -523,6 +524,7 @@ const TeacherDashboard = () => {
                                   setSelectedGradeForStudents(grade);
                                   setShowAddStudentModal(true);
                                 }}
+                                className="bg-gradient-to-r from-teal-500 to-blue-500 text-white hover:shadow-md transition-all"
                               >
                                 <UserPlus className="mr-1 h-3 w-3" />
                                 Agregar
