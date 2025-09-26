@@ -367,7 +367,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     <Input
                       id="studentDocument"
                       value={formData.studentDocument}
-                      onChange={(e) => setFormData({ ...formData, studentDocument: e.target.value })}
+                      onChange={handleInputChange('studentDocument')}
                       placeholder="Documento del estudiante"
                       className={errors.studentDocument ? 'border-red-500' : ''}
                     />
@@ -376,7 +376,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
 
                   <div>
                     <Label htmlFor="relationshipType">Relación con el Estudiante *</Label>
-                    <Select value={formData.relationshipType} onValueChange={(value) => setFormData({ ...formData, relationshipType: value })}>
+                    <Select value={formData.relationshipType} onValueChange={handleSelectChange('relationshipType')}>
                       <SelectTrigger className={errors.relationshipType ? 'border-red-500' : ''}>
                         <SelectValue placeholder="Seleccionar relación" />
                       </SelectTrigger>
