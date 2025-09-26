@@ -17,6 +17,7 @@ import {
   Save
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
+import { PeriodsManager } from '../utils/dataManager';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
