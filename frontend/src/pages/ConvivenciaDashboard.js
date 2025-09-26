@@ -35,6 +35,22 @@ const ConvivenciaDashboard = () => {
   const { user } = useAuth();
   const [selectedGrade, setSelectedGrade] = useState('all');
   const [selectedPeriod, setSelectedPeriod] = useState('1');
+  const [periods, setPeriods] = useState([]);
+  const [showNoteModal, setShowNoteModal] = useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
+  const [convivenceNotes, setConvivenceNotes] = useState({});
+
+  useEffect(() => {
+    // Cargar períodos desde localStorage
+    const loadedPeriods = PeriodsManager.getAll();
+    setPeriods(loadedPeriods);
+    
+    // Cargar notas de convivencia existentes
+    const savedNotes = localStorage.getItem('gada_convivence_notes');
+    if (savedNotes) {
+      setConvivenceNotes(JSON.parse(savedNotes));
+    }
+  }, []);
 
   if (!user || user.role !== 'coordinadora_convivencia') {
     return <Navigate to="/login" />;
