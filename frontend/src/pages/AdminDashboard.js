@@ -166,6 +166,17 @@ const AdminDashboard = () => {
           <div className="relative p-6">
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">Panel de Administración</h1>
             <p className="text-gray-600 mt-2">Bienvenido, {user.name}</p>
+            
+            {/* Indicador de acceso total */}
+            <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+              <div className="flex items-center">
+                <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                <span className="text-green-800 font-medium">🚀 ACCESO ADMINISTRATIVO COMPLETO ACTIVADO</span>
+              </div>
+              <p className="text-sm text-green-700 mt-1">
+                Todas las funcionalidades, períodos, reportes, gestión de usuarios, calificaciones y configuraciones están completamente habilitadas sin restricciones.
+              </p>
+            </div>
           </div>
         </div>
 
