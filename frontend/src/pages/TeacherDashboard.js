@@ -432,7 +432,7 @@ const TeacherDashboard = () => {
                 </div>
               </CardHeader>
               <CardContent>
-                {selectedGradeForStudents ? (
+                {selectedGradeForStudents && selectedGradeForStudents !== "all" ? (
                   // Mostrar estudiantes del grado seleccionado
                   <div>
                     <h3 className="text-lg font-semibold mb-4 flex items-center">
