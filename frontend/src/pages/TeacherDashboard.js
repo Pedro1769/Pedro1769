@@ -123,12 +123,6 @@ const TeacherDashboard = () => {
                 <p className="text-sm text-gray-600">
                   Seleccione el grado, materia y período para asignar calificaciones
                 </p>
-                <div className="mt-2 p-3 bg-green-50 rounded-lg border-green-200 border">
-                  <p className="text-sm text-green-800">
-                    ✓ <strong>Todos los períodos están habilitados</strong> para su rol de docente. 
-                    Puede ingresar y modificar calificaciones en cualquier período académico.
-                  </p>
-                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 {/* Filters */}
