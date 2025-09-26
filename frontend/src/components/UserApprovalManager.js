@@ -99,6 +99,7 @@ const UserApprovalManager = ({ onClose }) => {
     const roles = {
       'teacher': 'Docente',
       'parent': 'Padre de Familia',
+      'student': 'Estudiante',
       'coordinadora_convivencia': 'Coordinadora de Convivencia',
       'coordinador_academico': 'Coordinador Académico',
       'admin': 'Administrador'
@@ -110,6 +111,7 @@ const UserApprovalManager = ({ onClose }) => {
     const colors = {
       'teacher': 'bg-blue-100 text-blue-800',
       'parent': 'bg-green-100 text-green-800',
+      'student': 'bg-indigo-100 text-indigo-800',
       'coordinadora_convivencia': 'bg-purple-100 text-purple-800',
       'coordinador_academico': 'bg-orange-100 text-orange-800',
       'admin': 'bg-red-100 text-red-800'
