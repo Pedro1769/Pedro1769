@@ -168,6 +168,30 @@ test_plan:
   test_all: false
   test_priority: "high_first"
 
+  - task: "Add user management access to AdminDashboard"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/pages/AdminDashboard.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Added UserApprovalManager import, new 'Users' tab, and modal integration so admin can view/manage all registered users"
+
+  - task: "Update UserApprovalManager for better admin experience"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/UserApprovalManager.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Changed default tab to 'approved users', improved UI for approved users, added informational alerts, and better action buttons"
+
 agent_communication:
   - agent: "main"
-    message: "Implemented auto-approval for all user registrations. Users can now login immediately after registration. No 'academo granada' text found - all institutional references are correct."
+    message: "Implemented complete auto-approval system. All users now register with immediate access. Added comprehensive user management interface in AdminDashboard with dedicated 'Users' tab. Admin can view all registered users, their details, and manage them as needed. No 'academo granada' text found - all institutional references are correct."
