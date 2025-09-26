@@ -59,12 +59,34 @@ const ParentDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Portal de Padres</h1>
-          <p className="text-gray-600">Bienvenido, {user.name}</p>
+        <div className="mb-8 relative">
+          <div className="absolute inset-0 bg-gradient-header opacity-10 rounded-2xl"></div>
+          <div className="relative p-6">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">Panel de Padres</h1>
+            <p className="text-gray-600 mt-2">Bienvenido/a, {user.name}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                Padre de Familia
+              </Badge>
+              <Badge className="bg-green-100 text-green-800 border-green-200">
+                ✅ Acceso Total a Información Académica
+              </Badge>
+            </div>
+            
+            {/* Mensaje de acceso completo */}
+            <div className="mt-4 p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg border border-purple-200">
+              <div className="flex items-center">
+                <User className="h-5 w-5 text-purple-600 mr-2" />
+                <span className="text-purple-800 font-medium">👨‍👩‍👧‍👦 ACCESO PARENTAL COMPLETO</span>
+              </div>
+              <p className="text-sm text-purple-700 mt-1">
+                Acceso total a calificaciones, reportes, boletines, progreso académico y comunicaciones de todos sus hijos en todos los períodos escolares.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Children Cards */}
