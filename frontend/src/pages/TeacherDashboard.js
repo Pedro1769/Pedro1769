@@ -83,7 +83,7 @@ const TeacherDashboard = () => {
       name: '',
       document: '',
       birthDate: '',
-      grade: selectedGradeForStudents || availableGrades[0] || '',
+      grade: (selectedGradeForStudents !== "all" ? selectedGradeForStudents : availableGrades[0]) || '',
       level: '',
       academicYear: 2025
     });
