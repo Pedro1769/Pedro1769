@@ -77,6 +77,145 @@ const TeacherDashboard = () => {
     setShowAddStudentModal(false);
   };
 
+  // Add Student Modal Component
+  const AddStudentModal = () => {
+    const [newStudent, setNewStudent] = useState({
+      name: '',
+      document: '',
+      birthDate: '',
+      grade: selectedGradeForStudents || availableGrades[0] || '',
+      level: '',
+      academicYear: 2025
+    });
+
+    const [errors, setErrors] = useState({});
+
+    const validateStudent = () => {
+      const newErrors = {};
+      if (!newStudent.name.trim()) newErrors.name = 'El nombre es obligatorio';
+      if (!newStudent.document.trim()) newErrors.document = 'El documento es obligatorio';
+      if (!newStudent.birthDate) newErrors.birthDate = 'La fecha de nacimiento es obligatoria';
+      if (!newStudent.grade) newErrors.grade = 'El grado es obligatorio';
+      
+      setErrors(newErrors);
+      return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (!validateStudent()) return;
+
+      // Determinar el nivel según el grado
+      let level = '';
+      if (newStudent.grade === '0°') level = 'Transición';
+      else if (['1°', '2°', '3°', '4°', '5°'].includes(newStudent.grade)) level = 'Básica Primaria';
+      else if (['6°', '7°', '8°', '9°'].includes(newStudent.grade)) level = 'Básica Secundaria';
+      else if (['10°', '11°'].includes(newStudent.grade)) level = 'Media Vocacional';
+
+      const studentToAdd = {
+        ...newStudent,
+        level
+      };
+
+      handleAddStudent(studentToAdd);
+    };
+
+    const handleInputChange = (field) => (e) => {
+      setNewStudent(prev => ({
+        ...prev,
+        [field]: e.target.value
+      }));
+    };
+
+    const handleSelectChange = (field) => (value) => {
+      setNewStudent(prev => ({
+        ...prev,
+        [field]: value
+      }));
+    };
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="flex items-center">
+              <UserPlus className="mr-2 h-5 w-5" />
+              Agregar Nuevo Estudiante
+            </CardTitle>
+            <Button variant="ghost" onClick={() => setShowAddStudentModal(false)}>
+              <X className="h-4 w-4" />
+            </Button>
+          </CardHeader>
+          
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <Label htmlFor="name">Nombre Completo *</Label>
+                <Input
+                  id="name"
+                  value={newStudent.name}
+                  onChange={handleInputChange('name')}
+                  placeholder="Nombres y apellidos del estudiante"
+                  className={errors.name ? 'border-red-500' : ''}
+                />
+                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+              </div>
+
+              <div>
+                <Label htmlFor="document">Documento de Identidad *</Label>
+                <Input
+                  id="document"
+                  value={newStudent.document}
+                  onChange={handleInputChange('document')}
+                  placeholder="Número de documento"
+                  className={errors.document ? 'border-red-500' : ''}
+                />
+                {errors.document && <p className="text-red-500 text-sm mt-1">{errors.document}</p>}
+              </div>
+
+              <div>
+                <Label htmlFor="birthDate">Fecha de Nacimiento *</Label>
+                <Input
+                  id="birthDate"
+                  type="date"
+                  value={newStudent.birthDate}
+                  onChange={handleInputChange('birthDate')}
+                  className={errors.birthDate ? 'border-red-500' : ''}
+                />
+                {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
+              </div>
+
+              <div>
+                <Label htmlFor="grade">Grado *</Label>
+                <Select value={newStudent.grade} onValueChange={handleSelectChange('grade')}>
+                  <SelectTrigger className={errors.grade ? 'border-red-500' : ''}>
+                    <SelectValue placeholder="Seleccionar grado" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {availableGrades.map((grade) => (
+                      <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.grade && <p className="text-red-500 text-sm mt-1">{errors.grade}</p>}
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button type="button" variant="outline" onClick={() => setShowAddStudentModal(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit">
+                  <Save className="mr-2 h-4 w-4" />
+                  Agregar Estudiante
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
