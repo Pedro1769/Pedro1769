@@ -26,7 +26,8 @@ import {
   BookOpen,
   GraduationCap,
   Plus,
-  X
+  X,
+  Edit
 } from 'lucide-react';
 import { mockStudents } from '../mock/mockData';
 import { PeriodsManager, StudentsManager } from '../utils/dataManager';
