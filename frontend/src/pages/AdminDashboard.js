@@ -600,6 +600,12 @@ const AdminDashboard = () => {
           />
         )}
 
+        {showUserManager && (
+          <UserApprovalManager 
+            onClose={() => setShowUserManager(false)}
+          />
+        )}
+
         {showObjectivesManager && (
           <AcademicObjectivesManager 
             onClose={() => setShowObjectivesManager(false)}
