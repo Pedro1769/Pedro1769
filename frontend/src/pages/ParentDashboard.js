@@ -198,11 +198,13 @@ const ParentDashboard = () => {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {periods.map((period) => (
+                    {periods && periods.length > 0 ? periods.map((period) => (
                       <SelectItem key={period.id} value={period.id.toString()}>
-                        {period.name}
+                        {period.name || `Período ${period.id}`}
                       </SelectItem>
-                    ))}
+                    )) : (
+                      <SelectItem value="1">Primer Período</SelectItem>
+                    )}
                   </SelectContent>
                 </Select>
               </div>
