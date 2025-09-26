@@ -204,19 +204,31 @@ const UserApprovalManager = ({ onClose }) => {
           {status === 'approved' && (
             <div className="ml-4">
               <div className="text-xs text-green-600 mb-2">
-                ✓ Aprobado por: {user.approvedBy}
+                ✓ Usuario Activo
               </div>
-              <div className="text-xs text-gray-500">
-                {new Date(user.approvalDate).toLocaleDateString('es-CO')}
+              <div className="text-xs text-gray-500 mb-2">
+                Registrado: {new Date(user.createdAt).toLocaleDateString('es-CO')}
               </div>
-              <Button 
-                size="sm" 
-                variant="outline"
-                onClick={() => deleteUser(user.id)}
-                className="mt-2"
-              >
-                Eliminar
-              </Button>
+              <div className="space-y-2">
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => setSelectedUser(user)}
+                  className="w-full"
+                >
+                  <Eye className="mr-1 h-3 w-3" />
+                  Ver Detalles
+                </Button>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => deleteUser(user.id)}
+                  className="w-full hover:bg-red-50 hover:border-red-200"
+                >
+                  <Trash2 className="mr-1 h-3 w-3" />
+                  Eliminar
+                </Button>
+              </div>
             </div>
           )}
           
