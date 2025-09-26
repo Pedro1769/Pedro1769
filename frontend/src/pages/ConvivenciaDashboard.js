@@ -1210,7 +1210,7 @@ const ConvivenciaDashboard = () => {
 
         {/* Modales */}
         {showNoteModal && <ConvivenceNoteModal />}
-        {showStudentNoteModal && <StudentConvivenceNoteModal />}
+        {showStudentNoteModal && selectedStudent && <StudentConvivenceNoteModal />}
       </div>
     </div>
   );
