@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -14,9 +14,12 @@ import {
   GraduationCap, 
   PlusCircle,
   Edit,
-  Save
+  Save,
+  UserPlus,
+  X
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
+import { StudentsManager } from '../utils/dataManager';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
