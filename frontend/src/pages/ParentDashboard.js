@@ -240,13 +240,25 @@ const ParentDashboard = () => {
                     Boletín de Calificaciones
                   </CardTitle>
                   <div className="flex space-x-2">
-                    <Button onClick={() => setShowReportCard(true)}>
+                    <Button 
+                      onClick={() => setShowReportCard(true)}
+                      className="bg-gradient-gada text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
+                    >
                       <Eye className="mr-2 h-4 w-4" />
-                      Ver Boletín
+                      Ver Boletín Completo
                     </Button>
-                    <Button variant="outline">
+                    <Button 
+                      className="bg-gradient-to-r from-green-500 to-teal-500 text-white hover:shadow-lg"
+                    >
                       <Download className="mr-2 h-4 w-4" />
-                      Descargar PDF
+                      Descargar Boletín
+                    </Button>
+                    <Button 
+                      variant="outline"
+                      className="border-blue-300 text-blue-600 hover:bg-blue-50"
+                    >
+                      <Calendar className="mr-2 h-4 w-4" />
+                      Historial Académico
                     </Button>
                   </div>
                 </CardHeader>
