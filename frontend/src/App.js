@@ -14,6 +14,8 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ParentDashboard from "./pages/ParentDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
+import ConvivenciaDashboard from "./pages/ConvivenciaDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ReportCards from "./pages/ReportCards";
 import GradeManagement from "./pages/GradeManagement";
