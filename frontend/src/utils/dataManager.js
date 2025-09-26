@@ -237,6 +237,96 @@ export const GradesManager = {
   }
 };
 
+// Download Codes Manager
+export const DownloadCodesManager = {
+  getAll: () => {
+    try {
+      return JSON.parse(localStorage.getItem('gada_download_codes') || '[]');
+    } catch (error) {
+      console.error('Error loading download codes:', error);
+      return [];
+    }
+  },
+  
+  generateCode: (type, studentDocument, parentEmail, expiryHours = 24) => {
+    try {
+      const codes = DownloadCodesManager.getAll();
+      const codeId = 'DL-' + Date.now().toString().substr(-6) + '-' + Math.random().toString(36).substr(2, 3).toUpperCase();
+      
+      const newCode = {
+        id: codeId,
+        code: codeId,
+        type: type, // 'boletin', 'certificado', 'reporte'
+        studentDocument: studentDocument,
+        parentEmail: parentEmail,
+        createdAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + (expiryHours * 60 * 60 * 1000)).toISOString(),
+        used: false,
+        usedAt: null,
+        active: true
+      };
+      
+      codes.push(newCode);
+      localStorage.setItem('gada_download_codes', JSON.stringify(codes));
+      return newCode;
+    } catch (error) {
+      console.error('Error generating download code:', error);
+      return null;
+    }
+  },
+  
+  validateAndUseCode: (code, parentEmail, studentDocument) => {
+    try {
+      const codes = DownloadCodesManager.getAll();
+      const downloadCode = codes.find(c => 
+        c.code === code && 
+        c.parentEmail === parentEmail && 
+        c.studentDocument === studentDocument &&
+        !c.used && 
+        c.active &&
+        new Date() < new Date(c.expiresAt)
+      );
+      
+      if (downloadCode) {
+        // Marcar como usado
+        downloadCode.used = true;
+        downloadCode.usedAt = new Date().toISOString();
+        localStorage.setItem('gada_download_codes', JSON.stringify(codes));
+        return { valid: true, code: downloadCode };
+      }
+      
+      return { valid: false, reason: 'Código inválido, expirado o ya utilizado' };
+    } catch (error) {
+      console.error('Error validating download code:', error);
+      return { valid: false, reason: 'Error del sistema' };
+    }
+  },
+  
+  getCodesByParent: (parentEmail) => {
+    try {
+      const codes = DownloadCodesManager.getAll();
+      return codes.filter(c => c.parentEmail === parentEmail);
+    } catch (error) {
+      console.error('Error getting codes by parent:', error);
+      return [];
+    }
+  },
+  
+  deactivateCode: (codeId) => {
+    try {
+      const codes = DownloadCodesManager.getAll();
+      const updatedCodes = codes.map(c => 
+        c.id === codeId ? { ...c, active: false } : c
+      );
+      localStorage.setItem('gada_download_codes', JSON.stringify(updatedCodes));
+      return true;
+    } catch (error) {
+      console.error('Error deactivating code:', error);
+      return false;
+    }
+  }
+};
+
 // Inicializar datos por defecto si no existen
 export const initializeDefaultData = () => {
   // Solo inicializar si no hay datos existentes
