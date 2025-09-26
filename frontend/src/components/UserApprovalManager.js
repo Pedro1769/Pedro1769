@@ -250,7 +250,7 @@ const UserApprovalManager = ({ onClose }) => {
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="flex items-center">
             <UserCheck className="mr-2 h-5 w-5" />
-            Gestión de Cuentas de Usuario
+            Gestión de Usuarios del Sistema
           </CardTitle>
           <Button variant="ghost" onClick={onClose}>
             <X className="h-4 w-4" />
