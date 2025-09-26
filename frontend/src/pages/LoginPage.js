@@ -76,11 +76,7 @@ const LoginPage = () => {
       const updatedUsers = [...existingUsers, userData];
       localStorage.setItem('gada_registered_users', JSON.stringify(updatedUsers));
       
-      if (userData.role === 'admin') {
-        alert('Usuario registrado exitosamente');
-      } else {
-        alert('Registro enviado. Su cuenta será revisada por el administrador.');
-      }
+      alert('Usuario registrado exitosamente. Ya puede iniciar sesión con sus credenciales.');
     } catch (error) {
       console.error('Error registering user:', error);
       alert('Error al registrar usuario');
