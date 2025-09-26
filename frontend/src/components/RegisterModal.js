@@ -71,6 +71,11 @@ const RegisterModal = ({ onClose, onRegister }) => {
         approved: true // Todos los usuarios se aprueban automáticamente
       };
       
+      // Asignar grados automáticamente según el nivel educativo para docentes
+      if (formData.role === 'teacher' && formData.teachingLevel) {
+        userData.grades = getGradesByLevel(formData.teachingLevel);
+      }
+      
       // Remove password confirmation from final data
       delete userData.confirmPassword;
       
