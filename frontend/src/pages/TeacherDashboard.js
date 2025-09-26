@@ -28,7 +28,7 @@ const TeacherDashboard = () => {
   const [selectedPeriod, setSelectedPeriod] = useState('1');
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
   const [students, setStudents] = useState([]);
-  const [selectedGradeForStudents, setSelectedGradeForStudents] = useState('');
+  const [selectedGradeForStudents, setSelectedGradeForStudents] = useState('all');
 
   useEffect(() => {
     // Cargar estudiantes desde localStorage
