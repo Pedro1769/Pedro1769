@@ -31,16 +31,24 @@ const LoginPage = () => {
       const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
       const allUsers = [...mockUsers, ...registeredUsers.filter(u => u.approved)];
       
+      console.log('Attempting login with:', email);
+      console.log('Available users:', allUsers.map(u => ({ email: u.email, role: u.role, approved: u.approved })));
+      
       const user = allUsers.find(
         (u) => u.email === email && u.password === password
       );
 
+      console.log('Found user:', user);
+
       if (user) {
         login(user);
+        
+        console.log('Login successful, redirecting to:', user.role);
         
         // Redirect based on role
         switch (user.role) {
           case 'admin':
+          case 'coordinador_academico':
             navigate('/admin');
             break;
           case 'teacher':
@@ -49,13 +57,18 @@ const LoginPage = () => {
           case 'parent':
             navigate('/parent');
             break;
+          case 'coordinadora_convivencia':
+            navigate('/admin'); // También van al panel de admin
+            break;
           default:
             navigate('/dashboard');
         }
       } else {
+        console.log('Login failed - user not found or incorrect credentials');
         setError('Credenciales incorrectas. Verifique su email y contraseña.');
       }
     } catch (err) {
+      console.error('Login error:', err);
       setError('Error al iniciar sesión. Inténtelo nuevamente.');
     } finally {
       setLoading(false);
