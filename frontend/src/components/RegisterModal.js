@@ -31,6 +31,31 @@ const RegisterModal = ({ onClose, onRegister }) => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
+  // Manejar cambios en campos de texto
+  const handleInputChange = (field) => (event) => {
+    const value = event.target.value;
+    setFormData(prevState => ({
+      ...prevState,
+      [field]: value
+    }));
+  };
+
+  // Manejar cambios en selects
+  const handleSelectChange = (field) => (value) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [field]: value
+    }));
+  };
+
+  // Manejar cambios en checkboxes
+  const handleCheckboxChange = (field) => (checked) => {
+    setFormData(prevState => ({
+      ...prevState,
+      [field]: checked
+    }));
+  };
+
   const validateForm = () => {
     const newErrors = {};
     
