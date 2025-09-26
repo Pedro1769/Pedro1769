@@ -166,7 +166,7 @@ const LoginPage = () => {
 
               <Button 
                 type="submit" 
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className="w-full bg-gradient-gada text-white hover:shadow-lg hover:scale-105 transition-all duration-300"
                 disabled={loading}
               >
                 {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
@@ -176,7 +176,7 @@ const LoginPage = () => {
             <div className="text-center space-y-2">
               <Link 
                 to="/forgot-password" 
-                className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+                className="text-sm text-blue-600 hover:text-teal-600 hover:underline transition-colors"
               >
                 ¿Olvidaste tu contraseña?
               </Link>
@@ -184,7 +184,7 @@ const LoginPage = () => {
               <div className="border-t pt-4">
                 <Button 
                   variant="outline" 
-                  className="w-full" 
+                  className="w-full border-2 border-blue-200 hover:bg-gradient-hover hover:border-blue-300 transition-all duration-300" 
                   onClick={() => setShowRegisterModal(true)}
                 >
                   <UserPlus className="mr-2 h-4 w-4" />
