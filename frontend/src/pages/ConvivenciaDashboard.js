@@ -29,7 +29,7 @@ import {
   X
 } from 'lucide-react';
 import { mockStudents } from '../mock/mockData';
-import { PeriodsManager } from '../utils/dataManager';
+import { PeriodsManager, StudentsManager } from '../utils/dataManager';
 
 const ConvivenciaDashboard = () => {
   const { user } = useAuth();
