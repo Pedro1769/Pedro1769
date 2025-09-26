@@ -59,9 +59,6 @@ const RegisterModal = ({ onClose, onRegister }) => {
   const validateForm = () => {
     const newErrors = {};
     
-    // Debug: Log form data during validation
-    console.log('Validating form data:', formData);
-    
     if (!formData.name.trim()) newErrors.name = 'El nombre es obligatorio';
     if (!formData.email.trim()) newErrors.email = 'El email es obligatorio';
     if (formData.email && !formData.email.includes('@')) newErrors.email = 'Email inválido';
@@ -82,7 +79,6 @@ const RegisterModal = ({ onClose, onRegister }) => {
       if (!formData.relationshipType) newErrors.relationshipType = 'Debe especificar la relación con el estudiante';
     }
     
-    console.log('Validation errors:', newErrors);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
