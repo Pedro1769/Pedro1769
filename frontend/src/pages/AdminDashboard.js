@@ -251,8 +251,9 @@ const AdminDashboard = () => {
               <div className="flex items-center">
                 <BookOpen className="h-8 w-8 text-amber-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-amber-700">Calificaciones</p>
-                  <p className="text-2xl font-bold text-amber-900">{stats.grades}</p>
+                  <p className="text-sm font-medium text-amber-700">Usuarios Registrados</p>
+                  <p className="text-2xl font-bold text-amber-900">{stats.registeredUsers}</p>
+                  <p className="text-xs text-amber-600">({stats.approvedUsers} aprobados)</p>
                 </div>
               </div>
             </CardContent>
