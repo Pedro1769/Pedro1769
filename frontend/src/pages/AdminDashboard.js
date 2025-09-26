@@ -359,6 +359,64 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="downloads" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Códigos de Descarga</CardTitle>
+                <p className="text-sm text-gray-600">
+                  Gestione los códigos de descarga para acceso a recursos y materiales educativos.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <Button className="mb-4">
+                    <Plus className="mr-2 h-4 w-4" />
+                    Generar Nuevo Código
+                  </Button>
+                  <div className="bg-blue-50 p-4 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      <strong>Información:</strong> Los códigos de descarga permiten a estudiantes y padres 
+                      acceder a materiales educativos, boletines y recursos institucionales de forma segura.
+                    </p>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b">
+                          <th className="text-left p-3">Código</th>
+                          <th className="text-left p-3">Tipo</th>
+                          <th className="text-left p-3">Estado</th>
+                          <th className="text-left p-3">Fecha Creación</th>
+                          <th className="text-left p-3">Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr className="border-b hover:bg-gray-50">
+                          <td className="p-3 font-mono">DL-2024-001</td>
+                          <td className="p-3">Boletines P1</td>
+                          <td className="p-3">
+                            <Badge variant="default">Activo</Badge>
+                          </td>
+                          <td className="p-3">15/03/2024</td>
+                          <td className="p-3">
+                            <div className="flex space-x-2">
+                              <Button size="sm" variant="outline">
+                                <Eye className="h-3 w-3" />
+                              </Button>
+                              <Button size="sm" variant="outline">
+                                <Download className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="students" className="mt-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
