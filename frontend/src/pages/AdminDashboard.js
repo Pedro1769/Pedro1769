@@ -171,49 +171,49 @@ const AdminDashboard = () => {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-gradient-to-br from-blue-50 via-blue-100 to-blue-50 border-blue-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
                 <GraduationCap className="h-8 w-8 text-blue-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-blue-600">Estudiantes</p>
+                  <p className="text-sm font-medium text-blue-700">Estudiantes</p>
                   <p className="text-2xl font-bold text-blue-900">{stats.students}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-green-50 border-green-200">
+          <Card className="bg-gradient-to-br from-teal-50 via-teal-100 to-teal-50 border-teal-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-green-600" />
+                <Users className="h-8 w-8 text-teal-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-green-600">Profesores</p>
-                  <p className="text-2xl font-bold text-green-900">{stats.teachers}</p>
+                  <p className="text-sm font-medium text-teal-700">Profesores</p>
+                  <p className="text-2xl font-bold text-teal-900">{stats.teachers}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-purple-50 border-purple-200">
+          <Card className="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 border-slate-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-purple-600" />
+                <Users className="h-8 w-8 text-slate-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-purple-600">Padres</p>
-                  <p className="text-2xl font-bold text-purple-900">{stats.parents}</p>
+                  <p className="text-sm font-medium text-slate-700">Padres</p>
+                  <p className="text-2xl font-bold text-slate-900">{stats.parents}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-orange-50 border-orange-200">
+          <Card className="bg-gradient-to-br from-amber-50 via-amber-100 to-amber-50 border-amber-200 hover-gradient card-institutional">
             <CardContent className="p-6">
               <div className="flex items-center">
-                <BookOpen className="h-8 w-8 text-orange-600" />
+                <BookOpen className="h-8 w-8 text-amber-600" />
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-orange-600">Calificaciones</p>
-                  <p className="text-2xl font-bold text-orange-900">{stats.grades}</p>
+                  <p className="text-sm font-medium text-amber-700">Calificaciones</p>
+                  <p className="text-2xl font-bold text-amber-900">{stats.grades}</p>
                 </div>
               </div>
             </CardContent>
