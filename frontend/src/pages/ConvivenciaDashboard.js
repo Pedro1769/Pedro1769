@@ -653,6 +653,9 @@ const ConvivenciaDashboard = () => {
             </Card>
           </TabsContent>
         </Tabs>
+
+        {/* Modales */}
+        {showNoteModal && <ConvivenceNoteModal />}
       </div>
     </div>
   );
