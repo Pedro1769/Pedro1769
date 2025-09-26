@@ -45,9 +45,9 @@ const TeacherDashboard = () => {
     return <Navigate to="/login" />;
   }
 
-  // Filter students by teacher's grades
+  // Filter students by available grades
   const teacherStudents = mockStudents.filter(student => 
-    user.grades?.includes(student.grade)
+    availableGrades.includes(student.grade)
   );
 
   // Get subjects for the teacher
