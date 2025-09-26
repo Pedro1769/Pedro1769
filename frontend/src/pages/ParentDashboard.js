@@ -36,27 +36,38 @@ const ParentDashboard = () => {
 
   useEffect(() => {
     // Cargar períodos
-    const loadedPeriods = PeriodsManager.getAll();
-    setPeriods(loadedPeriods);
+    try {
+      const loadedPeriods = PeriodsManager.getAll();
+      setPeriods(loadedPeriods || []);
+    } catch (error) {
+      console.error('Error loading periods:', error);
+      setPeriods([]);
+    }
     
     // Cargar todos los estudiantes (mock + registrados)
-    const students = [...mockStudents, ...StudentsManager.getAll()];
-    setAllStudents(students);
-    
-    // Para efectos de demostración, mostrar algunos estudiantes como hijos
-    // En un sistema real, esto se basaría en la relación padre-estudiante
-    const demoChildren = students.slice(0, 3).map(student => ({
-      ...student,
-      parentId: user.id // Simular relación padre-hijo
-    }));
-    
-    setChildren(demoChildren);
-    
-    // Seleccionar el primer hijo por defecto
-    if (demoChildren.length > 0 && !selectedChild) {
-      setSelectedChild(demoChildren[0].id.toString());
+    try {
+      const students = [...(mockStudents || []), ...(StudentsManager.getAll() || [])];
+      setAllStudents(students);
+      
+      // Para efectos de demostración, mostrar algunos estudiantes como hijos
+      // En un sistema real, esto se basaría en la relación padre-estudiante
+      const demoChildren = students.slice(0, 3).map(student => ({
+        ...student,
+        parentId: user?.id // Simular relación padre-hijo
+      }));
+      
+      setChildren(demoChildren);
+      
+      // Seleccionar el primer hijo por defecto
+      if (demoChildren.length > 0 && !selectedChild) {
+        setSelectedChild(demoChildren[0]?.id?.toString());
+      }
+    } catch (error) {
+      console.error('Error loading students:', error);
+      setChildren([]);
+      setAllStudents([]);
     }
-  }, [user, selectedChild]);
+  }, [user?.id, selectedChild]);
 
   if (!user || user.role !== 'parent') {
     return <Navigate to="/login" />;
