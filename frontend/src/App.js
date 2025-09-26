@@ -52,6 +52,8 @@ function App() {
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/teacher" element={<TeacherDashboard />} />
               <Route path="/parent" element={<ParentDashboard />} />
+              <Route path="/student" element={<StudentDashboard />} />
+              <Route path="/convivencia" element={<ConvivenciaDashboard />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/report-cards" element={<ReportCards />} />
               <Route path="/grades" element={<GradeManagement />} />
