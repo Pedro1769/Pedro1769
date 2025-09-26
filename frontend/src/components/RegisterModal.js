@@ -116,6 +116,13 @@ const RegisterModal = ({ onClose, onRegister }) => {
       if (formData.role === 'teacher' && formData.teachingLevel) {
         userData.grades = getGradesByLevel(formData.teachingLevel);
       }
+
+      // Asignar información específica para estudiantes
+      if (formData.role === 'student') {
+        userData.grade = formData.studentGrade;
+        userData.studentId = Date.now() + Math.random(); // ID único para el estudiante
+        userData.level = getStudentLevel(formData.studentGrade);
+      }
       
       // Remove password confirmation from final data
       delete userData.confirmPassword;
