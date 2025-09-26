@@ -168,8 +168,14 @@ const StudentDashboard = () => {
             <TabsTrigger value="achievements" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Logros
             </TabsTrigger>
+            <TabsTrigger value="behavior" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+              Convivencia
+            </TabsTrigger>
             <TabsTrigger value="reports" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Boletín
+            </TabsTrigger>
+            <TabsTrigger value="homework" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+              Tareas
             </TabsTrigger>
           </TabsList>
 
