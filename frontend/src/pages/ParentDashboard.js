@@ -65,26 +65,28 @@ const ParentDashboard = () => {
   const selectedChildData = children.find(child => child.id === parseInt(selectedChild));
 
   // Get grades for selected child and period
-  const childGrades = selectedChild ? mockGrades.filter(
+  const childGrades = selectedChild && mockGrades ? mockGrades.filter(
     grade => grade.studentId === parseInt(selectedChild) && 
              grade.period === parseInt(selectedPeriod)
   ) : [];
 
-  // Calculate statistics
+  // Calculate statistics with safe checks
   const calculateAverage = (grades) => {
-    if (grades.length === 0) return 0;
-    return grades.reduce((sum, grade) => sum + grade.grade, 0) / grades.length;
+    if (!grades || grades.length === 0) return 0;
+    return grades.reduce((sum, grade) => sum + (grade.grade || 0), 0) / grades.length;
   };
 
   const getPerformanceLevel = (grade, level) => {
-    const scale = performanceScale[level] || performanceScale['Básica Secundaria'];
+    if (!performanceScale || !level) return { level: 'N/A', code: 'N/A' };
+    
+    const scale = performanceScale[level] || performanceScale['Básica Secundaria'] || {};
     
     for (const [performance, range] of Object.entries(scale)) {
-      if (grade >= range.min && grade <= range.max) {
+      if (range && grade >= range.min && grade <= range.max) {
         return { level: performance, code: range.code };
       }
     }
-    return { level: 'Bajo', code: 'Bj' };
+    return { level: 'N/A', code: 'N/A' };
   };
 
   return (
