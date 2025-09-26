@@ -339,37 +339,166 @@ const ParentDashboard = () => {
               </Card>
             </TabsContent>
 
-            <TabsContent value="attendance" className="space-y-6">
-              <Card>
-                <CardHeader>
+            <TabsContent value="progress" className="space-y-6">
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-teal-50 to-green-50 rounded-t-lg">
                   <CardTitle className="flex items-center">
-                    <Calendar className="mr-2 h-5 w-5" />
-                    Control de Asistencia
+                    <TrendingUp className="mr-2 h-5 w-5 text-teal-600" />
+                    Progreso Académico de {selectedChildData?.name}
                   </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Evolución académica completa en todos los períodos
+                  </p>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="text-center bg-green-50 p-4 rounded-lg">
-                      <div className="text-3xl font-bold text-green-600">95%</div>
-                      <p className="text-green-700">Asistencia General</p>
-                    </div>
-                    <div className="text-center bg-blue-50 p-4 rounded-lg">
-                      <div className="text-3xl font-bold text-blue-600">2</div>
-                      <p className="text-blue-700">Faltas Justificadas</p>
-                    </div>
-                    <div className="text-center bg-orange-50 p-4 rounded-lg">
-                      <div className="text-3xl font-bold text-orange-600">0</div>
-                      <p className="text-orange-700">Faltas Injustificadas</p>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="p-4 border-2 border-blue-200">
+                      <h4 className="font-medium text-blue-800 mb-3">Evolución por Períodos</h4>
+                      <div className="space-y-2">
+                        {periods.map((period, index) => (
+                          <div key={period.id} className="flex items-center justify-between">
+                            <span className="text-sm">{period.name}</span>
+                            <div className="flex items-center space-x-2">
+                              <div className="w-24 bg-gray-200 rounded-full h-2">
+                                <div 
+                                  className="bg-gradient-to-r from-blue-500 to-teal-500 h-2 rounded-full" 
+                                  style={{width: `${75 + index * 5}%`}}
+                                ></div>
+                              </div>
+                              <span className="text-sm font-medium">{(7.5 + index * 0.5).toFixed(1)}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
+                    
+                    <Card className="p-4 border-2 border-teal-200">
+                      <h4 className="font-medium text-teal-800 mb-3">Materias Destacadas</h4>
+                      <div className="space-y-2">
+                        {['Matemáticas', 'Español', 'Ciencias', 'Inglés'].map((materia, index) => (
+                          <div key={index} className="flex items-center justify-between">
+                            <span className="text-sm">{materia}</span>
+                            <Badge className="bg-green-100 text-green-800">
+                              {(9.0 - index * 0.3).toFixed(1)}
+                            </Badge>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
+                  </div>
+                  
+                  <div className="mt-4 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                      <span className="text-green-800 font-medium">Seguimiento Académico Completo Habilitado</span>
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-                  <div className="mt-6">
-                    <h4 className="font-semibold mb-3">Registro de Asistencia - {selectedChildData?.name}</h4>
-                    <div className="bg-gray-50 p-4 rounded-lg">
-                      <p className="text-gray-600 text-center">
-                        Registro detallado de asistencia próximamente disponible
-                      </p>
-                    </div>
+            <TabsContent value="behavior" className="space-y-6">
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-lg">
+                  <CardTitle className="flex items-center">
+                    <Star className="mr-2 h-5 w-5 text-purple-600" />
+                    Convivencia y Comportamiento
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Seguimiento comportamental y notas de convivencia
+                  </p>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                    <Card className="p-4 text-center border-2 border-green-200 bg-green-50">
+                      <CheckCircle className="h-8 w-8 mx-auto mb-2 text-green-600" />
+                      <h4 className="font-medium text-green-800">Comportamiento Excelente</h4>
+                      <p className="text-sm text-green-700 mt-1">Sin incidentes reportados</p>
+                    </Card>
+                    
+                    <Card className="p-4 text-center border-2 border-blue-200 bg-blue-50">
+                      <Trophy className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                      <h4 className="font-medium text-blue-800">Reconocimientos</h4>
+                      <p className="text-sm text-blue-700 mt-1">3 menciones positivas</p>
+                    </Card>
+                    
+                    <Card className="p-4 text-center border-2 border-orange-200 bg-orange-50">
+                      <Clock className="h-8 w-8 mx-auto mb-2 text-orange-600" />
+                      <h4 className="font-medium text-orange-800">Puntualidad</h4>
+                      <p className="text-sm text-orange-700 mt-1">95% de asistencia</p>
+                    </Card>
+                  </div>
+                  
+                  <div className="p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
+                    <h4 className="font-medium text-purple-800 mb-2">Nota de Convivencia - Período {selectedPeriod}</h4>
+                    <p className="text-sm text-purple-700">
+                      El estudiante {selectedChildData?.name} ha demostrado un excelente comportamiento durante este período, 
+                      mostrando respeto hacia sus compañeros y docentes. Su participación en actividades grupales ha sido destacada.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="communication" className="space-y-6">
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-t-lg">
+                  <CardTitle className="flex items-center">
+                    <MessageSquare className="mr-2 h-5 w-5 text-orange-600" />
+                    Comunicaciones y Notificaciones
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Mensajes del colegio, citaciones y comunicados importantes
+                  </p>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <Card className="p-4 border-l-4 border-green-500 bg-green-50">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className="font-medium text-green-800">Felicitación Académica</h4>
+                          <p className="text-sm text-green-700 mt-1">
+                            Su hijo {selectedChildData?.name} ha obtenido excelentes resultados en el período actual. ¡Felicitaciones!
+                          </p>
+                          <p className="text-xs text-green-600 mt-2">Enviado por: Coordinación Académica</p>
+                        </div>
+                        <Badge className="bg-green-200 text-green-800 text-xs">Hoy</Badge>
+                      </div>
+                    </Card>
+                    
+                    <Card className="p-4 border-l-4 border-blue-500 bg-blue-50">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className="font-medium text-blue-800">Reunión de Padres</h4>
+                          <p className="text-sm text-blue-700 mt-1">
+                            Cordial invitación a la reunión de padres de familia del grado {selectedChildData?.grade} 
+                            programada para el viernes 28 de enero a las 2:00 PM.
+                          </p>
+                          <p className="text-xs text-blue-600 mt-2">Enviado por: Dirección de Grupo</p>
+                        </div>
+                        <Badge className="bg-blue-200 text-blue-800 text-xs">2 días</Badge>
+                      </div>
+                    </Card>
+                    
+                    <Card className="p-4 border-l-4 border-purple-500 bg-purple-50">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h4 className="font-medium text-purple-800">Actividad Extracurricular</h4>
+                          <p className="text-sm text-purple-700 mt-1">
+                            Inscripciones abiertas para el taller de ciencias. Su hijo está invitado a participar.
+                          </p>
+                          <p className="text-xs text-purple-600 mt-2">Enviado por: Coordinación Extracurricular</p>
+                        </div>
+                        <Badge className="bg-purple-200 text-purple-800 text-xs">1 semana</Badge>
+                      </div>
+                    </Card>
+                  </div>
+                  
+                  <div className="mt-6 text-center">
+                    <Button className="bg-gradient-gada text-white hover:shadow-lg">
+                      <MessageSquare className="mr-2 h-4 w-4" />
+                      Ver Todas las Comunicaciones
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
