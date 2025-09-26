@@ -258,7 +258,7 @@ const UserApprovalManager = ({ onClose }) => {
         </CardHeader>
         
         <CardContent>
-          <Tabs defaultValue="pending">
+          <Tabs defaultValue="approved">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="approved" className="flex items-center">
                 <CheckCircle className="mr-2 h-4 w-4" />
@@ -296,15 +296,26 @@ const UserApprovalManager = ({ onClose }) => {
             </TabsContent>
 
             <TabsContent value="approved" className="space-y-4">
-              <div className="grid gap-4">
-                {approvedUsers.map((user) => (
-                  <UserCard key={user.id} user={user} showActions={false} status="approved" />
-                ))}
-              </div>
-              {approvedUsers.length === 0 && (
+              {approvedUsers.length > 0 ? (
+                <>
+                  <Alert>
+                    <CheckCircle className="h-4 w-4" />
+                    <AlertDescription>
+                      Estos son todos los usuarios activos del sistema. Puede editarlos o eliminarlos según sea necesario.
+                      Los nuevos usuarios se aprueban automáticamente y aparecen aquí inmediatamente.
+                    </AlertDescription>
+                  </Alert>
+                  
+                  <div className="grid gap-4">
+                    {approvedUsers.map((user) => (
+                      <UserCard key={user.id} user={user} showActions={false} status="approved" />
+                    ))}
+                  </div>
+                </>
+              ) : (
                 <div className="text-center py-12 text-gray-500">
                   <CheckCircle className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                  <p>No hay cuentas aprobadas</p>
+                  <p>No hay usuarios registrados aún</p>
                 </div>
               )}
             </TabsContent>
