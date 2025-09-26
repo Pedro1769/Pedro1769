@@ -217,19 +217,22 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Panel del Profesor</h1>
-          <p className="text-gray-600">Bienvenido, {user.name}</p>
-          <div className="mt-2">
-            <Badge variant="secondary" className="mr-2">
-              Materias: {teacherSubjects.join(', ')}
-            </Badge>
-            <Badge variant="outline">
-              Grados: {availableGrades.join(', ')}
-            </Badge>
+        <div className="mb-8 relative">
+          <div className="absolute inset-0 bg-gradient-header opacity-10 rounded-2xl"></div>
+          <div className="relative p-6">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">Panel del Profesor</h1>
+            <p className="text-gray-600 mt-2">Bienvenido, {user.name}</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
+                Materias: {teacherSubjects.join(', ')}
+              </Badge>
+              <Badge variant="outline" className="border-teal-200 text-teal-700 hover:bg-teal-50 transition-colors">
+                Grados: {availableGrades.join(', ')}
+              </Badge>
+            </div>
           </div>
         </div>
 
