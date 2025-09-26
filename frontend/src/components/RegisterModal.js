@@ -271,6 +271,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <SelectContent>
                     <SelectItem value="teacher">Docente</SelectItem>
                     <SelectItem value="parent">Padre de Familia</SelectItem>
+                    <SelectItem value="student">Estudiante</SelectItem>
                     <SelectItem value="coordinadora_convivencia">Coordinadora de Convivencia</SelectItem>
                     <SelectItem value="coordinador_academico">Coordinador Académico</SelectItem>
                   </SelectContent>
