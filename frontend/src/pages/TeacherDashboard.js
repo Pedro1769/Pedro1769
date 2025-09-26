@@ -415,8 +415,13 @@ const TeacherDashboard = () => {
                 <div>
                   <CardTitle>Mis Estudiantes</CardTitle>
                   <p className="text-sm text-gray-600 mt-1">
-                    Estudiantes asignados a sus grados. Puede agregar nuevos estudiantes cuando sea necesario.
+                    Estudiantes asignados a sus grados. Incluye estudiantes registrados en el sistema.
                   </p>
+                  <div className="mt-2 p-2 bg-blue-50 rounded-md border border-blue-200">
+                    <p className="text-xs text-blue-800">
+                      📋 <strong>Sistema Integrado:</strong> Se muestran estudiantes creados manualmente + usuarios registrados como estudiantes aprobados
+                    </p>
+                  </div>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Select value={selectedGradeForStudents} onValueChange={setSelectedGradeForStudents}>
