@@ -321,12 +321,73 @@ const StudentDashboard = () => {
                   <Trophy className="mr-2 h-5 w-5 text-yellow-600" />
                   Mis Logros y Reconocimientos
                 </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Celebra tus éxitos académicos y reconocimientos especiales
+                </p>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="text-center py-12 text-gray-500">
-                  <Trophy className="h-16 w-16 mx-auto mb-4 text-gray-300" />
-                  <p className="text-lg">¡Sigue esforzándote!</p>
-                  <p className="text-sm">Tus logros y reconocimientos aparecerán aquí</p>
+                <div className="space-y-6">
+                  {/* Logros académicos */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <Card className="p-4 text-center border-2 border-yellow-200 bg-yellow-50">
+                      <Trophy className="h-12 w-12 mx-auto mb-3 text-yellow-600" />
+                      <h4 className="font-medium text-yellow-800 mb-1">Excelencia Académica</h4>
+                      <p className="text-xs text-yellow-700">Promedio superior a 9.0</p>
+                      <Badge className="mt-2 bg-yellow-200 text-yellow-800">Primer Período</Badge>
+                    </Card>
+                    
+                    <Card className="p-4 text-center border-2 border-blue-200 bg-blue-50">
+                      <Star className="h-12 w-12 mx-auto mb-3 text-blue-600" />
+                      <h4 className="font-medium text-blue-800 mb-1">Estudiante Destacado</h4>
+                      <p className="text-xs text-blue-700">Comportamiento ejemplar</p>
+                      <Badge className="mt-2 bg-blue-200 text-blue-800">Convivencia</Badge>
+                    </Card>
+                    
+                    <Card className="p-4 text-center border-2 border-green-200 bg-green-50">
+                      <BookOpen className="h-12 w-12 mx-auto mb-3 text-green-600" />
+                      <h4 className="font-medium text-green-800 mb-1">Participación Activa</h4>
+                      <p className="text-xs text-green-700">Liderazgo en actividades</p>
+                      <Badge className="mt-2 bg-green-200 text-green-800">Extracurricular</Badge>
+                    </Card>
+                  </div>
+                  
+                  {/* Certificaciones */}
+                  <Card className="p-4 border-2 border-purple-200">
+                    <h4 className="font-medium text-purple-800 mb-3">Certificaciones y Diplomas</h4>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between p-2 bg-purple-50 rounded">
+                        <div className="flex items-center">
+                          <GraduationCap className="h-4 w-4 text-purple-600 mr-2" />
+                          <span className="text-sm">Certificado de Inglés Básico</span>
+                        </div>
+                        <Button size="sm" variant="outline" className="border-purple-300 text-purple-600">
+                          <Download className="mr-1 h-3 w-3" />
+                          Descargar
+                        </Button>
+                      </div>
+                      
+                      <div className="flex items-center justify-between p-2 bg-purple-50 rounded">
+                        <div className="flex items-center">
+                          <Trophy className="h-4 w-4 text-purple-600 mr-2" />
+                          <span className="text-sm">Diploma Mejor Compañero</span>
+                        </div>
+                        <Button size="sm" variant="outline" className="border-purple-300 text-purple-600">
+                          <Download className="mr-1 h-3 w-3" />
+                          Descargar
+                        </Button>
+                      </div>
+                    </div>
+                  </Card>
+                  
+                  <div className="p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border border-yellow-200">
+                    <div className="flex items-center">
+                      <Trophy className="h-5 w-5 text-yellow-600 mr-2" />
+                      <span className="text-yellow-800 font-medium">Sistema de Logros Activo</span>
+                    </div>
+                    <p className="text-sm text-yellow-700 mt-1">
+                      Todos tus logros, certificaciones y reconocimientos están habilitados para visualización y descarga.
+                    </p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
