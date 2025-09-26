@@ -14,7 +14,9 @@ import {
   AlertCircle,
   Mail,
   Phone,
-  User
+  User,
+  X,
+  Trash2
 } from 'lucide-react';
 
 const UserApprovalManager = ({ onClose }) => {
