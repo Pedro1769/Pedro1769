@@ -104,6 +104,25 @@ const ConvivenciaDashboard = () => {
     setShowNoteModal(false);
   };
 
+  // Función para guardar nota de convivencia individual de estudiante
+  const saveStudentConvivenceNote = (studentNoteData) => {
+    const noteKey = `${studentNoteData.studentId}_${studentNoteData.period}`;
+    const updatedNotes = {
+      ...studentNotes,
+      [noteKey]: {
+        ...studentNoteData,
+        createdBy: user.name,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+    };
+    
+    setStudentNotes(updatedNotes);
+    localStorage.setItem('gada_student_convivence_notes', JSON.stringify(updatedNotes));
+    setShowStudentNoteModal(false);
+    setSelectedStudent(null);
+  };
+
   // Componente Modal para Nota de Convivencia
   const ConvivenceNoteModal = () => {
     const [noteData, setNoteData] = useState({
