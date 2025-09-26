@@ -121,46 +121,50 @@ const ParentDashboard = () => {
         </div>
 
         {/* Children Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {children.map((child) => {
-            const childAllGrades = mockGrades.filter(g => g.studentId === child.id);
-            const average = calculateAverage(childAllGrades);
-            const performance = getPerformanceLevel(average, child.level);
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {children && children.length > 0 ? children.map((child) => {
+            const childGradesForStats = mockGrades ? mockGrades.filter(g => g.studentId === child.id) : [];
+            const average = calculateAverage(childGradesForStats);
+            const performance = getPerformanceLevel(average, child.level || 'Básica Secundaria');
 
             return (
-              <Card key={child.id} className="hover:shadow-lg transition-shadow cursor-pointer"
-                    onClick={() => setSelectedChild(child.id.toString())}>
+              <Card 
+                key={child.id} 
+                className={`cursor-pointer transition-all duration-300 card-institutional hover-gradient ${
+                  selectedChild === child.id.toString() 
+                    ? 'ring-2 ring-blue-500 shadow-lg' 
+                    : 'hover:shadow-md'
+                }`}
+                onClick={() => setSelectedChild(child.id.toString())}
+              >
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="bg-blue-100 p-2 rounded-lg mr-3">
-                      <GraduationCap className="h-6 w-6 text-blue-600" />
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold">
+                      {(child.name || 'N').charAt(0)}
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-lg">{child.name}</h3>
-                      <p className="text-gray-600 text-sm">{child.grade} - {child.level}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Promedio General:</span>
-                      <Badge variant={average >= 8 ? 'default' : average >= 6 ? 'secondary' : 'destructive'}>
-                        {average.toFixed(1)}
-                      </Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Desempeño:</span>
-                      <Badge variant="outline">{performance.level}</Badge>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">Calificaciones:</span>
-                      <span className="text-sm font-medium">{childAllGrades.length} registradas</span>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-gray-900">{child.name || 'Nombre no disponible'}</h3>
+                      <p className="text-sm text-gray-600">Grado: {child.grade || 'N/A'}</p>
+                      <div className="flex items-center space-x-2 mt-2">
+                        <Badge variant="secondary" className="text-xs">
+                          Promedio: {average.toFixed(1)}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {performance.level}
+                        </Badge>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
             );
-          })}
+          }) : (
+            <Card className="col-span-3 p-8 text-center text-gray-500">
+              <User className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+              <p>No se encontraron estudiantes asociados</p>
+              <p className="text-sm">Los estudiantes aparecerán aquí cuando estén registrados</p>
+            </Card>
+          )}
         </div>
 
         {/* Child Details */}
