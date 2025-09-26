@@ -69,7 +69,7 @@ const ConvivenciaDashboard = () => {
   ];
 
   const stats = {
-    totalStudents: mockStudents.length,
+    totalStudents: allStudents.length,
     totalIncidents: incidents.length,
     resolvedIncidents: incidents.filter(i => i.resolved).length,
     pendingIncidents: incidents.filter(i => !i.resolved).length
