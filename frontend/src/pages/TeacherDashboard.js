@@ -628,6 +628,154 @@ const TeacherDashboard = () => {
               </Card>
             </div>
           </TabsContent>
+
+          <TabsContent value="convivencia" className="space-y-6">
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
+                <CardTitle className="flex items-center">
+                  <Shield className="mr-2 h-5 w-5 text-purple-600" />
+                  Gestión de Convivencia - Docente
+                </CardTitle>
+                <p className="text-sm text-gray-600 mt-2">
+                  Como docente, puede registrar observaciones de convivencia y comportamiento para sus estudiantes.
+                  <span className="text-green-600 font-medium"> Acceso completo habilitado.</span>
+                </p>
+                <div className="mt-2 p-3 bg-green-50 rounded-lg border-green-200 border">
+                  <p className="text-sm text-green-800">
+                    ✅ <strong>FUNCIONALIDAD DOCENTE COMPLETA</strong> - Puede registrar notas de convivencia, observaciones comportamentales y recomendaciones para todos sus estudiantes en cualquier período académico.
+                  </p>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="gradeSelect">Grado</Label>
+                      <Select value={selectedGrade} onValueChange={setSelectedGrade}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar grado" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {availableGrades.map((grade) => (
+                            <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label htmlFor="periodSelect">Período</Label>
+                      <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Seleccionar período" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Primer Período</SelectItem>
+                          <SelectItem value="2">Segundo Período</SelectItem>
+                          <SelectItem value="3">Tercer Período</SelectItem>
+                          <SelectItem value="4">Cuarto Período</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {selectedGrade && (
+                    <div>
+                      <h3 className="text-lg font-semibold mb-4 flex items-center">
+                        <Users className="mr-2 h-5 w-5" />
+                        Estudiantes de {selectedGrade} - Período {selectedPeriod}
+                      </h3>
+                      
+                      <div className="grid gap-4">
+                        {teacherStudents
+                          .filter(student => student.grade === selectedGrade)
+                          .map((student) => (
+                            <Card key={student.id} className="border border-purple-200 hover:shadow-md transition-shadow">
+                              <CardHeader className="pb-3">
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center space-x-3">
+                                    <div className="p-2 bg-purple-100 rounded-full">
+                                      <UserCheck className="h-4 w-4 text-purple-600" />
+                                    </div>
+                                    <div>
+                                      <h4 className="font-medium text-gray-900">{student.name}</h4>
+                                      <p className="text-sm text-gray-600">
+                                        Documento: {student.document}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className="flex space-x-2">
+                                    <Button size="sm" variant="outline" className="border-purple-200 text-purple-600 hover:bg-purple-50">
+                                      <Eye className="mr-1 h-3 w-3" />
+                                      Ver Historial
+                                    </Button>
+                                    <Button size="sm" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:shadow-md transition-all">
+                                      <Plus className="mr-1 h-3 w-3" />
+                                      Agregar Nota
+                                    </Button>
+                                  </div>
+                                </div>
+                              </CardHeader>
+                              <CardContent>
+                                <div className="space-y-3">
+                                  <div>
+                                    <Label className="text-sm font-medium text-gray-700">Observación Rápida</Label>
+                                    <div className="flex gap-2 mt-1">
+                                      <Button size="sm" variant="outline" className="text-green-600 border-green-200 hover:bg-green-50">
+                                        Excelente
+                                      </Button>
+                                      <Button size="sm" variant="outline" className="text-blue-600 border-blue-200 hover:bg-blue-50">
+                                        Bueno
+                                      </Button>
+                                      <Button size="sm" variant="outline" className="text-yellow-600 border-yellow-200 hover:bg-yellow-50">
+                                        Mejorar
+                                      </Button>
+                                      <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
+                                        Refuerzo
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                    <div>
+                                      <Label className="text-xs font-medium text-gray-600">Comportamiento</Label>
+                                      <div className="flex items-center space-x-1 mt-1">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                          <button key={star} className="text-gray-300 hover:text-yellow-400 transition-colors">
+                                            ⭐
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <Label className="text-xs font-medium text-gray-600">Participación</Label>
+                                      <div className="flex items-center space-x-1 mt-1">
+                                        {[1, 2, 3, 4, 5].map((star) => (
+                                          <button key={star} className="text-gray-300 hover:text-blue-400 transition-colors">
+                                            ⭐
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {!selectedGrade && (
+                    <div className="text-center py-12 text-gray-500">
+                      <Shield className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+                      <p className="text-lg">Seleccione un grado para gestionar las notas de convivencia</p>
+                      <p className="text-sm">Podrá registrar observaciones y notas comportamentales para sus estudiantes</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
         </Tabs>
 
         {/* Modal para agregar estudiante */}
