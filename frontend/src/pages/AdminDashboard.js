@@ -29,6 +29,7 @@ import PeriodManager from '../components/PeriodManager';
 import ReportCardModern from '../components/ReportCardModern';
 import StudentEditModal from '../components/StudentEditModal';
 import TeacherEditModal from '../components/TeacherEditModal';
+import UserApprovalManager from '../components/UserApprovalManager';
 import AcademicObjectivesManager from '../components/AcademicObjectivesManager';
 import CurriculumManager from '../components/CurriculumManager';
 
