@@ -57,12 +57,25 @@ const TeacherDashboard = () => {
   }
 
   // Filter students by available grades
-  const teacherStudents = mockStudents.filter(student => 
+  const teacherStudents = students.filter(student => 
     availableGrades.includes(student.grade)
   );
 
   // Get subjects for the teacher
   const teacherSubjects = user.subjects || [];
+
+  // Group students by grade
+  const studentsByGrade = availableGrades.reduce((acc, grade) => {
+    acc[grade] = teacherStudents.filter(student => student.grade === grade);
+    return acc;
+  }, {});
+
+  // Handle adding new student
+  const handleAddStudent = (studentData) => {
+    const newStudent = StudentsManager.add(studentData);
+    setStudents(StudentsManager.getAll());
+    setShowAddStudentModal(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
