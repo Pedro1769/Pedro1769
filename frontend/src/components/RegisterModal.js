@@ -141,21 +141,20 @@ const RegisterModal = ({ onClose, onRegister }) => {
   };
 
   const toggleSubject = (subject) => {
-    setFormData(prev => {
-      const newSubjects = prev.subjects.includes(subject)
-        ? prev.subjects.filter(s => s !== subject)
-        : [...prev.subjects, subject];
-      console.log('Toggling subject:', subject, 'New subjects:', newSubjects);
-      return { ...prev, subjects: newSubjects };
-    });
+    setFormData(prevState => ({
+      ...prevState,
+      subjects: prevState.subjects.includes(subject)
+        ? prevState.subjects.filter(s => s !== subject)
+        : [...prevState.subjects, subject]
+    }));
   };
 
   const toggleGrade = (grade) => {
-    setFormData(prev => ({
-      ...prev,
-      grades: prev.grades.includes(grade)
-        ? prev.grades.filter(g => g !== grade)
-        : [...prev.grades, grade]
+    setFormData(prevState => ({
+      ...prevState,
+      grades: prevState.grades.includes(grade)
+        ? prevState.grades.filter(g => g !== grade)
+        : [...prevState.grades, grade]
     }));
   };
 
