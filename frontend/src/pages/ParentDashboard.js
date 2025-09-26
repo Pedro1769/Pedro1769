@@ -62,7 +62,9 @@ const ParentDashboard = () => {
     return <Navigate to="/login" />;
   }
 
-  const selectedChildData = children.find(child => child.id === parseInt(selectedChild));
+  const selectedChildData = children && children.length > 0 && selectedChild 
+    ? children.find(child => child && child.id === parseInt(selectedChild))
+    : null;
 
   // Get grades for selected child and period
   const childGrades = selectedChild && mockGrades ? mockGrades.filter(
