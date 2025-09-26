@@ -228,7 +228,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={(e) => {
+                      const newValue = e.target.value;
+                      setFormData(prev => ({ ...prev, password: newValue }));
+                    }}
                     placeholder="Mínimo 6 caracteres"
                     className={errors.password ? 'border-red-500' : ''}
                   />
