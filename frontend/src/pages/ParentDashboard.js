@@ -181,7 +181,7 @@ const ParentDashboard = () => {
         </div>
 
         {/* Child Details */}
-        {selectedChild && (
+        {selectedChild && selectedChildData && (
           <Tabs defaultValue="grades" className="space-y-6">
             <div className="flex justify-between items-center">
               <TabsList className="bg-white/80 backdrop-blur-sm border border-gray-200">
