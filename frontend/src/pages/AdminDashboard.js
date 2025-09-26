@@ -760,6 +760,96 @@ const AdminDashboard = () => {
           />
         )}
 
+        {showCodeGenerator && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <Card className="w-full max-w-md">
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle className="flex items-center">
+                  <Download className="mr-2 h-5 w-5" />
+                  Generar Código de Descarga
+                </CardTitle>
+                <Button variant="ghost" onClick={() => setShowCodeGenerator(false)}>
+                  ❌
+                </Button>
+              </CardHeader>
+              
+              <CardContent>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.target);
+                  const type = formData.get('type');
+                  const studentDocument = formData.get('studentDocument');
+                  const parentEmail = formData.get('parentEmail');
+                  
+                  if (!type || !studentDocument || !parentEmail) {
+                    alert('Todos los campos son obligatorios');
+                    return;
+                  }
+                  
+                  const newCode = DownloadCodesManager.generateCode(type, studentDocument, parentEmail);
+                  if (newCode) {
+                    setDownloadCodes(DownloadCodesManager.getAll());
+                    alert(`Código generado exitosamente: ${newCode.code}\n\nEste código expira en 24 horas y es de un solo uso.`);
+                    setShowCodeGenerator(false);
+                  } else {
+                    alert('Error al generar el código');
+                  }
+                }} className="space-y-4">
+                  
+                  <div>
+                    <Label htmlFor="type">Tipo de Documento *</Label>
+                    <Select name="type" required>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Seleccionar tipo" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="boletin">Boletín de Calificaciones</SelectItem>
+                        <SelectItem value="certificado">Certificado Académico</SelectItem>
+                        <SelectItem value="reporte">Reporte Comportamental</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="studentDocument">Documento del Estudiante *</Label>
+                    <Input
+                      name="studentDocument"
+                      placeholder="Número de documento del estudiante"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="parentEmail">Email del Padre/Acudiente *</Label>
+                    <Input
+                      name="parentEmail"
+                      type="email"
+                      placeholder="correo@ejemplo.com"
+                      required
+                    />
+                  </div>
+
+                  <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                    <p className="text-xs text-yellow-800">
+                      <strong>Importante:</strong> Este código será válido por 24 horas y se puede usar una sola vez. 
+                      Compártalo directamente con el padre autorizado.
+                    </p>
+                  </div>
+
+                  <div className="flex justify-end space-x-2 pt-4">
+                    <Button type="button" variant="outline" onClick={() => setShowCodeGenerator(false)}>
+                      Cancelar
+                    </Button>
+                    <Button type="submit" className="bg-gradient-gada text-white">
+                      🔑 Generar Código
+                    </Button>
+                  </div>
+                </form>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
         {showUserManager && (
           <UserApprovalManager 
             onClose={() => setShowUserManager(false)}
