@@ -68,7 +68,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
         ...formData,
         id: Date.now() + Math.random(),
         createdAt: new Date().toISOString(),
-        approved: formData.role === 'admin' ? true : false // Admins auto-approved
+        approved: true // Todos los usuarios se aprueban automáticamente
       };
       
       // Remove password confirmation from final data
