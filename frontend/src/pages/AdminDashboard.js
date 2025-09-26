@@ -291,6 +291,30 @@ const AdminDashboard = () => {
             </div>
           </TabsContent>
 
+          <TabsContent value="users" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Gestión de Usuarios del Sistema</CardTitle>
+                <p className="text-sm text-gray-600">
+                  Administre todos los usuarios registrados: docentes, padres de familia y coordinadores.
+                  Aquí puede ver, editar o eliminar cualquier cuenta de usuario registrada en el sistema.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <Button onClick={() => setShowUserManager(true)} className="mb-4">
+                  <Users className="mr-2 h-4 w-4" />
+                  Abrir Gestor de Usuarios
+                </Button>
+                <div className="bg-blue-50 p-4 rounded-lg">
+                  <p className="text-sm text-blue-800">
+                    <strong>Nota:</strong> Todos los usuarios ahora se registran con acceso inmediato. 
+                    Use este gestor para ver los detalles completos, editar información o eliminar cuentas si es necesario.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="students" className="mt-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
