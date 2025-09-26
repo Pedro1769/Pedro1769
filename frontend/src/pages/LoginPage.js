@@ -21,6 +21,14 @@ const LoginPage = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
 
+  // Función temporal para mostrar usuarios registrados (para depuración)
+  const showRegisteredUsers = () => {
+    const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+    const allUsers = [...mockUsers, ...registeredUsers.filter(u => u.approved)];
+    console.log('Usuarios disponibles:', allUsers);
+    alert(`Usuarios registrados: ${allUsers.length}\n\nEmails disponibles:\n${allUsers.map(u => `${u.email} (${u.role})`).join('\n')}`);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
