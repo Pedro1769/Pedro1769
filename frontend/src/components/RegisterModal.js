@@ -85,16 +85,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Debug: Log form data before validation
-    console.log('Form data before validation:', formData);
-    console.log('Form data keys:', Object.keys(formData));
-    console.log('Form data values:', Object.values(formData));
-    
-    if (!validateForm()) {
-      console.log('Validation failed, current errors:', errors);
-      return;
-    }
+    if (!validateForm()) return;
     
     setLoading(true);
     try {
