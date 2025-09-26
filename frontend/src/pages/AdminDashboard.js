@@ -87,13 +87,39 @@ const AdminDashboard = () => {
     PeriodsManager.save(newPeriods);
   };
 
-  const stats = {
-    students: students.length,
-    teachers: teachers.length,
-    parents: mockUsers.filter(u => u.role === 'parent').length,
-    grades: mockGrades.length,
-    activePeriod: periods.find(p => p.isActive)?.name || 'Ninguno'
+  const calculateStats = () => {
+    try {
+      // Obtener estudiantes de ambas fuentes
+      const allStudents = StudentsManager.getAll();
+      
+      // Obtener usuarios registrados
+      const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+      const approvedUsers = registeredUsers.filter(u => u.approved);
+      
+      return {
+        students: allStudents.length,
+        teachers: [...mockUsers.filter(u => u.role === 'teacher'), ...approvedUsers.filter(u => u.role === 'teacher')].length,
+        parents: [...mockUsers.filter(u => u.role === 'parent'), ...approvedUsers.filter(u => u.role === 'parent')].length,
+        grades: GradesManager.getAll().length,
+        registeredUsers: registeredUsers.length,
+        approvedUsers: approvedUsers.length,
+        activePeriod: periods.find(p => p.isActive)?.name || 'Ninguno'
+      };
+    } catch (error) {
+      console.error('Error calculating stats:', error);
+      return {
+        students: 0,
+        teachers: 0,
+        parents: 0,
+        grades: 0,
+        registeredUsers: 0,
+        approvedUsers: 0,
+        activePeriod: 'Ninguno'
+      };
+    }
   };
+
+  const stats = calculateStats();
 
   const handleViewReportCard = (student) => {
     setSelectedStudent(student);
