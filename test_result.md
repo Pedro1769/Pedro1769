@@ -173,7 +173,9 @@ test_plan:
   current_focus:
     - "Auto-approve users on registration"
     - "Update registration success message"
-  stuck_tasks: []
+  stuck_tasks:
+    - "Auto-approve users on registration"
+    - "Update registration success message"
   test_all: false
   test_priority: "high_first"
 
