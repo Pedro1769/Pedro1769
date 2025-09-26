@@ -54,6 +54,14 @@ const AdminDashboard = () => {
   const [students, setStudents] = useState([]);
   const [periods, setPeriods] = useState([]);
   const [teachers, setTeachers] = useState([]);
+  const [showCodeGenerator, setShowCodeGenerator] = useState(false);
+  const [downloadCodes, setDownloadCodes] = useState([]);
+
+  // Cargar códigos de descarga
+  useEffect(() => {
+    const codes = DownloadCodesManager.getAll();
+    setDownloadCodes(codes);
+  }, []);
 
   // Inicializar datos al cargar el componente
   useEffect(() => {
