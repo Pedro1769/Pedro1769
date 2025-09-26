@@ -259,18 +259,14 @@ const UserApprovalManager = ({ onClose }) => {
         
         <CardContent>
           <Tabs defaultValue="pending">
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-2">
+              <TabsTrigger value="approved" className="flex items-center">
+                <CheckCircle className="mr-2 h-4 w-4" />
+                Usuarios Activos ({approvedUsers.length})
+              </TabsTrigger>
               <TabsTrigger value="pending" className="flex items-center">
                 <Clock className="mr-2 h-4 w-4" />
                 Pendientes ({pendingUsers.length})
-              </TabsTrigger>
-              <TabsTrigger value="approved" className="flex items-center">
-                <CheckCircle className="mr-2 h-4 w-4" />
-                Aprobadas ({approvedUsers.length})
-              </TabsTrigger>
-              <TabsTrigger value="rejected" className="flex items-center">
-                <XCircle className="mr-2 h-4 w-4" />
-                Rechazadas ({rejectedUsers.length})
               </TabsTrigger>
             </TabsList>
 
