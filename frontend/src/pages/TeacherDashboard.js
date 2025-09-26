@@ -16,7 +16,11 @@ import {
   Edit,
   Save,
   UserPlus,
-  X
+  X,
+  Shield,
+  Eye,
+  Plus,
+  UserCheck
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
 import { StudentsManager } from '../utils/dataManager';
