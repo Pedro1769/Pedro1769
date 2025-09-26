@@ -189,7 +189,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={handleInputChange('name')}
                     placeholder="Nombres y apellidos"
                     className={errors.name ? 'border-red-500' : ''}
                   />
@@ -201,7 +201,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Input
                     id="document"
                     value={formData.document}
-                    onChange={(e) => setFormData({ ...formData, document: e.target.value })}
+                    onChange={handleInputChange('document')}
                     placeholder="Número de documento"
                     className={errors.document ? 'border-red-500' : ''}
                   />
@@ -210,17 +210,13 @@ const RegisterModal = ({ onClose, onRegister }) => {
 
                 <div>
                   <Label htmlFor="email">Email *</Label>
-                  <input
+                  <Input
                     id="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => {
-                      const newValue = e.target.value;
-                      console.log('Email input changed:', newValue);
-                      setFormData(prev => ({ ...prev, email: newValue }));
-                    }}
+                    onChange={handleInputChange('email')}
                     placeholder="correo@ejemplo.com"
-                    className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${errors.email ? 'border-red-500' : ''}`}
+                    className={errors.email ? 'border-red-500' : ''}
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
@@ -230,24 +226,20 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Input
                     id="phone"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={handleInputChange('phone')}
                     placeholder="Número de contacto"
                   />
                 </div>
 
                 <div>
                   <Label htmlFor="password">Contraseña *</Label>
-                  <input
+                  <Input
                     id="password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => {
-                      const newValue = e.target.value;
-                      console.log('Password input changed:', newValue);
-                      setFormData(prev => ({ ...prev, password: newValue }));
-                    }}
+                    onChange={handleInputChange('password')}
                     placeholder="Mínimo 6 caracteres"
-                    className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${errors.password ? 'border-red-500' : ''}`}
+                    className={errors.password ? 'border-red-500' : ''}
                   />
                   {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                 </div>
@@ -258,10 +250,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="confirmPassword"
                     type="password"
                     value={formData.confirmPassword}
-                    onChange={(e) => {
-                      const newValue = e.target.value;
-                      setFormData(prev => ({ ...prev, confirmPassword: newValue }));
-                    }}
+                    onChange={handleInputChange('confirmPassword')}
                     placeholder="Repetir contraseña"
                     className={errors.confirmPassword ? 'border-red-500' : ''}
                   />
