@@ -183,17 +183,6 @@ const LoginPage = () => {
                 ¿Olvidaste tu contraseña?
               </Link>
               
-              {/* Botón temporal para depuración */}
-              <div>
-                <button 
-                  type="button"
-                  onClick={showRegisteredUsers}
-                  className="text-xs text-gray-500 hover:text-gray-700 underline"
-                >
-                  Ver usuarios registrados (Debug)
-                </button>
-              </div>
-              
               <div className="border-t pt-4">
                 <Button 
                   variant="outline" 
