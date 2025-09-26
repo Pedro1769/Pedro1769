@@ -561,7 +561,10 @@ const ConvivenciaDashboard = () => {
         <Tabs defaultValue="notes" className="space-y-6">
           <TabsList className="bg-white/80 backdrop-blur-sm border border-gray-200">
             <TabsTrigger value="notes" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
-              Notas de Convivencia
+              Notas por Grado
+            </TabsTrigger>
+            <TabsTrigger value="students" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+              Notas Individuales
             </TabsTrigger>
             <TabsTrigger value="incidents" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Incidentes
