@@ -77,6 +77,11 @@ const RegisterModal = ({ onClose, onRegister }) => {
       if (formData.subjects.length === 0) newErrors.subjects = 'Debe seleccionar al menos una materia';
     }
     
+    if (formData.role === 'student') {
+      if (!formData.studentGrade) newErrors.studentGrade = 'Debe seleccionar el grado';
+      if (!formData.birthDate) newErrors.birthDate = 'La fecha de nacimiento es obligatoria';
+    }
+    
     if (formData.role === 'parent') {
       if (!formData.studentDocument.trim()) newErrors.studentDocument = 'El documento del estudiante es obligatorio';
       if (!formData.relationshipType) newErrors.relationshipType = 'Debe especificar la relación con el estudiante';
