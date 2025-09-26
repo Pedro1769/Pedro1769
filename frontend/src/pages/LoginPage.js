@@ -50,8 +50,11 @@ const LoginPage = () => {
           case 'parent':
             navigate('/parent');
             break;
+          case 'student':
+            navigate('/student');
+            break;
           case 'coordinadora_convivencia':
-            navigate('/admin'); // También van al panel de admin
+            navigate('/convivencia');
             break;
           default:
             navigate('/dashboard');
