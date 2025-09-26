@@ -609,6 +609,9 @@ const TeacherDashboard = () => {
             </div>
           </TabsContent>
         </Tabs>
+
+        {/* Modal para agregar estudiante */}
+        {showAddStudentModal && <AddStudentModal />}
       </div>
     </div>
   );
