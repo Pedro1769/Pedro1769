@@ -632,39 +632,181 @@ const ConvivenciaDashboard = () => {
           </TabsContent>
 
           <TabsContent value="reports" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Reportes Manuales */}
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
+                  <CardTitle className="flex items-center">
+                    <FileText className="mr-2 h-5 w-5 text-blue-600" />
+                    Reportes Manuales
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Cree reportes personalizados de convivencia y comportamiento
+                  </p>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <Button className="w-full justify-start bg-gradient-to-r from-blue-500 to-teal-500 text-white h-16">
+                      <div className="text-left">
+                        <Calendar className="h-6 w-6 mb-1" />
+                        <p className="text-sm font-medium">Reporte Mensual de Convivencia</p>
+                        <p className="text-xs opacity-90">Generar informe completo del mes</p>
+                      </div>
+                    </Button>
+                    
+                    <Button className="w-full justify-start bg-gradient-to-r from-purple-500 to-blue-500 text-white h-16">
+                      <div className="text-left">
+                        <TrendingUp className="h-6 w-6 mb-1" />
+                        <p className="text-sm font-medium">Estadísticas por Grado</p>
+                        <p className="text-xs opacity-90">Análisis comportamental por curso</p>
+                      </div>
+                    </Button>
+                    
+                    <Button className="w-full justify-start bg-gradient-to-r from-teal-500 to-green-500 text-white h-16">
+                      <div className="text-left">
+                        <Shield className="h-6 w-6 mb-1" />
+                        <p className="text-sm font-medium">Reporte de Incidentes</p>
+                        <p className="text-xs opacity-90">Resumen de casos y seguimientos</p>
+                      </div>
+                    </Button>
+                    
+                    <Button className="w-full justify-start bg-gradient-to-r from-orange-500 to-red-500 text-white h-16">
+                      <div className="text-left">
+                        <FileText className="h-6 w-6 mb-1" />
+                        <p className="text-sm font-medium">Reporte Personalizado</p>
+                        <p className="text-xs opacity-90">Crear reporte con filtros específicos</p>
+                      </div>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Gestión de Archivos */}
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 rounded-t-lg">
+                  <CardTitle className="flex items-center">
+                    <Upload className="mr-2 h-5 w-5 text-green-600" />
+                    Gestión de Archivos
+                  </CardTitle>
+                  <p className="text-sm text-gray-600">
+                    Administre documentos y archivos adjuntos del área de convivencia
+                  </p>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Zona de carga de archivos */}
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
+                      <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                      <p className="text-sm text-gray-600 mb-2">Subir archivos de convivencia</p>
+                      <p className="text-xs text-gray-500 mb-4">
+                        Formatos: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG (Máx. 10MB)
+                      </p>
+                      <Button variant="outline" className="border-blue-300 text-blue-600 hover:bg-blue-50">
+                        <Plus className="mr-2 h-4 w-4" />
+                        Seleccionar Archivos
+                      </Button>
+                    </div>
+
+                    {/* Archivos recientes */}
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-sm text-gray-700">Archivos Recientes</h4>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                          <div className="flex items-center">
+                            <FileText className="h-4 w-4 text-blue-600 mr-2" />
+                            <span className="text-sm">Reglamento_Convivencia_2024.pdf</span>
+                          </div>
+                          <div className="flex space-x-1">
+                            <Button size="sm" variant="ghost">
+                              <Eye className="h-3 w-3" />
+                            </Button>
+                            <Button size="sm" variant="ghost">
+                              <Download className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                          <div className="flex items-center">
+                            <FileText className="h-4 w-4 text-green-600 mr-2" />
+                            <span className="text-sm">Acta_Comite_Convivencia_Enero.docx</span>
+                          </div>
+                          <div className="flex space-x-1">
+                            <Button size="sm" variant="ghost">
+                              <Eye className="h-3 w-3" />
+                            </Button>
+                            <Button size="sm" variant="ghost">
+                              <Download className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                          <div className="flex items-center">
+                            <FileText className="h-4 w-4 text-purple-600 mr-2" />
+                            <span className="text-sm">Estadisticas_Comportamiento_Q1.xlsx</span>
+                          </div>
+                          <div className="flex space-x-1">
+                            <Button size="sm" variant="ghost">
+                              <Eye className="h-3 w-3" />
+                            </Button>
+                            <Button size="sm" variant="ghost">
+                              <Download className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Button className="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white">
+                      <Upload className="mr-2 h-4 w-4" />
+                      Ver Todos los Archivos
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Configuración de Períodos */}
             <Card className="shadow-lg border-0 card-institutional">
-              <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
+              <CardHeader className="bg-gradient-to-r from-orange-50 to-yellow-50 rounded-t-lg">
                 <CardTitle className="flex items-center">
-                  <FileText className="mr-2 h-5 w-5 text-blue-600" />
-                  Reportes de Convivencia
+                  <Calendar className="mr-2 h-5 w-5 text-orange-600" />
+                  Configuración de Períodos Académicos
                 </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Administre y configure los períodos académicos para el manejo de notas de convivencia
+                </p>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Button variant="outline" className="h-20 border-2 hover:bg-gradient-hover">
-                    <div className="text-center">
-                      <Calendar className="h-6 w-6 mx-auto mb-2" />
-                      <p className="text-sm">Reporte Mensual</p>
-                    </div>
-                  </Button>
-                  <Button variant="outline" className="h-20 border-2 hover:bg-gradient-hover">
-                    <div className="text-center">
-                      <TrendingUp className="h-6 w-6 mx-auto mb-2" />
-                      <p className="text-sm">Estadísticas por Grado</p>
-                    </div>
-                  </Button>
-                  <Button variant="outline" className="h-20 border-2 hover:bg-gradient-hover">
-                    <div className="text-center">
-                      <Shield className="h-6 w-6 mx-auto mb-2" />
-                      <p className="text-sm">Incidentes por Tipo</p>
-                    </div>
-                  </Button>
-                  <Button variant="outline" className="h-20 border-2 hover:bg-gradient-hover">
-                    <div className="text-center">
-                      <FileText className="h-6 w-6 mx-auto mb-2" />
-                      <p className="text-sm">Reporte Personalizado</p>
-                    </div>
-                  </Button>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {periods.map((period) => (
+                    <Card key={period.id} className="border border-green-200 bg-green-50">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-medium text-green-800">{period.name}</h4>
+                          <CheckCircle className="h-5 w-5 text-green-600" />
+                        </div>
+                        <p className="text-xs text-green-700 mb-2">
+                          {period.startDate} - {period.endDate}
+                        </p>
+                        <Badge className="bg-green-200 text-green-800 text-xs">
+                          Habilitado
+                        </Badge>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                
+                <div className="mt-6 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+                  <div className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                    <span className="text-green-800 font-medium">Estado del Sistema: Totalmente Operativo</span>
+                  </div>
+                  <p className="text-sm text-green-700 mt-1">
+                    Todos los períodos académicos están habilitados para la gestión de notas de convivencia. 
+                    Puede crear, editar y administrar contenido en cualquier período sin restricciones.
+                  </p>
                 </div>
               </CardContent>
             </Card>
