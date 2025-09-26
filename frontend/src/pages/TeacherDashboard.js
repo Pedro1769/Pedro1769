@@ -141,7 +141,7 @@ const TeacherDashboard = () => {
                         <SelectValue placeholder="Seleccionar grado" />
                       </SelectTrigger>
                       <SelectContent>
-                        {user.grades?.map((grade) => (
+                        {availableGrades.map((grade) => (
                           <SelectItem key={grade} value={grade}>{grade}</SelectItem>
                         ))}
                       </SelectContent>
