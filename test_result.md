@@ -123,27 +123,33 @@ backend:
 frontend:
   - task: "Auto-approve users on registration"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/components/RegisterModal.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Changed line 71 to auto-approve all users: approved: true (removed admin-only logic)"
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL BUG FOUND: Registration form has severe state management issue. Form inputs (email, password, subjects) are not updating React state despite appearing filled in UI. Debug logs show: email='', password='', subjects=Array(0) even after user fills them. This prevents registration from completing. Tested with both shadcn Input components and native HTML inputs - same issue. Likely React 19 compatibility issue or form state corruption."
 
   - task: "Update registration success message"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/frontend/src/pages/LoginPage.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Updated registration message to inform users can login immediately"
+      - working: false
+        agent: "testing"
+        comment: "Cannot test success message because registration form is completely broken. Users cannot register due to form state management bug in RegisterModal.js."
 
   - task: "Search and replace 'academo granada' text"
     implemented: true
