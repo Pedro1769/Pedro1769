@@ -305,21 +305,23 @@ const StudentDashboard = () => {
               </CardHeader>
               <CardContent className="p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="text-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
-                    <Download className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                    <p className="text-sm text-gray-600 mb-2">Descargar Boletín</p>
-                    <Button variant="outline" disabled>
-                      Próximamente
+                  <Card className="text-center p-6 border-2 border-blue-200 hover:border-blue-400 transition-colors hover:shadow-lg">
+                    <Download className="h-12 w-12 mx-auto mb-4 text-blue-500" />
+                    <p className="text-sm text-gray-700 mb-2 font-medium">Descargar Boletín</p>
+                    <Button className="bg-gradient-to-r from-blue-500 to-teal-500 text-white hover:shadow-lg">
+                      <Download className="mr-2 h-4 w-4" />
+                      Descargar PDF
                     </Button>
-                  </div>
+                  </Card>
                   
-                  <div className="text-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
-                    <Calendar className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                    <p className="text-sm text-gray-600 mb-2">Historial Académico</p>
-                    <Button variant="outline" disabled>
-                      Próximamente
+                  <Card className="text-center p-6 border-2 border-green-200 hover:border-green-400 transition-colors hover:shadow-lg">
+                    <Calendar className="h-12 w-12 mx-auto mb-4 text-green-500" />
+                    <p className="text-sm text-gray-700 mb-2 font-medium">Historial Académico</p>
+                    <Button className="bg-gradient-to-r from-green-500 to-blue-500 text-white hover:shadow-lg">
+                      <Eye className="mr-2 h-4 w-4" />
+                      Ver Historial
                     </Button>
-                  </div>
+                  </Card>
                 </div>
               </CardContent>
             </Card>
