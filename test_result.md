@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "necesito que cuando un usuario se registre quede funcional su rol y panel, que pueda ingresar inmediatament, tambien necesito que en lugar de academo granada, debe decir gimnasio americano del atlantico"
+user_problem_statement: "Gimnasio americano del atlantico, academico, importante que todos los paneles tengan cada sesion totalmente funcional, sin ningun campo que se pueda seleccionar y no este disponible, habilita todo en cada panel segun corresponda a su rol, es importante que la coordinadora de convivencia pueda asignar las notas de convivencia y acompañamiento de acudiente por grado y por estudiante como lo hacen los docentes"
 
 backend:
   - task: "Review existing backend authentication system"
