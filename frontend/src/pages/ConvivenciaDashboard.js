@@ -267,9 +267,26 @@ const ConvivenciaDashboard = () => {
               Panel de Convivencia
             </h1>
             <p className="text-gray-600 mt-2">Bienvenida, {user.name}</p>
-            <Badge variant="secondary" className="mt-2 bg-purple-100 text-purple-800">
-              Coordinadora de Convivencia
-            </Badge>
+            <div className="mt-4 flex flex-wrap gap-2">
+              <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                Coordinadora de Convivencia
+              </Badge>
+              <Badge variant="outline" className="bg-green-50 border-green-200 text-green-700">
+                ✓ Todas las sesiones habilitadas
+              </Badge>
+            </div>
+            
+            {/* Información de acceso completo */}
+            <div className="mt-4 p-4 bg-gradient-to-r from-blue-50 to-teal-50 rounded-lg border border-blue-200">
+              <div className="flex items-center">
+                <Shield className="h-5 w-5 text-blue-600 mr-2" />
+                <span className="text-blue-800 font-medium">Acceso Completo al Sistema</span>
+              </div>
+              <p className="text-sm text-blue-700 mt-1">
+                Como Coordinadora de Convivencia tiene acceso a todas las funcionalidades: gestión de notas para boletín, 
+                reportes manuales, archivos adjuntos y administración de períodos académicos sin restricciones.
+              </p>
+            </div>
           </div>
         </div>
 
