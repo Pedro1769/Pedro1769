@@ -136,7 +136,9 @@ const ParentDashboard = () => {
         {/* Children Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           {children && children.length > 0 ? children.map((child) => {
-            const childGradesForStats = mockGrades ? mockGrades.filter(g => g.studentId === child.id) : [];
+            if (!child || !child.id) return null;
+            
+            const childGradesForStats = mockGrades ? mockGrades.filter(g => g && g.studentId === child.id) : [];
             const average = calculateAverage(childGradesForStats);
             const performance = getPerformanceLevel(average, child.level || 'Básica Secundaria');
 
