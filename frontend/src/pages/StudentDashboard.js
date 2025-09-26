@@ -399,7 +399,114 @@ const StudentDashboard = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="reports" className="space-y-6">
+          <TabsContent value="behavior" className="space-y-6">
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-t-lg">
+                <CardTitle className="flex items-center">
+                  <Star className="mr-2 h-5 w-5 text-purple-600" />
+                  Mi Comportamiento y Convivencia
+                </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Seguimiento de mi comportamiento escolar y reconocimientos
+                </p>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                  <Card className="p-4 text-center border-2 border-green-200 bg-green-50">
+                    <CheckCircle className="h-8 w-8 mx-auto mb-2 text-green-600" />
+                    <h4 className="font-medium text-green-800">Comportamiento Excelente</h4>
+                    <p className="text-sm text-green-700 mt-1">Sin observaciones negativas</p>
+                  </Card>
+                  
+                  <Card className="p-4 text-center border-2 border-blue-200 bg-blue-50">
+                    <Trophy className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                    <h4 className="font-medium text-blue-800">Reconocimientos</h4>
+                    <p className="text-sm text-blue-700 mt-1">3 menciones positivas</p>
+                  </Card>
+                  
+                  <Card className="p-4 text-center border-2 border-orange-200 bg-orange-50">
+                    <Clock className="h-8 w-8 mx-auto mb-2 text-orange-600" />
+                    <h4 className="font-medium text-orange-800">Asistencia</h4>
+                    <p className="text-sm text-orange-700 mt-1">95% puntualidad</p>
+                  </Card>
+                </div>
+                
+                <div className="p-4 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
+                  <h4 className="font-medium text-purple-800 mb-2">Nota de Convivencia - Período {selectedPeriod}</h4>
+                  <p className="text-sm text-purple-700">
+                    Has demostrado un excelente comportamiento durante este período, mostrando respeto hacia tus compañeros y docentes. 
+                    Tu participación en actividades grupales ha sido destacada. ¡Sigue así!
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="homework" className="space-y-6">
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-t-lg">
+                <CardTitle className="flex items-center">
+                  <BookOpen className="mr-2 h-5 w-5 text-indigo-600" />
+                  Mis Tareas y Actividades
+                </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Seguimiento de tareas asignadas y actividades pendientes
+                </p>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Card className="p-4 border-l-4 border-red-500 bg-red-50">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-medium text-red-800">Matemáticas - Ejercicios Cap. 5</h4>
+                        <p className="text-sm text-red-700 mt-1">
+                          Resolver ejercicios del 15 al 30 del capítulo de ecuaciones lineales
+                        </p>
+                        <p className="text-xs text-red-600 mt-2">Fecha límite: Mañana</p>
+                      </div>
+                      <Badge className="bg-red-200 text-red-800 text-xs">Pendiente</Badge>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-4 border-l-4 border-yellow-500 bg-yellow-50">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-medium text-yellow-800">Español - Ensayo</h4>
+                        <p className="text-sm text-yellow-700 mt-1">
+                          Escribir ensayo de 500 palabras sobre "El medio ambiente en mi comunidad"
+                        </p>
+                        <p className="text-xs text-yellow-600 mt-2">Fecha límite: Viernes</p>
+                      </div>
+                      <Badge className="bg-yellow-200 text-yellow-800 text-xs">En Progreso</Badge>
+                    </div>
+                  </Card>
+                  
+                  <Card className="p-4 border-l-4 border-green-500 bg-green-50">
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <h4 className="font-medium text-green-800">Ciencias - Laboratorio</h4>
+                        <p className="text-sm text-green-700 mt-1">
+                          Informe del experimento sobre densidad de líquidos realizado en clase
+                        </p>
+                        <p className="text-xs text-green-600 mt-2">Entregado el: Lunes pasado</p>
+                      </div>
+                      <Badge className="bg-green-200 text-green-800 text-xs">Completado</Badge>
+                    </div>
+                  </Card>
+                </div>
+                
+                <div className="mt-6 p-4 bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg">
+                  <div className="flex items-center">
+                    <CheckCircle className="h-5 w-5 text-indigo-600 mr-2" />
+                    <span className="text-indigo-800 font-medium">Sistema de Tareas Completamente Habilitado</span>
+                  </div>
+                  <p className="text-sm text-indigo-700 mt-1">
+                    Acceso total a todas las tareas, fechas límite y seguimiento de actividades académicas.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
             <Card className="shadow-lg border-0 card-institutional">
               <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
                 <div className="flex justify-between items-center">
