@@ -578,7 +578,7 @@ const ConvivenciaDashboard = () => {
                     </thead>
                     <tbody>
                       {incidents.map((incident) => {
-                        const student = mockStudents.find(s => s.id === incident.studentId);
+                        const student = allStudents.find(s => s.id === incident.studentId);
                         return (
                           <tr key={incident.id} className="border-b hover:bg-gradient-hover transition-colors">
                             <td className="p-3">{incident.date}</td>
