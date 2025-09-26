@@ -165,13 +165,28 @@ const ParentDashboard = () => {
         {selectedChild && (
           <Tabs defaultValue="grades" className="space-y-6">
             <div className="flex justify-between items-center">
-              <TabsList>
-                <TabsTrigger value="grades">Calificaciones</TabsTrigger>
-                <TabsTrigger value="report">Boletín</TabsTrigger>
-                <TabsTrigger value="attendance">Asistencia</TabsTrigger>
+              <TabsList className="bg-white/80 backdrop-blur-sm border border-gray-200">
+                <TabsTrigger value="grades" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+                  Calificaciones
+                </TabsTrigger>
+                <TabsTrigger value="progress" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+                  Progreso Académico
+                </TabsTrigger>
+                <TabsTrigger value="behavior" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+                  Convivencia
+                </TabsTrigger>
+                <TabsTrigger value="report" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+                  Boletín
+                </TabsTrigger>
+                <TabsTrigger value="communication" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+                  Comunicaciones
+                </TabsTrigger>
               </TabsList>
 
               <div className="flex items-center space-x-4">
+                <Badge className="bg-green-100 text-green-800 border-green-200">
+                  ✅ Todas las sesiones habilitadas
+                </Badge>
                 <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
                   <SelectTrigger className="w-48">
                     <SelectValue />
