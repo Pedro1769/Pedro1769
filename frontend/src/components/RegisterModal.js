@@ -100,7 +100,21 @@ const RegisterModal = ({ onClose, onRegister }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateForm()) return;
+    
+    // Debug logs to monitor form state
+    console.log('Form submission attempt:', {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password ? '***' : '',
+      role: formData.role,
+      subjects: formData.subjects,
+      formDataKeys: Object.keys(formData)
+    });
+    
+    if (!validateForm()) {
+      console.log('Form validation failed:', errors);
+      return;
+    }
     
     setLoading(true);
     try {
@@ -126,6 +140,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
       // Remove password confirmation from final data
       delete userData.confirmPassword;
       
+      console.log('Submitting user data:', userData);
       onRegister(userData);
       onClose();
     } catch (error) {
