@@ -89,12 +89,18 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-md space-y-6">
+    <div className="min-h-screen bg-institutional flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Elementos decorativos de fondo */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-10 left-10 w-72 h-72 bg-gradient-to-br from-blue-400/20 to-teal-400/20 rounded-full blur-3xl float-animation"></div>
+        <div className="absolute bottom-10 right-10 w-96 h-96 bg-gradient-to-br from-teal-400/20 to-blue-500/20 rounded-full blur-3xl float-animation" style={{animationDelay: '3s'}}></div>
+      </div>
+      
+      <div className="w-full max-w-md space-y-6 relative z-10">
         {/* Header */}
         <div className="text-center space-y-2">
           <div className="flex justify-center items-center mb-4">
-            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mr-3">
+            <div className="w-16 h-16 bg-gradient-gada rounded-full flex items-center justify-center mr-3 shadow-lg">
               <span className="text-white font-bold text-sm">GADA</span>
             </div>
             <div>
@@ -102,14 +108,14 @@ const LoginPage = () => {
               <p className="text-sm text-gray-600">del Atlántico</p>
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Sistema Académico</h1>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">Sistema Académico</h1>
           <p className="text-gray-600">Sede 2 Manuela Beltrán</p>
         </div>
 
         {/* Login Form */}
-        <Card className="shadow-xl border-0">
+        <Card className="shadow-xl border-0 card-institutional hover-gradient">
           <CardHeader className="space-y-1 pb-6">
-            <CardTitle className="text-2xl text-center">Iniciar Sesión</CardTitle>
+            <CardTitle className="text-2xl text-center bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">Iniciar Sesión</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {error && (
