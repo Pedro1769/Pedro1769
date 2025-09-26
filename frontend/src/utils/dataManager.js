@@ -231,39 +231,43 @@ export const initializeDefaultData = () => {
         startDate: '2025-01-15', 
         endDate: '2025-03-30',
         gradeEntryStart: '2025-01-15T08:00',
-        gradeEntryEnd: '2025-03-30T18:00',
+        gradeEntryEnd: '2025-12-31T23:59', // Extendido hasta fin de año
         isActive: true,
-        isGradeEntryOpen: true
+        isGradeEntryOpen: true,
+        alwaysEnabled: true // Nueva propiedad para forzar habilitación
       },
       { 
         id: 2, 
         name: 'Segundo Período', 
         startDate: '2025-04-01', 
         endDate: '2025-06-15',
-        gradeEntryStart: '2025-04-01T08:00',
-        gradeEntryEnd: '2025-06-15T18:00',
-        isActive: false,
-        isGradeEntryOpen: true
+        gradeEntryStart: '2025-01-15T08:00', // Habilitado desde inicio de año
+        gradeEntryEnd: '2025-12-31T23:59', // Hasta fin de año
+        isActive: true,
+        isGradeEntryOpen: true,
+        alwaysEnabled: true
       },
       { 
         id: 3, 
         name: 'Tercer Período', 
         startDate: '2025-07-01', 
         endDate: '2025-09-15',
-        gradeEntryStart: '2025-07-01T08:00',
-        gradeEntryEnd: '2025-09-15T18:00',
-        isActive: false,
-        isGradeEntryOpen: true
+        gradeEntryStart: '2025-01-15T08:00', // Habilitado desde inicio de año
+        gradeEntryEnd: '2025-12-31T23:59', // Hasta fin de año
+        isActive: true,
+        isGradeEntryOpen: true,
+        alwaysEnabled: true
       },
       { 
         id: 4, 
         name: 'Cuarto Período', 
         startDate: '2025-09-16', 
         endDate: '2025-11-30',
-        gradeEntryStart: '2025-09-16T08:00',
-        gradeEntryEnd: '2025-11-30T18:00',
-        isActive: false,
-        isGradeEntryOpen: true
+        gradeEntryStart: '2025-01-15T08:00', // Habilitado desde inicio de año
+        gradeEntryEnd: '2025-12-31T23:59', // Hasta fin de año
+        isActive: true,
+        isGradeEntryOpen: true,
+        alwaysEnabled: true
       }
     ];
     
