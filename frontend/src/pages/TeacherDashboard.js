@@ -403,50 +403,158 @@ const TeacherDashboard = () => {
 
           <TabsContent value="students" className="space-y-6">
             <Card>
-              <CardHeader>
-                <CardTitle>Mis Estudiantes</CardTitle>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Mis Estudiantes</CardTitle>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Estudiantes asignados a sus grados. Puede agregar nuevos estudiantes cuando sea necesario.
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Select value={selectedGradeForStudents} onValueChange={setSelectedGradeForStudents}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue placeholder="Todos los grados" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="">Todos</SelectItem>
+                      {availableGrades.map((grade) => (
+                        <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <Button onClick={() => setShowAddStudentModal(true)}>
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Agregar Estudiante
+                  </Button>
+                </div>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="text-left p-3">Nombre</th>
-                        <th className="text-left p-3">Grado</th>
-                        <th className="text-left p-3">Nivel</th>
-                        <th className="text-left p-3">Promedio</th>
-                        <th className="text-left p-3">Acciones</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {teacherStudents.map((student) => {
-                        const studentGrades = mockGrades.filter(g => g.studentId === student.id);
-                        const average = studentGrades.length > 0 
-                          ? (studentGrades.reduce((sum, g) => sum + g.grade, 0) / studentGrades.length).toFixed(1)
-                          : 'N/A';
+                {selectedGradeForStudents ? (
+                  // Mostrar estudiantes del grado seleccionado
+                  <div>
+                    <h3 className="text-lg font-semibold mb-4 flex items-center">
+                      <GraduationCap className="mr-2 h-5 w-5" />
+                      Grado {selectedGradeForStudents}
+                      <Badge className="ml-2">{studentsByGrade[selectedGradeForStudents]?.length || 0} estudiantes</Badge>
+                    </h3>
+                    
+                    {studentsByGrade[selectedGradeForStudents]?.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b">
+                              <th className="text-left p-3">Nombre</th>
+                              <th className="text-left p-3">Documento</th>
+                              <th className="text-left p-3">Nivel</th>
+                              <th className="text-left p-3">Promedio</th>
+                              <th className="text-left p-3">Acciones</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {studentsByGrade[selectedGradeForStudents].map((student) => {
+                              const studentGrades = mockGrades.filter(g => g.studentId === student.id);
+                              const average = studentGrades.length > 0 
+                                ? (studentGrades.reduce((sum, g) => sum + g.grade, 0) / studentGrades.length).toFixed(1)
+                                : 'N/A';
 
-                        return (
-                          <tr key={student.id} className="border-b hover:bg-gray-50">
-                            <td className="p-3 font-medium">{student.name}</td>
-                            <td className="p-3">{student.grade}</td>
-                            <td className="p-3">{student.level}</td>
-                            <td className="p-3">
-                              <Badge variant={average !== 'N/A' && parseFloat(average) >= 8 ? 'default' : 'secondary'}>
-                                {average}
-                              </Badge>
-                            </td>
-                            <td className="p-3">
-                              <Button size="sm" variant="outline">
-                                <Edit className="mr-2 h-3 w-3" />
-                                Ver Detalle
+                              return (
+                                <tr key={student.id} className="border-b hover:bg-gray-50">
+                                  <td className="p-3 font-medium">{student.name}</td>
+                                  <td className="p-3">{student.document}</td>
+                                  <td className="p-3">{student.level}</td>
+                                  <td className="p-3">
+                                    <Badge variant={average !== 'N/A' && parseFloat(average) >= 8 ? 'default' : 'secondary'}>
+                                      {average}
+                                    </Badge>
+                                  </td>
+                                  <td className="p-3">
+                                    <Button size="sm" variant="outline">
+                                      <Edit className="mr-2 h-3 w-3" />
+                                      Ver Detalle
+                                    </Button>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 text-gray-500">
+                        <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                        <p>No hay estudiantes en el grado {selectedGradeForStudents}</p>
+                        <Button 
+                          onClick={() => setShowAddStudentModal(true)}
+                          className="mt-4"
+                          variant="outline"
+                        >
+                          <UserPlus className="mr-2 h-4 w-4" />
+                          Agregar Primer Estudiante
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  // Mostrar resumen por grados
+                  <div className="space-y-6">
+                    {availableGrades.map((grade) => (
+                      <Card key={grade} className="border border-gray-200">
+                        <CardHeader className="pb-3">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center">
+                              <GraduationCap className="mr-2 h-5 w-5" />
+                              <h3 className="text-lg font-semibold">Grado {grade}</h3>
+                              <Badge className="ml-2">{studentsByGrade[grade]?.length || 0} estudiantes</Badge>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                onClick={() => setSelectedGradeForStudents(grade)}
+                              >
+                                Ver Todos
                               </Button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+                              <Button 
+                                size="sm"
+                                onClick={() => {
+                                  setSelectedGradeForStudents(grade);
+                                  setShowAddStudentModal(true);
+                                }}
+                              >
+                                <UserPlus className="mr-1 h-3 w-3" />
+                                Agregar
+                              </Button>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          {studentsByGrade[grade]?.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                              {studentsByGrade[grade].slice(0, 6).map((student) => (
+                                <div key={student.id} className="p-3 border rounded-lg bg-gray-50">
+                                  <p className="font-medium text-sm">{student.name}</p>
+                                  <p className="text-xs text-gray-600">Doc: {student.document}</p>
+                                </div>
+                              ))}
+                              {studentsByGrade[grade].length > 6 && (
+                                <div className="p-3 border rounded-lg bg-blue-50 flex items-center justify-center">
+                                  <p className="text-sm text-blue-600">
+                                    +{studentsByGrade[grade].length - 6} más
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            <div className="text-center py-6 text-gray-500">
+                              <Users className="h-8 w-8 mx-auto mb-2 text-gray-300" />
+                              <p className="text-sm">No hay estudiantes registrados</p>
+                            </div>
+                          )}
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
