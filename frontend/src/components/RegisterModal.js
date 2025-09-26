@@ -23,6 +23,9 @@ const RegisterModal = ({ onClose, onRegister }) => {
     tutorGrade: '',
     subjects: [],
     grades: [],
+    // Student specific
+    studentGrade: '',
+    birthDate: '',
     // Parent specific
     studentDocument: '',
     relationshipType: ''
