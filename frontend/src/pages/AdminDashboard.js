@@ -25,7 +25,7 @@ import {
   Shield
 } from 'lucide-react';
 import { mockUsers, mockGrades } from '../mock/mockData';
-import { StudentsManager, PeriodsManager, GradesManager, initializeDefaultData } from '../utils/dataManager';
+import { StudentsManager, PeriodsManager, GradesManager, DownloadCodesManager, initializeDefaultData } from '../utils/dataManager';
 import StudentBulkManager from '../components/StudentBulkManager';
 import PeriodManager from '../components/PeriodManager';
 import ReportCardModern from '../components/ReportCardModern';
