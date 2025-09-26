@@ -754,6 +754,181 @@ const ConvivenciaDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="students" className="space-y-6">
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-green-50 to-blue-50 rounded-t-lg">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <CardTitle className="flex items-center">
+                      <UserCheck className="mr-2 h-5 w-5 text-green-600" />
+                      Gestión de Notas Individuales por Estudiante
+                    </CardTitle>
+                    <p className="text-sm text-gray-600 mt-2">
+                      Asigne notas de convivencia y acompañamiento específicas para cada estudiante. 
+                      <span className="text-green-600 font-medium"> Sistema completamente habilitado.</span>
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex space-x-4 mt-4">
+                  <div>
+                    <Label htmlFor="gradeFilter">Filtrar por Grado</Label>
+                    <Select value={selectedGrade} onValueChange={setSelectedGrade}>
+                      <SelectTrigger className="w-40">
+                        <SelectValue placeholder="Seleccionar grado" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">Todos los grados</SelectItem>
+                        {grades.slice(1).map((grade) => (
+                          <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  
+                  <div>
+                    <Label htmlFor="periodFilter">Filtrar por Período</Label>
+                    <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                      <SelectTrigger className="w-40">
+                        <SelectValue placeholder="Seleccionar período" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {periods.map((period) => (
+                          <SelectItem key={period.id} value={period.id.toString()}>
+                            {period.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {/* Indicador de funcionalidad habilitada */}
+                  <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                    <div className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                      <span className="text-green-800 font-medium">Gestión individual completamente habilitada</span>
+                    </div>
+                    <p className="text-sm text-green-700 mt-1">
+                      Puede crear y editar notas individuales de convivencia para cualquier estudiante en cualquier período académico.
+                    </p>
+                  </div>
+
+                  {/* Grid de estudiantes */}
+                  <div className="grid gap-4">
+                    {allStudents
+                      .filter(student => selectedGrade === 'all' || student.grade === selectedGrade)
+                      .map((student) => {
+                        const studentNoteKey = `${student.id}_${selectedPeriod}`;
+                        const existingNote = studentNotes[studentNoteKey];
+                        
+                        return (
+                          <Card key={student.id} className="border border-green-200 hover:shadow-md transition-shadow">
+                            <CardHeader className="pb-3">
+                              <div className="flex justify-between items-center">
+                                <div className="flex items-center space-x-3">
+                                  <div className="p-2 bg-green-100 rounded-full">
+                                    <UserCheck className="h-4 w-4 text-green-600" />
+                                  </div>
+                                  <div>
+                                    <h4 className="font-medium text-gray-900">{student.name}</h4>
+                                    <p className="text-sm text-gray-600">
+                                      Grado {student.grade} • Documento: {student.document}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <Badge 
+                                    variant={existingNote ? "default" : "outline"} 
+                                    className={existingNote ? "bg-green-100 text-green-800" : "border-gray-300 text-gray-600"}
+                                  >
+                                    {existingNote ? `Nota P${selectedPeriod}` : 'Sin nota'}
+                                  </Badge>
+                                  <Button 
+                                    size="sm" 
+                                    onClick={() => {
+                                      setSelectedStudent(student);
+                                      setShowStudentNoteModal(true);
+                                    }}
+                                    className="bg-gradient-to-r from-green-500 to-teal-500 text-white hover:shadow-md transition-all"
+                                  >
+                                    {existingNote ? (
+                                      <>
+                                        <Edit className="mr-1 h-3 w-3" />
+                                        Editar Nota
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Plus className="mr-1 h-3 w-3" />
+                                        Crear Nota
+                                      </>
+                                    )}
+                                  </Button>
+                                </div>
+                              </div>
+                            </CardHeader>
+                            
+                            {existingNote && (
+                              <CardContent className="pt-0">
+                                <div className="bg-gray-50 p-3 rounded-lg space-y-2">
+                                  {existingNote.behaviorNote && (
+                                    <div>
+                                      <h5 className="text-xs font-medium text-gray-700 mb-1">Convivencia:</h5>
+                                      <p className="text-xs text-gray-600">
+                                        {existingNote.behaviorNote.length > 100 
+                                          ? `${existingNote.behaviorNote.substring(0, 100)}...` 
+                                          : existingNote.behaviorNote
+                                        }
+                                      </p>
+                                    </div>
+                                  )}
+                                  {existingNote.accompanimentNote && (
+                                    <div>
+                                      <h5 className="text-xs font-medium text-gray-700 mb-1">Acompañamiento:</h5>
+                                      <p className="text-xs text-gray-600">
+                                        {existingNote.accompanimentNote.length > 100 
+                                          ? `${existingNote.accompanimentNote.substring(0, 100)}...` 
+                                          : existingNote.accompanimentNote
+                                        }
+                                      </p>
+                                    </div>
+                                  )}
+                                  {existingNote.parentNote && (
+                                    <div>
+                                      <h5 className="text-xs font-medium text-gray-700 mb-1">Para Acudientes:</h5>
+                                      <p className="text-xs text-gray-600">
+                                        {existingNote.parentNote.length > 80 
+                                          ? `${existingNote.parentNote.substring(0, 80)}...` 
+                                          : existingNote.parentNote
+                                        }
+                                      </p>
+                                    </div>
+                                  )}
+                                  <div className="text-xs text-gray-500 border-t pt-2">
+                                    Creado por {existingNote.createdBy} • {new Date(existingNote.createdAt).toLocaleDateString('es-CO')}
+                                  </div>
+                                </div>
+                              </CardContent>
+                            )}
+                          </Card>
+                        );
+                      })}
+                    
+                    {allStudents.filter(student => selectedGrade === 'all' || student.grade === selectedGrade).length === 0 && (
+                      <div className="text-center py-12 text-gray-500">
+                        <UserCheck className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+                        <p className="text-lg">No hay estudiantes en el filtro seleccionado</p>
+                        <p className="text-sm">Seleccione un grado diferente o verifique que existan estudiantes registrados</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="incidents" className="space-y-6">
             <Card className="shadow-lg border-0 card-institutional">
               <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
