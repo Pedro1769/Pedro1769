@@ -58,6 +58,12 @@ const ConvivenciaDashboard = () => {
     if (savedNotes) {
       setConvivenceNotes(JSON.parse(savedNotes));
     }
+    
+    // Cargar notas individuales de estudiantes existentes
+    const savedStudentNotes = localStorage.getItem('gada_student_convivence_notes');
+    if (savedStudentNotes) {
+      setStudentNotes(JSON.parse(savedStudentNotes));
+    }
   }, []);
 
   if (!user || user.role !== 'coordinadora_convivencia') {
