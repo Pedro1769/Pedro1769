@@ -46,6 +46,8 @@ const ConvivenciaDashboard = () => {
   const [studentNotes, setStudentNotes] = useState({});
   const [showIncidentModal, setShowIncidentModal] = useState(false);
   const [selectedIncident, setSelectedIncident] = useState(null);
+  const [showIncidentModal, setShowIncidentModal] = useState(false);
+  const [selectedIncident, setSelectedIncident] = useState(null);
   const [incidents, setIncidents] = useState([]);
 
   useEffect(() => {
