@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { mockStudents } from '../mock/mockData';
 import { PeriodsManager, StudentsManager } from '../utils/dataManager';
+import ProjectsManager from '../components/ProjectsManager';
 
 const ConvivenciaDashboard = () => {
   const { user } = useAuth();
