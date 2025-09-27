@@ -309,6 +309,10 @@ const AdminDashboard = () => {
                     <FileText className="mr-2 h-4 w-4" />
                     Mallas Curriculares
                   </Button>
+                  <Button className="w-full justify-start" variant="outline" onClick={() => setShowProjectsManager(true)}>
+                    <FileText className="mr-2 h-4 w-4" />
+                    Proyectos Institucionales
+                  </Button>
                   <Button className="w-full justify-start" variant="outline" onClick={() => setShowPeriodManager(true)}>
                     <Calendar className="mr-2 h-4 w-4" />
                     Gestionar Períodos Académicos
