@@ -1784,7 +1784,13 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
         {showNoteModal && <ConvivenceNoteModal />}
         {showStudentNoteModal && selectedStudent && <StudentConvivenceNoteModal />}
         {showIncidentModal && selectedIncident && <IncidentModal />}
-        {showIncidentModal && selectedIncident && <IncidentModal />}
+        
+        {/* Modal de Proyectos Institucionales */}
+        {showProjectsManager && (
+          <ProjectsManager 
+            onClose={() => setShowProjectsManager(false)}
+          />
+        )}
       </div>
     </div>
   );
