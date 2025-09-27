@@ -224,6 +224,122 @@ export const PeriodsManager = {
   }
 };
 
+export const UsersManager = {
+  getAll: () => {
+    try {
+      // Obtener usuarios del localStorage
+      const localUsers = loadFromStorage(STORAGE_KEYS.USERS, []);
+      
+      // También obtener de gada_registered_users para compatibilidad
+      const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+      
+      // Combinar evitando duplicados por email
+      const allUsers = [...localUsers, ...registeredUsers];
+      const uniqueUsers = allUsers.reduce((acc, current) => {
+        const existingUser = acc.find(user => user.email === current.email);
+        if (!existingUser) {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
+      
+      return uniqueUsers;
+    } catch (error) {
+      console.error('Error loading users:', error);
+      return [];
+    }
+  },
+  
+  save: (users) => {
+    saveToStorage(STORAGE_KEYS.USERS, users);
+    // También guardar en gada_registered_users para compatibilidad
+    localStorage.setItem('gada_registered_users', JSON.stringify(users));
+  },
+  
+  add: async (userData) => {
+    try {
+      const newUser = {
+        ...userData,
+        id: Date.now() + Math.random(),
+        is_approved: true,
+        created_at: new Date().toISOString()
+      };
+
+      // Intentar guardar en el backend
+      try {
+        const savedUser = await ApiService.createUser({
+          name: newUser.name,
+          email: newUser.email,
+          role: newUser.role,
+          document: newUser.document || '',
+          phone: newUser.phone || '',
+          subjects: newUser.subjects || [],
+          grades: newUser.grades || [],
+          teaching_level: newUser.teaching_level || ''
+        });
+        
+        newUser.id = savedUser.id;
+        newUser.backendId = savedUser.id;
+      } catch (backendError) {
+        console.warn('No se pudo guardar usuario en backend, guardando solo localmente:', backendError);
+      }
+      
+      const allUsers = UsersManager.getAll();
+      allUsers.push(newUser);
+      UsersManager.save(allUsers);
+      
+      return newUser;
+    } catch (error) {
+      console.error('Error adding user:', error);
+      return null;
+    }
+  },
+
+  update: (id, updatedData) => {
+    try {
+      const users = UsersManager.getAll();
+      const index = users.findIndex(u => u.id === id);
+      if (index !== -1) {
+        users[index] = {
+          ...users[index],
+          ...updatedData,
+          updated_at: new Date().toISOString()
+        };
+        UsersManager.save(users);
+        return users[index];
+      }
+      return null;
+    } catch (error) {
+      console.error('Error updating user:', error);
+      return null;
+    }
+  },
+
+  syncWithBackend: async () => {
+    try {
+      const backendUsers = await ApiService.getUsers();
+      const localUsers = UsersManager.getAll();
+      
+      // Marcar usuarios del backend
+      const syncedUsers = backendUsers.map(user => ({
+        ...user,
+        backendId: user.id,
+        isFromBackend: true
+      }));
+      
+      // Combinar con usuarios locales que no estén en el backend
+      const combinedUsers = [...syncedUsers, ...localUsers.filter(local => 
+        !backendUsers.some(backend => backend.email === local.email)
+      )];
+      
+      return combinedUsers;
+    } catch (error) {
+      console.warn('No se pudo sincronizar usuarios con el backend, usando datos locales:', error);
+      return UsersManager.getAll();
+    }
+  }
+};
+
 export const GradesManager = {
   getAll: () => loadFromStorage(STORAGE_KEYS.GRADES, []),
   
