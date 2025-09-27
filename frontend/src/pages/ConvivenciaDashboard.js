@@ -1989,12 +1989,12 @@ ${grades.slice(1).map(grade => {
     return period === selectedPeriod && gradeStudents.find(s => s.id.toString() === studentId);
   }).length;
   
-  return \`
-Grado \${grade}:
-- Estudiantes: \${gradeStudents.length}
-- Notas individuales: \${gradeNotes}
-- Cobertura: \${gradeStudents.length > 0 ? ((gradeNotes / gradeStudents.length) * 100).toFixed(1) : '0'}%
-\`;
+  return `
+Grado ${grade}:
+- Estudiantes: ${gradeStudents.length}
+- Notas individuales: ${gradeNotes}
+- Cobertura: ${gradeStudents.length > 0 ? ((gradeNotes / gradeStudents.length) * 100).toFixed(1) : '0'}%
+`;
 }).join('')}
 
 LOGROS DEL PERÍODO:
