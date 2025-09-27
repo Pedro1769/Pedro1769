@@ -36,6 +36,7 @@ const TeacherDashboard = () => {
   const [selectedGradeForStudents, setSelectedGradeForStudents] = useState('all');
   const [periods, setPeriods] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
+  const [showProjectsManager, setShowProjectsManager] = useState(false);
 
   useEffect(() => {
     // Cargar períodos dinámicamente
