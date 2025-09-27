@@ -50,6 +50,7 @@ const AdminDashboard = () => {
   const [showUserManager, setShowUserManager] = useState(false);
   const [showObjectivesManager, setShowObjectivesManager] = useState(false);
   const [showCurriculumManager, setShowCurriculumManager] = useState(false);
+  const [showProjectsManager, setShowProjectsManager] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
   const [editingTeacher, setEditingTeacher] = useState(null);
