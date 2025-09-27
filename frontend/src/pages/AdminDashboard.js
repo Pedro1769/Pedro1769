@@ -873,6 +873,12 @@ const AdminDashboard = () => {
           />
         )}
 
+        {showProjectsManager && (
+          <ProjectsManager 
+            onClose={() => setShowProjectsManager(false)}
+          />
+        )}
+
         {showEditModal && editingStudent && (
           <StudentEditModal 
             student={editingStudent}
