@@ -24,6 +24,9 @@ import {
   CheckCircle,
   Shield
 } from 'lucide-react';
+import { Label } from '../components/ui/label';
+import { Input } from '../components/ui/input';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { mockUsers, mockGrades } from '../mock/mockData';
 import { StudentsManager, PeriodsManager, GradesManager, DownloadCodesManager, initializeDefaultData } from '../utils/dataManager';
 import StudentBulkManager from '../components/StudentBulkManager';
