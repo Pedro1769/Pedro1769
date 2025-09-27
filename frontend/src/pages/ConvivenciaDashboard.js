@@ -2011,7 +2011,7 @@ Generado por: ${user.name}
 Fecha: ${new Date().toLocaleDateString('es-CO')}
     `;
 
-    downloadReport(reportContent, \`Resumen_Periodo_\${selectedPeriod}_\${new Date().getFullYear()}.txt\`);
+    downloadReport(reportContent, `Resumen_Periodo_${selectedPeriod}_${new Date().getFullYear()}.txt`);
   };
 
   const downloadReport = (content, filename) => {
