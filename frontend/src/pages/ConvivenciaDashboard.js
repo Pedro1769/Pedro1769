@@ -1552,6 +1552,29 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
             </Card>
           </TabsContent>
 
+          <TabsContent value="projects" className="space-y-6">
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-t-lg">
+                <CardTitle className="flex items-center">
+                  <BookOpen className="h-6 w-6 mr-2 text-purple-600" />
+                  Proyectos Institucionales
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <p className="text-gray-600 mb-4">
+                  Gestiona proyectos institucionales de convivencia, sube material de apoyo y colabora en iniciativas pedagógicas.
+                </p>
+                <Button 
+                  onClick={() => setShowProjectsManager(true)}
+                  className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white h-12"
+                >
+                  <Plus className="mr-2 h-5 w-5" />
+                  Abrir Gestión de Proyectos Institucionales
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="reports" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Reportes Manuales */}
