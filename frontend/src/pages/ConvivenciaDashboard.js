@@ -820,6 +820,9 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
             <TabsTrigger value="behavior" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Seguimiento Comportamental
             </TabsTrigger>
+            <TabsTrigger value="projects" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+              Proyectos
+            </TabsTrigger>
             <TabsTrigger value="reports" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Reportes
             </TabsTrigger>
