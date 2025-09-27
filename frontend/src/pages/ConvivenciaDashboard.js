@@ -1064,7 +1064,11 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                   {/* Grid de estudiantes */}
                   <div className="grid gap-4">
                     {allStudents
-                      .filter(student => selectedGrade === 'all' || student.grade === selectedGrade)
+                      .filter(student => {
+                        // Filtrar por grado si no es 'all'
+                        if (selectedGrade !== 'all' && student.grade !== selectedGrade) return false;
+                        return true;
+                      })
                       .map((student) => {
                         const studentNoteKey = `${student.id}_${selectedPeriod}`;
                         const existingNote = studentNotes[studentNoteKey];
@@ -1086,10 +1090,16 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                                 </div>
                                 <div className="flex items-center space-x-2">
                                   <Badge 
+                                    variant="outline"
+                                    className="bg-blue-50 border-blue-200 text-blue-800"
+                                  >
+                                    {periods.find(p => p.id.toString() === selectedPeriod)?.name || `Período ${selectedPeriod}`}
+                                  </Badge>
+                                  <Badge 
                                     variant={existingNote ? "default" : "outline"} 
                                     className={existingNote ? "bg-green-100 text-green-800" : "border-gray-300 text-gray-600"}
                                   >
-                                    {existingNote ? `Nota P${selectedPeriod}` : 'Sin nota'}
+                                    {existingNote ? 'Con nota' : 'Sin nota'}
                                   </Badge>
                                   <Button 
                                     size="sm" 
