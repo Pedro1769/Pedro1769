@@ -74,12 +74,24 @@ const TeacherDashboard = () => {
   }
 
   // Filter students by available grades
-  const teacherStudents = students.filter(student => 
+  const teacherStudents = allStudents.filter(student => 
     availableGrades.includes(student.grade)
   );
 
-  // Get subjects for the teacher - ensure it's never empty
-  const teacherSubjects = user.subjects && user.subjects.length > 0 ? user.subjects : ['Todas las materias'];
+  // Get subjects for the teacher - Lógica especial para primaria
+  const getTeacherSubjects = () => {
+    if (user.teachingLevel === 'primaria') {
+      // En primaria, el docente enseña todas las materias de su(s) grado(s)
+      return ['ESPAÑOL', 'CALIGRAFIA', 'INGLES', 'MATEMATICAS', 'NATURALES', 'SOCIALES', 'CATEDRA DE PAZ', 'ETICA Y RELIGION', 'INFORMATICA', 'ARTE', 'ED. FISICA'];
+    } else if (user.teachingLevel === 'transicion') {
+      return ['ESPAÑOL', 'INGLES', 'MATEMATICAS', 'SOCIALES-NATURALES', 'ETICA Y RELIGION', 'INFORMATICA', 'ARTE', 'ED. FISICA'];
+    } else {
+      // Para bachillerato, usar las materias específicas asignadas
+      return user.subjects && user.subjects.length > 0 ? user.subjects : ['Todas las materias'];
+    }
+  };
+
+  const teacherSubjects = getTeacherSubjects();
 
   // Group students by grade
   const studentsByGrade = availableGrades.reduce((acc, grade) => {
