@@ -148,9 +148,21 @@ frontend:
         agent: "main"
         comment: "COMPLETED: Implemented comprehensive individual student convivencia note system for coordinators. 1) Added new 'Notas Individuales' tab, 2) Created StudentConvivenceNoteModal with behavior, accompaniment, parent notes, and recommendations, 3) Student filtering by grade and period, 4) Individual note persistence with localStorage, 5) Visual indicators for existing notes, 6) Full CRUD functionality for student-specific convivencia management."
 
-  - task: "Enhanced teacher convivencia functionality"
+  - task: "Complete convivencia coordinator functionality with all sessions enabled"
     implemented: true
     working: "NA"
+    file: "/app/frontend/src/pages/ConvivenciaDashboard.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "COMPREHENSIVE SYSTEM COMPLETED: 1) Individual notes with period selection and grade filtering - fully functional, 2) Incident management with 'Ver' and 'Resolver' buttons - fully operational with complete incident modal and download capability, 3) Behavioral tracking by grade and period with visual statistics, student cards, and progress indicators, 4) Complete reports section with 5 downloadable report types: Monthly Report, Grade Statistics, Incident Report, Custom Report, Period Summary - all with institutional formatting and professional content, 5) All sessions enabled without restrictions, 6) Integration with real student data (mock + registered), 7) Professional incident evidence generation for parent meetings."
+
+  - task: "Enhanced teacher functionality with primary school logic and dynamic periods"
+    implemented: true
+    working: "NA"  
     file: "/app/frontend/src/pages/TeacherDashboard.js"
     stuck_count: 0
     priority: "high"
@@ -158,7 +170,7 @@ frontend:
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "COMPLETED: Added comprehensive convivencia tab to TeacherDashboard. 1) New 'Convivencia' tab for behavior management, 2) Grade and period selection for student observation, 3) Quick observation buttons (Excelente, Bueno, Mejorar, Refuerzo), 4) Star rating system for behavior and participation, 5) Individual student behavior cards with action buttons, 6) Full access enabled for all periods and students."
+        comment: "TEACHER SYSTEM ENHANCED: 1) Implemented primary school logic - single teacher for all subjects in assigned grades, 2) Dynamic period loading from PeriodsManager, 3) Enhanced student data integration (mock + registered + teacher-created), 4) Improved convivencia tab with behavioral tracking, 5) All periods dynamically loaded and functional across all tabs, 6) Grade-specific subject assignment based on teaching level (transición, primaria, bachillerato)."
 
   - task: "Update registration success message"
     implemented: true
