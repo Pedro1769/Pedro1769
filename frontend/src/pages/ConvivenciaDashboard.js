@@ -475,6 +475,249 @@ const ConvivenciaDashboard = () => {
     );
   };
 
+  // Componente Modal para Ver/Editar Incidente
+  const IncidentModal = () => {
+    const [incidentData, setIncidentData] = useState({
+      id: selectedIncident?.id || '',
+      studentId: selectedIncident?.studentId || '',
+      type: selectedIncident?.type || '',
+      severity: selectedIncident?.severity || 'Leve',
+      date: selectedIncident?.date || new Date().toISOString().split('T')[0],
+      description: selectedIncident?.description || '',
+      resolved: selectedIncident?.resolved || false,
+      resolution: selectedIncident?.resolution || '',
+      followUp: selectedIncident?.followUp || '',
+      parentNotified: selectedIncident?.parentNotified || false,
+      attachments: selectedIncident?.attachments || []
+    });
+
+    const handleInputChange = (field) => (e) => {
+      const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+      setIncidentData(prev => ({
+        ...prev,
+        [field]: value
+      }));
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      // Aquí guardarías el incidente actualizado
+      console.log('Saving incident:', incidentData);
+      setShowIncidentModal(false);
+      setSelectedIncident(null);
+    };
+
+    const handleGenerateReport = () => {
+      // Generar reporte descargable del incidente
+      const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+REPORTE DE INCIDENTE DE CONVIVENCIA
+
+Fecha del Incidente: ${incidentData.date}
+Estudiante: ${allStudents.find(s => s.id === incidentData.studentId)?.name || 'N/A'}
+Tipo de Incidente: ${incidentData.type}
+Severidad: ${incidentData.severity}
+
+Descripción:
+${incidentData.description}
+
+${incidentData.resolved ? `
+Estado: RESUELTO
+Resolución:
+${incidentData.resolution}
+
+Seguimiento:
+${incidentData.followUp}
+` : 'Estado: PENDIENTE'}
+
+Acudiente Notificado: ${incidentData.parentNotified ? 'SÍ' : 'NO'}
+
+Generado por: ${user.name}
+Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
+      `;
+
+      const blob = new Blob([reportContent], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = `Incidente_${incidentData.type}_${incidentData.date}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    };
+
+    const student = allStudents.find(s => s.id === incidentData.studentId);
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-red-50 to-orange-50">
+            <CardTitle className="flex items-center">
+              <AlertCircle className="mr-2 h-5 w-5 text-red-600" />
+              Gestión de Incidente - {student?.name}
+            </CardTitle>
+            <div className="flex space-x-2">
+              <Button
+                onClick={handleGenerateReport}
+                variant="outline"
+                size="sm"
+                className="border-green-300 text-green-700 hover:bg-green-50"
+              >
+                <Download className="mr-1 h-3 w-3" />
+                Descargar Reporte
+              </Button>
+              <Button variant="ghost" onClick={() => setShowIncidentModal(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+          
+          <CardContent className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-gray-50 rounded-lg">
+                <div>
+                  <Label className="text-sm font-medium text-gray-700">Estudiante:</Label>
+                  <p className="text-sm font-semibold">{student?.name}</p>
+                  <p className="text-xs text-gray-600">Grado: {student?.grade}</p>
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-700">Fecha del Incidente:</Label>
+                  <Input
+                    type="date"
+                    value={incidentData.date}
+                    onChange={handleInputChange('date')}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-sm font-medium text-gray-700">Estado:</Label>
+                  <Badge 
+                    variant={incidentData.resolved ? "default" : "destructive"}
+                    className="mt-2 block w-fit"
+                  >
+                    {incidentData.resolved ? "Resuelto" : "Pendiente"}
+                  </Badge>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="type">Tipo de Incidente</Label>
+                  <Select value={incidentData.type} onValueChange={(value) => setIncidentData(prev => ({...prev, type: value}))}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar tipo" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Tardanza">Tardanza</SelectItem>
+                      <SelectItem value="Falta de Respeto">Falta de Respeto</SelectItem>
+                      <SelectItem value="Uniforme">Uniforme</SelectItem>
+                      <SelectItem value="Agresión">Agresión</SelectItem>
+                      <SelectItem value="Incumplimiento">Incumplimiento de Normas</SelectItem>
+                      <SelectItem value="Otro">Otro</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="severity">Severidad</Label>
+                  <Select value={incidentData.severity} onValueChange={(value) => setIncidentData(prev => ({...prev, severity: value}))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Leve">Leve</SelectItem>
+                      <SelectItem value="Moderado">Moderado</SelectItem>
+                      <SelectItem value="Grave">Grave</SelectItem>
+                      <SelectItem value="Muy Grave">Muy Grave</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="description">Descripción del Incidente</Label>
+                <Textarea
+                  id="description"
+                  value={incidentData.description}
+                  onChange={handleInputChange('description')}
+                  placeholder="Describa detalladamente lo ocurrido..."
+                  className="min-h-[100px]"
+                />
+              </div>
+
+              <div className="flex items-center space-x-4 p-3 bg-blue-50 rounded-lg">
+                <input
+                  type="checkbox"
+                  id="parentNotified"
+                  checked={incidentData.parentNotified}
+                  onChange={handleInputChange('parentNotified')}
+                  className="w-4 h-4 text-blue-600"
+                />
+                <Label htmlFor="parentNotified" className="text-sm font-medium text-blue-800">
+                  Acudiente notificado sobre el incidente
+                </Label>
+              </div>
+
+              <div>
+                <Label htmlFor="resolution">Resolución/Acción Tomada</Label>
+                <Textarea
+                  id="resolution"
+                  value={incidentData.resolution}
+                  onChange={handleInputChange('resolution')}
+                  placeholder="Describa las acciones correctivas tomadas..."
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <div>
+                <Label htmlFor="followUp">Plan de Seguimiento</Label>
+                <Textarea
+                  id="followUp"
+                  value={incidentData.followUp}
+                  onChange={handleInputChange('followUp')}
+                  placeholder="Establezca el plan de seguimiento para el estudiante..."
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <div className="flex items-center space-x-4 p-3 bg-green-50 rounded-lg">
+                <input
+                  type="checkbox"
+                  id="resolved"
+                  checked={incidentData.resolved}
+                  onChange={handleInputChange('resolved')}
+                  className="w-4 h-4 text-green-600"
+                />
+                <Label htmlFor="resolved" className="text-sm font-medium text-green-800">
+                  Marcar incidente como resuelto
+                </Label>
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4 border-t">
+                <Button type="button" variant="outline" onClick={() => setShowIncidentModal(false)}>
+                  Cancelar
+                </Button>
+                <Button 
+                  type="button" 
+                  onClick={handleGenerateReport}
+                  className="bg-gradient-to-r from-blue-500 to-teal-500 text-white"
+                >
+                  <Download className="mr-2 h-4 w-4" />
+                  Generar Evidencia
+                </Button>
+                <Button type="submit" className="bg-gradient-to-r from-green-500 to-teal-500 text-white">
+                  <Save className="mr-2 h-4 w-4" />
+                  Guardar Cambios
+                </Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
