@@ -33,11 +33,24 @@ const TeacherDashboard = () => {
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
   const [students, setStudents] = useState([]);
   const [selectedGradeForStudents, setSelectedGradeForStudents] = useState('all');
+  const [periods, setPeriods] = useState([]);
+  const [allStudents, setAllStudents] = useState([]);
 
   useEffect(() => {
-    // Cargar estudiantes desde localStorage
-    const allStudents = StudentsManager.getAll();
-    setStudents(allStudents);
+    // Cargar períodos dinámicamente
+    const loadedPeriods = PeriodsManager.getAll();
+    setPeriods(loadedPeriods);
+    if (loadedPeriods.length > 0) {
+      setSelectedPeriod(loadedPeriods[0].id.toString());
+    }
+    
+    // Cargar todos los estudiantes (mock + registrados + creados por docentes)
+    const mockStudentsData = mockStudents;
+    const registeredStudents = StudentsManager.getAll();
+    const combinedStudents = [...mockStudentsData, ...registeredStudents];
+    
+    setStudents(combinedStudents);
+    setAllStudents(combinedStudents);
   }, []);
 
   if (!user || user.role !== 'teacher') {
