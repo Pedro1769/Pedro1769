@@ -23,7 +23,7 @@ import {
   UserCheck
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
-import { StudentsManager } from '../utils/dataManager';
+import { StudentsManager, PeriodsManager } from '../utils/dataManager';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
