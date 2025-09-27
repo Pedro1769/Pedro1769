@@ -96,6 +96,46 @@ async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
 
+# Endpoints para usuarios
+@api_router.post("/users", response_model=User)
+async def create_user(user_data: UserCreate):
+    user_dict = user_data.dict()
+    user_obj = User(**user_dict)
+    _ = await db.users.insert_one(user_obj.dict())
+    return user_obj
+
+@api_router.get("/users", response_model=List[User])
+async def get_users():
+    users = await db.users.find().to_list(1000)
+    return [User(**user) for user in users]
+
+@api_router.get("/users/{user_id}", response_model=User)
+async def get_user(user_id: str):
+    user = await db.users.find_one({"id": user_id})
+    if not user:
+        raise HTTPException(status_code=404, detail="Usuario no encontrado")
+    return User(**user)
+
+# Endpoints para estudiantes
+@api_router.post("/students", response_model=Student)
+async def create_student(student_data: StudentCreate):
+    student_dict = student_data.dict()
+    student_obj = Student(**student_dict)
+    _ = await db.students.insert_one(student_obj.dict())
+    return student_obj
+
+@api_router.get("/students", response_model=List[Student])
+async def get_students():
+    students = await db.students.find().to_list(1000)
+    return [Student(**student) for student in students]
+
+@api_router.get("/students/{student_id}", response_model=Student)
+async def get_student(student_id: str):
+    student = await db.students.find_one({"id": student_id})
+    if not student:
+        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+    return Student(**student)
+
 # Include the router in the main app
 app.include_router(api_router)
 
