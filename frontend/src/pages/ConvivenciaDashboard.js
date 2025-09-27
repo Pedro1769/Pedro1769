@@ -1978,8 +1978,8 @@ FECHAS: ${currentPeriod?.startDate} - ${currentPeriod?.endDate}
 
 CONSOLIDADO GENERAL:
 - Total de Estudiantes: ${allStudents.length}
-- Notas de Convivencia Registradas: ${Object.keys(studentNotes).filter(key => key.includes(\`_\${selectedPeriod}\`)).length}
-- Notas de Grado Registradas: ${Object.keys(convivenceNotes).filter(key => key.includes(\`_\${selectedPeriod}\`)).length}
+- Notas de Convivencia Registradas: ${Object.keys(studentNotes).filter(key => key.includes(`_${selectedPeriod}`)).length}
+- Notas de Grado Registradas: ${Object.keys(convivenceNotes).filter(key => key.includes(`_${selectedPeriod}`)).length}
 
 RESUMEN POR GRADOS:
 ${grades.slice(1).map(grade => {
