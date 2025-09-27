@@ -35,6 +35,50 @@ class StatusCheck(BaseModel):
 class StatusCheckCreate(BaseModel):
     client_name: str
 
+# Modelos para el sistema académico
+class User(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    email: str
+    role: str  # 'admin', 'teacher', 'coordinadora_convivencia', 'student', 'parent'
+    document: str = ""
+    phone: str = ""
+    subjects: List[str] = []
+    grades: List[str] = []
+    teaching_level: str = ""
+    is_approved: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class UserCreate(BaseModel):
+    name: str
+    email: str
+    role: str
+    document: str = ""
+    phone: str = ""
+    subjects: List[str] = []
+    grades: List[str] = []
+    teaching_level: str = ""
+
+class Student(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    name: str
+    grade: str
+    document: str
+    age: int = 0
+    parent_email: str = ""
+    parent_phone: str = ""
+    created_by: str = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class StudentCreate(BaseModel):
+    name: str
+    grade: str
+    document: str
+    age: int = 0
+    parent_email: str = ""
+    parent_phone: str = ""
+    created_by: str = ""
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
