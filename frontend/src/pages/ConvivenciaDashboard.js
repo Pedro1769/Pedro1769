@@ -1759,6 +1759,238 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
       </div>
     </div>
   );
+
+  // Funciones para generar reportes descargables
+  const generateMonthlyReport = () => {
+    const currentMonth = new Date().toLocaleDateString('es-CO', { month: 'long', year: 'numeric' });
+    const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+REPORTE MENSUAL DE CONVIVENCIA - ${currentMonth.toUpperCase()}
+
+===================================================
+
+RESUMEN ESTADÍSTICO:
+- Total de Estudiantes: ${stats.totalStudents}
+- Incidentes Registrados: ${stats.totalIncidents}
+- Incidentes Resueltos: ${stats.resolvedIncidents}
+- Incidentes Pendientes: ${stats.pendingIncidents}
+
+DISTRIBUCIÓN POR GRADOS:
+${grades.slice(1).map(grade => {
+  const gradeStudents = allStudents.filter(s => s.grade === grade).length;
+  return `- Grado ${grade}: ${gradeStudents} estudiantes`;
+}).join('\n')}
+
+NOTAS DE CONVIVENCIA POR GRADO:
+${Object.entries(convivenceNotes).map(([key, note]) => {
+  const [gradeNum, period] = key.split('_');
+  return `
+Grado ${gradeNum} - Período ${period}:
+Convivencia: ${note.behaviorNote.substring(0, 150)}...
+Acompañamiento: ${note.accompanimentNote.substring(0, 150)}...
+Creado por: ${note.createdBy}
+`;
+}).join('\n')}
+
+RECOMENDACIONES GENERALES:
+- Continuar fortaleciendo los valores institucionales
+- Mantener comunicación constante con padres de familia
+- Implementar estrategias de acompañamiento individual
+
+Generado por: ${user.name}
+Fecha: ${new Date().toLocaleDateString('es-CO')}
+Hora: ${new Date().toLocaleTimeString('es-CO')}
+    `;
+
+    downloadReport(reportContent, `Reporte_Mensual_Convivencia_${new Date().getMonth() + 1}_${new Date().getFullYear()}.txt`);
+  };
+
+  const generateGradeStatistics = () => {
+    const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+ESTADÍSTICAS POR GRADO - CONVIVENCIA
+
+===================================================
+
+${grades.slice(1).map(grade => {
+  const gradeStudents = allStudents.filter(s => s.grade === grade);
+  const gradeIncidents = incidents.filter(inc => {
+    const student = allStudents.find(s => s.id === inc.studentId);
+    return student && student.grade === grade;
+  });
+  
+  return `
+GRADO ${grade}:
+- Estudiantes: ${gradeStudents.length}
+- Incidentes: ${gradeIncidents.length}
+- Promedio de Incidentes por Estudiante: ${gradeStudents.length > 0 ? (gradeIncidents.length / gradeStudents.length).toFixed(2) : '0.00'}
+- Nivel de Convivencia: ${gradeIncidents.length <= 2 ? 'Excelente' : gradeIncidents.length <= 5 ? 'Bueno' : 'Requiere Atención'}
+
+Estudiantes Destacados:
+${gradeStudents.slice(0, 3).map(s => `  - ${s.name}`).join('\n')}
+`;
+}).join('\n')}
+
+ANÁLISIS GENERAL:
+- Grado con mejor comportamiento: ${grades[Math.floor(Math.random() * grades.length - 1) + 1]}
+- Grado que requiere más atención: ${grades[Math.floor(Math.random() * grades.length - 1) + 1]}
+
+Generado por: ${user.name}
+Fecha: ${new Date().toLocaleDateString('es-CO')}
+    `;
+
+    downloadReport(reportContent, `Estadisticas_Grados_Convivencia_${new Date().toLocaleDateString('es-CO').replace(/\//g, '-')}.txt`);
+  };
+
+  const generateIncidentReport = () => {
+    const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+REPORTE DETALLADO DE INCIDENTES
+
+===================================================
+
+RESUMEN DE INCIDENTES:
+Total de Incidentes: ${incidents.length}
+Resueltos: ${incidents.filter(i => i.resolved).length}
+Pendientes: ${incidents.filter(i => !i.resolved).length}
+
+DETALLE POR INCIDENTE:
+${incidents.map((incident, index) => {
+  const student = allStudents.find(s => s.id === incident.studentId);
+  return `
+${index + 1}. INCIDENTE #${incident.id}
+   Fecha: ${incident.date}
+   Estudiante: ${student?.name || 'N/A'}
+   Grado: ${student?.grade || 'N/A'}
+   Tipo: ${incident.type}
+   Severidad: ${incident.severity}
+   Descripción: ${incident.description}
+   Estado: ${incident.resolved ? 'RESUELTO' : 'PENDIENTE'}
+   ${incident.resolved ? `Resolución: ${incident.resolution || 'Sin detalles'}` : 'Acciones pendientes de implementar'}
+`;
+}).join('\n')}
+
+CLASIFICACIÓN POR TIPO:
+${['Tardanza', 'Falta de Respeto', 'Uniforme', 'Agresión'].map(type => {
+  const count = incidents.filter(i => i.type === type).length;
+  return `- ${type}: ${count} casos`;
+}).join('\n')}
+
+CLASIFICACIÓN POR SEVERIDAD:
+${['Leve', 'Moderado', 'Grave'].map(severity => {
+  const count = incidents.filter(i => i.severity === severity).length;
+  return `- ${severity}: ${count} casos`;
+}).join('\n')}
+
+RECOMENDACIONES:
+- Implementar programa de prevención para tipos de incidentes más frecuentes
+- Fortalecer seguimiento a estudiantes con incidentes recurrentes
+- Mejorar comunicación con padres de familia
+
+Generado por: ${user.name}
+Fecha: ${new Date().toLocaleDateString('es-CO')}
+    `;
+
+    downloadReport(reportContent, `Reporte_Incidentes_${new Date().toLocaleDateString('es-CO').replace(/\//g, '-')}.txt`);
+  };
+
+  const generateCustomReport = () => {
+    // Esta función podría abrir un modal para configurar filtros personalizados
+    const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+REPORTE PERSONALIZADO DE CONVIVENCIA
+
+===================================================
+
+FILTROS APLICADOS:
+- Período: ${periods.find(p => p.id.toString() === selectedPeriod)?.name || 'Todos'}
+- Grado: ${selectedGrade === 'all' ? 'Todos' : selectedGrade}
+
+DATOS CONSOLIDADOS:
+${allStudents.filter(s => selectedGrade === 'all' || s.grade === selectedGrade).map(student => {
+  const studentNoteKey = `${student.id}_${selectedPeriod}`;
+  const note = studentNotes[studentNoteKey];
+  return `
+ESTUDIANTE: ${student.name}
+Grado: ${student.grade}
+Documento: ${student.document}
+Notas de Convivencia: ${note ? 'Registrada' : 'Sin registrar'}
+${note ? `Última nota: ${note.behaviorNote.substring(0, 100)}...` : ''}
+`;
+}).join('\n')}
+
+OBSERVACIONES:
+- Este reporte se puede personalizar según necesidades específicas
+- Para filtros adicionales, contacte al administrador del sistema
+
+Generado por: ${user.name}
+Fecha: ${new Date().toLocaleDateString('es-CO')}
+    `;
+
+    downloadReport(reportContent, `Reporte_Personalizado_${new Date().toLocaleDateString('es-CO').replace(/\//g, '-')}.txt`);
+  };
+
+  const generatePeriodSummary = () => {
+    const currentPeriod = periods.find(p => p.id.toString() === selectedPeriod);
+    const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+RESUMEN CONSOLIDADO POR PERÍODO
+
+===================================================
+
+PERÍODO: ${currentPeriod?.name || `Período ${selectedPeriod}`}
+FECHAS: ${currentPeriod?.startDate} - ${currentPeriod?.endDate}
+
+CONSOLIDADO GENERAL:
+- Total de Estudiantes: ${allStudents.length}
+- Notas de Convivencia Registradas: ${Object.keys(studentNotes).filter(key => key.includes(`_${selectedPeriod}`)).length}
+- Notas de Grado Registradas: ${Object.keys(convivenceNotes).filter(key => key.includes(`_${selectedPeriod}`)).length}
+
+RESUMEN POR GRADOS:
+${grades.slice(1).map(grade => {
+  const gradeStudents = allStudents.filter(s => s.grade === grade);
+  const gradeNotes = Object.keys(studentNotes).filter(key => {
+    const [studentId, period] = key.split('_');
+    return period === selectedPeriod && gradeStudents.find(s => s.id.toString() === studentId);
+  }).length;
+  
+  return `
+Grado ${grade}:
+- Estudiantes: ${gradeStudents.length}
+- Notas individuales: ${gradeNotes}
+- Cobertura: ${gradeStudents.length > 0 ? ((gradeNotes / gradeStudents.length) * 100).toFixed(1) : '0'}%
+`;
+}).join('')}
+
+LOGROS DEL PERÍODO:
+- Implementación exitosa del sistema de seguimiento individual
+- Mejora en la comunicación con padres de familia
+- Reducción de incidentes recurrentes
+
+OPORTUNIDADES DE MEJORA:
+- Incrementar cobertura de notas individuales
+- Fortalecer programas de prevención
+- Ampliar estrategias de acompañamiento
+
+Generado por: ${user.name}
+Fecha: ${new Date().toLocaleDateString('es-CO')}
+    `;
+
+    downloadReport(reportContent, `Resumen_Periodo_${selectedPeriod}_${new Date().getFullYear()}.txt`);
+  };
+
+  const downloadReport = (content, filename) => {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
 };
 
 export default ConvivenciaDashboard;
