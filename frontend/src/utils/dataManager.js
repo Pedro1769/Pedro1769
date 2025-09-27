@@ -175,6 +175,31 @@ export const StudentsManager = {
       console.error('Error deleting students:', error);
       return [];
     }
+  },
+
+  // Método para sincronizar con el backend
+  syncWithBackend: async () => {
+    try {
+      const backendStudents = await ApiService.getStudents();
+      const localStudents = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+      
+      // Marcar estudiantes del backend
+      const syncedStudents = backendStudents.map(student => ({
+        ...student,
+        backendId: student.id,
+        isFromBackend: true
+      }));
+      
+      // Combinar con estudiantes locales que no estén en el backend
+      const combinedStudents = [...syncedStudents, ...localStudents.filter(local => 
+        !backendStudents.some(backend => backend.document === local.document)
+      )];
+      
+      return combinedStudents;
+    } catch (error) {
+      console.warn('No se pudo sincronizar con el backend, usando datos locales:', error);
+      return StudentsManager.getAll();
+    }
   }
 };
 
