@@ -37,6 +37,7 @@ import TeacherEditModal from '../components/TeacherEditModal';
 import UserApprovalManager from '../components/UserApprovalManager';
 import AcademicObjectivesManager from '../components/AcademicObjectivesManager';
 import CurriculumManager from '../components/CurriculumManager';
+import ProjectsManager from '../components/ProjectsManager';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
