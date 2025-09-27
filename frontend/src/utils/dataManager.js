@@ -1,4 +1,6 @@
 // Gestor de datos con persistencia local y backend
+import ApiService from '../services/api';
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
