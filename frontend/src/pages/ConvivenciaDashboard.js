@@ -1931,7 +1931,54 @@ Fecha: ${new Date().toLocaleDateString('es-CO')}
     downloadReport(reportContent, `Reporte_Personalizado_${new Date().toLocaleDateString('es-CO').replace(/\//g, '-')}.txt`);
   };
 
-  // Esta función se movió a la sección de funciones de reporte
+  const generatePeriodSummary = () => {
+    const currentPeriod = periods.find(p => p.id.toString() === selectedPeriod);
+    const reportContent = `
+GIMNASIO AMERICANO DEL ATLÁNTICO
+RESUMEN CONSOLIDADO POR PERÍODO
+
+===================================================
+
+PERÍODO: ${currentPeriod?.name || `Período ${selectedPeriod}`}
+FECHAS: ${currentPeriod?.startDate} - ${currentPeriod?.endDate}
+
+CONSOLIDADO GENERAL:
+- Total de Estudiantes: ${allStudents.length}
+- Notas de Convivencia Registradas: ${Object.keys(studentNotes).filter(key => key.includes(\`_\${selectedPeriod}\`)).length}
+- Notas de Grado Registradas: ${Object.keys(convivenceNotes).filter(key => key.includes(\`_\${selectedPeriod}\`)).length}
+
+RESUMEN POR GRADOS:
+${grades.slice(1).map(grade => {
+  const gradeStudents = allStudents.filter(s => s.grade === grade);
+  const gradeNotes = Object.keys(studentNotes).filter(key => {
+    const [studentId, period] = key.split('_');
+    return period === selectedPeriod && gradeStudents.find(s => s.id.toString() === studentId);
+  }).length;
+  
+  return \`
+Grado \${grade}:
+- Estudiantes: \${gradeStudents.length}
+- Notas individuales: \${gradeNotes}
+- Cobertura: \${gradeStudents.length > 0 ? ((gradeNotes / gradeStudents.length) * 100).toFixed(1) : '0'}%
+\`;
+}).join('')}
+
+LOGROS DEL PERÍODO:
+- Implementación exitosa del sistema de seguimiento individual
+- Mejora en la comunicación con padres de familia
+- Reducción de incidentes recurrentes
+
+OPORTUNIDADES DE MEJORA:
+- Incrementar cobertura de notas individuales
+- Fortalecer programas de prevención
+- Ampliar estrategias de acompañamiento
+
+Generado por: ${user.name}
+Fecha: ${new Date().toLocaleDateString('es-CO')}
+    `;
+
+    downloadReport(reportContent, \`Resumen_Periodo_\${selectedPeriod}_\${new Date().getFullYear()}.txt\`);
+  };
 
   const downloadReport = (content, filename) => {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
