@@ -1231,7 +1231,15 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                             </td>
                             <td className="p-3">
                               <div className="flex space-x-2">
-                                <Button size="sm" variant="outline" className="hover:bg-blue-50">
+                                <Button 
+                                  size="sm" 
+                                  variant="outline" 
+                                  className="hover:bg-blue-50"
+                                  onClick={() => {
+                                    setSelectedIncident(incident);
+                                    setShowIncidentModal(true);
+                                  }}
+                                >
                                   <Eye className="mr-1 h-3 w-3" />
                                   Ver
                                 </Button>
