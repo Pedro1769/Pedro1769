@@ -1456,6 +1456,7 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
         {/* Modales */}
         {showNoteModal && <ConvivenceNoteModal />}
         {showStudentNoteModal && selectedStudent && <StudentConvivenceNoteModal />}
+        {showIncidentModal && selectedIncident && <IncidentModal />}
       </div>
     </div>
   );
