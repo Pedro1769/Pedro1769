@@ -628,7 +628,7 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
 
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setShowProjectsManager(true)}>
                 <CardContent className="p-6 text-center">
                   <FileText className="h-12 w-12 mx-auto mb-4 text-purple-600" />
                   <h3 className="text-lg font-semibold mb-2">Proyectos Institucionales</h3>
