@@ -77,7 +77,7 @@ export const StudentsManager = {
   
   save: (students) => saveToStorage(STORAGE_KEYS.STUDENTS, students),
   
-  add: (student) => {
+  add: async (student) => {
     try {
       const newStudent = {
         ...student,
@@ -86,6 +86,25 @@ export const StudentsManager = {
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
+      
+      // Intentar guardar en el backend
+      try {
+        const savedStudent = await ApiService.createStudent({
+          name: newStudent.name,
+          grade: newStudent.grade,
+          document: newStudent.document,
+          age: newStudent.age || 0,
+          parent_email: newStudent.parentEmail || '',
+          parent_phone: newStudent.parentPhone || '',
+          created_by: newStudent.createdBy || 'manual'
+        });
+        
+        // Si se guardó en backend, usar el ID del backend
+        newStudent.id = savedStudent.id;
+        newStudent.backendId = savedStudent.id;
+      } catch (backendError) {
+        console.warn('No se pudo guardar en backend, guardando solo localmente:', backendError);
+      }
       
       // Solo agregar a estudiantes manuales si no es un usuario registrado
       if (!student.isRegisteredUser) {
