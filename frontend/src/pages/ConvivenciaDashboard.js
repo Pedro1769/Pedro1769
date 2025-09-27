@@ -1254,7 +1254,15 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                                   Ver
                                 </Button>
                                 {!incident.resolved && (
-                                  <Button size="sm" className="bg-gradient-to-r from-green-500 to-teal-500 text-white">
+                                  <Button 
+                                    size="sm" 
+                                    className="bg-gradient-to-r from-green-500 to-teal-500 text-white"
+                                    onClick={() => {
+                                      // Marcar incidente como resuelto
+                                      setSelectedIncident({...incident, resolved: true});
+                                      setShowIncidentModal(true);
+                                    }}
+                                  >
                                     <CheckCircle className="mr-1 h-3 w-3" />
                                     Resolver
                                   </Button>
