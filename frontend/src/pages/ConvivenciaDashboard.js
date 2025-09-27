@@ -1554,15 +1554,18 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                 <CardHeader className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-lg">
                   <CardTitle className="flex items-center">
                     <FileText className="mr-2 h-5 w-5 text-blue-600" />
-                    Reportes Manuales
+                    Reportes de Convivencia
                   </CardTitle>
                   <p className="text-sm text-gray-600">
-                    Cree reportes personalizados de convivencia y comportamiento
+                    Genere y descargue reportes completos de convivencia y comportamiento
                   </p>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    <Button className="w-full justify-start bg-gradient-to-r from-blue-500 to-teal-500 text-white h-16">
+                    <Button 
+                      className="w-full justify-start bg-gradient-to-r from-blue-500 to-teal-500 text-white h-16"
+                      onClick={() => generateMonthlyReport()}
+                    >
                       <div className="text-left">
                         <Calendar className="h-6 w-6 mb-1" />
                         <p className="text-sm font-medium">Reporte Mensual de Convivencia</p>
@@ -1570,7 +1573,10 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                       </div>
                     </Button>
                     
-                    <Button className="w-full justify-start bg-gradient-to-r from-purple-500 to-blue-500 text-white h-16">
+                    <Button 
+                      className="w-full justify-start bg-gradient-to-r from-purple-500 to-blue-500 text-white h-16"
+                      onClick={() => generateGradeStatistics()}
+                    >
                       <div className="text-left">
                         <TrendingUp className="h-6 w-6 mb-1" />
                         <p className="text-sm font-medium">Estadísticas por Grado</p>
@@ -1578,7 +1584,10 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                       </div>
                     </Button>
                     
-                    <Button className="w-full justify-start bg-gradient-to-r from-teal-500 to-green-500 text-white h-16">
+                    <Button 
+                      className="w-full justify-start bg-gradient-to-r from-teal-500 to-green-500 text-white h-16"
+                      onClick={() => generateIncidentReport()}
+                    >
                       <div className="text-left">
                         <Shield className="h-6 w-6 mb-1" />
                         <p className="text-sm font-medium">Reporte de Incidentes</p>
@@ -1586,11 +1595,25 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                       </div>
                     </Button>
                     
-                    <Button className="w-full justify-start bg-gradient-to-r from-orange-500 to-red-500 text-white h-16">
+                    <Button 
+                      className="w-full justify-start bg-gradient-to-r from-orange-500 to-red-500 text-white h-16"
+                      onClick={() => generateCustomReport()}
+                    >
                       <div className="text-left">
                         <FileText className="h-6 w-6 mb-1" />
                         <p className="text-sm font-medium">Reporte Personalizado</p>
                         <p className="text-xs opacity-90">Crear reporte con filtros específicos</p>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      className="w-full justify-start bg-gradient-to-r from-indigo-500 to-purple-500 text-white h-16"
+                      onClick={() => generatePeriodSummary()}
+                    >
+                      <div className="text-left">
+                        <BookOpen className="h-6 w-6 mb-1" />
+                        <p className="text-sm font-medium">Resumen por Período</p>
+                        <p className="text-xs opacity-90">Consolidado académico de convivencia</p>
                       </div>
                     </Button>
                   </div>
