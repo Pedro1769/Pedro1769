@@ -833,6 +833,13 @@ const TeacherDashboard = () => {
 
         {/* Modal para agregar estudiante */}
         {showAddStudentModal && <AddStudentModal />}
+
+        {/* Modal de Proyectos Institucionales */}
+        {showProjectsManager && (
+          <ProjectsManager 
+            onClose={() => setShowProjectsManager(false)}
+          />
+        )}
       </div>
     </div>
   );
