@@ -102,7 +102,10 @@ const TeacherDashboard = () => {
   // Handle adding new student
   const handleAddStudent = (studentData) => {
     const newStudent = StudentsManager.add(studentData);
-    setStudents(StudentsManager.getAll());
+    const updatedStudents = StudentsManager.getAll();
+    const combinedStudents = [...mockStudents, ...updatedStudents];
+    setStudents(combinedStudents);
+    setAllStudents(combinedStudents);
     setShowAddStudentModal(false);
   };
 
