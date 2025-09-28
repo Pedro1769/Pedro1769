@@ -741,149 +741,189 @@ const TeacherDashboard = () => {
           </TabsContent>
 
           <TabsContent value="convivencia" className="space-y-6">
-            <Card className="shadow-lg border-0 card-institutional">
-              <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
-                <CardTitle className="flex items-center">
-                  <Shield className="mr-2 h-5 w-5 text-purple-600" />
-                  Gestión de Convivencia - Docente
-                </CardTitle>
-                <p className="text-sm text-gray-600 mt-2">
-                  Como docente, puede registrar observaciones de convivencia y comportamiento para sus estudiantes.
-                  <span className="text-green-600 font-medium"> Acceso completo habilitado.</span>
-                </p>
-                <div className="mt-2 p-3 bg-green-50 rounded-lg border-green-200 border">
-                  <p className="text-sm text-green-800">
-                    ✅ <strong>FUNCIONALIDAD DOCENTE COMPLETA</strong> - Puede registrar notas de convivencia, observaciones comportamentales y recomendaciones para todos sus estudiantes en cualquier período académico.
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Registro de Observaciones */}
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
+                  <CardTitle className="flex items-center">
+                    <Shield className="mr-2 h-5 w-5 text-purple-600" />
+                    Registro de Observaciones
+                  </CardTitle>
+                  <p className="text-sm text-gray-600 mt-2">
+                    Registre observaciones de comportamiento y convivencia de sus estudiantes.
                   </p>
-                </div>
-              </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
                     <div>
-                      <Label htmlFor="gradeSelect">Grado</Label>
-                      <Select value={selectedGrade} onValueChange={setSelectedGrade}>
+                      <Label>Estudiante</Label>
+                      <Select>
                         <SelectTrigger>
-                          <SelectValue placeholder="Seleccionar grado" />
+                          <SelectValue placeholder="Seleccionar estudiante" />
                         </SelectTrigger>
                         <SelectContent>
-                          {availableGrades.map((grade) => (
-                            <SelectItem key={grade} value={grade}>{grade}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Label htmlFor="periodSelect">Período</Label>
-                      <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Seleccionar período" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {periods.map((period) => (
-                            <SelectItem key={period.id} value={period.id.toString()}>
-                              {period.name}
+                          {allStudents.filter(s => availableGrades.includes(s.grade)).map(student => (
+                            <SelectItem key={student.id} value={student.id.toString()}>
+                              {student.name} - {student.grade}
                             </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
                     </div>
-                  </div>
-
-                  {selectedGrade && (
+                    
                     <div>
-                      <h3 className="text-lg font-semibold mb-4 flex items-center">
-                        <Users className="mr-2 h-5 w-5" />
-                        Estudiantes de {selectedGrade} - Período {selectedPeriod}
-                      </h3>
-                      
-                      <div className="grid gap-4">
-                        {teacherStudents
-                          .filter(student => student.grade === selectedGrade)
-                          .map((student) => (
-                            <Card key={student.id} className="border border-purple-200 hover:shadow-md transition-shadow">
-                              <CardHeader className="pb-3">
-                                <div className="flex justify-between items-center">
-                                  <div className="flex items-center space-x-3">
-                                    <div className="p-2 bg-purple-100 rounded-full">
-                                      <UserCheck className="h-4 w-4 text-purple-600" />
-                                    </div>
-                                    <div>
-                                      <h4 className="font-medium text-gray-900">{student.name}</h4>
-                                      <p className="text-sm text-gray-600">
-                                        Documento: {student.document}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="flex space-x-2">
-                                    <Button size="sm" variant="outline" className="border-purple-200 text-purple-600 hover:bg-purple-50">
-                                      <Eye className="mr-1 h-3 w-3" />
-                                      Ver Historial
-                                    </Button>
-                                    <Button size="sm" className="bg-gradient-to-r from-purple-500 to-blue-500 text-white hover:shadow-md transition-all">
-                                      <Plus className="mr-1 h-3 w-3" />
-                                      Agregar Nota
-                                    </Button>
-                                  </div>
-                                </div>
-                              </CardHeader>
-                              <CardContent>
-                                <div className="space-y-3">
-                                  <div>
-                                    <Label className="text-sm font-medium text-gray-700">Observación Rápida</Label>
-                                    <div className="flex gap-2 mt-1">
-                                      <Button size="sm" variant="outline" className="text-green-600 border-green-200 hover:bg-green-50">
-                                        Excelente
-                                      </Button>
-                                      <Button size="sm" variant="outline" className="text-blue-600 border-blue-200 hover:bg-blue-50">
-                                        Bueno
-                                      </Button>
-                                      <Button size="sm" variant="outline" className="text-yellow-600 border-yellow-200 hover:bg-yellow-50">
-                                        Mejorar
-                                      </Button>
-                                      <Button size="sm" variant="outline" className="text-red-600 border-red-200 hover:bg-red-50">
-                                        Refuerzo
-                                      </Button>
-                                    </div>
-                                  </div>
-                                  
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    <div>
-                                      <Label className="text-xs font-medium text-gray-600">Comportamiento</Label>
-                                      <div className="flex items-center space-x-1 mt-1">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                          <button key={star} className="text-gray-300 hover:text-yellow-400 transition-colors">
-                                            ⭐
-                                          </button>
-                                        ))}
-                                      </div>
-                                    </div>
-                                    <div>
-                                      <Label className="text-xs font-medium text-gray-600">Participación</Label>
-                                      <div className="flex items-center space-x-1 mt-1">
-                                        {[1, 2, 3, 4, 5].map((star) => (
-                                          <button key={star} className="text-gray-300 hover:text-blue-400 transition-colors">
-                                            ⭐
-                                          </button>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </CardContent>
-                            </Card>
+                      <Label>Tipo de Observación</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Tipo" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="positiva">😊 Observación Positiva</SelectItem>
+                          <SelectItem value="proceso">📋 En Proceso</SelectItem>
+                          <SelectItem value="llamado">⚠️ Llamado de Atención</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div>
+                      <Label>Observación</Label>
+                      <Textarea 
+                        placeholder="Describe el comportamiento observado..."
+                        className="min-h-[80px]"
+                      />
+                    </div>
+                    
+                    <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                      <Plus className="mr-2 h-4 w-4" />
+                      Registrar Observación
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Historial de Convivencia */}
+              <Card className="shadow-lg border-0 card-institutional">
+                <CardHeader className="bg-gradient-to-r from-green-50 to-teal-50 rounded-t-lg">
+                  <CardTitle className="flex items-center">
+                    <FileText className="mr-2 h-5 w-5 text-green-600" />
+                    Historial de Convivencia
+                  </CardTitle>
+                  <p className="text-sm text-gray-600 mt-2">
+                    Consulte el historial completo de observaciones de convivencia.
+                  </p>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Filtros */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Filtrar por grado" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="todos">Todos los grados</SelectItem>
+                          {availableGrades.map(grade => (
+                            <SelectItem key={grade} value={grade}>{grade}</SelectItem>
                           ))}
+                        </SelectContent>
+                      </Select>
+                      
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Período" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Período 1</SelectItem>
+                          <SelectItem value="2">Período 2</SelectItem>
+                          <SelectItem value="3">Período 3</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Lista de observaciones recientes */}
+                    <div className="space-y-3 max-h-[300px] overflow-y-auto">
+                      {/* Simulación de historial */}
+                      <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-400">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <p className="font-medium text-green-800">María Isabel Salas Pérez</p>
+                            <p className="text-sm text-green-600">3° - Observación Positiva</p>
+                          </div>
+                          <Badge className="bg-green-100 text-green-800 text-xs">
+                            Hoy
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-700">Excelente participación en clase de matemáticas. Ayudó a sus compañeros con las actividades.</p>
+                      </div>
+
+                      <div className="bg-yellow-50 p-3 rounded-lg border-l-4 border-yellow-400">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <p className="font-medium text-yellow-800">Ashley Muñoz Rada</p>
+                            <p className="text-sm text-yellow-600">2° - En Proceso</p>
+                          </div>
+                          <Badge className="bg-yellow-100 text-yellow-800 text-xs">
+                            Ayer
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-700">Necesita mejorar la atención durante las explicaciones. Se distrae fácilmente.</p>
+                      </div>
+
+                      <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-400">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <p className="font-medium text-blue-800">Gabriel Antón Rosanía</p>
+                            <p className="text-sm text-blue-600">7° - Observación Positiva</p>
+                          </div>
+                          <Badge className="bg-blue-100 text-blue-800 text-xs">
+                            2 días
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-gray-700">Liderazgo positivo en trabajo en equipo. Fomenta la colaboración.</p>
                       </div>
                     </div>
-                  )}
 
-                  {!selectedGrade && (
-                    <div className="text-center py-12 text-gray-500">
-                      <Shield className="h-16 w-16 mx-auto mb-4 text-gray-300" />
-                      <p className="text-lg">Seleccione un grado para gestionar las notas de convivencia</p>
-                      <p className="text-sm">Podrá registrar observaciones y notas comportamentales para sus estudiantes</p>
+                    <div className="flex space-x-2">
+                      <Button variant="outline" className="flex-1">
+                        <Download className="mr-2 h-4 w-4" />
+                        Exportar Historial
+                      </Button>
+                      <Button variant="outline" className="flex-1">
+                        <Eye className="mr-2 h-4 w-4" />
+                        Ver Completo
+                      </Button>
                     </div>
-                  )}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Estadísticas de Convivencia */}
+            <Card className="shadow-lg border-0 card-institutional">
+              <CardHeader className="bg-gradient-to-r from-teal-50 to-blue-50 rounded-t-lg">
+                <CardTitle className="flex items-center">
+                  <Target className="mr-2 h-5 w-5 text-teal-600" />
+                  Estadísticas de Convivencia - Mis Estudiantes
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div className="bg-green-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-green-600">85%</div>
+                    <p className="text-sm text-green-700">Observaciones Positivas</p>
+                  </div>
+                  <div className="bg-yellow-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-yellow-600">12%</div>
+                    <p className="text-sm text-yellow-700">En Proceso</p>
+                  </div>
+                  <div className="bg-red-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-red-600">3%</div>
+                    <p className="text-sm text-red-700">Llamados Atención</p>
+                  </div>
+                  <div className="bg-blue-50 p-4 rounded-lg text-center">
+                    <div className="text-2xl font-bold text-blue-600">{allStudents.filter(s => availableGrades.includes(s.grade)).length}</div>
+                    <p className="text-sm text-blue-700">Total Estudiantes</p>
+                  </div>
                 </div>
               </CardContent>
             </Card>
