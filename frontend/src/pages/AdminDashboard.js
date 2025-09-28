@@ -974,6 +974,13 @@ const AdminDashboard = () => {
           />
         )}
 
+        {/* Modal de Reporte Consolidado */}
+        {showReporteConsolidado && (
+          <ReporteConsolidadoAdmin
+            onClose={() => setShowReporteConsolidado(false)}
+          />
+        )}
+
         {showEditModal && editingStudent && (
           <StudentEditModal 
             student={editingStudent}
