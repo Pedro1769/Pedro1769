@@ -552,6 +552,10 @@ const StudentDashboard = () => {
               </CardContent>
             </Card>
           </TabsContent>
+
+          <TabsContent value="talleres" className="space-y-6">
+            <TalleresAsistidos user={user} />
+          </TabsContent>
         </Tabs>
 
         {/* Report Card Modal */}
