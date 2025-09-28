@@ -896,6 +896,14 @@ const TeacherDashboard = () => {
             onClose={() => setShowGradePlanilla(false)}
           />
         )}
+
+        {/* Modal de Material para Estudiantes */}
+        {showMaterialManager && (
+          <MaterialEstudiantesManager
+            teacher={user}
+            onClose={() => setShowMaterialManager(false)}
+          />
+        )}
       </div>
     </div>
   );
