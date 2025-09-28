@@ -643,6 +643,49 @@ const AdminDashboard = () => {
                   <p className="text-gray-600 text-sm">Gestionar proyectos y actividades institucionales</p>
                 </CardContent>
               </Card>
+
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <FileSpreadsheet className="h-12 w-12 mx-auto mb-4 text-red-600" />
+                  <h3 className="text-lg font-semibold mb-2">Planillas de Notas</h3>
+                  <p className="text-gray-600 text-sm mb-4">Acceder y editar planillas completas por período</p>
+                  
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <Select value={planillaGrade} onValueChange={setPlanillaGrade}>
+                        <SelectTrigger className="text-xs">
+                          <SelectValue placeholder="Grado" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {['0°', '1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'].map(grade => (
+                            <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      
+                      <Select value={planillaPeriod} onValueChange={setPlanillaPeriod}>
+                        <SelectTrigger className="text-xs">
+                          <SelectValue placeholder="Período" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Período 1</SelectItem>
+                          <SelectItem value="2">Período 2</SelectItem>
+                          <SelectItem value="3">Período 3</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <Button 
+                      onClick={() => setShowPlanillaCompleta(true)}
+                      disabled={!planillaGrade}
+                      className="w-full bg-red-600 hover:bg-red-700 text-white text-xs"
+                      size="sm"
+                    >
+                      Abrir Planilla Completa
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </TabsContent>
 
