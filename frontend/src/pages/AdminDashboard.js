@@ -931,6 +931,20 @@ const AdminDashboard = () => {
           />
         )}
 
+        {/* Modal de Planilla Completa - Admin puede ver/editar cualquier planilla */}
+        {showPlanillaCompleta && planillaGrade && (
+          <PlanillaCompletaPorPeriodo
+            teacher={{ 
+              name: 'Administrador', 
+              teachingLevel: planillaGrade === '0°' ? 'transicion' : 
+                           ['1°', '2°', '3°', '4°', '5°'].includes(planillaGrade) ? 'primaria' : 'bachillerato'
+            }}
+            selectedGrade={planillaGrade}
+            selectedPeriod={planillaPeriod}
+            onClose={() => setShowPlanillaCompleta(false)}
+          />
+        )}
+
         {showEditModal && editingStudent && (
           <StudentEditModal 
             student={editingStudent}
