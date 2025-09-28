@@ -23,7 +23,8 @@ import {
   Grid,
   CheckCircle,
   Shield,
-  FileSpreadsheet
+  FileSpreadsheet,
+  TrendingDown
 } from 'lucide-react';
 import { Label } from '../components/ui/label';
 import { Input } from '../components/ui/input';
