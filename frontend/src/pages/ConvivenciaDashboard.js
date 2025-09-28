@@ -1634,6 +1634,10 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
                                           size="sm" 
                                           variant="outline"
                                           className="border-teal-200 text-teal-700 hover:bg-teal-50"
+                                          onClick={() => {
+                                            setSelectedStudentEvolucion(student);
+                                            setShowEvolucionModal(true);
+                                          }}
                                         >
                                           <TrendingUp className="mr-1 h-3 w-3" />
                                           Ver Evolución
