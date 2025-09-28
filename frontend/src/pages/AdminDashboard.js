@@ -52,6 +52,9 @@ const AdminDashboard = () => {
   const [showObjectivesManager, setShowObjectivesManager] = useState(false);
   const [showCurriculumManager, setShowCurriculumManager] = useState(false);
   const [showProjectsManager, setShowProjectsManager] = useState(false);
+  const [showPlanillaCompleta, setShowPlanillaCompleta] = useState(false);
+  const [planillaGrade, setPlanillaGrade] = useState('');
+  const [planillaPeriod, setPlanillaPeriod] = useState('1');
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
   const [editingTeacher, setEditingTeacher] = useState(null);
