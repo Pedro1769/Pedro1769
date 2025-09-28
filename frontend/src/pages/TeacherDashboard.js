@@ -356,8 +356,15 @@ const TeacherDashboard = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* Botón para abrir selector de planillas por asignatura */}
+                {/* Botones para abrir planillas */}
                 <div className="flex justify-end space-x-3">
+                  <Button
+                    onClick={() => setShowPlanillaCompleta(true)}
+                    className="bg-gradient-to-r from-red-600 to-blue-600 text-white hover:shadow-lg text-sm font-bold"
+                    disabled={!selectedGrade || !selectedPeriod}
+                  >
+                    📋 PLANILLA COMPLETA PERÍODO
+                  </Button>
                   <Button
                     onClick={() => setShowSelectorPlanillas(true)}
                     className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg"
@@ -370,7 +377,7 @@ const TeacherDashboard = () => {
                     className="bg-gradient-to-r from-blue-600 to-teal-600 text-white hover:shadow-lg"
                     disabled={!selectedGrade}
                   >
-                    📊 Planilla General (Anterior)
+                    📊 Planilla Anterior (Demo)
                   </Button>
                 </div>
 
