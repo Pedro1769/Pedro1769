@@ -913,6 +913,16 @@ const TeacherDashboard = () => {
             onClose={() => setShowMaterialManager(false)}
           />
         )}
+
+        {/* Selector de Planillas por Asignatura */}
+        {showSelectorPlanillas && selectedGrade && selectedPeriod && (
+          <SelectorPlanillas
+            teacher={user}
+            selectedGrade={selectedGrade}
+            selectedPeriod={selectedPeriod}
+            onClose={() => setShowSelectorPlanillas(false)}
+          />
+        )}
       </div>
     </div>
   );
