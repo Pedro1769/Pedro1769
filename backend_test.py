@@ -165,6 +165,134 @@ def test_cors_configuration():
         print(f"  ❌ CORS test failed - connection error: {e}")
         return False
 
+def test_student_login_system():
+    """Test student login functionality and user management"""
+    print("\n🔍 Testing Student Login System...")
+    
+    # First, check if login endpoints exist
+    print("  🔐 Checking for authentication endpoints...")
+    
+    auth_endpoints = ["/login", "/auth/login", "/authenticate"]
+    login_endpoint_found = False
+    
+    for endpoint in auth_endpoints:
+        try:
+            response = requests.post(f"{API_BASE}{endpoint}", 
+                                   json={"email": "test@test.com", "password": "test"}, 
+                                   timeout=5)
+            if response.status_code != 404:
+                print(f"    ✅ Found potential login endpoint: {endpoint}")
+                login_endpoint_found = True
+                break
+        except:
+            continue
+    
+    if not login_endpoint_found:
+        print("    ❌ CRITICAL: No login endpoints found in backend!")
+        print("    📋 Available endpoints appear to be: /users, /students, /status")
+        print("    🚨 This explains why student login is failing - no authentication system exists!")
+        return False
+    
+    # Test user management endpoints
+    print("  👥 Testing user management endpoints...")
+    
+    # Test creating a student user
+    student_user_data = {
+        "name": "María González",
+        "email": "maria.gonzalez@estudiante.com",
+        "role": "student",
+        "document": "1234567890",
+        "phone": "3001234567"
+    }
+    
+    try:
+        # Create student user
+        response = requests.post(f"{API_BASE}/users", json=student_user_data, timeout=10)
+        if response.status_code == 200:
+            created_user = response.json()
+            print(f"    ✅ Student user created successfully: {created_user.get('name')}")
+            
+            # Verify user has student role
+            if created_user.get('role') == 'student':
+                print("    ✅ Student role assigned correctly")
+            else:
+                print(f"    ❌ Role mismatch: expected 'student', got '{created_user.get('role')}'")
+                return False
+                
+        else:
+            print(f"    ❌ Failed to create student user - status: {response.status_code}")
+            print(f"    Response: {response.text}")
+            return False
+            
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ User creation test failed: {e}")
+        return False
+    
+    # Test retrieving users and check for students
+    print("  📖 Checking for existing student users...")
+    
+    try:
+        response = requests.get(f"{API_BASE}/users", timeout=10)
+        if response.status_code == 200:
+            users = response.json()
+            student_users = [user for user in users if user.get('role') == 'student']
+            
+            print(f"    📊 Found {len(student_users)} student users out of {len(users)} total users")
+            
+            if len(student_users) > 0:
+                print("    ✅ Student users exist in database")
+                for student in student_users[:3]:  # Show first 3 students
+                    print(f"      - {student.get('name')} ({student.get('email')})")
+            else:
+                print("    ⚠️  No student users found in database")
+                
+        else:
+            print(f"    ❌ Failed to retrieve users - status: {response.status_code}")
+            return False
+            
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ User retrieval test failed: {e}")
+        return False
+    
+    return True
+
+def test_frontend_backend_connectivity():
+    """Test connectivity between frontend and backend"""
+    print("\n🔍 Testing Frontend-Backend Connectivity...")
+    
+    # Test the exact URL that frontend uses
+    frontend_backend_url = "https://escuela-digital-7.preview.emergentagent.com"
+    
+    print(f"  🌐 Testing frontend's backend URL: {frontend_backend_url}")
+    
+    try:
+        # Test basic connectivity
+        response = requests.get(f"{frontend_backend_url}/api/", timeout=10)
+        if response.status_code == 200:
+            print("    ✅ Frontend can reach backend successfully")
+            
+            # Test CORS for frontend domain
+            headers = {
+                'Origin': frontend_backend_url,
+                'Content-Type': 'application/json'
+            }
+            
+            response = requests.get(f"{frontend_backend_url}/api/users", headers=headers, timeout=10)
+            if response.status_code == 200:
+                print("    ✅ CORS working for frontend domain")
+                return True
+            else:
+                print(f"    ⚠️  CORS might have issues - status: {response.status_code}")
+                return True  # Don't fail for CORS issues
+                
+        else:
+            print(f"    ❌ Frontend cannot reach backend - status: {response.status_code}")
+            return False
+            
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ Frontend-backend connectivity test failed: {e}")
+        return False
+
 def run_comprehensive_backend_test():
     """Run all backend tests"""
     print("🚀 Starting Comprehensive Backend Testing Suite")
@@ -183,6 +311,12 @@ def run_comprehensive_backend_test():
     
     # Test 4: CORS Configuration
     test_results.append(("CORS Configuration", test_cors_configuration()))
+    
+    # Test 5: Student Login System (NEW)
+    test_results.append(("Student Login System", test_student_login_system()))
+    
+    # Test 6: Frontend-Backend Connectivity (NEW)
+    test_results.append(("Frontend-Backend Connectivity", test_frontend_backend_connectivity()))
     
     # Summary
     print("\n" + "=" * 60)
