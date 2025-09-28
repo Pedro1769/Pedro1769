@@ -25,6 +25,7 @@ import {
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
 import { StudentsManager, PeriodsManager } from '../utils/dataManager';
 import ProjectsManager from '../components/ProjectsManager';
+import GradePlanilla from '../components/GradePlanilla';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
