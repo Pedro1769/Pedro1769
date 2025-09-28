@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { mockGrades, performanceScale, schoolInfo } from '../mock/mockData';
 import ReportCardComponent from '../components/ReportCard';
+import TalleresAsistidos from '../components/TalleresAsistidos';
 
 const StudentDashboard = () => {
   const { user } = useAuth();
