@@ -33,7 +33,7 @@ const StudentDashboard = () => {
 
   // Get student grades for selected period
   const studentGrades = mockGrades.filter(
-    grade => grade.studentId === user.studentId && 
+    grade => grade.studentId === (user.studentId || user.id) && 
              grade.period === parseInt(selectedPeriod)
   );
 
