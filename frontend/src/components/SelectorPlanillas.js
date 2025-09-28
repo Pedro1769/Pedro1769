@@ -11,7 +11,7 @@ import {
   ChevronRight,
   GraduationCap
 } from 'lucide-react';
-import PlanillaPorAsignatura from './PlanillaPorAsignatura';
+import PlanillaIndividualAsignatura from './PlanillaIndividualAsignatura';
 
 const SelectorPlanillas = ({ teacher, selectedGrade, selectedPeriod, onClose }) => {
   const [selectedSubject, setSelectedSubject] = useState('');
