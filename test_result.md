@@ -120,6 +120,18 @@ backend:
         agent: "testing"
         comment: "Backend infrastructure fully tested and working. Fixed missing .env files (MONGO_URL, DB_NAME, CORS_ORIGINS). All API endpoints (/api/, /api/status GET/POST) responding correctly. MongoDB connection verified with successful data persistence. CORS properly configured. System ready for frontend integration."
 
+  - task: "Student login endpoint functionality"
+    implemented: false
+    working: false
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: Student login completely non-functional. Backend has NO authentication endpoints (/login, /auth/login, /authenticate) - all return 404 Not Found. Backend logs show frontend attempting login requests that fail. Current backend only has CRUD endpoints for users/students/status but no authentication system. Frontend uses localStorage-based auth but mockUsers array contains ZERO student users. Students cannot login because: 1) No backend auth endpoints, 2) No student login accounts exist in mockUsers, 3) mockStudents are data records only, not login accounts. URGENT: Implement authentication endpoints OR add student users to mockUsers array."
+
 frontend:
   - task: "Fix registration form state management issue"
     implemented: true
