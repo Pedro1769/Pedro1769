@@ -38,6 +38,7 @@ import UserApprovalManager from '../components/UserApprovalManager';
 import AcademicObjectivesManager from '../components/AcademicObjectivesManager';
 import CurriculumManager from '../components/CurriculumManager';
 import ProjectsManager from '../components/ProjectsManager';
+import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
