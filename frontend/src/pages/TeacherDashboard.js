@@ -976,6 +976,16 @@ const TeacherDashboard = () => {
             onClose={() => setShowSelectorPlanillas(false)}
           />
         )}
+
+        {/* Planilla Completa por Período */}
+        {showPlanillaCompleta && selectedGrade && selectedPeriod && (
+          <PlanillaCompletaPorPeriodo
+            teacher={user}
+            selectedGrade={selectedGrade}
+            selectedPeriod={selectedPeriod}
+            onClose={() => setShowPlanillaCompleta(false)}
+          />
+        )}
       </div>
     </div>
   );
