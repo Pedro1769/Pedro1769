@@ -40,6 +40,7 @@ import AcademicObjectivesManager from '../components/AcademicObjectivesManager';
 import CurriculumManager from '../components/CurriculumManager';
 import ProjectsManager from '../components/ProjectsManager';
 import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
+import ReporteConsolidadoAdmin from '../components/ReporteConsolidadoAdmin';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
