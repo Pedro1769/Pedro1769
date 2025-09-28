@@ -88,7 +88,7 @@ const SelectorPlanillas = ({ teacher, selectedGrade, selectedPeriod, onClose }) 
 
   if (showPlanilla && selectedSubject) {
     return (
-      <PlanillaPorAsignatura
+      <PlanillaIndividualAsignatura
         teacher={teacher}
         selectedGrade={selectedGrade}
         selectedPeriod={selectedPeriod}
