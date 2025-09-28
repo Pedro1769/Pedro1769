@@ -722,6 +722,186 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
     );
   };
 
+  // Modal de Evolución Comportamental
+  const EvolucionModal = () => {
+    const [comportamientoData, setComportamientoData] = useState({
+      comportamiento: 4,
+      participacion: 4,
+      responsabilidad: 4,
+      observaciones: ''
+    });
+
+    const updateRating = (category, rating) => {
+      setComportamientoData(prev => ({
+        ...prev,
+        [category]: rating
+      }));
+    };
+
+    const saveEvolucion = () => {
+      const evolucionKey = `evolucion_${selectedStudentEvolucion.id}_${selectedPeriod}`;
+      const historialData = JSON.parse(localStorage.getItem(evolucionKey) || '[]');
+      
+      const nuevaEvaluacion = {
+        ...comportamientoData,
+        fecha: new Date().toISOString(),
+        periodo: selectedPeriod,
+        evaluadoPor: user.name
+      };
+      
+      historialData.push(nuevaEvaluacion);
+      localStorage.setItem(evolucionKey, JSON.stringify(historialData));
+      
+      alert('Evolución guardada exitosamente');
+      setShowEvolucionModal(false);
+    };
+
+    const getHistorial = () => {
+      const evolucionKey = `evolucion_${selectedStudentEvolucion.id}_${selectedPeriod}`;
+      return JSON.parse(localStorage.getItem(evolucionKey) || '[]');
+    };
+
+    const historial = getHistorial();
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <Card className="w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <CardHeader className="bg-gradient-to-r from-teal-600 to-blue-600 text-white">
+            <div className="flex justify-between items-center">
+              <div>
+                <CardTitle className="text-xl">📈 Evolución Comportamental</CardTitle>
+                <p className="text-teal-100">{selectedStudentEvolucion?.name} - Período {selectedPeriod}</p>
+              </div>
+              <Button 
+                variant="secondary" 
+                size="sm"
+                onClick={() => setShowEvolucionModal(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </CardHeader>
+
+          <CardContent className="p-6 space-y-6">
+            {/* Evaluación Actual */}
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h3 className="font-semibold text-blue-800 mb-4">Nueva Evaluación</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {['comportamiento', 'participacion', 'responsabilidad'].map(category => (
+                  <div key={category} className="space-y-2">
+                    <Label className="font-medium capitalize">{category}</Label>
+                    <div className="flex space-x-2">
+                      {[1, 2, 3, 4, 5].map(rating => (
+                        <button
+                          key={rating}
+                          onClick={() => updateRating(category, rating)}
+                          className={`p-2 rounded-full transition-colors ${
+                            comportamientoData[category] >= rating
+                              ? 'text-yellow-500 hover:text-yellow-600'
+                              : 'text-gray-300 hover:text-gray-400'
+                          }`}
+                        >
+                          ⭐
+                        </button>
+                      ))}
+                    </div>
+                    <p className="text-xs text-gray-600">
+                      {comportamientoData[category] >= 5 ? 'Excelente' :
+                       comportamientoData[category] >= 4 ? 'Bueno' :
+                       comportamientoData[category] >= 3 ? 'Mejorable' : 'Requiere Apoyo'}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4">
+                <Label>Observaciones</Label>
+                <Textarea
+                  value={comportamientoData.observaciones}
+                  onChange={(e) => setComportamientoData(prev => ({...prev, observaciones: e.target.value}))}
+                  placeholder="Observaciones sobre el comportamiento del estudiante..."
+                  className="min-h-[80px]"
+                />
+              </div>
+
+              <Button onClick={saveEvolucion} className="mt-4 w-full bg-teal-600 hover:bg-teal-700">
+                💾 Guardar Evaluación
+              </Button>
+            </div>
+
+            {/* Historial */}
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-4">📊 Historial de Evaluaciones</h3>
+              
+              {historial.length === 0 ? (
+                <div className="text-center py-8 text-gray-500">
+                  <TrendingUp className="h-12 w-12 mx-auto mb-2 text-gray-300" />
+                  <p>No hay evaluaciones anteriores</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {historial.reverse().map((evaluacion, index) => (
+                    <Card key={index} className="p-4">
+                      <div className="flex justify-between items-start mb-3">
+                        <div>
+                          <p className="font-medium">{new Date(evaluacion.fecha).toLocaleDateString('es-CO')}</p>
+                          <p className="text-sm text-gray-600">Evaluado por: {evaluacion.evaluadoPor}</p>
+                        </div>
+                        <Badge className="bg-blue-100 text-blue-800">
+                          Período {evaluacion.periodo}
+                        </Badge>
+                      </div>
+
+                      <div className="grid grid-cols-3 gap-4 mb-3">
+                        <div>
+                          <Label className="text-xs">Comportamiento</Label>
+                          <div className="flex space-x-1">
+                            {[1,2,3,4,5].map(star => (
+                              <span key={star} className={star <= evaluacion.comportamiento ? 'text-yellow-400' : 'text-gray-300'}>
+                                ⭐
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <Label className="text-xs">Participación</Label>
+                          <div className="flex space-x-1">
+                            {[1,2,3,4,5].map(star => (
+                              <span key={star} className={star <= evaluacion.participacion ? 'text-blue-400' : 'text-gray-300'}>
+                                ⭐
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <Label className="text-xs">Responsabilidad</Label>
+                          <div className="flex space-x-1">
+                            {[1,2,3,4,5].map(star => (
+                              <span key={star} className={star <= evaluacion.responsabilidad ? 'text-green-400' : 'text-gray-300'}>
+                                ⭐
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {evaluacion.observaciones && (
+                        <div className="bg-gray-50 p-2 rounded text-sm">
+                          <strong>Observaciones:</strong> {evaluacion.observaciones}
+                        </div>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
