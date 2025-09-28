@@ -219,11 +219,11 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Auto-approve users on registration"
-    - "Update registration success message"
+    - "Student login endpoint functionality"
+    - "Fix registration form state management issue"
   stuck_tasks:
-    - "Auto-approve users on registration"
-    - "Update registration success message"
+    - "Student login endpoint functionality"
+    - "Fix registration form state management issue"
   test_all: false
   test_priority: "high_first"
 
