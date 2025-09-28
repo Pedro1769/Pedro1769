@@ -8,6 +8,138 @@ export const mockUsers = [
     name: 'Pedro Hurtado',
     role: 'admin',
     position: 'Coordinador Académico'
+  },
+  
+  // Teachers
+  {
+    id: 2,
+    email: 'profesor1@gada.edu.co',
+    password: 'prof123',
+    name: 'Ana María González',
+    role: 'teacher',
+    teachingLevel: 'primaria',
+    grades: ['1°', '2°'],
+    subjects: ['ESPAÑOL', 'MATEMÁTICAS', 'CIENCIAS NATURALES', 'CIENCIAS SOCIALES', 'INGLÉS', 'EDUCACIÓN ARTÍSTICA', 'ÉTICA Y RELIGIÓN', 'INFORMÁTICA']
+  },
+  {
+    id: 3,
+    email: 'profesor2@gada.edu.co',
+    password: 'prof123',
+    name: 'Carlos Alberto Ruiz',
+    role: 'teacher',
+    teachingLevel: 'bachillerato',
+    grades: ['6°', '7°', '8°'],
+    subjects: ['MATEMÁTICAS', 'FÍSICA']
+  },
+  {
+    id: 4,
+    email: 'profesora3@gada.edu.co',
+    password: 'prof123',
+    name: 'Luz Marina Torres',
+    role: 'teacher',
+    teachingLevel: 'transicion',
+    grades: ['0°'],
+    subjects: ['DIMENSIÓN COMUNICATIVA', 'DIMENSIÓN COGNITIVA', 'DIMENSIÓN CORPORAL', 'DIMENSIÓN ESTÉTICA', 'DIMENSIÓN ÉTICA']
+  },
+  
+  // Coordinadora de Convivencia
+  {
+    id: 5,
+    email: 'convivencia@gada.edu.co',
+    password: 'conv123',
+    name: 'Sandra Patricia López',
+    role: 'coordinadora_convivencia'
+  },
+  
+  // Students with login credentials
+  {
+    id: 101,
+    email: 'geovanny.salas@estudiante.gada.edu.co',
+    password: 'est123',
+    name: 'Geovanny Erick Salas Pérez',
+    role: 'student',
+    studentId: 1,
+    grade: '11°',
+    document: '1087585001426',
+    parentId: 201
+  },
+  {
+    id: 102,
+    email: 'maria.salas@estudiante.gada.edu.co',
+    password: 'est123',
+    name: 'María Isabel Salas Pérez',
+    role: 'student',
+    studentId: 2,
+    grade: '3°',
+    document: '1087585001427',
+    parentId: 201
+  },
+  {
+    id: 103,
+    email: 'ashley.munoz@estudiante.gada.edu.co',
+    password: 'est123',
+    name: 'Ashley Muñoz Rada',
+    role: 'student',
+    studentId: 3,
+    grade: '2°',
+    document: '1087585001428',
+    parentId: 202
+  },
+  {
+    id: 104,
+    email: 'gabriel.rosania@estudiante.gada.edu.co',
+    password: 'est123',
+    name: 'Gabriel Antón Rosanía',
+    role: 'student',
+    studentId: 4,
+    grade: '7°',
+    document: '1087585001429',
+    parentId: 203
+  },
+  {
+    id: 105,
+    email: 'santiago.moreno@estudiante.gada.edu.co',
+    password: 'est123',
+    name: 'Santiago Moreno Castro',
+    role: 'student',
+    studentId: 5,
+    grade: '0°',
+    document: '1087585001430',
+    parentId: 204
+  },
+  
+  // Parents
+  {
+    id: 201,
+    email: 'padre.salas@gada.edu.co',
+    password: 'pad123',
+    name: 'Roberto Salas',
+    role: 'parent',
+    children: [1, 2] // studentIds
+  },
+  {
+    id: 202,
+    email: 'madre.munoz@gada.edu.co',
+    password: 'pad123',
+    name: 'Carmen Rada',
+    role: 'parent',
+    children: [3]
+  },
+  {
+    id: 203,
+    email: 'padre.rosania@gada.edu.co',
+    password: 'pad123',
+    name: 'Antonio Rosanía',
+    role: 'parent',
+    children: [4]
+  },
+  {
+    id: 204,
+    email: 'madre.moreno@gada.edu.co',
+    password: 'pad123',
+    name: 'Claudia Castro',
+    role: 'parent',
+    children: [5]
   }
 ];
 
