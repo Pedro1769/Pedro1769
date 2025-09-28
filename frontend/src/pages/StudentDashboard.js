@@ -17,7 +17,8 @@ import {
   Trophy,
   Target,
   Clock,
-  Star
+  Star,
+  CheckCircle
 } from 'lucide-react';
 import { mockGrades, performanceScale, schoolInfo } from '../mock/mockData';
 import ReportCardComponent from '../components/ReportCard';
