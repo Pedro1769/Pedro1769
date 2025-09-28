@@ -657,6 +657,26 @@ const TeacherDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="material" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Gestión de Material para Estudiantes</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Crea y gestiona talleres, recuperaciones y actividades para tus estudiantes.
+                </p>
+                <Button 
+                  onClick={() => setShowMaterialManager(true)}
+                  className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Abrir Gestión de Material
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="reports" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
