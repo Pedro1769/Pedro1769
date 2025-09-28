@@ -61,11 +61,21 @@ const TeacherDashboard = () => {
 
   // Obtener grados disponibles para el docente
   const getAvailableGrades = () => {
+    // Si el profesor tiene grados específicamente asignados
     if (user.grades && user.grades.length > 0) {
       return user.grades;
     }
     
-    // Si no tiene grados asignados, devolver todos los grados como fallback
+    // Para tutores de primaria, si no tienen grado específico, mostrar todos los de primaria
+    if (user.teachingLevel === 'primaria') {
+      return ['1°', '2°', '3°', '4°', '5°'];
+    } else if (user.teachingLevel === 'transicion') {
+      return ['0°'];
+    } else if (user.teachingLevel === 'bachillerato') {
+      return ['6°', '7°', '8°', '9°', '10°', '11°'];
+    }
+    
+    // Si no hay información específica, devolver todos los grados como fallback
     return ['0°', '1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'];
   };
 
