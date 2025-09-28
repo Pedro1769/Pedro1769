@@ -350,14 +350,21 @@ const TeacherDashboard = () => {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                {/* Botón para abrir planilla profesional */}
-                <div className="flex justify-end">
+                {/* Botón para abrir selector de planillas por asignatura */}
+                <div className="flex justify-end space-x-3">
+                  <Button
+                    onClick={() => setShowSelectorPlanillas(true)}
+                    className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:shadow-lg"
+                    disabled={!selectedGrade || !selectedPeriod}
+                  >
+                    📋 Planillas por Asignatura
+                  </Button>
                   <Button
                     onClick={() => setShowGradePlanilla(true)}
                     className="bg-gradient-to-r from-blue-600 to-teal-600 text-white hover:shadow-lg"
                     disabled={!selectedGrade}
                   >
-                    📋 Abrir Planilla de Notas Profesional
+                    📊 Planilla General (Anterior)
                   </Button>
                 </div>
 
