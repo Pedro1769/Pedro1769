@@ -20,7 +20,10 @@ import {
   Shield,
   Eye,
   Plus,
-  UserCheck
+  UserCheck,
+  FileText,
+  Target,
+  Download
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
 import { StudentsManager, PeriodsManager } from '../utils/dataManager';
