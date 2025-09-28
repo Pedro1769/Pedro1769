@@ -178,6 +178,9 @@ const StudentDashboard = () => {
             <TabsTrigger value="homework" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
               Tareas
             </TabsTrigger>
+            <TabsTrigger value="talleres" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-teal-500 data-[state=active]:text-white">
+              Talleres Asistidos
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="grades" className="space-y-6">
