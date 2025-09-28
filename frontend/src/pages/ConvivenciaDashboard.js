@@ -1977,6 +1977,9 @@ Fecha del Reporte: ${new Date().toLocaleDateString('es-CO')}
             onClose={() => setShowProjectsManager(false)}
           />
         )}
+
+        {/* Modal de Evolución Comportamental */}
+        {showEvolucionModal && selectedStudentEvolucion && <EvolucionModal />}
       </div>
     </div>
   );
