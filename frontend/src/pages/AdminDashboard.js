@@ -700,6 +700,32 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="reports" className="mt-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setShowReporteConsolidado(true)}>
+                <CardContent className="p-6 text-center">
+                  <TrendingDown className="h-12 w-12 mx-auto mb-4 text-red-600" />
+                  <h3 className="text-lg font-semibold mb-2">Reporte Consolidado</h3>
+                  <p className="text-gray-600 text-sm">Análisis de rendimiento y riesgo de reprobación por grado y período</p>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <Users className="h-12 w-12 mx-auto mb-4 text-blue-600" />
+                  <h3 className="text-lg font-semibold mb-2">Estadísticas Generales</h3>
+                  <p className="text-gray-600 text-sm">Métricas institucionales y comparativos por período</p>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                <CardContent className="p-6 text-center">
+                  <Upload className="h-12 w-12 mx-auto mb-4 text-green-600" />
+                  <h3 className="text-lg font-semibold mb-2">Carga Masiva</h3>
+                  <p className="text-gray-600 text-sm">Subir consolidado de notas de períodos anteriores</p>
+                </CardContent>
+              </Card>
+            </div>
+
             <Card>
               <CardHeader>
                 <CardTitle>Gestión de Boletines Académicos</CardTitle>
