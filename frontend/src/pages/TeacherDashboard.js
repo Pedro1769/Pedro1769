@@ -863,6 +863,16 @@ const TeacherDashboard = () => {
             onClose={() => setShowProjectsManager(false)}
           />
         )}
+
+        {/* Modal de Planilla de Notas */}
+        {showGradePlanilla && selectedGrade && (
+          <GradePlanilla
+            teacher={user}
+            selectedGrade={selectedGrade}
+            selectedPeriod={selectedPeriod}
+            onClose={() => setShowGradePlanilla(false)}
+          />
+        )}
       </div>
     </div>
   );
