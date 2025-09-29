@@ -171,9 +171,10 @@ const TeacherDashboard = () => {
 
   const teacherSubjects = getTeacherSubjects();
 
-  // Group students by grade
+  // Group students by grade with filters applied
+  const filteredStudents = filterStudents(teacherStudents);
   const studentsByGrade = availableGrades.reduce((acc, grade) => {
-    acc[grade] = teacherStudents.filter(student => student.grade === grade);
+    acc[grade] = filteredStudents.filter(student => student.grade === grade);
     return acc;
   }, {});
 
