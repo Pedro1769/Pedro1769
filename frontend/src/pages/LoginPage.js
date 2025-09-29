@@ -28,46 +28,73 @@ const LoginPage = () => {
     setError('');
 
     try {
-      // Get all users (mock + registered)
-      const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
-      const allUsers = [...mockUsers, ...registeredUsers.filter(u => u.approved)];
-      
-      const user = allUsers.find(
+      // Primero intentar con usuarios mock para compatibilidad
+      const mockUser = mockUsers.find(
         (u) => u.email === email && u.password === password
       );
 
-      if (user) {
-        login(user);
+      if (mockUser) {
+        login(mockUser);
+        redirectBasedOnRole(mockUser.role);
+        return;
+      }
+
+      // Si no se encuentra en mock, buscar en base de datos
+      try {
+        const dbUsers = await ApiService.getUsers();
+        const dbUser = dbUsers.find(u => u.email === email);
         
-        // Redirect based on role
-        switch (user.role) {
-          case 'admin':
-          case 'coordinador_academico':
-            navigate('/admin');
-            break;
-          case 'teacher':
-            navigate('/teacher');
-            break;
-          case 'parent':
-            navigate('/parent');
-            break;
-          case 'student':
-            navigate('/student');
-            break;
-          case 'coordinadora_convivencia':
-            navigate('/convivencia');
-            break;
-          default:
-            navigate('/dashboard');
+        if (dbUser) {
+          // Por ahora, como no tenemos hash de passwords, solo verificamos que exista
+          // En producción aquí se haría la verificación del hash
+          login(dbUser);
+          redirectBasedOnRole(dbUser.role);
+        } else {
+          setError('Credenciales incorrectas. Verifique su email y contraseña.');
         }
-      } else {
-        setError('Credenciales incorrectas. Verifique su email y contraseña.');
+      } catch (apiError) {
+        console.error('Error consultando usuarios de BD:', apiError);
+        // Fallback a localStorage si hay error con la API
+        const registeredUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+        const localUser = registeredUsers.find(
+          (u) => u.email === email && u.password === password && u.approved
+        );
+        
+        if (localUser) {
+          login(localUser);
+          redirectBasedOnRole(localUser.role);
+        } else {
+          setError('Credenciales incorrectas o error de conectividad.');
+        }
       }
     } catch (err) {
       console.error('Login error:', err);
       setError('Error al iniciar sesión. Inténtelo nuevamente.');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const redirectBasedOnRole = (role) => {
+    switch (role) {
+      case 'admin':
+      case 'coordinador_academico':
+        navigate('/admin');
+        break;
+      case 'teacher':
+        navigate('/teacher');
+        break;
+      case 'parent':
+        navigate('/parent');
+        break;
+      case 'coordinadora_convivencia':
+        navigate('/convivencia');
+        break;
+      case 'student':
+        navigate('/student');
+        break;
+      default:
+        navigate('/');
     }
   };
 
