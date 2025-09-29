@@ -594,7 +594,7 @@ const TeacherDashboard = () => {
                       <Badge className="ml-2">{filteredStudents.filter(s => s.grade === selectedGradeForStudents).length} estudiantes</Badge>
                     </h3>
                     
-                    {studentsByGrade[selectedGradeForStudents]?.length > 0 ? (
+                    {filteredStudents.filter(s => s.grade === selectedGradeForStudents).length > 0 ? (
                       <div className="overflow-x-auto">
                         <table className="w-full text-sm">
                           <thead>
@@ -607,7 +607,7 @@ const TeacherDashboard = () => {
                             </tr>
                           </thead>
                           <tbody>
-                            {studentsByGrade[selectedGradeForStudents].map((student) => {
+                            {filteredStudents.filter(s => s.grade === selectedGradeForStudents).map((student) => {
                               const studentGrades = mockGrades.filter(g => g.studentId === student.id);
                               const average = studentGrades.length > 0 
                                 ? (studentGrades.reduce((sum, g) => sum + g.grade, 0) / studentGrades.length).toFixed(1)
