@@ -441,6 +441,21 @@ const ReporteConsolidadoAdmin = ({ onClose }) => {
                             </Badge>
                           </div>
                         </td>
+                        <td className="border border-gray-300 p-2 text-center">
+                          {(student.status === 'necesita-apoyo' || student.status === 'reprobado') && (
+                            <Button
+                              size="sm"
+                              onClick={() => {
+                                setSelectedStudentForHelp(student);
+                                setShowAyudaModal(true);
+                              }}
+                              className="bg-orange-600 hover:bg-orange-700 text-white"
+                            >
+                              <Heart className="mr-1 h-3 w-3" />
+                              Ayuda
+                            </Button>
+                          )}
+                        </td>
                       </tr>
                     );
                   })}
