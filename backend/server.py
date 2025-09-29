@@ -139,6 +139,22 @@ class ConvivenciaNoteCreate(BaseModel):
     parent_note: str = ""
     recommendations: str = ""
 
+# Modelo para configuraciones administrativas
+class AdminConfig(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    config_key: str  # 'student_grades_enabled', 'student_bulletin_download_enabled', etc.
+    config_value: bool
+    enabled_periods: List[str] = []  # períodos específicos habilitados
+    admin_id: str
+    last_updated: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class AdminConfigCreate(BaseModel):
+    config_key: str
+    config_value: bool
+    enabled_periods: List[str] = []
+    admin_id: str
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
