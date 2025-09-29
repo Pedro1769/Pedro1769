@@ -238,6 +238,7 @@ const PlanillaCompletaPorPeriodo = ({ teacher, selectedGrade, selectedPeriod, on
                     <h1 className="font-bold text-lg text-blue-800">GIMNASIO AMERICANO DEL ATLÁNTICO</h1>
                     <p className="text-sm text-gray-700">PREESCOLAR - BÁSICA PRIMARIA - BÁSICA SECUNDARIA</p>
                     <p className="text-sm text-gray-700">MEDIA VOCACIONAL COMERCIAL</p>
+                    <p className="text-xs text-gray-600 font-bold text-blue-700">40+ AÑOS DE EXCELENCIA ACADÉMICA</p>
                     <p className="text-xs text-gray-600">LICENCIA DE FUNCIONAMIENTO RES. 1544 DEL 31 DE DICIEMBRE DE 2.002</p>
                     <p className="text-xs text-gray-600">LICENCIA DE FUNCIONAMIENTO RES. 1557 DEL 7 DE SEPTIEMBRE DE 1.999</p>
                     <p className="text-xs text-gray-600">REGISTRO DANE 308758-001703 NIT 830.503.594-4</p>
