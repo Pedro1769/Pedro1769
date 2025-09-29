@@ -196,6 +196,84 @@ async def get_student(student_id: str):
         raise HTTPException(status_code=404, detail="Estudiante no encontrado")
     return Student(**student)
 
+# Endpoints para calificaciones
+@api_router.post("/grades", response_model=Grade)
+async def create_grade(grade_data: GradeCreate):
+    grade_dict = grade_data.dict()
+    grade_obj = Grade(**grade_dict)
+    _ = await db.grades.insert_one(grade_obj.dict())
+    return grade_obj
+
+@api_router.get("/grades", response_model=List[Grade])
+async def get_grades(student_id: str = None, teacher_id: str = None, period: str = None, grade: str = None):
+    query = {}
+    if student_id:
+        query["student_id"] = student_id
+    if teacher_id:
+        query["teacher_id"] = teacher_id  
+    if period:
+        query["period"] = period
+    if grade:
+        query["grade"] = grade
+    
+    grades = await db.grades.find(query).to_list(1000)
+    return [Grade(**grade) for grade in grades]
+
+# Endpoints para observaciones
+@api_router.post("/observations", response_model=Observation)
+async def create_observation(observation_data: ObservationCreate):
+    observation_dict = observation_data.dict()
+    observation_obj = Observation(**observation_dict)
+    _ = await db.observations.insert_one(observation_obj.dict())
+    return observation_obj
+
+@api_router.get("/observations", response_model=List[Observation])
+async def get_observations(student_id: str = None, teacher_id: str = None, period: str = None, grade: str = None):
+    query = {}
+    if student_id:
+        query["student_id"] = student_id
+    if teacher_id:
+        query["teacher_id"] = teacher_id
+    if period:
+        query["period"] = period
+    if grade:
+        query["grade"] = grade
+    
+    observations = await db.observations.find(query).to_list(1000)
+    return [Observation(**obs) for obs in observations]
+
+# Endpoints para notas de convivencia
+@api_router.post("/convivencia-notes", response_model=ConvivenciaNote)
+async def create_convivencia_note(note_data: ConvivenciaNoteCreate):
+    note_dict = note_data.dict()
+    note_obj = ConvivenciaNote(**note_dict)
+    _ = await db.convivencia_notes.insert_one(note_obj.dict())
+    return note_obj
+
+@api_router.get("/convivencia-notes", response_model=List[ConvivenciaNote])
+async def get_convivencia_notes(student_id: str = None, coordinator_id: str = None, period: str = None, grade: str = None):
+    query = {}
+    if student_id:
+        query["student_id"] = student_id
+    if coordinator_id:
+        query["coordinator_id"] = coordinator_id
+    if period:
+        query["period"] = period
+    if grade:
+        query["grade"] = grade
+    
+    notes = await db.convivencia_notes.find(query).to_list(1000)
+    return [ConvivenciaNote(**note) for note in notes]
+
+# Endpoint para autenticación (simple)
+@api_router.post("/auth/login")
+async def login(email: str, password: str):
+    # Por ahora, solo validamos que el usuario existe
+    user = await db.users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=401, detail="Usuario no encontrado")
+    return {"user": User(**user), "token": "dummy_token"}
+
 # Include the router in the main app
 app.include_router(api_router)
 
