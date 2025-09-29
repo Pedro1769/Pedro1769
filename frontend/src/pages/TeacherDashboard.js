@@ -50,6 +50,7 @@ const TeacherDashboard = () => {
   const [showMaterialManager, setShowMaterialManager] = useState(false);
   const [showSelectorPlanillas, setShowSelectorPlanillas] = useState(false);
   const [showPlanillaCompleta, setShowPlanillaCompleta] = useState(false);
+  const [showPreparadores, setShowPreparadores] = useState(false);
 
   useEffect(() => {
     // Cargar períodos dinámicamente
