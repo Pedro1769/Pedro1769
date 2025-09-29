@@ -1,5 +1,5 @@
 // API Service para comunicación con el backend
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || import.meta.env.REACT_APP_BACKEND_URL;
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8001/api';
 
 class ApiService {
   
