@@ -33,6 +33,7 @@ import GradePlanilla from '../components/GradePlanilla';
 import SelectorPlanillas from '../components/SelectorPlanillas';
 import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
 import MaterialEstudiantesManager from '../components/MaterialEstudiantesManager';
+import PreparadoresClase from '../components/PreparadoresClase';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
