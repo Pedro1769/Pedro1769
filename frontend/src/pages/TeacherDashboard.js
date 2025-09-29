@@ -591,7 +591,7 @@ const TeacherDashboard = () => {
                     <h3 className="text-lg font-semibold mb-4 flex items-center">
                       <GraduationCap className="mr-2 h-5 w-5" />
                       Grado {selectedGradeForStudents}
-                      <Badge className="ml-2">{studentsByGrade[selectedGradeForStudents]?.length || 0} estudiantes</Badge>
+                      <Badge className="ml-2">{filteredStudents.filter(s => s.grade === selectedGradeForStudents).length} estudiantes</Badge>
                     </h3>
                     
                     {studentsByGrade[selectedGradeForStudents]?.length > 0 ? (
