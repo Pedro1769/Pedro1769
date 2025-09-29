@@ -602,25 +602,75 @@ const StudentDashboard = () => {
                 </div>
               </CardHeader>
               <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card className="text-center p-6 border-2 border-blue-200 hover:border-blue-400 transition-colors hover:shadow-lg">
-                    <Download className="h-12 w-12 mx-auto mb-4 text-blue-500" />
-                    <p className="text-sm text-gray-700 mb-2 font-medium">Descargar Boletín</p>
-                    <Button className="bg-gradient-to-r from-blue-500 to-teal-500 text-white hover:shadow-lg">
-                      <Download className="mr-2 h-4 w-4" />
-                      Descargar PDF
-                    </Button>
-                  </Card>
-                  
-                  <Card className="text-center p-6 border-2 border-green-200 hover:border-green-400 transition-colors hover:shadow-lg">
-                    <Calendar className="h-12 w-12 mx-auto mb-4 text-green-500" />
-                    <p className="text-sm text-gray-700 mb-2 font-medium">Historial Académico</p>
-                    <Button className="bg-gradient-to-r from-green-500 to-blue-500 text-white hover:shadow-lg">
-                      <Eye className="mr-2 h-4 w-4" />
-                      Ver Historial
-                    </Button>
-                  </Card>
-                </div>
+                {loadingPermissions ? (
+                  <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Verificando permisos de descarga...</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card className="text-center p-6 border-2 border-blue-200 hover:border-blue-400 transition-colors hover:shadow-lg">
+                      <Download className="h-12 w-12 mx-auto mb-4 text-blue-500" />
+                      <p className="text-sm text-gray-700 mb-2 font-medium">Descargar Boletín</p>
+                      {permissions.bulletin_download_enabled ? (
+                        <Button 
+                          className="bg-gradient-to-r from-blue-500 to-teal-500 text-white hover:shadow-lg"
+                          onClick={() => {
+                            // Aquí iría la lógica de descarga
+                            alert('Descargando boletín...');
+                          }}
+                        >
+                          <Download className="mr-2 h-4 w-4" />
+                          Descargar PDF
+                        </Button>
+                      ) : (
+                        <div className="space-y-3">
+                          <Button 
+                            disabled
+                            className="bg-gray-300 text-gray-500 cursor-not-allowed"
+                          >
+                            <Lock className="mr-2 h-4 w-4" />
+                            Descarga Bloqueada
+                          </Button>
+                          <p className="text-xs text-red-600">
+                            El administrador debe autorizar la descarga
+                          </p>
+                        </div>
+                      )}
+                    </Card>
+                    
+                    <Card className="text-center p-6 border-2 border-green-200 hover:border-green-400 transition-colors hover:shadow-lg">
+                      <Calendar className="h-12 w-12 mx-auto mb-4 text-green-500" />
+                      <p className="text-sm text-gray-700 mb-2 font-medium">Historial Académico</p>
+                      <Button 
+                        className="bg-gradient-to-r from-green-500 to-blue-500 text-white hover:shadow-lg"
+                        onClick={() => setShowReportCard(true)}
+                      >
+                        <Eye className="mr-2 h-4 w-4" />
+                        Ver Historial
+                      </Button>
+                    </Card>
+                  </div>
+                )}
+
+                {!loadingPermissions && (
+                  <div className="mt-6">
+                    <Alert className={permissions.bulletin_download_enabled ? "border-green-200 bg-green-50" : "border-orange-200 bg-orange-50"}>
+                      <Shield className="h-4 w-4" />
+                      <AlertDescription className={permissions.bulletin_download_enabled ? "text-green-700" : "text-orange-700"}>
+                        <div className="space-y-1">
+                          <p><strong>Estado de Permisos:</strong></p>
+                          <p>
+                            {permissions.bulletin_download_enabled 
+                              ? "✅ Descarga de boletín autorizada por el administrador"
+                              : "🔒 Descarga de boletín requiere autorización administrativa"
+                            }
+                          </p>
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
