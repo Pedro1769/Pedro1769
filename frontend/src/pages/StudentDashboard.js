@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate } from 'react-router-dom';
 import { Button } from '../components/ui/button';
@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Badge } from '../components/ui/badge';
+import { Alert, AlertDescription } from '../components/ui/alert';
 import { 
   GraduationCap, 
   BookOpen, 
@@ -18,11 +19,15 @@ import {
   Target,
   Clock,
   Star,
-  CheckCircle
+  CheckCircle,
+  Lock,
+  AlertCircle,
+  Shield
 } from 'lucide-react';
 import { mockGrades, performanceScale, schoolInfo } from '../mock/mockData';
 import ReportCardComponent from '../components/ReportCard';
 import TalleresAsistidos from '../components/TalleresAsistidos';
+import ApiService from '../services/apiService';
 
 const StudentDashboard = () => {
   const { user } = useAuth();
