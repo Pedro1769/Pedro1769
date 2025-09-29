@@ -231,20 +231,54 @@ const StudentDashboard = () => {
                   </CardTitle>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
-                    <SelectTrigger className="w-40">
-                      <SelectValue placeholder="Seleccionar período" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">Primer Período</SelectItem>
-                      <SelectItem value="2">Segundo Período</SelectItem>
-                      <SelectItem value="3">Tercer Período</SelectItem>
-                      <SelectItem value="4">Cuarto Período</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  {permissions.grades_enabled && (
+                    <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                      <SelectTrigger className="w-40">
+                        <SelectValue placeholder="Seleccionar período" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {permissions.grades_periods.map(period => (
+                          <SelectItem key={period} value={period}>
+                            Período {period}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
                 </div>
               </CardHeader>
               <CardContent className="p-6">
+                {loadingPermissions ? (
+                  <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                    <p className="mt-4 text-gray-600">Verificando permisos...</p>
+                  </div>
+                ) : !permissions.grades_enabled ? (
+                  <Alert className="border-orange-200 bg-orange-50">
+                    <Lock className="h-4 w-4" />
+                    <AlertDescription className="text-orange-700">
+                      <div className="space-y-2">
+                        <p><strong>Acceso Restringido</strong></p>
+                        <p>Las calificaciones no están disponibles en este momento. El administrador debe habilitar el acceso para poder visualizar tus calificaciones.</p>
+                        <div className="flex items-center mt-3 text-sm">
+                          <Shield className="h-4 w-4 mr-2" />
+                          <span>Contacta con la administración para más información.</span>
+                        </div>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+                ) : !permissions.period_enabled ? (
+                  <Alert className="border-yellow-200 bg-yellow-50">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription className="text-yellow-700">
+                      <div className="space-y-2">
+                        <p><strong>Período No Disponible</strong></p>
+                        <p>El período {selectedPeriod} no está habilitado para consulta.</p>
+                        <p>Períodos disponibles: {permissions.grades_periods.join(', ')}</p>
+                      </div>
+                    </AlertDescription>
+                  </Alert>
+                ) : (
                 {studentGrades.length > 0 ? (
                   <div className="grid gap-4">
                     {Object.entries(subjectGrades).map(([subject, grades]) => {
