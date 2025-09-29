@@ -9,6 +9,7 @@ import { Alert, AlertDescription } from '../components/ui/alert';
 import { mockUsers } from '../mock/mockData';
 import { Eye, EyeOff, User, Lock, UserPlus } from 'lucide-react';
 import RegisterModal from '../components/RegisterModal';
+import ApiService from '../services/apiService';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
