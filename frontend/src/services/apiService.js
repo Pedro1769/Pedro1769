@@ -257,6 +257,71 @@ class ApiService {
     }
   }
 
+  // Métodos para configuraciones administrativas
+  async createAdminConfig(configData) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin-config`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(configData),
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Error al crear configuración: ${response.statusText}`);
+      }
+      
+      return await response.json();
+    } catch (error) {
+      console.error('Error en createAdminConfig:', error);
+      throw error;
+    }
+  }
+
+  async getAdminConfig(configKey) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin-config/${configKey}`);
+      if (!response.ok) {
+        throw new Error(`Error al obtener configuración: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error en getAdminConfig:', error);
+      throw error;
+    }
+  }
+
+  async getAllAdminConfigs() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/admin-config`);
+      if (!response.ok) {
+        throw new Error(`Error al obtener configuraciones: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error en getAllAdminConfigs:', error);
+      throw error;
+    }
+  }
+
+  async getStudentPermissions(studentId, period = null) {
+    try {
+      const url = period 
+        ? `${API_BASE_URL}/student-permissions/${studentId}?period=${period}`
+        : `${API_BASE_URL}/student-permissions/${studentId}`;
+        
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error al obtener permisos: ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error en getStudentPermissions:', error);
+      throw error;
+    }
+  }
+
   // Método para verificar conectividad del backend
   async healthCheck() {
     try {
