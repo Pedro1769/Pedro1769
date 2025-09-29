@@ -24,7 +24,8 @@ import {
   UserCheck,
   FileText,
   Target,
-  Download
+  Download,
+  BarChart3
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
 import { StudentsManager, PeriodsManager } from '../utils/dataManager';
