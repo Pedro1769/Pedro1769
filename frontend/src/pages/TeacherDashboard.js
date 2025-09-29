@@ -702,6 +702,26 @@ const TeacherDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="preparadores" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle>Preparadores de Clase</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-600 mb-4">
+                  Crea y gestiona tus preparadores de clase siguiendo el formato institucional.
+                </p>
+                <Button 
+                  onClick={() => setShowPreparadores(true)}
+                  className="w-full bg-gradient-to-r from-indigo-500 to-purple-500 text-white"
+                >
+                  <FileText className="mr-2 h-4 w-4" />
+                  Abrir Gestión de Preparadores
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="reports" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
