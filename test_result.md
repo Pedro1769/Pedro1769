@@ -401,11 +401,23 @@ test_plan:
     file: "/app/backend/server.py, /app/frontend/src/services/apiService.js, /app/frontend/src/hooks/useFilters.js"
     stuck_count: 0
     priority: "critical"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "MAJOR UPGRADE COMPLETED - DATABASE INTEGRATION: 1) ✅ Backend expanded with MongoDB models for users, students, grades, observations, convivencia notes, 2) ✅ Complete API service created with full CRUD operations, 3) ✅ Registration system now saves to database (tested successfully), 4) ✅ Login system updated to query database users + fallback to localStorage, 5) ✅ Created FilterControls component and useFilters hook for dynamic period/grade filtering, 6) ✅ Integrated filters into TeacherDashboard with real-time student filtering by grade, 7) ✅ Fixed backend .env configuration (MONGO_URL, DB_NAME, CORS), 8) ✅ Tested API endpoints: User creation working, Student creation working, Data persistence confirmed. SYSTEM NOW FULLY FUNCTIONAL with database backend + dynamic filtering capabilities."
+
+  - task: "Administrative control system for student permissions"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py, /app/frontend/src/components/StudentPermissionsManager.js, /app/frontend/src/pages/StudentDashboard.js, /app/frontend/src/pages/AdminDashboard.js"
+    stuck_count: 0
+    priority: "critical"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "ADMINISTRATIVE PERMISSIONS SYSTEM COMPLETED: 1) ✅ Backend AdminConfig model with CRUD endpoints for permissions management, 2) ✅ StudentPermissionsManager component for admin control panel, 3) ✅ Student grades visibility controlled by admin - only enabled periods are accessible, 4) ✅ Student bulletin download requires admin authorization, 5) ✅ Real-time permission checking with API integration, 6) ✅ Comprehensive UI feedback for restricted access, 7) ✅ Added new 'Permisos' tab in AdminDashboard, 8) ✅ API tested: Config creation/update working, Student permissions API functional. Fixed all JSX syntax errors and environment configuration issues."
 
 agent_communication:
   - agent: "main"
