@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Alert, AlertDescription } from './ui/alert';
 import { Checkbox } from './ui/checkbox';
 import { X, Save, AlertCircle, UserPlus } from 'lucide-react';
+import ApiService from '../services/apiService';
 
 const RegisterModal = ({ onClose, onRegister }) => {
   const [formData, setFormData] = useState({
