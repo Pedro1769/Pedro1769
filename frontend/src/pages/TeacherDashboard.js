@@ -70,21 +70,56 @@ const TeacherDashboard = () => {
   } = useFilters('1', 'all');
 
   useEffect(() => {
-    // Cargar períodos dinámicamente
-    const loadedPeriods = PeriodsManager.getAll();
-    setPeriods(loadedPeriods);
-    if (loadedPeriods.length > 0) {
-      setSelectedPeriod(loadedPeriods[0].id.toString());
-    }
-    
-    // Cargar todos los estudiantes (mock + registrados + creados por docentes)
-    const mockStudentsData = mockStudents;
-    const registeredStudents = StudentsManager.getAll();
-    const combinedStudents = [...mockStudentsData, ...registeredStudents];
-    
-    setStudents(combinedStudents);
-    setAllStudents(combinedStudents);
+    loadInitialData();
   }, []);
+
+  const loadInitialData = async () => {
+    try {
+      // Cargar períodos dinámicamente
+      const loadedPeriods = PeriodsManager.getAll();
+      setPeriods(loadedPeriods);
+      if (loadedPeriods.length > 0) {
+        setSelectedPeriod(loadedPeriods[0].id.toString());
+      }
+      
+      // Cargar estudiantes desde múltiples fuentes
+      const mockStudentsData = mockStudents;
+      const localStudents = StudentsManager.getAll();
+      
+      // Intentar cargar estudiantes de la base de datos también
+      let dbStudents = [];
+      try {
+        dbStudents = await ApiService.getStudents();
+        console.log('Estudiantes cargados desde BD:', dbStudents.length);
+      } catch (error) {
+        console.log('No se pudieron cargar estudiantes de BD, usando datos locales:', error.message);
+      }
+      
+      // Combinar todas las fuentes, evitando duplicados por documento
+      const allStudentsSources = [...mockStudentsData, ...localStudents, ...dbStudents];
+      const uniqueStudents = allStudentsSources.reduce((acc, student) => {
+        const exists = acc.find(s => s.document === student.document && student.document);
+        if (!exists) {
+          acc.push(student);
+        }
+        return acc;
+      }, []);
+      
+      setStudents(uniqueStudents);
+      setAllStudents(uniqueStudents);
+      
+      console.log('Total estudiantes cargados:', uniqueStudents.length);
+    } catch (error) {
+      console.error('Error cargando datos iniciales:', error);
+      // Fallback a datos locales
+      const mockStudentsData = mockStudents;
+      const localStudents = StudentsManager.getAll();
+      const combinedStudents = [...mockStudentsData, ...localStudents];
+      
+      setStudents(combinedStudents);
+      setAllStudents(combinedStudents);
+    }
+  };
 
   if (!user || user.role !== 'teacher') {
     return <Navigate to="/login" />;
