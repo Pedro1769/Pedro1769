@@ -41,6 +41,31 @@ const StudentDashboard = () => {
   });
   const [loadingPermissions, setLoadingPermissions] = useState(true);
 
+  useEffect(() => {
+    loadStudentPermissions();
+  }, [selectedPeriod]);
+
+  const loadStudentPermissions = async () => {
+    setLoadingPermissions(true);
+    try {
+      const studentId = user.studentId || user.id;
+      const perms = await ApiService.getStudentPermissions(studentId, selectedPeriod);
+      setPermissions(perms);
+      console.log('Permisos cargados para estudiante:', perms);
+    } catch (error) {
+      console.error('Error cargando permisos:', error);
+      // Usar valores por defecto restrictivos si hay error
+      setPermissions({
+        grades_enabled: false,
+        grades_periods: [],
+        period_enabled: false,
+        bulletin_download_enabled: false
+      });
+    } finally {
+      setLoadingPermissions(false);
+    }
+  };
+
   if (!user || user.role !== 'student') {
     return <Navigate to="/login" />;
   }
