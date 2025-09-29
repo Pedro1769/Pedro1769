@@ -343,14 +343,26 @@ async def get_student_permissions(student_id: str, period: str = None):
     
     return permissions
 
-# Endpoint para autenticación (simple)
+# Endpoint para autenticación
+from pydantic import BaseModel as PydanticBaseModel
+
+class LoginRequest(PydanticBaseModel):
+    email: str
+    password: str
+
 @api_router.post("/auth/login")
-async def login(email: str, password: str):
-    # Por ahora, solo validamos que el usuario existe
-    user = await db.users.find_one({"email": email})
+async def login(login_data: LoginRequest):
+    user = await db.users.find_one({"email": login_data.email})
     if not user:
         raise HTTPException(status_code=401, detail="Usuario no encontrado")
-    return {"user": User(**user), "token": "dummy_token"}
+    
+    # Validar password (en producción usar hash)
+    if user.get("password") != login_data.password:
+        raise HTTPException(status_code=401, detail="Contraseña incorrecta")
+    
+    # Crear respuesta sin incluir la contraseña
+    user_response = {k: v for k, v in user.items() if k != "password"}
+    return {"user": User(**user_response, password=""), "token": "dummy_token", "success": True}
 
 # Include the router in the main app
 app.include_router(api_router)
