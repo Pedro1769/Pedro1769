@@ -341,6 +341,7 @@ const TeacherDashboard = () => {
             <TabsTrigger value="convivencia">Convivencia</TabsTrigger>
             <TabsTrigger value="projects">Proyectos</TabsTrigger>
             <TabsTrigger value="material">Material Estudiantes</TabsTrigger>
+            <TabsTrigger value="preparadores">Preparadores</TabsTrigger>
             <TabsTrigger value="reports">Reportes</TabsTrigger>
           </TabsList>
 
