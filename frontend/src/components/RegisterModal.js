@@ -123,6 +123,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
       const userData = {
         name: formData.name,
         email: formData.email,
+        password: formData.password, // Incluir la contraseña
         role: formData.role,
         document: formData.document || '',
         phone: formData.phone || '',
