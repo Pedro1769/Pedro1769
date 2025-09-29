@@ -41,12 +41,12 @@ import ApiService from '../services/apiService';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
+  
+  // Estados existentes
   const [selectedGrade, setSelectedGrade] = useState('');
   const [selectedSubject, setSelectedSubject] = useState('');
-  const [selectedPeriod, setSelectedPeriod] = useState('1');
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
   const [students, setStudents] = useState([]);
-  const [selectedGradeForStudents, setSelectedGradeForStudents] = useState('all');
   const [periods, setPeriods] = useState([]);
   const [allStudents, setAllStudents] = useState([]);
   const [showProjectsManager, setShowProjectsManager] = useState(false);
@@ -55,6 +55,19 @@ const TeacherDashboard = () => {
   const [showSelectorPlanillas, setShowSelectorPlanillas] = useState(false);
   const [showPlanillaCompleta, setShowPlanillaCompleta] = useState(false);
   const [showPreparadores, setShowPreparadores] = useState(false);
+  
+  // Nuevos filtros dinámicos usando el hook personalizado
+  const {
+    selectedPeriod,
+    setSelectedPeriod,
+    selectedGrade: selectedGradeForStudents,
+    setSelectedGrade: setSelectedGradeForStudents,
+    filterStudents,
+    filterGrades,
+    filterObservations,
+    resetFilters,
+    getFilteredStats
+  } = useFilters('1', 'all');
 
   useEffect(() => {
     // Cargar períodos dinámicamente
