@@ -79,6 +79,66 @@ class StudentCreate(BaseModel):
     parent_phone: str = ""
     created_by: str = ""
 
+# Modelos adicionales para el sistema académico
+class Grade(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    student_id: str
+    subject: str
+    grade: str  # grado del estudiante 
+    period: str
+    score: float
+    teacher_id: str
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class GradeCreate(BaseModel):
+    student_id: str
+    subject: str
+    grade: str
+    period: str
+    score: float
+    teacher_id: str
+
+class Observation(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    student_id: str
+    teacher_id: str
+    grade: str  # grado del estudiante
+    period: str
+    type: str  # 'behavioral', 'academic', 'positive', etc.
+    description: str
+    date: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ObservationCreate(BaseModel):
+    student_id: str
+    teacher_id: str
+    grade: str
+    period: str
+    type: str
+    description: str
+
+class ConvivenciaNote(BaseModel):
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    student_id: str
+    coordinator_id: str
+    grade: str
+    period: str
+    behavior_note: str = ""
+    accompaniment_note: str = ""
+    parent_note: str = ""
+    recommendations: str = ""
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+class ConvivenciaNoteCreate(BaseModel):
+    student_id: str
+    coordinator_id: str
+    grade: str
+    period: str
+    behavior_note: str = ""
+    accompaniment_note: str = ""
+    parent_note: str = ""
+    recommendations: str = ""
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
