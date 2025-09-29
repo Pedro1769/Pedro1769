@@ -408,6 +408,7 @@ const ReporteConsolidadoAdmin = ({ onClose }) => {
                     ))}
                     <th className="border border-gray-300 p-2 text-center">Promedio General</th>
                     <th className="border border-gray-300 p-2 text-center">Estado</th>
+                    <th className="border border-gray-300 p-2 text-center">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
