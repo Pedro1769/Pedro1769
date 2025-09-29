@@ -712,7 +712,33 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
 
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => {
+                // Generar estadísticas institucionales completas
+                const allStudents = [
+                  ...JSON.parse(localStorage.getItem('gada_students') || '[]'),
+                  ...JSON.parse(localStorage.getItem('gada_registered_users') || '[]').filter(u => u.role === 'student')
+                ];
+                const allTeachers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]').filter(u => u.role === 'teacher');
+                const allPreparadores = JSON.parse(localStorage.getItem('gada_preparadores_historial') || '[]');
+                const allObservaciones = JSON.parse(localStorage.getItem('gada_observaciones') || '[]');
+                
+                const estadisticas = {
+                  estudiantes: allStudents.length,
+                  docentes: allTeachers.length,
+                  preparadores: allPreparadores.length,
+                  observaciones: allObservaciones.length,
+                  gradosActivos: [...new Set(allStudents.map(s => s.grade))].length
+                };
+                
+                alert(`📊 ESTADÍSTICAS INSTITUCIONALES GADA:\n\n` +
+                      `👥 Total Estudiantes: ${estadisticas.estudiantes}\n` +
+                      `👨‍🏫 Total Docentes: ${estadisticas.docentes}\n` +
+                      `📚 Grados Activos: ${estadisticas.gradosActivos}\n` +
+                      `📋 Preparadores Creados: ${estadisticas.preparadores}\n` +
+                      `📝 Observaciones Registradas: ${estadisticas.observaciones}\n\n` +
+                      `🏆 40+ años de excelencia académica\n` +
+                      `📍 Puerto Colombia - Atlántico`);
+              }}>
                 <CardContent className="p-6 text-center">
                   <Users className="h-12 w-12 mx-auto mb-4 text-blue-600" />
                   <h3 className="text-lg font-semibold mb-2">Estadísticas Generales</h3>
