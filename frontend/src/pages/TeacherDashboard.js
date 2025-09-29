@@ -338,7 +338,7 @@ const TeacherDashboard = () => {
           <TabsList>
             <TabsTrigger value="grades">Calificaciones</TabsTrigger>
             <TabsTrigger value="students">Mis Estudiantes</TabsTrigger>
-            <TabsTrigger value="convivencia">Convivencia</TabsTrigger>
+            <TabsTrigger value="convivencia">Observaciones Académicas</TabsTrigger>
             <TabsTrigger value="projects">Proyectos</TabsTrigger>
             <TabsTrigger value="material">Material Estudiantes</TabsTrigger>
             <TabsTrigger value="preparadores">Preparadores</TabsTrigger>
