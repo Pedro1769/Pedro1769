@@ -279,7 +279,7 @@ const StudentDashboard = () => {
                     </AlertDescription>
                   </Alert>
                 ) : (
-                {studentGrades.length > 0 ? (
+                  studentGrades.length > 0 ? (
                   <div className="grid gap-4">
                     {Object.entries(subjectGrades).map(([subject, grades]) => {
                       const subjectAverage = calculateAverage(grades);
