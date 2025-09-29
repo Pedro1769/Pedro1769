@@ -60,6 +60,7 @@ const AdminDashboard = () => {
   const [planillaGrade, setPlanillaGrade] = useState('');
   const [planillaPeriod, setPlanillaPeriod] = useState('1');
   const [showReporteConsolidado, setShowReporteConsolidado] = useState(false);
+  const [showDescargaListados, setShowDescargaListados] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [editingStudent, setEditingStudent] = useState(null);
   const [editingTeacher, setEditingTeacher] = useState(null);
