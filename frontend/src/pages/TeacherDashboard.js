@@ -35,6 +35,9 @@ import SelectorPlanillas from '../components/SelectorPlanillas';
 import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
 import MaterialEstudiantesManager from '../components/MaterialEstudiantesManager';
 import PreparadoresClase from '../components/PreparadoresClase';
+import FilterControls from '../components/FilterControls';
+import useFilters from '../hooks/useFilters';
+import ApiService from '../services/apiService';
 
 const TeacherDashboard = () => {
   const { user } = useAuth();
