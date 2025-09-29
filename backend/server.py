@@ -40,7 +40,7 @@ class User(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     name: str
     email: str
-    password: str  # Almacenar password (en producción debería ser hasheado)
+    password: str = ""  # Almacenar password (opcional para compatibilidad)
     role: str  # 'admin', 'teacher', 'coordinadora_convivencia', 'student', 'parent'
     document: str = ""
     phone: str = ""
