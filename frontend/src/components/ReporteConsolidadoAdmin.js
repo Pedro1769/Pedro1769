@@ -24,6 +24,8 @@ const ReporteConsolidadoAdmin = ({ onClose }) => {
   const [reportData, setReportData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [showAyudaModal, setShowAyudaModal] = useState(false);
+  const [selectedStudentForHelp, setSelectedStudentForHelp] = useState(null);
 
   const generateConsolidatedReport = () => {
     if (!selectedGrade) {
