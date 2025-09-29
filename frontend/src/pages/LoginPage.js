@@ -39,16 +39,13 @@ const LoginPage = () => {
         return;
       }
 
-      // Si no se encuentra en mock, buscar en base de datos
+      // Si no se encuentra en mock, intentar login con la API
       try {
-        const dbUsers = await ApiService.getUsers();
-        const dbUser = dbUsers.find(u => u.email === email);
+        const loginResponse = await ApiService.login(email, password);
         
-        if (dbUser) {
-          // Por ahora, como no tenemos hash de passwords, solo verificamos que exista
-          // En producción aquí se haría la verificación del hash
-          login(dbUser);
-          redirectBasedOnRole(dbUser.role);
+        if (loginResponse.success && loginResponse.user) {
+          login(loginResponse.user);
+          redirectBasedOnRole(loginResponse.user.role);
         } else {
           setError('Credenciales incorrectas. Verifique su email y contraseña.');
         }
