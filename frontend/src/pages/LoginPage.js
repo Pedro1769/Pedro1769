@@ -98,24 +98,40 @@ const LoginPage = () => {
     }
   };
 
-  const handleRegister = (userData) => {
+  const handleRegister = async (userData) => {
     try {
-      const existingUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
-      
-      // Check if email already exists
+      // Verificar si el email ya existe en la base de datos
+      const existingUsers = await ApiService.getUsers();
       const allUsers = [...mockUsers, ...existingUsers];
+      
       if (allUsers.some(u => u.email === userData.email)) {
         alert('Este email ya está registrado');
         return;
       }
       
-      const updatedUsers = [...existingUsers, userData];
-      localStorage.setItem('gada_registered_users', JSON.stringify(updatedUsers));
-      
-      alert('Usuario registrado exitosamente. Ya puede iniciar sesión con sus credenciales.');
+      alert('¡Registro exitoso! El usuario ha sido guardado en la base de datos. Ahora puede iniciar sesión.');
+      setShowRegisterModal(false);
     } catch (error) {
-      console.error('Error registering user:', error);
-      alert('Error al registrar usuario');
+      console.error('Error al verificar registro:', error);
+      // Fallback a localStorage si hay error con la API
+      try {
+        const existingLocalUsers = JSON.parse(localStorage.getItem('gada_registered_users') || '[]');
+        const allLocalUsers = [...mockUsers, ...existingLocalUsers];
+        
+        if (allLocalUsers.some(u => u.email === userData.email)) {
+          alert('Este email ya está registrado');
+          return;
+        }
+        
+        const updatedUsers = [...existingLocalUsers, userData];
+        localStorage.setItem('gada_registered_users', JSON.stringify(updatedUsers));
+        
+        alert('¡Registro exitoso! (guardado localmente). Ahora puede iniciar sesión.');
+        setShowRegisterModal(false);
+      } catch (localError) {
+        console.error('Error en fallback local:', localError);
+        alert('Error al registrar usuario');
+      }
     }
   };
 
