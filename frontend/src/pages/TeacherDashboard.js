@@ -550,6 +550,19 @@ const TeacherDashboard = () => {
           </TabsContent>
 
           <TabsContent value="students" className="space-y-6">
+            {/* Controles de filtro para estudiantes */}
+            <FilterControls
+              selectedGrade={selectedGradeForStudents}
+              setSelectedGrade={setSelectedGradeForStudents}
+              availableGrades={availableGrades}
+              showPeriodFilter={false}
+              showGradeFilter={true}
+              onReset={() => setSelectedGradeForStudents('all')}
+              filteredCount={filterStudents(allStudents).length}
+              totalCount={allStudents.length}
+              className="mb-4"
+            />
+
             <Card>
               <CardHeader className="flex flex-row items-center justify-between">
                 <div>
@@ -564,17 +577,6 @@ const TeacherDashboard = () => {
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Select value={selectedGradeForStudents} onValueChange={setSelectedGradeForStudents}>
-                    <SelectTrigger className="w-32">
-                      <SelectValue placeholder="Todos los grados" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="all">Todos</SelectItem>
-                      {availableGrades.map((grade) => (
-                        <SelectItem key={grade} value={grade}>{grade}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                   <Button onClick={() => setShowAddStudentModal(true)} className="bg-gradient-gada text-white hover:shadow-lg hover:scale-105 transition-all duration-300">
                     <UserPlus className="mr-2 h-4 w-4" />
                     Agregar Estudiante
