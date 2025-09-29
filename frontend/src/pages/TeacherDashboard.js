@@ -916,11 +916,58 @@ const TeacherDashboard = () => {
                     </div>
 
                     <div className="flex space-x-2">
-                      <Button variant="outline" className="flex-1">
+                      <Button 
+                        variant="outline" 
+                        className="flex-1"
+                        onClick={() => {
+                          // Exportar historial completo
+                          const allObservations = JSON.parse(localStorage.getItem('gada_observaciones') || '[]');
+                          const teacherObservations = allObservations.filter(obs => obs.teacherId === user.id);
+                          
+                          let exportContent = `HISTORIAL COMPLETO DE OBSERVACIONES ACADÉMICAS\n`;
+                          exportContent += `DOCENTE: ${user.name}\n`;
+                          exportContent += `FECHA: ${new Date().toLocaleDateString('es-CO')}\n\n`;
+                          
+                          teacherObservations.forEach((obs, index) => {
+                            exportContent += `${index + 1}. ${obs.estudianteNombre} - ${obs.grado}\n`;
+                            exportContent += `   Tipo: ${obs.tipo}\n`;
+                            exportContent += `   Fecha: ${new Date(obs.fecha).toLocaleDateString('es-CO')}\n`;
+                            exportContent += `   Observación: ${obs.descripcion}\n\n`;
+                          });
+                          
+                          const blob = new Blob([exportContent], { type: 'text/plain;charset=utf-8;' });
+                          const link = document.createElement('a');
+                          link.href = URL.createObjectURL(blob);
+                          link.download = `Historial_Observaciones_${user.name}_${new Date().toISOString().split('T')[0]}.txt`;
+                          link.click();
+                        }}
+                      >
                         <Download className="mr-2 h-4 w-4" />
                         Exportar Historial
                       </Button>
-                      <Button variant="outline" className="flex-1">
+                      <Button 
+                        variant="outline" 
+                        className="flex-1"
+                        onClick={() => {
+                          // Mostrar historial completo en modal
+                          const allObservations = JSON.parse(localStorage.getItem('gada_observaciones') || '[]');
+                          const teacherObservations = allObservations.filter(obs => obs.teacherId === user.id);
+                          
+                          if (teacherObservations.length === 0) {
+                            alert('No hay observaciones registradas aún');
+                            return;
+                          }
+                          
+                          let displayContent = `HISTORIAL COMPLETO - ${teacherObservations.length} OBSERVACIONES:\n\n`;
+                          teacherObservations.forEach((obs, index) => {
+                            displayContent += `${index + 1}. ${obs.estudianteNombre} (${obs.grado})\n`;
+                            displayContent += `   ${obs.tipo} - ${new Date(obs.fecha).toLocaleDateString('es-CO')}\n`;
+                            displayContent += `   ${obs.descripcion}\n\n`;
+                          });
+                          
+                          alert(displayContent);
+                        }}
+                      >
                         <Eye className="mr-2 h-4 w-4" />
                         Ver Completo
                       </Button>
