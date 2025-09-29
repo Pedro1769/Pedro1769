@@ -388,6 +388,31 @@ const AdminDashboard = () => {
             </Card>
           </TabsContent>
 
+          <TabsContent value="permissions" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Shield className="mr-2 h-5 w-5 text-orange-600" />
+                  Control de Permisos para Estudiantes
+                </CardTitle>
+                <p className="text-sm text-gray-600">
+                  Configure qué funcionalidades pueden usar los estudiantes en sus paneles. 
+                  Controle el acceso a calificaciones por período y descarga de boletines.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="bg-orange-50 p-4 rounded-lg border border-orange-200 mb-6">
+                  <p className="text-sm text-orange-800">
+                    <Shield className="inline h-4 w-4 mr-2" />
+                    <strong>Control Administrativo:</strong> Use estos controles para habilitar o deshabilitar 
+                    funcionalidades específicas en los paneles de estudiantes. Los cambios se aplican inmediatamente.
+                  </p>
+                </div>
+                <StudentPermissionsManager user={user} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="downloads" className="mt-6">
             <Card>
               <CardHeader>
