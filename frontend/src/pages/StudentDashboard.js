@@ -322,12 +322,13 @@ const StudentDashboard = () => {
                     })}
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-gray-500">
-                    <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-300" />
-                    <p className="text-lg">No hay calificaciones disponibles</p>
-                    <p className="text-sm">Las calificaciones aparecerán aquí una vez que sean registradas por tus profesores</p>
-                  </div>
-                ))}
+                    <div className="text-center py-12 text-gray-500">
+                      <BookOpen className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+                      <p className="text-lg">No hay calificaciones disponibles</p>
+                      <p className="text-sm">Las calificaciones aparecerán aquí una vez que sean registradas por tus profesores</p>
+                    </div>
+                  )
+                )}
               </CardContent>
             </Card>
           </TabsContent>
