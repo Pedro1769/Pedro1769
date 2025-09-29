@@ -904,7 +904,8 @@ const TeacherDashboard = () => {
                 </div>
               </CardContent>
             </Card>
-          </TabsContent>
+
+            {/* Sección adicional de estadísticas y acciones rápidas */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
