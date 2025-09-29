@@ -983,6 +983,13 @@ const AdminDashboard = () => {
           />
         )}
 
+        {/* Modal de Descarga de Listados */}
+        {showDescargaListados && (
+          <DescargaListadosEstudiantes
+            onClose={() => setShowDescargaListados(false)}
+          />
+        )}
+
         {showEditModal && editingStudent && (
           <StudentEditModal 
             student={editingStudent}
