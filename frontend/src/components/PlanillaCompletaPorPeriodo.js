@@ -261,7 +261,7 @@ const PlanillaCompletaPorPeriodo = ({ teacher, selectedGrade, selectedPeriod, on
                   <strong>PERÍODO:</strong> <span className="font-bold text-blue-800">{selectedPeriod}</span>
                 </div>
                 <div>
-                  <strong>JORNADA:</strong> MAÑANA
+                  <strong>JORNADA:</strong> {selectedGrade === '0°' || ['1°', '2°', '3°', '4°', '5°'].includes(selectedGrade) ? 'TARDE' : 'MAÑANA'}
                 </div>
               </div>
             </div>
