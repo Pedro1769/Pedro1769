@@ -720,11 +720,11 @@ const AdminDashboard = () => {
                 </CardContent>
               </Card>
 
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => setShowDescargaListados(true)}>
                 <CardContent className="p-6 text-center">
-                  <Upload className="h-12 w-12 mx-auto mb-4 text-green-600" />
-                  <h3 className="text-lg font-semibold mb-2">Carga Masiva</h3>
-                  <p className="text-gray-600 text-sm">Subir consolidado de notas de períodos anteriores</p>
+                  <Download className="h-12 w-12 mx-auto mb-4 text-green-600" />
+                  <h3 className="text-lg font-semibold mb-2">Descargar Listados</h3>
+                  <p className="text-gray-600 text-sm">Descargar listados de estudiantes por grado y consolidado</p>
                 </CardContent>
               </Card>
             </div>
