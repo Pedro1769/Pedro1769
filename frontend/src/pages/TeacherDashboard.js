@@ -779,10 +779,10 @@ const TeacherDashboard = () => {
                 <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-t-lg">
                   <CardTitle className="flex items-center">
                     <Shield className="mr-2 h-5 w-5 text-purple-600" />
-                    Registro de Observaciones
+                    Registro de Observaciones Académicas
                   </CardTitle>
                   <p className="text-sm text-gray-600 mt-2">
-                    Registre observaciones de comportamiento y convivencia de sus estudiantes.
+                    Registre observaciones académicas y de comportamiento en aula de sus estudiantes.
                   </p>
                 </CardHeader>
                 <CardContent className="p-6">
