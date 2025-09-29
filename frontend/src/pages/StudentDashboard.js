@@ -33,6 +33,13 @@ const StudentDashboard = () => {
   const { user } = useAuth();
   const [selectedPeriod, setSelectedPeriod] = useState('1');
   const [showReportCard, setShowReportCard] = useState(false);
+  const [permissions, setPermissions] = useState({
+    grades_enabled: false,
+    grades_periods: [],
+    period_enabled: false,
+    bulletin_download_enabled: false
+  });
+  const [loadingPermissions, setLoadingPermissions] = useState(true);
 
   if (!user || user.role !== 'student') {
     return <Navigate to="/login" />;
