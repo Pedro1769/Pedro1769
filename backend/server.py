@@ -281,6 +281,66 @@ async def get_convivencia_notes(student_id: str = None, coordinator_id: str = No
     notes = await db.convivencia_notes.find(query).to_list(1000)
     return [ConvivenciaNote(**note) for note in notes]
 
+# Endpoints para configuraciones administrativas
+@api_router.post("/admin-config", response_model=AdminConfig)
+async def create_admin_config(config_data: AdminConfigCreate):
+    # Verificar si ya existe la configuración y actualizarla
+    existing_config = await db.admin_configs.find_one({"config_key": config_data.config_key})
+    
+    if existing_config:
+        # Actualizar configuración existente
+        update_data = config_data.dict()
+        update_data["last_updated"] = datetime.utcnow()
+        await db.admin_configs.update_one(
+            {"config_key": config_data.config_key}, 
+            {"$set": update_data}
+        )
+        updated_config = await db.admin_configs.find_one({"config_key": config_data.config_key})
+        return AdminConfig(**updated_config)
+    else:
+        # Crear nueva configuración
+        config_dict = config_data.dict()
+        config_obj = AdminConfig(**config_dict)
+        _ = await db.admin_configs.insert_one(config_obj.dict())
+        return config_obj
+
+@api_router.get("/admin-config/{config_key}")
+async def get_admin_config(config_key: str):
+    config = await db.admin_configs.find_one({"config_key": config_key})
+    if not config:
+        # Retornar configuración por defecto si no existe
+        return {"config_key": config_key, "config_value": False, "enabled_periods": []}
+    return AdminConfig(**config)
+
+@api_router.get("/admin-config", response_model=List[AdminConfig])
+async def get_all_admin_configs():
+    configs = await db.admin_configs.find().to_list(1000)
+    return [AdminConfig(**config) for config in configs]
+
+# Endpoint para verificar permisos de estudiante
+@api_router.get("/student-permissions/{student_id}")
+async def get_student_permissions(student_id: str, period: str = None):
+    permissions = {}
+    
+    # Verificar permisos de calificaciones
+    grades_config = await db.admin_configs.find_one({"config_key": "student_grades_enabled"})
+    permissions["grades_enabled"] = False
+    permissions["grades_periods"] = []
+    
+    if grades_config:
+        permissions["grades_enabled"] = grades_config.get("config_value", False)
+        if period and period in grades_config.get("enabled_periods", []):
+            permissions["period_enabled"] = True
+        else:
+            permissions["period_enabled"] = False
+        permissions["grades_periods"] = grades_config.get("enabled_periods", [])
+    
+    # Verificar permisos de boletín
+    bulletin_config = await db.admin_configs.find_one({"config_key": "student_bulletin_download_enabled"})
+    permissions["bulletin_download_enabled"] = bulletin_config.get("config_value", False) if bulletin_config else False
+    
+    return permissions
+
 # Endpoint para autenticación (simple)
 @api_router.post("/auth/login")
 async def login(email: str, password: str):
