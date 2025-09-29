@@ -470,6 +470,23 @@ const ReporteConsolidadoAdmin = ({ onClose }) => {
               <p className="text-gray-500 text-lg">Haga clic en "Generar Reporte" para analizar el rendimiento</p>
             </div>
           )}
+
+          {/* Modal de Sistema de Ayuda */}
+          {showAyudaModal && selectedStudentForHelp && (
+            <SistemaAyudaPersonalizada
+              studentData={selectedStudentForHelp}
+              teacher={{ 
+                id: 'admin', 
+                name: 'Administrador Sistema', 
+                teachingLevel: selectedStudentForHelp.grade === '0°' ? 'transicion' : 
+                              ['1°', '2°', '3°', '4°', '5°'].includes(selectedStudentForHelp.grade) ? 'primaria' : 'bachillerato'
+              }}
+              onClose={() => {
+                setShowAyudaModal(false);
+                setSelectedStudentForHelp(null);
+              }}
+            />
+          )}
         </CardContent>
       </Card>
     </div>
