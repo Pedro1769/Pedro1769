@@ -42,6 +42,7 @@ import CurriculumManager from '../components/CurriculumManager';
 import ProjectsManager from '../components/ProjectsManager';
 import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
 import ReporteConsolidadoAdmin from '../components/ReporteConsolidadoAdmin';
+import DescargaListadosEstudiantes from '../components/DescargaListadosEstudiantes';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
