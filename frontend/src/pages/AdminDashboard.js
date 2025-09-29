@@ -43,6 +43,7 @@ import ProjectsManager from '../components/ProjectsManager';
 import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
 import ReporteConsolidadoAdmin from '../components/ReporteConsolidadoAdmin';
 import DescargaListadosEstudiantes from '../components/DescargaListadosEstudiantes';
+import StudentPermissionsManager from '../components/StudentPermissionsManager';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
