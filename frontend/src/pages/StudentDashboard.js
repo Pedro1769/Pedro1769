@@ -327,7 +327,7 @@ const StudentDashboard = () => {
                     <p className="text-lg">No hay calificaciones disponibles</p>
                     <p className="text-sm">Las calificaciones aparecerán aquí una vez que sean registradas por tus profesores</p>
                   </div>
-                )}
+                ))}
               </CardContent>
             </Card>
           </TabsContent>
