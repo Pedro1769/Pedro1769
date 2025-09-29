@@ -1009,6 +1009,14 @@ const TeacherDashboard = () => {
             onClose={() => setShowPlanillaCompleta(false)}
           />
         )}
+
+        {/* Modal de Preparadores de Clase */}
+        {showPreparadores && (
+          <PreparadoresClase
+            teacher={user}
+            onClose={() => setShowPreparadores(false)}
+          />
+        )}
       </div>
     </div>
   );
