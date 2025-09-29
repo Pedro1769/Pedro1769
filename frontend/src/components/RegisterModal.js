@@ -119,11 +119,16 @@ const RegisterModal = ({ onClose, onRegister }) => {
     
     setLoading(true);
     try {
+      // Preparar datos para la API
       const userData = {
-        ...formData,
-        id: Date.now() + Math.random(),
-        createdAt: new Date().toISOString(),
-        approved: true // Todos los usuarios se aprueban automáticamente
+        name: formData.name,
+        email: formData.email,
+        role: formData.role,
+        document: formData.document || '',
+        phone: formData.phone || '',
+        subjects: formData.subjects || [],
+        grades: [],
+        teaching_level: formData.teachingLevel || ''
       };
       
       // Asignar grados automáticamente según el nivel educativo para docentes
@@ -133,20 +138,41 @@ const RegisterModal = ({ onClose, onRegister }) => {
 
       // Asignar información específica para estudiantes
       if (formData.role === 'student') {
-        userData.grade = formData.studentGrade;
-        userData.studentId = Date.now() + Math.random(); // ID único para el estudiante
-        userData.level = getStudentLevel(formData.studentGrade);
+        userData.grades = [formData.studentGrade];
       }
       
-      // Remove password confirmation from final data
-      delete userData.confirmPassword;
+      console.log('Enviando datos del usuario a la API:', userData);
       
-      console.log('Submitting user data:', userData);
-      onRegister(userData);
+      // Usar la API para crear el usuario en la base de datos
+      const createdUser = await ApiService.createUser(userData);
+      
+      console.log('Usuario creado exitosamente:', createdUser);
+      
+      // Si es estudiante, también crear registro de estudiante
+      if (formData.role === 'student') {
+        const studentData = {
+          name: formData.name,
+          grade: formData.studentGrade,
+          document: formData.document,
+          age: 0,
+          parent_email: '',
+          parent_phone: '',
+          created_by: 'registration'
+        };
+        
+        await ApiService.createStudent(studentData);
+        console.log('Registro de estudiante creado');
+      }
+      
+      // Llamar al callback de éxito
+      if (onRegister) {
+        onRegister(createdUser);
+      }
+      
       onClose();
     } catch (error) {
-      console.error('Error registering user:', error);
-      setErrors({ general: 'Error al registrar usuario' });
+      console.error('Error registrando usuario:', error);
+      setErrors({ general: `Error al registrar usuario: ${error.message}` });
     } finally {
       setLoading(false);
     }
