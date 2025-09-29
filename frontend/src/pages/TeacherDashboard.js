@@ -825,7 +825,43 @@ const TeacherDashboard = () => {
                       />
                     </div>
                     
-                    <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                    <Button 
+                      className="w-full bg-purple-600 hover:bg-purple-700"
+                      onClick={() => {
+                        // Funcionalidad completa para registrar observación
+                        const studentSelect = document.querySelector('select[value]');
+                        const tipoSelect = document.querySelectorAll('select')[1];
+                        const observacionTextarea = document.querySelector('textarea');
+                        
+                        if (!studentSelect?.value || !tipoSelect?.value || !observacionTextarea?.value) {
+                          alert('Complete todos los campos para registrar la observación');
+                          return;
+                        }
+                        
+                        const nuevaObservacion = {
+                          id: Date.now(),
+                          estudianteId: studentSelect.value,
+                          estudianteNombre: studentSelect.options[studentSelect.selectedIndex].text.split(' - ')[0],
+                          grado: studentSelect.options[studentSelect.selectedIndex].text.split(' - ')[1],
+                          tipo: tipoSelect.value,
+                          descripcion: observacionTextarea.value,
+                          teacherId: user.id,
+                          teacherName: user.name,
+                          fecha: new Date().toISOString()
+                        };
+                        
+                        const observaciones = JSON.parse(localStorage.getItem('gada_observaciones') || '[]');
+                        observaciones.push(nuevaObservacion);
+                        localStorage.setItem('gada_observaciones', JSON.stringify(observaciones));
+                        
+                        alert('Observación registrada exitosamente');
+                        
+                        // Limpiar formulario
+                        studentSelect.value = '';
+                        tipoSelect.value = '';
+                        observacionTextarea.value = '';
+                      }}
+                    >
                       <Plus className="mr-2 h-4 w-4" />
                       Registrar Observación
                     </Button>
