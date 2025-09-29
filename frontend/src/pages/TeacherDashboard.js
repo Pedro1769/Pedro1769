@@ -838,10 +838,10 @@ const TeacherDashboard = () => {
                 <CardHeader className="bg-gradient-to-r from-green-50 to-teal-50 rounded-t-lg">
                   <CardTitle className="flex items-center">
                     <FileText className="mr-2 h-5 w-5 text-green-600" />
-                    Historial de Convivencia
+                    Historial de Observaciones
                   </CardTitle>
                   <p className="text-sm text-gray-600 mt-2">
-                    Consulte el historial completo de observaciones de convivencia.
+                    Consulte el historial completo de observaciones académicas y comportamentales.
                   </p>
                 </CardHeader>
                 <CardContent className="p-6">
