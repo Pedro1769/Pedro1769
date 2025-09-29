@@ -723,6 +723,187 @@ const TeacherDashboard = () => {
           </TabsContent>
 
           <TabsContent value="reports" className="space-y-6">
+            {/* Sección de Acciones Rápidas */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Target className="mr-2 h-5 w-5 text-blue-600" />
+                  Acciones Rápidas de Reportes
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Button 
+                    className="flex flex-col items-center p-4 h-auto bg-blue-50 text-blue-700 hover:bg-blue-100"
+                    onClick={() => {
+                      const reportContent = `REPORTE RÁPIDO - RESUMEN ACADÉMICO\nDocente: ${user.name}\nFecha: ${new Date().toLocaleDateString('es-CO')}\n\nEstudiantes por grado:\n${availableGrades.map(grade => `${grade}: ${allStudents.filter(s => s.grade === grade).length} estudiantes`).join('\n')}`;
+                      const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8;' });
+                      const link = document.createElement('a');
+                      link.href = URL.createObjectURL(blob);
+                      link.download = `Resumen_Academico_${user.name}_${new Date().toISOString().split('T')[0]}.txt`;
+                      link.click();
+                    }}
+                  >
+                    <Download className="h-6 w-6 mb-2" />
+                    <span className="text-sm">Resumen Académico</span>
+                  </Button>
+
+                  <Button 
+                    className="flex flex-col items-center p-4 h-auto bg-green-50 text-green-700 hover:bg-green-100"
+                    onClick={() => {
+                      const observaciones = JSON.parse(localStorage.getItem('gada_observaciones') || '[]').filter(obs => obs.teacherId === user.id);
+                      const reportContent = `REPORTE OBSERVACIONES\nDocente: ${user.name}\nTotal: ${observaciones.length}\n\n${observaciones.map((obs, i) => `${i+1}. ${obs.estudianteNombre} (${obs.grado})\n   ${obs.tipo}: ${obs.descripcion}\n   Fecha: ${new Date(obs.fecha).toLocaleDateString('es-CO')}\n`).join('\n')}`;
+                      const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8;' });
+                      const link = document.createElement('a');
+                      link.href = URL.createObjectURL(blob);
+                      link.download = `Reporte_Observaciones_${user.name}_${new Date().toISOString().split('T')[0]}.txt`;
+                      link.click();
+                    }}
+                  >
+                    <FileText className="h-6 w-6 mb-2" />
+                    <span className="text-sm">Reporte Observaciones</span>
+                  </Button>
+
+                  <Button 
+                    className="flex flex-col items-center p-4 h-auto bg-purple-50 text-purple-700 hover:bg-purple-100"
+                    onClick={() => {
+                      const preparadores = JSON.parse(localStorage.getItem(`gada_preparadores_${user.id}`) || '[]');
+                      const reportContent = `REPORTE PREPARADORES DE CLASE\nDocente: ${user.name}\nTotal: ${preparadores.length}\n\n${preparadores.map((prep, i) => `${i+1}. ${prep.asignatura} - ${prep.grado}\n   Unidad: ${prep.tituloUnidad}\n   Semana: ${prep.semana}\n   Creado: ${new Date(prep.fechaCreacion).toLocaleDateString('es-CO')}\n`).join('\n')}`;
+                      const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8;' });
+                      const link = document.createElement('a');
+                      link.href = URL.createObjectURL(blob);
+                      link.download = `Reporte_Preparadores_${user.name}_${new Date().toISOString().split('T')[0]}.txt`;
+                      link.click();
+                    }}
+                  >
+                    <BookOpen className="h-6 w-6 mb-2" />
+                    <span className="text-sm">Reporte Preparadores</span>
+                  </Button>
+
+                  <Button 
+                    className="flex flex-col items-center p-4 h-auto bg-orange-50 text-orange-700 hover:bg-orange-100"
+                    onClick={() => {
+                      const talleres = JSON.parse(localStorage.getItem('gada_talleres') || '[]').filter(t => t.profesorId === user.id);
+                      const reportContent = `REPORTE MATERIAL ESTUDIANTES\nDocente: ${user.name}\nTotal Talleres: ${talleres.length}\n\n${talleres.map((taller, i) => `${i+1}. ${taller.titulo}\n   Materia: ${taller.materia} - Grado: ${taller.grado}\n   Tipo: ${taller.tipo}\n   Fecha límite: ${new Date(taller.fechaLimite).toLocaleDateString('es-CO')}\n`).join('\n')}`;
+                      const blob = new Blob([reportContent], { type: 'text/plain;charset=utf-8;' });
+                      const link = document.createElement('a');
+                      link.href = URL.createObjectURL(blob);
+                      link.download = `Reporte_Material_${user.name}_${new Date().toISOString().split('T')[0]}.txt`;
+                      link.click();
+                    }}
+                  >
+                    <Users className="h-6 w-6 mb-2" />
+                    <span className="text-sm">Material Estudiantes</span>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Sección de Estadísticas del Período */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <BarChart3 className="mr-2 h-5 w-5 text-green-600" />
+                  Estadísticas del Período
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Panel de control de estadísticas */}
+                  <div className="space-y-4">
+                    <div className="flex space-x-3">
+                      <Select value={selectedPeriod} onValueChange={setSelectedPeriod}>
+                        <SelectTrigger className="w-40">
+                          <SelectValue placeholder="Período" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="1">Período 1</SelectItem>
+                          <SelectItem value="2">Período 2</SelectItem>
+                          <SelectItem value="3">Período 3</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      
+                      <Button 
+                        className="bg-green-600 hover:bg-green-700"
+                        onClick={() => {
+                          const estadisticas = {
+                            periodo: selectedPeriod,
+                            totalEstudiantes: allStudents.filter(s => availableGrades.includes(s.grade)).length,
+                            gradosAtendidos: availableGrades.length,
+                            observacionesRegistradas: JSON.parse(localStorage.getItem('gada_observaciones') || '[]').filter(obs => obs.teacherId === user.id).length,
+                            preparadoresCreados: JSON.parse(localStorage.getItem(`gada_preparadores_${user.id}`) || '[]').length,
+                            talleresAsignados: JSON.parse(localStorage.getItem('gada_talleres') || '[]').filter(t => t.profesorId === user.id).length
+                          };
+                          
+                          alert(`ESTADÍSTICAS PERÍODO ${selectedPeriod}:\n\n` +
+                                `👥 Estudiantes atendidos: ${estadisticas.totalEstudiantes}\n` +
+                                `📚 Grados asignados: ${estadisticas.gradosAtendidos}\n` +
+                                `📝 Observaciones registradas: ${estadisticas.observacionesRegistradas}\n` +
+                                `📋 Preparadores creados: ${estadisticas.preparadoresCreados}\n` +
+                                `🎯 Talleres asignados: ${estadisticas.talleresAsignados}`);
+                        }}
+                      >
+                        Ver Detallado
+                      </Button>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-blue-50 p-3 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-blue-600">
+                          {allStudents.filter(s => availableGrades.includes(s.grade)).length}
+                        </div>
+                        <p className="text-sm text-blue-700">Estudiantes</p>
+                      </div>
+                      
+                      <div className="bg-green-50 p-3 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-green-600">
+                          {availableGrades.length}
+                        </div>
+                        <p className="text-sm text-green-700">Grados</p>
+                      </div>
+                      
+                      <div className="bg-purple-50 p-3 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-purple-600">
+                          {JSON.parse(localStorage.getItem('gada_observaciones') || '[]').filter(obs => obs.teacherId === user.id).length}
+                        </div>
+                        <p className="text-sm text-purple-700">Observaciones</p>
+                      </div>
+                      
+                      <div className="bg-orange-50 p-3 rounded-lg text-center">
+                        <div className="text-2xl font-bold text-orange-600">
+                          {JSON.parse(localStorage.getItem(`gada_preparadores_${user.id}`) || '[]').length}
+                        </div>
+                        <p className="text-sm text-orange-700">Preparadores</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Gráfico simulado de rendimiento */}
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="font-medium mb-3">Rendimiento por Grado</h4>
+                    <div className="space-y-2">
+                      {availableGrades.map(grade => {
+                        const estudiantesGrado = allStudents.filter(s => s.grade === grade).length;
+                        const porcentaje = availableGrades.length > 0 ? (estudiantesGrado / allStudents.filter(s => availableGrades.includes(s.grade)).length * 100).toFixed(1) : 0;
+                        return (
+                          <div key={grade} className="flex items-center space-x-3">
+                            <span className="w-8 text-sm font-medium">{grade}</span>
+                            <div className="flex-1 bg-gray-200 rounded-full h-4">
+                              <div 
+                                className="bg-blue-600 h-4 rounded-full transition-all duration-300"
+                                style={{ width: `${porcentaje}%` }}
+                              ></div>
+                            </div>
+                            <span className="text-sm text-gray-600">{estudiantesGrado}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
