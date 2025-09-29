@@ -14,7 +14,8 @@ import {
   Download,
   Search,
   Users,
-  BarChart3
+  BarChart3,
+  Heart
 } from 'lucide-react';
 
 const ReporteConsolidadoAdmin = ({ onClose }) => {
