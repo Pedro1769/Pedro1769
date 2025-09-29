@@ -399,15 +399,32 @@ const TeacherDashboard = () => {
           </TabsList>
 
           <TabsContent value="grades" className="space-y-6">
+            {/* Controles de filtro para calificaciones */}
+            <FilterControls
+              selectedPeriod={selectedPeriod}
+              setSelectedPeriod={setSelectedPeriod}
+              selectedGrade={selectedGrade}
+              setSelectedGrade={setSelectedGrade}
+              availableGrades={availableGrades}
+              availablePeriods={periods}
+              showPeriodFilter={true}
+              showGradeFilter={true}
+              onReset={() => {
+                setSelectedGrade('');
+                setSelectedPeriod('1');
+              }}
+              className="mb-4"
+            />
+
             <Card>
               <CardHeader>
                 <CardTitle>Asignar Calificaciones</CardTitle>
                 <p className="text-sm text-gray-600">
-                  Seleccione el grado, materia y período para asignar calificaciones
+                  Use los filtros para seleccionar el período y grado. Las calificaciones se aplicarán según los filtros activos.
                 </p>
                 <div className="mt-2 p-3 bg-green-50 rounded-lg border-green-200 border">
                   <p className="text-sm text-green-800">
-                    ✅ <strong>ACCESO TOTAL HABILITADO</strong> - Todos los períodos, grados y funcionalidades están completamente disponibles para gestión de calificaciones, estudiantes y reportes.
+                    ✅ <strong>FILTROS DINÁMICOS ACTIVOS</strong> - Los filtros de período y grado se aplican automáticamente en todas las funcionalidades de calificaciones.
                   </p>
                 </div>
               </CardHeader>
