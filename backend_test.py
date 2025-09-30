@@ -408,7 +408,7 @@ def test_frontend_backend_connectivity():
     print("\n🔍 Testing Frontend-Backend Connectivity...")
     
     # Test the exact URL that frontend uses
-    frontend_backend_url = "https://gimfix.preview.emergentagent.com"
+    frontend_backend_url = "https://account-maker-5.preview.emergentagent.com"
     
     print(f"  🌐 Testing frontend's backend URL: {frontend_backend_url}")
     
