@@ -281,12 +281,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Label htmlFor="name">Nombre Completo *</Label>
                   <input
                     id="name"
+                    name="name"
                     type="text"
                     value={formData.name}
-                    onChange={(e) => {
-                      console.log('Name input change:', e.target.value);
-                      handleInputChange('name')(e);
-                    }}
+                    onChange={handleInputChange}
                     placeholder="Nombres y apellidos"
                     className={`w-full px-3 py-2 border rounded-md ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
                   />
