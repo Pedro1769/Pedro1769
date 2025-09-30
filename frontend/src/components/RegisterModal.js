@@ -703,4 +703,4 @@ const SimpleRegisterModal = ({ onClose, onRegister }) => {
   );
 };
 
-export default RegisterModal;
+export default SimpleRegisterModal;
