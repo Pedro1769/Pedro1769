@@ -276,19 +276,23 @@ const RegisterModal = ({ onClose, onRegister }) => {
     }
   };
 
-  const toggleSubject = (subject) => {
-    console.log('Toggling subject:', subject, 'Current subjects:', formData.subjects);
+  const toggleSubject = useCallback((subject) => {
+    console.log('📚 Cambiando materia:', subject, 'Materias actuales:', formData.subjects);
+    
     setFormData(prevState => {
-      const newSubjects = prevState.subjects.includes(subject)
-        ? prevState.subjects.filter(s => s !== subject)
-        : [...prevState.subjects, subject];
-      console.log('New subjects array:', newSubjects);
+      const currentSubjects = Array.isArray(prevState.subjects) ? prevState.subjects : [];
+      const newSubjects = currentSubjects.includes(subject)
+        ? currentSubjects.filter(s => s !== subject)
+        : [...currentSubjects, subject];
+      
+      console.log('📚 Nuevas materias:', newSubjects);
+      
       return {
         ...prevState,
         subjects: newSubjects
       };
     });
-  };
+  }, [formData.subjects]);
 
   const toggleGrade = (grade) => {
     setFormData(prevState => ({
