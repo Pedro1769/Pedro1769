@@ -441,9 +441,10 @@ def test_frontend_backend_connectivity():
         return False
 
 def run_comprehensive_backend_test():
-    """Run all backend tests"""
+    """Run all backend tests with focus on user registration"""
     print("🚀 Starting Comprehensive Backend Testing Suite")
-    print("=" * 60)
+    print("🎯 Focus: User Registration Functionality for Gimnasio Americano del Atlántico")
+    print("=" * 70)
     
     test_results = []
     
@@ -453,41 +454,55 @@ def run_comprehensive_backend_test():
     # Test 2: MongoDB Connection
     test_results.append(("MongoDB Connection", test_mongodb_connection()))
     
-    # Test 3: API Endpoints
-    test_results.append(("API Endpoints", test_api_endpoints()))
+    # Test 3: User Registration API (PRIORITY TEST)
+    test_results.append(("User Registration API", test_user_registration_api()[0]))
     
-    # Test 4: CORS Configuration
+    # Test 4: Authentication API (PRIORITY TEST)
+    test_results.append(("Authentication API", test_authentication_api()))
+    
+    # Test 5: Status Endpoints (PRIORITY TEST)
+    test_results.append(("Status Endpoints", test_status_endpoints()))
+    
+    # Test 6: MongoDB Persistence (PRIORITY TEST)
+    test_results.append(("MongoDB Persistence", test_mongodb_persistence()))
+    
+    # Test 7: CORS Configuration
     test_results.append(("CORS Configuration", test_cors_configuration()))
     
-    # Test 5: Student Login System (NEW)
-    test_results.append(("Student Login System", test_student_login_system()))
-    
-    # Test 6: Frontend-Backend Connectivity (NEW)
-    test_results.append(("Frontend-Backend Connectivity", test_frontend_backend_connectivity()))
-    
     # Summary
-    print("\n" + "=" * 60)
-    print("📋 TEST SUMMARY")
-    print("=" * 60)
+    print("\n" + "=" * 70)
+    print("📋 TEST SUMMARY - USER REGISTRATION FUNCTIONALITY")
+    print("=" * 70)
     
     passed_tests = 0
+    critical_tests = ["User Registration API", "Authentication API", "Status Endpoints", "MongoDB Persistence"]
+    critical_passed = 0
+    
     for test_name, result in test_results:
         status = "✅ PASS" if result else "❌ FAIL"
-        print(f"{test_name:<20} {status}")
+        priority = "🔥 CRITICAL" if test_name in critical_tests else "📋 STANDARD"
+        print(f"{test_name:<25} {status} {priority}")
+        
         if result:
             passed_tests += 1
+            if test_name in critical_tests:
+                critical_passed += 1
     
     success_rate = passed_tests / len(test_results) * 100
-    print(f"\nOverall Success Rate: {success_rate:.1f}% ({passed_tests}/{len(test_results)})")
+    critical_success_rate = critical_passed / len(critical_tests) * 100
     
-    if success_rate == 100:
-        print("\n🎉 All backend tests passed! System is ready for frontend integration.")
+    print(f"\nOverall Success Rate: {success_rate:.1f}% ({passed_tests}/{len(test_results)})")
+    print(f"Critical Tests Success Rate: {critical_success_rate:.1f}% ({critical_passed}/{len(critical_tests)})")
+    
+    # Determine overall status
+    if critical_success_rate == 100:
+        print("\n🎉 All critical user registration tests passed! System is fully functional.")
         return True
-    elif success_rate >= 75:
-        print("\n⚠️  Most backend tests passed. Minor issues detected but system should work.")
+    elif critical_success_rate >= 75:
+        print("\n⚠️  Most critical tests passed. Minor issues detected but registration should work.")
         return True
     else:
-        print("\n❌ Critical backend issues detected. System needs attention before frontend integration.")
+        print("\n❌ Critical user registration issues detected. System needs immediate attention.")
         return False
 
 if __name__ == "__main__":
