@@ -496,12 +496,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     <Label htmlFor="birthDate">Fecha de Nacimiento *</Label>
                     <input
                       id="birthDate"
+                      name="birthDate"
                       type="date"
                       value={formData.birthDate}
-                      onChange={(e) => {
-                        console.log('Birth date input change:', e.target.value);
-                        handleInputChange('birthDate')(e);
-                      }}
+                      onChange={handleInputChange}
                       className={`w-full px-3 py-2 border rounded-md ${errors.birthDate ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
