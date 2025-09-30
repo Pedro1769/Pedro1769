@@ -350,12 +350,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Label htmlFor="confirmPassword">Confirmar Contraseña *</Label>
                   <input
                     id="confirmPassword"
+                    name="confirmPassword"
                     type="password"
                     value={formData.confirmPassword}
-                    onChange={(e) => {
-                      console.log('Confirm password input change - length:', e.target.value.length);
-                      handleInputChange('confirmPassword')(e);
-                    }}
+                    onChange={handleInputChange}
                     placeholder="Repetir contraseña"
                     className={`w-full px-3 py-2 border rounded-md ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                   />
