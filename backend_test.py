@@ -508,6 +508,8 @@ def run_comprehensive_backend_test():
 if __name__ == "__main__":
     print(f"Backend URL: {BACKEND_URL}")
     print(f"API Base URL: {API_BASE}")
+    print(f"MongoDB: mongodb://localhost:27017")
+    print(f"DB Name: gimnasio_americano")
     print()
     
     success = run_comprehensive_backend_test()
