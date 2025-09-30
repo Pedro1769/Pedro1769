@@ -8,7 +8,7 @@ import { Label } from '../components/ui/label';
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { mockUsers } from '../mock/mockData';
 import { Eye, EyeOff, User, Lock, UserPlus } from 'lucide-react';
-import RegisterModal from '../components/RegisterModal';
+import SimpleRegisterModal from '../components/SimpleRegisterModal';
 import ApiService from '../services/apiService';
 
 const LoginPage = () => {
