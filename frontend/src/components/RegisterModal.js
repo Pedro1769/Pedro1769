@@ -418,7 +418,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         checked={formData.isTutor}
-                        onCheckedChange={handleCheckboxChange('isTutor')}
+                        onCheckedChange={(checked) => handleCheckboxChange('isTutor', checked)}
                       />
                       <Label>¿Es tutor de grado?</Label>
                     </div>
