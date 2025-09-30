@@ -147,85 +147,122 @@ const RegisterModal = ({ onClose, onRegister }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     
-    // Debug logs to monitor form state
-    console.log('Form submission attempt:', {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password ? '***' : '',
-      role: formData.role,
-      subjects: formData.subjects,
-      formDataKeys: Object.keys(formData)
+    console.log('🚀 INICIANDO ENVÍO DEL FORMULARIO');
+    console.log('📋 Estado completo del formulario:', formData);
+    
+    // Validar que tenemos los datos mínimos
+    console.log('🔍 Validando datos del formulario:', {
+      name: formData.name || 'VACIO',
+      email: formData.email || 'VACIO', 
+      password: formData.password ? 'PRESENTE' : 'VACIO',
+      role: formData.role || 'VACIO',
+      document: formData.document || 'VACIO'
     });
     
     if (!validateForm()) {
-      console.log('Form validation failed:', errors);
+      console.error('❌ Validación del formulario falló:', errors);
       return;
     }
     
     setLoading(true);
+    
     try {
-      // Preparar datos para la API
+      // Preparar datos con valores por defecto más robustos
       const userData = {
-        name: formData.name,
-        email: formData.email,
-        password: formData.password, // Incluir la contraseña
-        role: formData.role,
-        document: formData.document || '',
-        phone: formData.phone || '',
-        subjects: formData.subjects || [],
+        name: String(formData.name || '').trim(),
+        email: String(formData.email || '').trim().toLowerCase(),
+        password: String(formData.password || ''),
+        role: String(formData.role || ''),
+        document: String(formData.document || '').trim(),
+        phone: String(formData.phone || '').trim(),
+        subjects: Array.isArray(formData.subjects) ? formData.subjects : [],
         grades: [],
-        teaching_level: formData.teachingLevel || ''
+        teaching_level: String(formData.teachingLevel || '')
       };
       
       // Asignar grados automáticamente según el nivel educativo para docentes
       if (formData.role === 'teacher' && formData.teachingLevel) {
         userData.grades = getGradesByLevel(formData.teachingLevel);
+        console.log('👨‍🏫 Grados asignados para docente:', userData.grades);
       }
 
       // Asignar información específica para estudiantes
-      if (formData.role === 'student') {
+      if (formData.role === 'student' && formData.studentGrade) {
         userData.grades = [formData.studentGrade];
+        console.log('🎓 Grado asignado para estudiante:', userData.grades);
       }
       
-      console.log('Enviando datos del usuario a la API:', userData);
+      console.log('📤 Enviando datos a la API:', {
+        ...userData,
+        password: '***' // No mostrar la contraseña en logs
+      });
       
-      // Usar la API para crear el usuario en la base de datos
+      // Llamar a la API
       const createdUser = await ApiService.createUser(userData);
       
-      console.log('Usuario creado exitosamente:', createdUser);
+      console.log('✅ Usuario creado exitosamente:', {
+        id: createdUser.id,
+        name: createdUser.name,
+        email: createdUser.email,
+        role: createdUser.role
+      });
       
       // Si es estudiante, también crear registro de estudiante
-      if (formData.role === 'student') {
-        const studentData = {
-          name: formData.name,
-          grade: formData.studentGrade,
-          document: formData.document,
-          age: 0,
-          parent_email: '',
-          parent_phone: '',
-          created_by: 'registration'
-        };
-        
-        await ApiService.createStudent(studentData);
-        console.log('Registro de estudiante creado');
+      if (formData.role === 'student' && formData.studentGrade) {
+        try {
+          const studentData = {
+            name: formData.name,
+            grade: formData.studentGrade,
+            document: formData.document,
+            age: 0,
+            parent_email: '',
+            parent_phone: '',
+            created_by: 'registration'
+          };
+          
+          await ApiService.createStudent(studentData);
+          console.log('✅ Registro de estudiante creado');
+        } catch (studentError) {
+          console.warn('⚠️ Error creando registro de estudiante:', studentError);
+          // No fallar el registro principal por esto
+        }
       }
       
+      // Mostrar mensaje de éxito
+      alert(`✅ Usuario ${formData.name} registrado exitosamente!\n\nPuede hacer login inmediatamente con su email y contraseña.`);
+      
       // Llamar al callback de éxito
-      if (onRegister) {
+      if (onRegister && typeof onRegister === 'function') {
         onRegister(createdUser);
       }
       
+      // Cerrar modal
       onClose();
+      
     } catch (error) {
-      console.error('Error registrando usuario:', error);
-      setErrors({ general: `Error al registrar usuario: ${error.message}` });
+      console.error('❌ ERROR al registrar usuario:', error);
+      
+      let errorMessage = 'Error desconocido al registrar usuario';
+      
+      if (error.response) {
+        // Error de respuesta del servidor
+        errorMessage = `Error del servidor: ${error.response.status} - ${error.response.data?.detail || error.response.statusText}`;
+      } else if (error.request) {
+        // Error de red
+        errorMessage = 'Error de conexión. Verifique su conexión a internet.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
+      setErrors({ general: errorMessage });
+      
     } finally {
       setLoading(false);
     }
-  };
+  }, [formData, errors, validateForm, getGradesByLevel, onRegister, onClose]);
 
   const getSubjectsByLevel = (level) => {
     switch (level) {
