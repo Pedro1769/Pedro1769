@@ -323,12 +323,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Label htmlFor="phone">Teléfono</Label>
                   <input
                     id="phone"
+                    name="phone"
                     type="text"
                     value={formData.phone}
-                    onChange={(e) => {
-                      console.log('Phone input change:', e.target.value);
-                      handleInputChange('phone')(e);
-                    }}
+                    onChange={handleInputChange}
                     placeholder="Número de contacto"
                     className="w-full px-3 py-2 border rounded-md border-gray-300"
                   />
