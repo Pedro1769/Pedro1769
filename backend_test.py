@@ -165,95 +165,242 @@ def test_cors_configuration():
         print(f"  ❌ CORS test failed - connection error: {e}")
         return False
 
-def test_student_login_system():
-    """Test student login functionality and user management"""
-    print("\n🔍 Testing Student Login System...")
+def test_user_registration_api():
+    """Test user registration functionality as requested"""
+    print("\n🔍 Testing User Registration API (POST /api/users)...")
     
-    # First, check if login endpoints exist
-    print("  🔐 Checking for authentication endpoints...")
-    
-    auth_endpoints = ["/login", "/auth/login", "/authenticate"]
-    login_endpoint_found = False
-    
-    for endpoint in auth_endpoints:
-        try:
-            response = requests.post(f"{API_BASE}{endpoint}", 
-                                   json={"email": "test@test.com", "password": "test"}, 
-                                   timeout=5)
-            if response.status_code != 404:
-                print(f"    ✅ Found potential login endpoint: {endpoint}")
-                login_endpoint_found = True
-                break
-        except:
-            continue
-    
-    if not login_endpoint_found:
-        print("    ❌ CRITICAL: No login endpoints found in backend!")
-        print("    📋 Available endpoints appear to be: /users, /students, /status")
-        print("    🚨 This explains why student login is failing - no authentication system exists!")
-        return False
-    
-    # Test user management endpoints
-    print("  👥 Testing user management endpoints...")
-    
-    # Test creating a student user
-    student_user_data = {
-        "name": "María González",
-        "email": "maria.gonzalez@estudiante.com",
-        "role": "student",
-        "document": "1234567890",
-        "phone": "3001234567"
+    # Test data for teacher registration as specified
+    teacher_data = {
+        "name": "Juan Pérez Test",
+        "email": "juan.test@email.com", 
+        "password": "123456",
+        "role": "teacher",
+        "document": "12345678",
+        "phone": "3001234567",
+        "subjects": ["Matemáticas", "Ciencias"],
+        "grades": ["5°", "6°"],
+        "teaching_level": "primaria"
     }
     
     try:
-        # Create student user
-        response = requests.post(f"{API_BASE}/users", json=student_user_data, timeout=10)
+        print("  📝 Creating teacher user...")
+        response = requests.post(f"{API_BASE}/users", json=teacher_data, timeout=10)
+        
         if response.status_code == 200:
             created_user = response.json()
-            print(f"    ✅ Student user created successfully: {created_user.get('name')}")
+            print(f"    ✅ Teacher user created successfully: {created_user.get('name')}")
+            print(f"    📧 Email: {created_user.get('email')}")
+            print(f"    👤 Role: {created_user.get('role')}")
+            print(f"    🆔 Document: {created_user.get('document')}")
+            print(f"    🆔 User ID: {created_user.get('id')}")
             
-            # Verify user has student role
-            if created_user.get('role') == 'student':
-                print("    ✅ Student role assigned correctly")
-            else:
-                print(f"    ❌ Role mismatch: expected 'student', got '{created_user.get('role')}'")
+            # Verify all required fields are present
+            required_fields = ['id', 'name', 'email', 'role', 'document']
+            missing_fields = [field for field in required_fields if not created_user.get(field)]
+            
+            if missing_fields:
+                print(f"    ❌ Missing required fields: {missing_fields}")
+                return False, None
+                
+            # Verify role is correct
+            if created_user.get('role') != 'teacher':
+                print(f"    ❌ Role mismatch: expected 'teacher', got '{created_user.get('role')}'")
+                return False, None
+                
+            # Verify subjects and grades are preserved
+            if created_user.get('subjects') != teacher_data['subjects']:
+                print(f"    ❌ Subjects not preserved correctly")
+                return False, None
+                
+            print("    ✅ All user data validated successfully")
+            return True, created_user
+            
+        else:
+            print(f"    ❌ Failed to create teacher user - status: {response.status_code}")
+            print(f"    Response: {response.text}")
+            return False, None
+            
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ User registration test failed: {e}")
+        return False, None
+
+def test_authentication_api():
+    """Test authentication API (POST /api/auth)"""
+    print("\n🔍 Testing Authentication API (POST /api/auth/login)...")
+    
+    # First create a test user to authenticate
+    test_user_data = {
+        "name": "Test Auth User",
+        "email": "auth.test@email.com",
+        "password": "testpass123",
+        "role": "teacher",
+        "document": "87654321"
+    }
+    
+    try:
+        # Create user first
+        print("  👤 Creating test user for authentication...")
+        create_response = requests.post(f"{API_BASE}/users", json=test_user_data, timeout=10)
+        
+        if create_response.status_code != 200:
+            print(f"    ❌ Failed to create test user for auth test")
+            return False
+            
+        # Now test authentication
+        print("  🔐 Testing login with created user...")
+        login_data = {
+            "email": test_user_data["email"],
+            "password": test_user_data["password"]
+        }
+        
+        auth_response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=10)
+        
+        if auth_response.status_code == 200:
+            auth_result = auth_response.json()
+            print(f"    ✅ Authentication successful")
+            print(f"    👤 User: {auth_result.get('user', {}).get('name')}")
+            print(f"    🎫 Token received: {'Yes' if auth_result.get('token') else 'No'}")
+            print(f"    ✅ Success flag: {auth_result.get('success')}")
+            
+            # Verify response structure
+            if not auth_result.get('user'):
+                print("    ❌ No user data in auth response")
                 return False
                 
+            if not auth_result.get('token'):
+                print("    ❌ No token in auth response")
+                return False
+                
+            if not auth_result.get('success'):
+                print("    ❌ Success flag not set")
+                return False
+                
+            print("    ✅ Authentication API working correctly")
+            return True
+            
         else:
-            print(f"    ❌ Failed to create student user - status: {response.status_code}")
-            print(f"    Response: {response.text}")
+            print(f"    ❌ Authentication failed - status: {auth_response.status_code}")
+            print(f"    Response: {auth_response.text}")
             return False
             
     except requests.exceptions.RequestException as e:
-        print(f"    ❌ User creation test failed: {e}")
+        print(f"    ❌ Authentication test failed: {e}")
+        return False
+
+def test_mongodb_persistence():
+    """Test MongoDB data persistence"""
+    print("\n🔍 Testing MongoDB Data Persistence...")
+    
+    # Create a unique test user
+    timestamp = datetime.now().strftime("%H%M%S")
+    test_user = {
+        "name": f"Persistence Test User {timestamp}",
+        "email": f"persist.test.{timestamp}@email.com",
+        "password": "persist123",
+        "role": "student",
+        "document": f"PERSIST{timestamp}"
+    }
+    
+    try:
+        # Create user
+        print("  💾 Creating user for persistence test...")
+        create_response = requests.post(f"{API_BASE}/users", json=test_user, timeout=10)
+        
+        if create_response.status_code != 200:
+            print(f"    ❌ Failed to create test user")
+            return False
+            
+        created_user = create_response.json()
+        user_id = created_user.get('id')
+        
+        # Wait a moment to ensure data is persisted
+        time.sleep(1)
+        
+        # Retrieve all users and verify our user exists
+        print("  🔍 Verifying user persistence in database...")
+        get_response = requests.get(f"{API_BASE}/users", timeout=10)
+        
+        if get_response.status_code != 200:
+            print(f"    ❌ Failed to retrieve users")
+            return False
+            
+        all_users = get_response.json()
+        
+        # Find our test user
+        found_user = None
+        for user in all_users:
+            if user.get('id') == user_id:
+                found_user = user
+                break
+                
+        if not found_user:
+            print(f"    ❌ Created user not found in database")
+            return False
+            
+        # Verify data integrity
+        if found_user.get('email') != test_user['email']:
+            print(f"    ❌ Email data corruption detected")
+            return False
+            
+        if found_user.get('document') != test_user['document']:
+            print(f"    ❌ Document data corruption detected")
+            return False
+            
+        print(f"    ✅ User successfully persisted in MongoDB")
+        print(f"    📧 Email: {found_user.get('email')}")
+        print(f"    🆔 Document: {found_user.get('document')}")
+        print(f"    ✅ Data integrity verified")
+        
+        return True
+        
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ MongoDB persistence test failed: {e}")
+        return False
+
+def test_status_endpoints():
+    """Test status endpoints as requested"""
+    print("\n🔍 Testing Status Endpoints...")
+    
+    # Test GET /api/status
+    print("  📊 Testing GET /api/status...")
+    try:
+        response = requests.get(f"{API_BASE}/status", timeout=10)
+        if response.status_code == 200:
+            status_data = response.json()
+            print(f"    ✅ GET /api/status working - found {len(status_data)} status checks")
+        else:
+            print(f"    ❌ GET /api/status failed - status: {response.status_code}")
+            return False
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ GET /api/status failed: {e}")
         return False
     
-    # Test retrieving users and check for students
-    print("  📖 Checking for existing student users...")
-    
+    # Test GET /api/users
+    print("  👥 Testing GET /api/users...")
     try:
         response = requests.get(f"{API_BASE}/users", timeout=10)
         if response.status_code == 200:
-            users = response.json()
-            student_users = [user for user in users if user.get('role') == 'student']
+            users_data = response.json()
+            print(f"    ✅ GET /api/users working - found {len(users_data)} users")
             
-            print(f"    📊 Found {len(student_users)} student users out of {len(users)} total users")
-            
-            if len(student_users) > 0:
-                print("    ✅ Student users exist in database")
-                for student in student_users[:3]:  # Show first 3 students
-                    print(f"      - {student.get('name')} ({student.get('email')})")
-            else:
-                print("    ⚠️  No student users found in database")
+            # Show some user statistics
+            roles = {}
+            for user in users_data:
+                role = user.get('role', 'unknown')
+                roles[role] = roles.get(role, 0) + 1
+                
+            print("    📊 User roles distribution:")
+            for role, count in roles.items():
+                print(f"      - {role}: {count}")
                 
         else:
-            print(f"    ❌ Failed to retrieve users - status: {response.status_code}")
+            print(f"    ❌ GET /api/users failed - status: {response.status_code}")
             return False
-            
     except requests.exceptions.RequestException as e:
-        print(f"    ❌ User retrieval test failed: {e}")
+        print(f"    ❌ GET /api/users failed: {e}")
         return False
     
+    print("    ✅ All status endpoints working correctly")
     return True
 
 def test_frontend_backend_connectivity():
