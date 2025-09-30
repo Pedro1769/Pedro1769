@@ -10,6 +10,7 @@ import { X, Save, AlertCircle, UserPlus } from 'lucide-react';
 import ApiService from '../services/apiService';
 
 const RegisterModal = ({ onClose, onRegister }) => {
+  // Estado del formulario con valores iniciales más explícitos
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,7 +20,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
     phone: '',
     role: '',
     // Teacher specific
-    teachingLevel: '', // 'transicion', 'primaria', 'bachillerato'
+    teachingLevel: '',
     isTutor: false,
     tutorGrade: '',
     subjects: [],
@@ -34,38 +35,85 @@ const RegisterModal = ({ onClose, onRegister }) => {
   
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const formRef = useRef(null);
 
-  // Manejar cambios en campos de texto - React 19 compatible
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
-  };
+  // Debug: Log estado del formulario cada vez que cambie
+  useEffect(() => {
+    console.log('🔍 Estado actual del formulario:', {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password ? '***' : '',
+      role: formData.role,
+      subjects: formData.subjects
+    });
+  }, [formData]);
 
-  // Manejar cambios en selects - React 19 compatible
-  const handleSelectChange = (field, value) => {
-    setFormData(prevState => ({
-      ...prevState,
-      [field]: value
-    }));
-    // Clear errors when field changes
-    if (errors[field]) {
-      setErrors(prev => ({
-        ...prev,
-        [field]: undefined
-      }));
+  // Handler mejorado para campos de input con logging detallado
+  const handleInputChange = useCallback((event) => {
+    if (!event || !event.target) {
+      console.error('❌ Evento inválido en handleInputChange:', event);
+      return;
     }
-  };
+    
+    const { name, value, type } = event.target;
+    
+    console.log(`📝 Input cambiado - Campo: ${name}, Valor: ${value}, Tipo: ${type}`);
+    
+    setFormData(prevState => {
+      const newState = {
+        ...prevState,
+        [name]: value
+      };
+      console.log(`💾 Nuevo estado para ${name}:`, newState[name]);
+      return newState;
+    });
+    
+    // Limpiar errores cuando el usuario escribe
+    if (errors[name]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    }
+  }, [errors]);
 
-  // Manejar cambios en checkboxes - React 19 compatible
-  const handleCheckboxChange = (field, checked) => {
-    setFormData(prevState => ({
-      ...prevState,
-      [field]: checked
-    }));
-  };
+  // Handler mejorado para selects
+  const handleSelectChange = useCallback((field, value) => {
+    console.log(`🎯 Select cambiado - Campo: ${field}, Valor: ${value}`);
+    
+    setFormData(prevState => {
+      const newState = {
+        ...prevState,
+        [field]: value
+      };
+      console.log(`💾 Nuevo estado para ${field}:`, newState[field]);
+      return newState;
+    });
+    
+    // Limpiar errores
+    if (errors[field]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      });
+    }
+  }, [errors]);
+
+  // Handler mejorado para checkboxes
+  const handleCheckboxChange = useCallback((field, checked) => {
+    console.log(`☑️ Checkbox cambiado - Campo: ${field}, Marcado: ${checked}`);
+    
+    setFormData(prevState => {
+      const newState = {
+        ...prevState,
+        [field]: checked
+      };
+      console.log(`💾 Nuevo estado para ${field}:`, newState[field]);
+      return newState;
+    });
+  }, []);
 
   const validateForm = () => {
     const newErrors = {};
