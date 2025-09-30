@@ -638,10 +638,11 @@ const RegisterModal = ({ onClose, onRegister }) => {
                       id="studentDocument"
                       name="studentDocument"
                       type="text"
-                      value={formData.studentDocument}
+                      value={formData.studentDocument || ''}
                       onChange={handleInputChange}
+                      onInput={handleInputChange}
                       placeholder="Documento del estudiante"
-                      className={`w-full px-3 py-2 border rounded-md ${errors.studentDocument ? 'border-red-500' : 'border-gray-300'}`}
+                      className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.studentDocument ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {errors.studentDocument && <p className="text-red-500 text-sm mt-1">{errors.studentDocument}</p>}
                   </div>
