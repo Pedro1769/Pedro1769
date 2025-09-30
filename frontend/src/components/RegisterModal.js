@@ -44,8 +44,8 @@ const RegisterModal = ({ onClose, onRegister }) => {
     }));
   };
 
-  // Manejar cambios en selects
-  const handleSelectChange = (field) => (value) => {
+  // Manejar cambios en selects - React 19 compatible
+  const handleSelectChange = (field, value) => {
     setFormData(prevState => ({
       ...prevState,
       [field]: value
