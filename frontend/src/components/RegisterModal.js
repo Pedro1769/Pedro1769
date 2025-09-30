@@ -5,8 +5,7 @@ import { Alert, AlertDescription } from './ui/alert';
 import { X, Save, AlertCircle, UserPlus } from 'lucide-react';
 import ApiService from '../services/apiService';
 
-const RegisterModal = ({ onClose, onRegister }) => {
-  // Estado del formulario con valores iniciales más explícitos
+const SimpleRegisterModal = ({ onClose, onRegister }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -15,23 +14,16 @@ const RegisterModal = ({ onClose, onRegister }) => {
     document: '',
     phone: '',
     role: '',
-    // Teacher specific
     teachingLevel: '',
-    isTutor: false,
-    tutorGrade: '',
     subjects: [],
-    grades: [],
-    // Student specific
     studentGrade: '',
     birthDate: '',
-    // Parent specific
     studentDocument: '',
     relationshipType: ''
   });
   
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
-  const formRef = useRef(null);
 
   // Debug: Log estado del formulario cada vez que cambie
   useEffect(() => {
