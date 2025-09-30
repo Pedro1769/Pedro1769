@@ -381,10 +381,14 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="name"
                     name="name"
                     type="text"
-                    value={formData.name}
+                    value={formData.name || ''}
                     onChange={handleInputChange}
+                    onInput={handleInputChange}
+                    onFocus={() => console.log('📝 Focus en campo nombre')}
+                    onBlur={() => console.log('📝 Blur en campo nombre, valor:', formData.name)}
                     placeholder="Nombres y apellidos"
-                    className={`w-full px-3 py-2 border rounded-md ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
+                    autoComplete="name"
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                 </div>
@@ -395,10 +399,14 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="document"
                     name="document"
                     type="text"
-                    value={formData.document}
+                    value={formData.document || ''}
                     onChange={handleInputChange}
+                    onInput={handleInputChange}
+                    onFocus={() => console.log('📝 Focus en campo documento')}
+                    onBlur={() => console.log('📝 Blur en campo documento, valor:', formData.document)}
                     placeholder="Número de documento"
-                    className={`w-full px-3 py-2 border rounded-md ${errors.document ? 'border-red-500' : 'border-gray-300'}`}
+                    autoComplete="off"
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.document ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.document && <p className="text-red-500 text-sm mt-1">{errors.document}</p>}
                 </div>
@@ -409,10 +417,14 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="email"
                     name="email"
                     type="email"
-                    value={formData.email}
+                    value={formData.email || ''}
                     onChange={handleInputChange}
+                    onInput={handleInputChange}
+                    onFocus={() => console.log('📝 Focus en campo email')}
+                    onBlur={() => console.log('📝 Blur en campo email, valor:', formData.email)}
                     placeholder="correo@ejemplo.com"
-                    className={`w-full px-3 py-2 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
+                    autoComplete="email"
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
@@ -422,11 +434,13 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <input
                     id="phone"
                     name="phone"
-                    type="text"
-                    value={formData.phone}
+                    type="tel"
+                    value={formData.phone || ''}
                     onChange={handleInputChange}
+                    onInput={handleInputChange}
                     placeholder="Número de contacto"
-                    className="w-full px-3 py-2 border rounded-md border-gray-300"
+                    autoComplete="tel"
+                    className="w-full px-3 py-2 border rounded-md border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                   />
                 </div>
 
@@ -436,10 +450,14 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="password"
                     name="password"
                     type="password"
-                    value={formData.password}
+                    value={formData.password || ''}
                     onChange={handleInputChange}
+                    onInput={handleInputChange}
+                    onFocus={() => console.log('📝 Focus en campo password')}
+                    onBlur={() => console.log('📝 Blur en campo password, longitud:', formData.password?.length || 0)}
                     placeholder="Mínimo 6 caracteres"
-                    className={`w-full px-3 py-2 border rounded-md ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
+                    autoComplete="new-password"
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
                 </div>
@@ -450,10 +468,12 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     id="confirmPassword"
                     name="confirmPassword"
                     type="password"
-                    value={formData.confirmPassword}
+                    value={formData.confirmPassword || ''}
                     onChange={handleInputChange}
+                    onInput={handleInputChange}
                     placeholder="Repetir contraseña"
-                    className={`w-full px-3 py-2 border rounded-md ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
+                    autoComplete="new-password"
+                    className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'}`}
                   />
                   {errors.confirmPassword && <p className="text-red-500 text-sm mt-1">{errors.confirmPassword}</p>}
                 </div>
