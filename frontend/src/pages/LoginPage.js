@@ -257,7 +257,7 @@ const LoginPage = () => {
 
       {/* Register Modal */}
       {showRegisterModal && (
-        <RegisterModal 
+        <SimpleRegisterModal 
           onClose={() => setShowRegisterModal(false)}
           onRegister={handleRegister}
         />
