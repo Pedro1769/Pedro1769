@@ -517,12 +517,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                     <Label htmlFor="studentDocument">Documento del Estudiante *</Label>
                     <input
                       id="studentDocument"
+                      name="studentDocument"
                       type="text"
                       value={formData.studentDocument}
-                      onChange={(e) => {
-                        console.log('Student document input change:', e.target.value);
-                        handleInputChange('studentDocument')(e);
-                      }}
+                      onChange={handleInputChange}
                       placeholder="Documento del estudiante"
                       className={`w-full px-3 py-2 border rounded-md ${errors.studentDocument ? 'border-red-500' : 'border-gray-300'}`}
                     />
