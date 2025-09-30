@@ -59,8 +59,8 @@ const RegisterModal = ({ onClose, onRegister }) => {
     }
   };
 
-  // Manejar cambios en checkboxes
-  const handleCheckboxChange = (field) => (checked) => {
+  // Manejar cambios en checkboxes - React 19 compatible
+  const handleCheckboxChange = (field, checked) => {
     setFormData(prevState => ({
       ...prevState,
       [field]: checked
