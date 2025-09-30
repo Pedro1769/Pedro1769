@@ -427,7 +427,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   {formData.isTutor && formData.teachingLevel && (
                     <div>
                       <Label htmlFor="tutorGrade">Grado a Cargo *</Label>
-                      <Select value={formData.tutorGrade} onValueChange={handleSelectChange('tutorGrade')}>
+                      <Select value={formData.tutorGrade} onValueChange={(value) => handleSelectChange('tutorGrade', value)}>
                         <SelectTrigger className={errors.tutorGrade ? 'border-red-500' : ''}>
                           <SelectValue placeholder="Seleccionar grado" />
                         </SelectTrigger>
