@@ -295,12 +295,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Label htmlFor="document">Documento de Identidad *</Label>
                   <input
                     id="document"
+                    name="document"
                     type="text"
                     value={formData.document}
-                    onChange={(e) => {
-                      console.log('Document input change:', e.target.value);
-                      handleInputChange('document')(e);
-                    }}
+                    onChange={handleInputChange}
                     placeholder="Número de documento"
                     className={`w-full px-3 py-2 border rounded-md ${errors.document ? 'border-red-500' : 'border-gray-300'}`}
                   />
