@@ -470,7 +470,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="studentGrade">Grado *</Label>
-                    <Select value={formData.studentGrade || ''} onValueChange={handleSelectChange('studentGrade')}>
+                    <Select value={formData.studentGrade || ''} onValueChange={(value) => handleSelectChange('studentGrade', value)}>
                       <SelectTrigger className={errors.studentGrade ? 'border-red-500' : ''}>
                         <SelectValue placeholder="Seleccionar grado" />
                       </SelectTrigger>
