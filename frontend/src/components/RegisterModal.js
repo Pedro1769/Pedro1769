@@ -309,12 +309,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Label htmlFor="email">Email *</Label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     value={formData.email}
-                    onChange={(e) => {
-                      console.log('Email input change:', e.target.value);
-                      handleInputChange('email')(e);
-                    }}
+                    onChange={handleInputChange}
                     placeholder="correo@ejemplo.com"
                     className={`w-full px-3 py-2 border rounded-md ${errors.email ? 'border-red-500' : 'border-gray-300'}`}
                   />
