@@ -616,9 +616,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                       id="birthDate"
                       name="birthDate"
                       type="date"
-                      value={formData.birthDate}
+                      value={formData.birthDate || ''}
                       onChange={handleInputChange}
-                      className={`w-full px-3 py-2 border rounded-md ${errors.birthDate ? 'border-red-500' : 'border-gray-300'}`}
+                      onInput={handleInputChange}
+                      className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors ${errors.birthDate ? 'border-red-500' : 'border-gray-300'}`}
                     />
                     {errors.birthDate && <p className="text-red-500 text-sm mt-1">{errors.birthDate}</p>}
                   </div>
