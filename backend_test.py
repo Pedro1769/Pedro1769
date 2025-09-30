@@ -440,6 +440,132 @@ def test_frontend_backend_connectivity():
         print(f"    ❌ Frontend-backend connectivity test failed: {e}")
         return False
 
+def test_role_based_registration():
+    """Test registration for all user roles as specifically requested"""
+    print("\n🔍 Testing Role-Based Registration (All User Types)...")
+    
+    # Test data for different roles as specified in the request
+    test_users = [
+        {
+            "name": "María González Estudiante",
+            "email": "maria.estudiante@email.com",
+            "password": "estudiante123",
+            "role": "student",
+            "document": "98765432",
+            "phone": "3009876543"
+        },
+        {
+            "name": "Carlos Rodríguez Profesor",
+            "email": "carlos.profesor@email.com", 
+            "password": "profesor123",
+            "role": "teacher",
+            "document": "11223344",
+            "phone": "3001122334",
+            "subjects": ["Historia", "Geografía"],
+            "grades": ["7°", "8°", "9°"],
+            "teaching_level": "bachillerato"
+        },
+        {
+            "name": "Ana Martínez Padre",
+            "email": "ana.padre@email.com",
+            "password": "padre123", 
+            "role": "parent",
+            "document": "55667788",
+            "phone": "3005566778"
+        },
+        {
+            "name": "Laura Coordinadora",
+            "email": "laura.coordinadora@email.com",
+            "password": "coord123",
+            "role": "coordinadora_convivencia", 
+            "document": "99887766",
+            "phone": "3009988776"
+        },
+        {
+            "name": "Admin Sistema",
+            "email": "admin.sistema@email.com",
+            "password": "admin123",
+            "role": "admin",
+            "document": "12121212",
+            "phone": "3001212121"
+        }
+    ]
+    
+    successful_registrations = []
+    failed_registrations = []
+    
+    for user_data in test_users:
+        role = user_data["role"]
+        print(f"  👤 Testing {role} registration...")
+        
+        try:
+            # Create user
+            response = requests.post(f"{API_BASE}/users", json=user_data, timeout=10)
+            
+            if response.status_code == 200:
+                created_user = response.json()
+                print(f"    ✅ {role} user created: {created_user.get('name')}")
+                print(f"    📧 Email: {created_user.get('email')}")
+                print(f"    🆔 Document: {created_user.get('document')}")
+                
+                # Verify role-specific fields
+                if role == "teacher":
+                    if created_user.get('subjects') == user_data.get('subjects'):
+                        print(f"    ✅ Teacher subjects preserved: {created_user.get('subjects')}")
+                    else:
+                        print(f"    ❌ Teacher subjects not preserved correctly")
+                        failed_registrations.append(f"{role} - subjects not preserved")
+                        continue
+                        
+                    if created_user.get('teaching_level') == user_data.get('teaching_level'):
+                        print(f"    ✅ Teaching level preserved: {created_user.get('teaching_level')}")
+                    else:
+                        print(f"    ❌ Teaching level not preserved correctly")
+                        failed_registrations.append(f"{role} - teaching level not preserved")
+                        continue
+                
+                # Test immediate authentication after registration
+                print(f"    🔐 Testing immediate login for {role}...")
+                login_data = {
+                    "email": user_data["email"],
+                    "password": user_data["password"]
+                }
+                
+                auth_response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=10)
+                
+                if auth_response.status_code == 200:
+                    auth_result = auth_response.json()
+                    if auth_result.get('success') and auth_result.get('user', {}).get('role') == role:
+                        print(f"    ✅ {role} can login immediately after registration")
+                        successful_registrations.append(role)
+                    else:
+                        print(f"    ❌ {role} login failed after registration")
+                        failed_registrations.append(f"{role} - login failed")
+                else:
+                    print(f"    ❌ {role} authentication failed - status: {auth_response.status_code}")
+                    failed_registrations.append(f"{role} - auth endpoint failed")
+                    
+            else:
+                print(f"    ❌ {role} registration failed - status: {response.status_code}")
+                print(f"    Response: {response.text}")
+                failed_registrations.append(f"{role} - registration failed")
+                
+        except requests.exceptions.RequestException as e:
+            print(f"    ❌ {role} registration test failed: {e}")
+            failed_registrations.append(f"{role} - connection error")
+    
+    print(f"\n  📊 Role-based Registration Results:")
+    print(f"    ✅ Successful: {len(successful_registrations)}/5 roles")
+    print(f"    ❌ Failed: {len(failed_registrations)}/5 roles")
+    
+    if successful_registrations:
+        print(f"    ✅ Working roles: {', '.join(successful_registrations)}")
+    
+    if failed_registrations:
+        print(f"    ❌ Failed roles: {', '.join(failed_registrations)}")
+    
+    return len(failed_registrations) == 0
+
 def run_comprehensive_backend_test():
     """Run all backend tests with focus on user registration"""
     print("🚀 Starting Comprehensive Backend Testing Suite")
@@ -460,13 +586,16 @@ def run_comprehensive_backend_test():
     # Test 4: Authentication API (PRIORITY TEST)
     test_results.append(("Authentication API", test_authentication_api()))
     
-    # Test 5: Status Endpoints (PRIORITY TEST)
+    # Test 5: Role-based Registration (PRIORITY TEST - AS REQUESTED)
+    test_results.append(("Role-based Registration", test_role_based_registration()))
+    
+    # Test 6: Status Endpoints (PRIORITY TEST)
     test_results.append(("Status Endpoints", test_status_endpoints()))
     
-    # Test 6: MongoDB Persistence (PRIORITY TEST)
+    # Test 7: MongoDB Persistence (PRIORITY TEST)
     test_results.append(("MongoDB Persistence", test_mongodb_persistence()))
     
-    # Test 7: CORS Configuration
+    # Test 8: CORS Configuration
     test_results.append(("CORS Configuration", test_cors_configuration()))
     
     # Summary
