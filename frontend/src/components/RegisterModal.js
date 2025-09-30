@@ -529,7 +529,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
 
                   <div>
                     <Label htmlFor="relationshipType">Relación con el Estudiante *</Label>
-                    <Select value={formData.relationshipType} onValueChange={handleSelectChange('relationshipType')}>
+                    <Select value={formData.relationshipType} onValueChange={(value) => handleSelectChange('relationshipType', value)}>
                       <SelectTrigger className={errors.relationshipType ? 'border-red-500' : ''}>
                         <SelectValue placeholder="Seleccionar relación" />
                       </SelectTrigger>
