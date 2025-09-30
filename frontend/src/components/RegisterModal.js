@@ -336,12 +336,10 @@ const RegisterModal = ({ onClose, onRegister }) => {
                   <Label htmlFor="password">Contraseña *</Label>
                   <input
                     id="password"
+                    name="password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => {
-                      console.log('Password input change - length:', e.target.value.length);
-                      handleInputChange('password')(e);
-                    }}
+                    onChange={handleInputChange}
                     placeholder="Mínimo 6 caracteres"
                     className={`w-full px-3 py-2 border rounded-md ${errors.password ? 'border-red-500' : 'border-gray-300'}`}
                   />
