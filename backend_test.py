@@ -604,7 +604,7 @@ def run_comprehensive_backend_test():
     print("=" * 70)
     
     passed_tests = 0
-    critical_tests = ["User Registration API", "Authentication API", "Status Endpoints", "MongoDB Persistence"]
+    critical_tests = ["User Registration API", "Authentication API", "Role-based Registration", "Status Endpoints", "MongoDB Persistence"]
     critical_passed = 0
     
     for test_name, result in test_results:
