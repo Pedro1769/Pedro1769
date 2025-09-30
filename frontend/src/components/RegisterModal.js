@@ -668,15 +668,45 @@ const RegisterModal = ({ onClose, onRegister }) => {
               </div>
             )}
 
+            {/* Debug - Mostrar estado del formulario */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="mt-4 p-4 bg-gray-100 rounded-md">
+                <h4 className="font-medium text-sm text-gray-700 mb-2">Estado del Formulario (Debug):</h4>
+                <pre className="text-xs text-gray-600 max-h-32 overflow-y-auto">
+                  {JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    password: formData.password ? '***' : '',
+                    role: formData.role,
+                    document: formData.document,
+                    subjects: formData.subjects
+                  }, null, 2)}
+                </pre>
+              </div>
+            )}
+
             {/* Botones */}
-            <div className="flex justify-end space-x-2 pt-4">
-              <Button type="button" variant="outline" onClick={onClose}>
-                Cancelar
+            <div className="flex justify-between items-center space-x-2 pt-4">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => {
+                  console.log('🔍 Estado actual completo del formulario:', formData);
+                  alert(`Datos capturados:\nNombre: ${formData.name}\nEmail: ${formData.email}\nRol: ${formData.role}\nDocumento: ${formData.document}`);
+                }}
+              >
+                🔍 Ver Datos
               </Button>
-              <Button type="submit" disabled={loading}>
-                <Save className="mr-2 h-4 w-4" />
-                {loading ? 'Registrando...' : 'Registrar Usuario'}
-              </Button>
+              
+              <div className="flex space-x-2">
+                <Button type="button" variant="outline" onClick={onClose}>
+                  Cancelar
+                </Button>
+                <Button type="submit" disabled={loading}>
+                  <Save className="mr-2 h-4 w-4" />
+                  {loading ? 'Registrando...' : 'Registrar Usuario'}
+                </Button>
+              </div>
             </div>
           </form>
         </CardContent>
