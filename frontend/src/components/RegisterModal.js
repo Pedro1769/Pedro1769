@@ -331,14 +331,23 @@ const RegisterModal = ({ onClose, onRegister }) => {
     });
   }, [formData.subjects]);
 
-  const toggleGrade = (grade) => {
-    setFormData(prevState => ({
-      ...prevState,
-      grades: prevState.grades.includes(grade)
-        ? prevState.grades.filter(g => g !== grade)
-        : [...prevState.grades, grade]
-    }));
-  };
+  const toggleGrade = useCallback((grade) => {
+    console.log('🎯 Cambiando grado:', grade, 'Grados actuales:', formData.grades);
+    
+    setFormData(prevState => {
+      const currentGrades = Array.isArray(prevState.grades) ? prevState.grades : [];
+      const newGrades = currentGrades.includes(grade)
+        ? currentGrades.filter(g => g !== grade)
+        : [...currentGrades, grade];
+      
+      console.log('🎯 Nuevos grados:', newGrades);
+      
+      return {
+        ...prevState,
+        grades: newGrades
+      };
+    });
+  }, [formData.grades]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
