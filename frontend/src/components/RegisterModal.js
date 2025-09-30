@@ -367,7 +367,7 @@ const RegisterModal = ({ onClose, onRegister }) => {
               <h3 className="text-lg font-semibold mb-4">Información del Rol</h3>
               <div className="mb-4">
                 <Label htmlFor="role">Tipo de Usuario *</Label>
-                <Select value={formData.role} onValueChange={handleSelectChange('role')}>
+                <Select value={formData.role} onValueChange={(value) => handleSelectChange('role', value)}>
                   <SelectTrigger className={errors.role ? 'border-red-500' : ''}>
                     <SelectValue placeholder="Seleccionar rol" />
                   </SelectTrigger>
