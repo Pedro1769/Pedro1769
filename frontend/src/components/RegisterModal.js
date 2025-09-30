@@ -35,12 +35,12 @@ const RegisterModal = ({ onClose, onRegister }) => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // Manejar cambios en campos de texto
-  const handleInputChange = (field) => (event) => {
-    const value = event?.target?.value || '';
+  // Manejar cambios en campos de texto - React 19 compatible
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
     setFormData(prevState => ({
       ...prevState,
-      [field]: value
+      [name]: value
     }));
   };
 
