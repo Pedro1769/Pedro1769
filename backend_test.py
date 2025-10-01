@@ -403,6 +403,102 @@ def test_status_endpoints():
     print("    ✅ All status endpoints working correctly")
     return True
 
+def test_specific_login_users():
+    """Test login functionality with the specific users mentioned in the request"""
+    print("\n🔍 Testing Login with Specific Test Users (GIMNASIO AMERICANO DEL ATLÁNTICO)...")
+    
+    # Test users as specified in the request
+    test_users = [
+        {
+            "email": "carmen.frontend@test.com",
+            "password": "123456",
+            "role": "teacher",
+            "name": "Carmen Frontend"
+        },
+        {
+            "email": "maria.estudiante@email.com", 
+            "password": "estudiante123",
+            "role": "student",
+            "name": "María Estudiante"
+        },
+        {
+            "email": "marielacarolinas@hotmail.com",
+            "password": "Convi1234", 
+            "role": "coordinadora_convivencia",
+            "name": "Mariela Carolinas"
+        }
+    ]
+    
+    successful_logins = []
+    failed_logins = []
+    
+    for user in test_users:
+        print(f"  🔐 Testing login for {user['name']} ({user['role']})...")
+        print(f"    📧 Email: {user['email']}")
+        
+        try:
+            login_data = {
+                "email": user["email"],
+                "password": user["password"]
+            }
+            
+            # Test the exact endpoint that frontend uses
+            response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=10)
+            
+            if response.status_code == 200:
+                auth_result = response.json()
+                
+                # Verify response structure
+                if auth_result.get('success') and auth_result.get('user') and auth_result.get('token'):
+                    user_data = auth_result.get('user')
+                    print(f"    ✅ Login successful for {user['name']}")
+                    print(f"    👤 User ID: {user_data.get('id')}")
+                    print(f"    👤 Role: {user_data.get('role')}")
+                    print(f"    🎫 Token: {'Present' if auth_result.get('token') else 'Missing'}")
+                    
+                    # Verify role matches expected
+                    if user_data.get('role') == user['role']:
+                        print(f"    ✅ Role verification passed: {user['role']}")
+                        successful_logins.append(user['name'])
+                    else:
+                        print(f"    ❌ Role mismatch: expected {user['role']}, got {user_data.get('role')}")
+                        failed_logins.append(f"{user['name']} - role mismatch")
+                else:
+                    print(f"    ❌ Login response structure invalid")
+                    print(f"    Response: {auth_result}")
+                    failed_logins.append(f"{user['name']} - invalid response structure")
+                    
+            elif response.status_code == 401:
+                print(f"    ❌ Login failed - Invalid credentials (401)")
+                print(f"    Response: {response.text}")
+                failed_logins.append(f"{user['name']} - invalid credentials")
+                
+            elif response.status_code == 404:
+                print(f"    ❌ Login failed - Endpoint not found (404)")
+                print(f"    This suggests the backend is not accessible or login endpoint is missing")
+                failed_logins.append(f"{user['name']} - endpoint not found")
+                
+            else:
+                print(f"    ❌ Login failed - HTTP {response.status_code}")
+                print(f"    Response: {response.text}")
+                failed_logins.append(f"{user['name']} - HTTP {response.status_code}")
+                
+        except requests.exceptions.RequestException as e:
+            print(f"    ❌ Login test failed for {user['name']}: {e}")
+            failed_logins.append(f"{user['name']} - connection error")
+    
+    print(f"\n  📊 Login Test Results:")
+    print(f"    ✅ Successful logins: {len(successful_logins)}/3")
+    print(f"    ❌ Failed logins: {len(failed_logins)}/3")
+    
+    if successful_logins:
+        print(f"    ✅ Working users: {', '.join(successful_logins)}")
+    
+    if failed_logins:
+        print(f"    ❌ Failed users: {', '.join(failed_logins)}")
+    
+    return len(failed_logins) == 0
+
 def test_frontend_backend_connectivity():
     """Test connectivity between frontend and backend"""
     print("\n🔍 Testing Frontend-Backend Connectivity...")
@@ -438,6 +534,55 @@ def test_frontend_backend_connectivity():
             
     except requests.exceptions.RequestException as e:
         print(f"    ❌ Frontend-backend connectivity test failed: {e}")
+        return False
+
+def test_user_database_verification():
+    """Verify that the test users exist in the database"""
+    print("\n🔍 Testing User Database Verification...")
+    
+    expected_users = [
+        "carmen.frontend@test.com",
+        "maria.estudiante@email.com", 
+        "marielacarolinas@hotmail.com"
+    ]
+    
+    try:
+        # Get all users from database
+        response = requests.get(f"{API_BASE}/users", timeout=10)
+        
+        if response.status_code == 200:
+            all_users = response.json()
+            print(f"    📊 Total users in database: {len(all_users)}")
+            
+            found_users = []
+            missing_users = []
+            
+            for expected_email in expected_users:
+                user_found = any(user.get('email') == expected_email for user in all_users)
+                if user_found:
+                    found_users.append(expected_email)
+                    print(f"    ✅ Found user: {expected_email}")
+                else:
+                    missing_users.append(expected_email)
+                    print(f"    ❌ Missing user: {expected_email}")
+            
+            print(f"\n    📊 User Verification Results:")
+            print(f"    ✅ Found: {len(found_users)}/3 users")
+            print(f"    ❌ Missing: {len(missing_users)}/3 users")
+            
+            if missing_users:
+                print(f"    ❌ Missing users need to be created: {', '.join(missing_users)}")
+                return False
+            else:
+                print(f"    ✅ All test users exist in database")
+                return True
+                
+        else:
+            print(f"    ❌ Failed to retrieve users - status: {response.status_code}")
+            return False
+            
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ User database verification failed: {e}")
         return False
 
 def test_role_based_registration():
