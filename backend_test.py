@@ -10,8 +10,8 @@ import sys
 from datetime import datetime
 import time
 
-# Backend URL from frontend .env
-BACKEND_URL = "http://localhost:8001"
+# Backend URL from frontend .env - using the actual deployed URL
+BACKEND_URL = "https://login-fix-68.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 def test_backend_health():
