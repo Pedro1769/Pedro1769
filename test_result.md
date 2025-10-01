@@ -281,10 +281,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Enhanced individual student convivencia notes for coordinator"
-    - "Complete convivencia coordinator functionality with all sessions enabled"
-    - "Enhanced teacher functionality with primary school logic and dynamic periods"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
