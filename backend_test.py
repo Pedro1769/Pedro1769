@@ -712,50 +712,51 @@ def test_role_based_registration():
     return len(failed_registrations) == 0
 
 def run_comprehensive_backend_test():
-    """Run all backend tests with focus on user registration"""
+    """Run all backend tests with focus on login functionality"""
     print("🚀 Starting Comprehensive Backend Testing Suite")
-    print("🎯 Focus: User Registration Functionality for Gimnasio Americano del Atlántico")
+    print("🎯 Focus: LOGIN SYSTEM DIAGNOSIS for Gimnasio Americano del Atlántico")
+    print("🚨 USER REPORTED: 'Aún sigue molestando el inicio de sesión'")
     print("=" * 70)
     
     test_results = []
     
-    # Test 1: Backend Health
+    # Test 1: Backend Health (CRITICAL)
     test_results.append(("Backend Health", test_backend_health()))
     
-    # Test 2: MongoDB Connection
-    test_results.append(("MongoDB Connection", test_mongodb_connection()))
+    # Test 2: Frontend-Backend Connectivity (CRITICAL)
+    test_results.append(("Frontend-Backend Connectivity", test_frontend_backend_connectivity()))
     
-    # Test 3: User Registration API (PRIORITY TEST)
-    test_results.append(("User Registration API", test_user_registration_api()[0]))
+    # Test 3: User Database Verification (CRITICAL)
+    test_results.append(("User Database Verification", test_user_database_verification()))
     
-    # Test 4: Authentication API (PRIORITY TEST)
+    # Test 4: Specific Login Users Test (CRITICAL - MAIN ISSUE)
+    test_results.append(("Specific Login Users", test_specific_login_users()))
+    
+    # Test 5: CORS Configuration (CRITICAL)
+    test_results.append(("CORS Configuration", test_cors_configuration()))
+    
+    # Test 6: Authentication API (CRITICAL)
     test_results.append(("Authentication API", test_authentication_api()))
     
-    # Test 5: Role-based Registration (PRIORITY TEST - AS REQUESTED)
-    test_results.append(("Role-based Registration", test_role_based_registration()))
+    # Test 7: MongoDB Connection (STANDARD)
+    test_results.append(("MongoDB Connection", test_mongodb_connection()))
     
-    # Test 6: Status Endpoints (PRIORITY TEST)
+    # Test 8: Status Endpoints (STANDARD)
     test_results.append(("Status Endpoints", test_status_endpoints()))
-    
-    # Test 7: MongoDB Persistence (PRIORITY TEST)
-    test_results.append(("MongoDB Persistence", test_mongodb_persistence()))
-    
-    # Test 8: CORS Configuration
-    test_results.append(("CORS Configuration", test_cors_configuration()))
     
     # Summary
     print("\n" + "=" * 70)
-    print("📋 TEST SUMMARY - USER REGISTRATION FUNCTIONALITY")
+    print("📋 TEST SUMMARY - LOGIN SYSTEM DIAGNOSIS")
     print("=" * 70)
     
     passed_tests = 0
-    critical_tests = ["User Registration API", "Authentication API", "Role-based Registration", "Status Endpoints", "MongoDB Persistence"]
+    critical_tests = ["Backend Health", "Frontend-Backend Connectivity", "User Database Verification", "Specific Login Users", "CORS Configuration", "Authentication API"]
     critical_passed = 0
     
     for test_name, result in test_results:
         status = "✅ PASS" if result else "❌ FAIL"
         priority = "🔥 CRITICAL" if test_name in critical_tests else "📋 STANDARD"
-        print(f"{test_name:<25} {status} {priority}")
+        print(f"{test_name:<30} {status} {priority}")
         
         if result:
             passed_tests += 1
@@ -770,13 +771,15 @@ def run_comprehensive_backend_test():
     
     # Determine overall status
     if critical_success_rate == 100:
-        print("\n🎉 All critical user registration tests passed! System is fully functional.")
+        print("\n🎉 All critical login tests passed! Login system is fully functional.")
+        print("✅ Users should be able to login successfully from frontend.")
         return True
     elif critical_success_rate >= 75:
-        print("\n⚠️  Most critical tests passed. Minor issues detected but registration should work.")
+        print("\n⚠️  Most critical tests passed. Minor issues detected but login should work.")
         return True
     else:
-        print("\n❌ Critical user registration issues detected. System needs immediate attention.")
+        print("\n❌ CRITICAL LOGIN ISSUES DETECTED!")
+        print("🚨 This explains why users are getting 'Credenciales incorrectas o error de conectividad'")
         return False
 
 if __name__ == "__main__":
