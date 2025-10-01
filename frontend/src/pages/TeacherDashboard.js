@@ -75,6 +75,9 @@ const TeacherDashboard = () => {
 
   const loadInitialData = async () => {
     try {
+      // Inicializar datos por defecto si no existen
+      initializeDefaultData();
+      
       // Cargar períodos dinámicamente
       const loadedPeriods = PeriodsManager.getAll();
       console.log('Períodos cargados:', loadedPeriods);
