@@ -11,7 +11,7 @@ from datetime import datetime
 import time
 
 # Backend URL from frontend .env - using the actual deployed URL
-BACKEND_URL = "https://login-fix-68.preview.emergentagent.com"
+BACKEND_URL = "https://teacher-portal-9.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 def test_backend_health():
@@ -504,7 +504,7 @@ def test_frontend_backend_connectivity():
     print("\n🔍 Testing Frontend-Backend Connectivity...")
     
     # Test the exact URL that frontend uses
-    frontend_backend_url = "https://login-fix-68.preview.emergentagent.com"
+    frontend_backend_url = "https://teacher-portal-9.preview.emergentagent.com"
     
     print(f"  🌐 Testing frontend's backend URL: {frontend_backend_url}")
     
