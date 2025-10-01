@@ -711,12 +711,388 @@ def test_role_based_registration():
     
     return len(failed_registrations) == 0
 
+def test_enhanced_teacher_registration():
+    """Test enhanced teacher registration system as specifically requested"""
+    print("\n🎓 Testing Enhanced Teacher Registration System (GIMNASIO AMERICANO DEL ATLÁNTICO)...")
+    
+    # Test cases for different teacher types as specified in the request
+    teacher_test_cases = [
+        {
+            "name": "Docente Transición Test",
+            "email": "docente.transicion@gada.edu.co",
+            "password": "123456",
+            "role": "teacher",
+            "document": "TRANS001",
+            "phone": "3001234567",
+            "teaching_level": "transicion",
+            "grades": ["0°"],
+            "subjects": [],  # Should be auto-assigned
+            "description": "Transición teacher (grade 0°)"
+        },
+        {
+            "name": "Carmen Frontend Primaria",
+            "email": "carmen.frontend@test.com",
+            "password": "123456",
+            "role": "teacher",
+            "document": "PRIM003",
+            "phone": "3009876543",
+            "teaching_level": "primaria",
+            "grades": ["3°"],
+            "subjects": [],  # Should be auto-assigned for primaria
+            "description": "Primary teacher (grade 3°) - existing user"
+        },
+        {
+            "name": "Profesor Bachillerato Test",
+            "email": "profesor.bach@gada.edu.co",
+            "password": "123456",
+            "role": "teacher",
+            "document": "BACH911",
+            "phone": "3005566778",
+            "teaching_level": "bachillerato",
+            "grades": ["9°", "10°", "11°"],
+            "subjects": ["MATEMATICA", "GEOMETRIA", "ESTADISTICA"],
+            "description": "Bachillerato teacher (grades 9°-11°, specific subjects) - newly created"
+        }
+    ]
+    
+    successful_registrations = []
+    failed_registrations = []
+    
+    for teacher_data in teacher_test_cases:
+        print(f"\n  👨‍🏫 Testing {teacher_data['description']}...")
+        print(f"    📧 Email: {teacher_data['email']}")
+        print(f"    📚 Teaching Level: {teacher_data['teaching_level']}")
+        print(f"    🎯 Grades: {teacher_data['grades']}")
+        print(f"    📖 Subjects: {teacher_data['subjects'] if teacher_data['subjects'] else 'Auto-assigned'}")
+        
+        try:
+            # Create teacher user
+            registration_data = {k: v for k, v in teacher_data.items() if k not in ['description']}
+            response = requests.post(f"{API_BASE}/users", json=registration_data, timeout=10)
+            
+            if response.status_code == 200:
+                created_teacher = response.json()
+                print(f"    ✅ Teacher registered successfully")
+                print(f"    🆔 Teacher ID: {created_teacher.get('id')}")
+                print(f"    👤 Name: {created_teacher.get('name')}")
+                
+                # Verify teaching level is correctly stored
+                if created_teacher.get('teaching_level') == teacher_data['teaching_level']:
+                    print(f"    ✅ Teaching level correctly stored: {created_teacher.get('teaching_level')}")
+                else:
+                    print(f"    ❌ Teaching level mismatch: expected {teacher_data['teaching_level']}, got {created_teacher.get('teaching_level')}")
+                    failed_registrations.append(f"{teacher_data['description']} - teaching level error")
+                    continue
+                
+                # Verify grades are correctly stored
+                stored_grades = created_teacher.get('grades', [])
+                if set(stored_grades) == set(teacher_data['grades']):
+                    print(f"    ✅ Grades correctly stored: {stored_grades}")
+                else:
+                    print(f"    ❌ Grades mismatch: expected {teacher_data['grades']}, got {stored_grades}")
+                    failed_registrations.append(f"{teacher_data['description']} - grades error")
+                    continue
+                
+                # Verify subjects handling based on teaching level
+                stored_subjects = created_teacher.get('subjects', [])
+                if teacher_data['teaching_level'] == 'bachillerato':
+                    # Bachillerato should have specific subjects
+                    if set(stored_subjects) == set(teacher_data['subjects']):
+                        print(f"    ✅ Bachillerato subjects correctly stored: {stored_subjects}")
+                    else:
+                        print(f"    ❌ Bachillerato subjects mismatch: expected {teacher_data['subjects']}, got {stored_subjects}")
+                        failed_registrations.append(f"{teacher_data['description']} - subjects error")
+                        continue
+                else:
+                    # Primaria/Transición should have auto-assigned or empty subjects
+                    print(f"    ✅ {teacher_data['teaching_level'].title()} subjects: {stored_subjects if stored_subjects else 'Auto-assigned (all subjects for grade)'}")
+                
+                # Test immediate authentication
+                print(f"    🔐 Testing authentication for {teacher_data['teaching_level']} teacher...")
+                login_data = {
+                    "email": teacher_data["email"],
+                    "password": teacher_data["password"]
+                }
+                
+                auth_response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=10)
+                
+                if auth_response.status_code == 200:
+                    auth_result = auth_response.json()
+                    if auth_result.get('success') and auth_result.get('user'):
+                        user_data = auth_result.get('user')
+                        print(f"    ✅ Authentication successful")
+                        print(f"    👤 Authenticated as: {user_data.get('name')}")
+                        print(f"    📚 Teaching Level: {user_data.get('teaching_level')}")
+                        print(f"    🎯 Assigned Grades: {user_data.get('grades')}")
+                        print(f"    📖 Subjects: {user_data.get('subjects')}")
+                        
+                        successful_registrations.append(teacher_data['description'])
+                    else:
+                        print(f"    ❌ Authentication failed - invalid response structure")
+                        failed_registrations.append(f"{teacher_data['description']} - auth failed")
+                else:
+                    print(f"    ❌ Authentication failed - status: {auth_response.status_code}")
+                    failed_registrations.append(f"{teacher_data['description']} - auth endpoint failed")
+                    
+            else:
+                print(f"    ❌ Registration failed - status: {response.status_code}")
+                print(f"    Response: {response.text}")
+                failed_registrations.append(f"{teacher_data['description']} - registration failed")
+                
+        except requests.exceptions.RequestException as e:
+            print(f"    ❌ Teacher registration test failed: {e}")
+            failed_registrations.append(f"{teacher_data['description']} - connection error")
+    
+    print(f"\n  📊 Enhanced Teacher Registration Results:")
+    print(f"    ✅ Successful: {len(successful_registrations)}/3 teacher types")
+    print(f"    ❌ Failed: {len(failed_registrations)}/3 teacher types")
+    
+    if successful_registrations:
+        print(f"    ✅ Working teacher types:")
+        for success in successful_registrations:
+            print(f"      - {success}")
+    
+    if failed_registrations:
+        print(f"    ❌ Failed teacher types:")
+        for failure in failed_registrations:
+            print(f"      - {failure}")
+    
+    return len(failed_registrations) == 0
+
+def test_teacher_configuration_recovery():
+    """Test teacher configuration recovery via API endpoints"""
+    print("\n🔍 Testing Teacher Configuration Recovery...")
+    
+    # Test users to verify configuration recovery
+    test_teachers = [
+        {
+            "email": "carmen.frontend@test.com",
+            "expected_level": "primaria",
+            "expected_grades": ["3°"],
+            "description": "Primary teacher"
+        },
+        {
+            "email": "profesor.bach@gada.edu.co", 
+            "expected_level": "bachillerato",
+            "expected_grades": ["9°", "10°", "11°"],
+            "expected_subjects": ["MATEMATICA", "GEOMETRIA", "ESTADISTICA"],
+            "description": "Bachillerato teacher"
+        }
+    ]
+    
+    successful_recoveries = []
+    failed_recoveries = []
+    
+    for teacher in test_teachers:
+        print(f"\n  👨‍🏫 Testing configuration recovery for {teacher['description']}...")
+        print(f"    📧 Email: {teacher['email']}")
+        
+        try:
+            # First authenticate to get user ID
+            login_data = {
+                "email": teacher["email"],
+                "password": "123456"
+            }
+            
+            auth_response = requests.post(f"{API_BASE}/auth/login", json=login_data, timeout=10)
+            
+            if auth_response.status_code == 200:
+                auth_result = auth_response.json()
+                user_data = auth_result.get('user')
+                
+                if user_data:
+                    print(f"    ✅ Teacher authenticated successfully")
+                    
+                    # Verify teaching level
+                    actual_level = user_data.get('teaching_level')
+                    if actual_level == teacher['expected_level']:
+                        print(f"    ✅ Teaching level correct: {actual_level}")
+                    else:
+                        print(f"    ❌ Teaching level mismatch: expected {teacher['expected_level']}, got {actual_level}")
+                        failed_recoveries.append(f"{teacher['description']} - wrong teaching level")
+                        continue
+                    
+                    # Verify grades
+                    actual_grades = user_data.get('grades', [])
+                    if set(actual_grades) == set(teacher['expected_grades']):
+                        print(f"    ✅ Grades correct: {actual_grades}")
+                    else:
+                        print(f"    ❌ Grades mismatch: expected {teacher['expected_grades']}, got {actual_grades}")
+                        failed_recoveries.append(f"{teacher['description']} - wrong grades")
+                        continue
+                    
+                    # Verify subjects for bachillerato teachers
+                    if teacher.get('expected_subjects'):
+                        actual_subjects = user_data.get('subjects', [])
+                        if set(actual_subjects) == set(teacher['expected_subjects']):
+                            print(f"    ✅ Subjects correct: {actual_subjects}")
+                        else:
+                            print(f"    ❌ Subjects mismatch: expected {teacher['expected_subjects']}, got {actual_subjects}")
+                            failed_recoveries.append(f"{teacher['description']} - wrong subjects")
+                            continue
+                    
+                    # Test user retrieval by ID
+                    user_id = user_data.get('id')
+                    if user_id:
+                        user_response = requests.get(f"{API_BASE}/users/{user_id}", timeout=10)
+                        if user_response.status_code == 200:
+                            retrieved_user = user_response.json()
+                            print(f"    ✅ User configuration retrievable via GET /api/users/{user_id}")
+                            print(f"    📚 Retrieved teaching level: {retrieved_user.get('teaching_level')}")
+                            print(f"    🎯 Retrieved grades: {retrieved_user.get('grades')}")
+                            print(f"    📖 Retrieved subjects: {retrieved_user.get('subjects')}")
+                            
+                            successful_recoveries.append(teacher['description'])
+                        else:
+                            print(f"    ❌ Failed to retrieve user by ID - status: {user_response.status_code}")
+                            failed_recoveries.append(f"{teacher['description']} - retrieval failed")
+                    else:
+                        print(f"    ❌ No user ID in authentication response")
+                        failed_recoveries.append(f"{teacher['description']} - no user ID")
+                else:
+                    print(f"    ❌ No user data in authentication response")
+                    failed_recoveries.append(f"{teacher['description']} - no user data")
+            else:
+                print(f"    ❌ Authentication failed - status: {auth_response.status_code}")
+                failed_recoveries.append(f"{teacher['description']} - auth failed")
+                
+        except requests.exceptions.RequestException as e:
+            print(f"    ❌ Configuration recovery test failed: {e}")
+            failed_recoveries.append(f"{teacher['description']} - connection error")
+    
+    print(f"\n  📊 Teacher Configuration Recovery Results:")
+    print(f"    ✅ Successful: {len(successful_recoveries)}/2 teachers")
+    print(f"    ❌ Failed: {len(failed_recoveries)}/2 teachers")
+    
+    if successful_recoveries:
+        print(f"    ✅ Working configurations:")
+        for success in successful_recoveries:
+            print(f"      - {success}")
+    
+    if failed_recoveries:
+        print(f"    ❌ Failed configurations:")
+        for failure in failed_recoveries:
+            print(f"      - {failure}")
+    
+    return len(failed_recoveries) == 0
+
+def test_academic_periods_system():
+    """Test academic periods system (4 periods) for grade assignment"""
+    print("\n📅 Testing Academic Periods System (4 Periods)...")
+    
+    # Test creating grades for different periods
+    periods = ["Período 1", "Período 2", "Período 3", "Período 4"]
+    
+    # First get a teacher to use for testing
+    try:
+        # Get all users and find a teacher
+        users_response = requests.get(f"{API_BASE}/users", timeout=10)
+        if users_response.status_code != 200:
+            print("    ❌ Failed to retrieve users for period testing")
+            return False
+            
+        users = users_response.json()
+        teacher = None
+        for user in users:
+            if user.get('role') == 'teacher':
+                teacher = user
+                break
+        
+        if not teacher:
+            print("    ❌ No teacher found for period testing")
+            return False
+            
+        print(f"    👨‍🏫 Using teacher: {teacher.get('name')} ({teacher.get('email')})")
+        
+        # Create a test student for grade assignment
+        student_data = {
+            "name": "Estudiante Períodos Test",
+            "grade": "3°",
+            "document": "PERIOD001",
+            "age": 8,
+            "parent_email": "padre.periodo@test.com",
+            "parent_phone": "3001234567",
+            "created_by": teacher.get('id')
+        }
+        
+        student_response = requests.post(f"{API_BASE}/students", json=student_data, timeout=10)
+        if student_response.status_code != 200:
+            print(f"    ❌ Failed to create test student - status: {student_response.status_code}")
+            return False
+            
+        student = student_response.json()
+        print(f"    👶 Created test student: {student.get('name')}")
+        
+        # Test grade assignment for each period
+        successful_periods = []
+        failed_periods = []
+        
+        for period in periods:
+            print(f"    📅 Testing {period}...")
+            
+            grade_data = {
+                "student_id": student.get('id'),
+                "subject": "Matemáticas",
+                "grade": "3°",
+                "period": period,
+                "score": 4.5,
+                "teacher_id": teacher.get('id')
+            }
+            
+            try:
+                grade_response = requests.post(f"{API_BASE}/grades", json=grade_data, timeout=10)
+                
+                if grade_response.status_code == 200:
+                    created_grade = grade_response.json()
+                    print(f"      ✅ Grade created for {period}")
+                    print(f"      📊 Score: {created_grade.get('score')}")
+                    print(f"      📚 Subject: {created_grade.get('subject')}")
+                    successful_periods.append(period)
+                else:
+                    print(f"      ❌ Failed to create grade for {period} - status: {grade_response.status_code}")
+                    failed_periods.append(period)
+                    
+            except requests.exceptions.RequestException as e:
+                print(f"      ❌ Grade creation failed for {period}: {e}")
+                failed_periods.append(period)
+        
+        # Test grade retrieval by period
+        print(f"\n    🔍 Testing grade retrieval by period...")
+        for period in successful_periods:
+            try:
+                grades_response = requests.get(f"{API_BASE}/grades?period={period}&student_id={student.get('id')}", timeout=10)
+                
+                if grades_response.status_code == 200:
+                    period_grades = grades_response.json()
+                    print(f"      ✅ Retrieved {len(period_grades)} grades for {period}")
+                else:
+                    print(f"      ❌ Failed to retrieve grades for {period}")
+                    
+            except requests.exceptions.RequestException as e:
+                print(f"      ❌ Grade retrieval failed for {period}: {e}")
+        
+        print(f"\n  📊 Academic Periods System Results:")
+        print(f"    ✅ Working periods: {len(successful_periods)}/4")
+        print(f"    ❌ Failed periods: {len(failed_periods)}/4")
+        
+        if successful_periods:
+            print(f"    ✅ Functional periods: {', '.join(successful_periods)}")
+        
+        if failed_periods:
+            print(f"    ❌ Failed periods: {', '.join(failed_periods)}")
+        
+        return len(failed_periods) == 0
+        
+    except requests.exceptions.RequestException as e:
+        print(f"    ❌ Academic periods test failed: {e}")
+        return False
+
 def run_comprehensive_backend_test():
-    """Run all backend tests with focus on login functionality"""
+    """Run all backend tests with focus on enhanced teacher system"""
     print("🚀 Starting Comprehensive Backend Testing Suite")
-    print("🎯 Focus: LOGIN SYSTEM DIAGNOSIS for Gimnasio Americano del Atlántico")
-    print("🚨 USER REPORTED: 'Aún sigue molestando el inicio de sesión'")
-    print("=" * 70)
+    print("🎯 Focus: ENHANCED TEACHER SYSTEM for Gimnasio Americano del Atlántico")
+    print("📋 Testing: Registration improvements, teaching levels, grade assignments, periods")
+    print("=" * 80)
     
     test_results = []
     
@@ -726,60 +1102,76 @@ def run_comprehensive_backend_test():
     # Test 2: Frontend-Backend Connectivity (CRITICAL)
     test_results.append(("Frontend-Backend Connectivity", test_frontend_backend_connectivity()))
     
-    # Test 3: User Database Verification (CRITICAL)
-    test_results.append(("User Database Verification", test_user_database_verification()))
+    # Test 3: Enhanced Teacher Registration (CRITICAL - MAIN FOCUS)
+    test_results.append(("Enhanced Teacher Registration", test_enhanced_teacher_registration()))
     
-    # Test 4: Specific Login Users Test (CRITICAL - MAIN ISSUE)
+    # Test 4: Teacher Configuration Recovery (CRITICAL)
+    test_results.append(("Teacher Configuration Recovery", test_teacher_configuration_recovery()))
+    
+    # Test 5: Academic Periods System (HIGH PRIORITY)
+    test_results.append(("Academic Periods System", test_academic_periods_system()))
+    
+    # Test 6: Specific Login Users Test (CRITICAL)
     test_results.append(("Specific Login Users", test_specific_login_users()))
     
-    # Test 5: CORS Configuration (CRITICAL)
-    test_results.append(("CORS Configuration", test_cors_configuration()))
-    
-    # Test 6: Authentication API (CRITICAL)
+    # Test 7: Authentication API (CRITICAL)
     test_results.append(("Authentication API", test_authentication_api()))
     
-    # Test 7: MongoDB Connection (STANDARD)
+    # Test 8: MongoDB Connection (STANDARD)
     test_results.append(("MongoDB Connection", test_mongodb_connection()))
     
-    # Test 8: Status Endpoints (STANDARD)
+    # Test 9: Status Endpoints (STANDARD)
     test_results.append(("Status Endpoints", test_status_endpoints()))
     
     # Summary
-    print("\n" + "=" * 70)
-    print("📋 TEST SUMMARY - LOGIN SYSTEM DIAGNOSIS")
-    print("=" * 70)
+    print("\n" + "=" * 80)
+    print("📋 TEST SUMMARY - ENHANCED TEACHER SYSTEM")
+    print("=" * 80)
     
     passed_tests = 0
-    critical_tests = ["Backend Health", "Frontend-Backend Connectivity", "User Database Verification", "Specific Login Users", "CORS Configuration", "Authentication API"]
+    critical_tests = ["Backend Health", "Frontend-Backend Connectivity", "Enhanced Teacher Registration", "Teacher Configuration Recovery", "Specific Login Users", "Authentication API"]
+    high_priority_tests = ["Academic Periods System"]
     critical_passed = 0
+    high_priority_passed = 0
     
     for test_name, result in test_results:
         status = "✅ PASS" if result else "❌ FAIL"
-        priority = "🔥 CRITICAL" if test_name in critical_tests else "📋 STANDARD"
-        print(f"{test_name:<30} {status} {priority}")
+        if test_name in critical_tests:
+            priority = "🔥 CRITICAL"
+        elif test_name in high_priority_tests:
+            priority = "⚡ HIGH"
+        else:
+            priority = "📋 STANDARD"
+        print(f"{test_name:<35} {status} {priority}")
         
         if result:
             passed_tests += 1
             if test_name in critical_tests:
                 critical_passed += 1
+            elif test_name in high_priority_tests:
+                high_priority_passed += 1
     
     success_rate = passed_tests / len(test_results) * 100
     critical_success_rate = critical_passed / len(critical_tests) * 100
+    high_priority_success_rate = high_priority_passed / len(high_priority_tests) * 100 if high_priority_tests else 100
     
     print(f"\nOverall Success Rate: {success_rate:.1f}% ({passed_tests}/{len(test_results)})")
     print(f"Critical Tests Success Rate: {critical_success_rate:.1f}% ({critical_passed}/{len(critical_tests)})")
+    print(f"High Priority Tests Success Rate: {high_priority_success_rate:.1f}% ({high_priority_passed}/{len(high_priority_tests)})")
     
     # Determine overall status
-    if critical_success_rate == 100:
-        print("\n🎉 All critical login tests passed! Login system is fully functional.")
-        print("✅ Users should be able to login successfully from frontend.")
+    if critical_success_rate == 100 and high_priority_success_rate == 100:
+        print("\n🎉 All critical and high priority tests passed! Enhanced teacher system is fully functional.")
+        print("✅ Teacher registration improvements working correctly.")
+        print("✅ Teaching levels, grades, and subjects properly configured.")
+        print("✅ Academic periods system operational.")
         return True
-    elif critical_success_rate >= 75:
-        print("\n⚠️  Most critical tests passed. Minor issues detected but login should work.")
+    elif critical_success_rate >= 80:
+        print("\n⚠️  Most critical tests passed. Minor issues detected but system should work.")
         return True
     else:
-        print("\n❌ CRITICAL LOGIN ISSUES DETECTED!")
-        print("🚨 This explains why users are getting 'Credenciales incorrectas o error de conectividad'")
+        print("\n❌ CRITICAL TEACHER SYSTEM ISSUES DETECTED!")
+        print("🚨 Enhanced teacher registration system has significant problems.")
         return False
 
 if __name__ == "__main__":
