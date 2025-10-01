@@ -30,7 +30,7 @@ import {
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
 import { StudentsManager, PeriodsManager } from '../utils/dataManager';
 import ProjectsManager from '../components/ProjectsManager';
-import GradePlanilla from '../components/GradePlanilla';
+import EnhancedGradePlanilla from '../components/EnhancedGradePlanilla';
 import SelectorPlanillas from '../components/SelectorPlanillas';
 import PlanillaCompletaPorPeriodo from '../components/PlanillaCompletaPorPeriodo';
 import MaterialEstudiantesManager from '../components/MaterialEstudiantesManager';
