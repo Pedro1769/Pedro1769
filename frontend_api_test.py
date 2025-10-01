@@ -13,7 +13,7 @@ def test_frontend_api_configuration():
     print("=" * 50)
     
     # The frontend should now be calling these URLs:
-    expected_base_url = "https://teacher-portal-9.preview.emergentagent.com/api"
+    expected_base_url = "https://period-selector-fix.preview.emergentagent.com/api"
     expected_login_url = f"{expected_base_url}/auth/login"
     
     print(f"✅ Expected API Base URL: {expected_base_url}")
@@ -50,7 +50,7 @@ def test_all_api_endpoints():
     print("\n🔍 TESTING ALL API ENDPOINTS")
     print("=" * 50)
     
-    base_url = "https://teacher-portal-9.preview.emergentagent.com/api"
+    base_url = "https://period-selector-fix.preview.emergentagent.com/api"
     
     endpoints = [
         ("GET", "/", "Root endpoint"),

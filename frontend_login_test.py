@@ -8,7 +8,7 @@ import requests
 import json
 
 # Use the exact same URL that frontend uses
-FRONTEND_BACKEND_URL = "https://teacher-portal-9.preview.emergentagent.com"
+FRONTEND_BACKEND_URL = "https://period-selector-fix.preview.emergentagent.com"
 LOGIN_ENDPOINT = f"{FRONTEND_BACKEND_URL}/api/auth/login"
 
 def test_frontend_login_simulation():
