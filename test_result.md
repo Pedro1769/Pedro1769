@@ -268,7 +268,6 @@ test_plan:
     - "Fix registration form state management issue"
   stuck_tasks:
     - "Student login endpoint functionality"
-    - "Fix registration form state management issue"
   test_all: false
   test_priority: "high_first"
 
