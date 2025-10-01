@@ -154,17 +154,21 @@ const TeacherDashboard = () => {
     availableGrades.includes(student.grade)
   );
 
-  // Get subjects for the teacher - Lógica especial para primaria
+  // Get subjects for the teacher - Materias según el boletín del nivel
   const getTeacherSubjects = () => {
-    if (user.teachingLevel === 'primaria') {
-      // En primaria, el docente enseña todas las materias de su(s) grado(s)
-      return ['ESPAÑOL', 'CALIGRAFIA', 'INGLES', 'MATEMATICAS', 'NATURALES', 'SOCIALES', 'CATEDRA DE PAZ', 'ETICA Y RELIGION', 'INFORMATICA', 'ARTE', 'ED. FISICA'];
-    } else if (user.teachingLevel === 'transicion') {
+    if (user.teachingLevel === 'transicion') {
+      // Grado 0° - Transición (incluido en primaria según usuario)
       return ['ESPAÑOL', 'INGLES', 'MATEMATICAS', 'SOCIALES-NATURALES', 'ETICA Y RELIGION', 'INFORMATICA', 'ARTE', 'ED. FISICA'];
-    } else {
-      // Para bachillerato, usar las materias específicas asignadas
-      return user.subjects && user.subjects.length > 0 ? user.subjects : ['Todas las materias'];
+    } else if (user.teachingLevel === 'primaria') {
+      // Grados 1° a 5° - Básica Primaria - Docente enseña todas las materias del boletín
+      return ['ESPAÑOL', 'CALIGRAFIA', 'INGLES', 'MATEMATICAS', 'NATURALES', 'SOCIALES', 'CATEDRA DE PAZ', 'ETICA Y RELIGION', 'INFORMATICA', 'ARTE', 'ED. FISICA'];
+    } else if (user.teachingLevel === 'bachillerato') {
+      // Grados 6° a 11° - Bachillerato - Materias específicas según asignación
+      return user.subjects && user.subjects.length > 0 ? user.subjects : [];
     }
+    
+    // Fallback: usar materias asignadas al usuario o vacío
+    return user.subjects && user.subjects.length > 0 ? user.subjects : [];
   };
 
   const teacherSubjects = getTeacherSubjects();
