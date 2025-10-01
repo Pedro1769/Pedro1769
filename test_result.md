@@ -267,10 +267,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Student login endpoint functionality"
-    - "Fix registration form state management issue"
-  stuck_tasks:
-    - "Student login endpoint functionality"
+    - "Enhanced individual student convivencia notes for coordinator"
+    - "Complete convivencia coordinator functionality with all sessions enabled"
+    - "Enhanced teacher functionality with primary school logic and dynamic periods"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
