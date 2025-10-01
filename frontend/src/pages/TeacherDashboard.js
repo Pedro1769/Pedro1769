@@ -332,19 +332,76 @@ const TeacherDashboard = () => {
   return (
     <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* Header Mejorado */}
         <div className="mb-8 relative">
           <div className="absolute inset-0 bg-gradient-header opacity-10 rounded-2xl"></div>
           <div className="relative p-6">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">Panel del Profesor</h1>
-            <p className="text-gray-600 mt-2">Bienvenido, {user.name}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <Badge variant="secondary" className="bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
-                Materias: {teacherSubjects.join(', ')}
-              </Badge>
-              <Badge variant="outline" className="border-teal-200 text-teal-700 hover:bg-teal-50 transition-colors">
-                Grados: {availableGrades.join(', ')}
-              </Badge>
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 via-teal-600 to-blue-700 bg-clip-text text-transparent">
+                  Panel del Profesor
+                </h1>
+                <p className="text-gray-600 mt-2">Bienvenido, {user.name}</p>
+                
+                {/* Información del Docente */}
+                <div className="mt-4 space-y-2">
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="bg-purple-100 text-purple-800">
+                      🎓 Nivel: {user.teachingLevel === 'transicion' ? 'Transición (0°)' : 
+                               user.teachingLevel === 'primaria' ? 'Primaria (1°-5°)' : 
+                               user.teachingLevel === 'bachillerato' ? 'Bachillerato (6°-11°)' : 
+                               'No especificado'}
+                    </Badge>
+                    
+                    <Badge variant="outline" className="border-teal-200 text-teal-700 hover:bg-teal-50">
+                      📚 Grados: {availableGrades.length > 0 ? availableGrades.join(', ') : 'Ninguno asignado'}
+                    </Badge>
+                    
+                    {(user.teachingLevel === 'transicion' || user.teachingLevel === 'primaria') && availableGrades.length === 1 && (
+                      <Badge variant="default" className="bg-green-100 text-green-800">
+                        👨‍🏫 Tutor: {availableGrades[0]}
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                      📖 Materias: {teacherSubjects.length} 
+                      {teacherSubjects.length <= 3 ? ` (${teacherSubjects.join(', ')})` : ' materias asignadas'}
+                    </Badge>
+                    
+                    {(user.teachingLevel === 'transicion' || user.teachingLevel === 'primaria') && (
+                      <Badge variant="outline" className="border-blue-200 text-blue-700">
+                        ℹ️ Todas las materias del nivel
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Acceso Rápido según el Nivel */}
+              <div className="mt-4 lg:mt-0">
+                <div className="bg-white rounded-lg p-4 shadow-sm border border-gray-200">
+                  <p className="text-sm font-medium text-gray-700 mb-2">🔑 Acceso Configurado:</p>
+                  {user.teachingLevel === 'transicion' || user.teachingLevel === 'primaria' ? (
+                    <div className="text-sm text-blue-600">
+                      ✓ Solo grado asignado<br/>
+                      ✓ Todas las materias del nivel<br/>
+                      ✓ Tutoría automática
+                    </div>
+                  ) : user.teachingLevel === 'bachillerato' ? (
+                    <div className="text-sm text-green-600">
+                      ✓ Múltiples grados<br/>
+                      ✓ Materias específicas<br/>
+                      ✓ Sistema rotativo
+                    </div>
+                  ) : (
+                    <div className="text-sm text-orange-600">
+                      ⚠️ Configuración pendiente
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>
