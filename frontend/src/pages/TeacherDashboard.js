@@ -28,7 +28,7 @@ import {
   BarChart3
 } from 'lucide-react';
 import { mockStudents, mockGrades, mockSubjects } from '../mock/mockData';
-import { StudentsManager, PeriodsManager } from '../utils/dataManager';
+import { StudentsManager, PeriodsManager, initializeDefaultData } from '../utils/dataManager';
 import ProjectsManager from '../components/ProjectsManager';
 import EnhancedGradePlanilla from '../components/EnhancedGradePlanilla';
 import SelectorPlanillas from '../components/SelectorPlanillas';
