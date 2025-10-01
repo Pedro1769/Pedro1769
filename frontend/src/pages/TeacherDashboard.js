@@ -125,24 +125,22 @@ const TeacherDashboard = () => {
     return <Navigate to="/login" />;
   }
 
-  // Obtener grados disponibles para el docente
+  // Obtener grados disponibles para el docente - Nueva lógica según especificaciones
   const getAvailableGrades = () => {
-    // Si el profesor tiene grados específicamente asignados
-    if (user.grades && user.grades.length > 0) {
-      return user.grades;
-    }
-    
-    // Para tutores de primaria, si no tienen grado específico, mostrar todos los de primaria
-    if (user.teachingLevel === 'primaria') {
-      return ['1°', '2°', '3°', '4°', '5°'];
-    } else if (user.teachingLevel === 'transicion') {
-      return ['0°'];
+    // REGLA PRINCIPAL: En primaria (incluyendo transición), el docente SOLO ve su grado asignado
+    if (user.teachingLevel === 'transicion') {
+      // Grado 0° está incluido en primaria como mencionó el usuario
+      return user.grades && user.grades.length > 0 ? user.grades : ['0°'];
+    } else if (user.teachingLevel === 'primaria') {
+      // En primaria, un docente por grado - SOLO su grado asignado
+      return user.grades && user.grades.length > 0 ? user.grades : [];
     } else if (user.teachingLevel === 'bachillerato') {
-      return ['6°', '7°', '8°', '9°', '10°', '11°'];
+      // En bachillerato, los docentes son rotativos en todos los grados asignados
+      return user.grades && user.grades.length > 0 ? user.grades : ['6°', '7°', '8°', '9°', '10°', '11°'];
     }
     
-    // Si no hay información específica, devolver todos los grados como fallback
-    return ['0°', '1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'];
+    // Si no hay información específica de nivel, devolver los grados asignados o vacío
+    return user.grades && user.grades.length > 0 ? user.grades : [];
   };
 
   const availableGrades = getAvailableGrades();
