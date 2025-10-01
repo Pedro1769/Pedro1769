@@ -122,9 +122,9 @@ backend:
 
   - task: "Student login endpoint functionality"
     implemented: true
-    working: true
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "critical"
     needs_retesting: false
     status_history:
@@ -137,6 +137,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "✅ STUDENT LOGIN SYSTEM VERIFIED AFTER SERVICE REPAIR: Completed comprehensive testing of student login functionality as specifically requested for Gimnasio Americano del Atlántico. DETAILED RESULTS: 1) ✅ POST /api/auth/login endpoint fully operational - successfully authenticated student 'María González Estudiante' with email 'maria.estudiante@email.com' and password 'estudiante123', 2) ✅ Student user creation working perfectly via POST /api/users with role 'student', document '98765432', and all required fields, 3) ✅ Complete registration → authentication → database persistence flow verified, 4) ✅ MongoDB connection confirmed - student data correctly saved to 'gimnasio_americano' database and retrievable, 5) ✅ Authentication returns proper token, user data, and success flag, 6) ✅ All backend services running (Backend: RUNNING, MongoDB: RUNNING, Frontend: RUNNING), 7) ✅ 100% success rate on all critical tests (7/7 passed). CONCLUSION: Student login endpoint functionality is 100% operational. Students can register, authenticate, and access their accounts immediately after registration. System is production-ready."
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL LOGIN FAILURE - FRONTEND CALLING WRONG URL: Comprehensive testing of login functionality for Gimnasio Americano del Atlántico reveals CRITICAL configuration error. SPECIFIC FINDINGS: 1) ❌ Frontend making API calls to WRONG URL: 'https://account-maker-5.preview.emergentagent.com/auth/login' (frontend URL) instead of backend API, 2) ❌ All login attempts return 404 errors because frontend is calling itself, not the backend, 3) ❌ REACT_APP_BACKEND_URL misconfigured: Currently set to 'https://account-maker-5.preview.emergentagent.com' (frontend URL) instead of backend URL, 4) ❌ Backend CORS configured for localhost:3000,localhost:3001 but frontend deployed to cloud URL, 5) ❌ Tested all 3 users (carmen.frontend@test.com, maria.estudiante@email.com, marielacarolinas@hotmail.com) - ALL FAIL with same 404 error. ROOT CAUSE: Deployment configuration mismatch - frontend trying to call login endpoint on itself instead of backend server. URGENT FIX NEEDED: Update REACT_APP_BACKEND_URL to point to actual backend API URL and ensure backend is accessible from frontend domain."
 
   - task: "User registration functionality for Gimnasio Americano del Atlántico"
     implemented: true
