@@ -1311,9 +1311,9 @@ const TeacherDashboard = () => {
           />
         )}
 
-        {/* Modal de Planilla de Notas */}
+        {/* Modal de Planilla de Notas Mejorada */}
         {showGradePlanilla && selectedGrade && (
-          <GradePlanilla
+          <EnhancedGradePlanilla
             teacher={user}
             selectedGrade={selectedGrade}
             selectedPeriod={selectedPeriod}
