@@ -77,6 +77,7 @@ const TeacherDashboard = () => {
     try {
       // Cargar períodos dinámicamente
       const loadedPeriods = PeriodsManager.getAll();
+      console.log('Períodos cargados:', loadedPeriods);
       setPeriods(loadedPeriods);
       if (loadedPeriods.length > 0) {
         setSelectedPeriod(loadedPeriods[0].id.toString());
