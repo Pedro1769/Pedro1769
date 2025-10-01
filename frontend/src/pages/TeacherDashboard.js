@@ -332,6 +332,26 @@ const TeacherDashboard = () => {
   return (
     <div className="min-h-screen bg-institutional">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Alertas de Configuración */}
+        {(!user.teachingLevel || !user.grades || user.grades.length === 0) && (
+          <div className="mb-6 p-4 bg-orange-50 border border-orange-200 rounded-lg">
+            <div className="flex items-center">
+              <div className="text-orange-500 mr-3">⚠️</div>
+              <div>
+                <h3 className="font-semibold text-orange-800">Configuración Incompleta</h3>
+                <p className="text-orange-700 text-sm mt-1">
+                  Para acceder a todas las funcionalidades, complete su perfil docente con:
+                  {!user.teachingLevel && ' • Nivel de enseñanza'}
+                  {(!user.grades || user.grades.length === 0) && ' • Grados asignados'}
+                </p>
+                <p className="text-orange-600 text-xs mt-2">
+                  💡 Contacte al administrador para completar su configuración
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Header Mejorado */}
         <div className="mb-8 relative">
           <div className="absolute inset-0 bg-gradient-header opacity-10 rounded-2xl"></div>
