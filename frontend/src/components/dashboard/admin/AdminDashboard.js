@@ -25,41 +25,95 @@ import { useToast } from '../../../hooks/use-toast';
 import BulkStudentUpload from '../../admin/BulkStudentUpload';
 
 const AdminDashboard = () => {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  
   const [selectedPeriods, setSelectedPeriods] = useState(['I', 'II', 'III', 'IV']);
+  const [activeTab, setActiveTab] = useState('resumen');
+  const [statistics, setStatistics] = useState(null);
+  const [students, setStudents] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showBulkUpload, setShowBulkUpload] = useState(false);
+  const [consolidatedData, setConsolidatedData] = useState([]);
 
-  const getConsolidatedData = () => {
-    const studentsAnalysis = MOCK_STUDENTS.map(student => {
-      const periodGrades = selectedPeriods.map(period => {
-        const grades = student.grades[period] || {};
-        const gradeValues = Object.values(grades).filter(g => g);
-        const average = gradeValues.length > 0 
-          ? gradeValues.reduce((sum, grade) => sum + grade, 0) / gradeValues.length 
-          : 0;
-        return { period, average: parseFloat(average.toFixed(1)) };
-      });
+  useEffect(() => {
+    loadDashboardData();
+  }, []);
 
-      const totalAverage = periodGrades.reduce((sum, p) => sum + p.average, 0) / periodGrades.length;
-      const performance = getPerformanceLevel(totalAverage);
+  const loadDashboardData = async () => {
+    try {
+      setLoading(true);
       
-      return {
-        ...student,
-        periodGrades,
-        totalAverage: parseFloat(totalAverage.toFixed(1)),
-        performance,
-        status: totalAverage >= 3.0 ? 'GANA' : totalAverage >= 2.5 ? 'REQUIERE AYUDA' : 'PIERDE'
-      };
-    });
-
-    return studentsAnalysis;
+      // Cargar estadísticas del sistema
+      const [statsData, studentsData, usersData] = await Promise.all([
+        adminService.getStatistics(),
+        studentService.getStudents(),
+        adminService.getUsers()
+      ]);
+      
+      setStatistics(statsData);
+      setStudents(studentsData);
+      setUsers(usersData);
+      
+      // Cargar consolidado académico
+      await loadConsolidatedData(studentsData);
+      
+    } catch (error) {
+      console.error('Error loading dashboard data:', error);
+      toast({
+        title: "Error",
+        description: "No se pudieron cargar los datos del dashboard",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const consolidatedData = getConsolidatedData();
+  const loadConsolidatedData = async (studentsData = students) => {
+    try {
+      if (studentsData.length === 0) return;
+      
+      const consolidated = await gradeService.getConsolidatedGrades(selectedPeriods);
+      setConsolidatedData(consolidated.students || []);
+      
+    } catch (error) {
+      console.error('Error loading consolidated data:', error);
+    }
+  };
+
+  const generateBulletinCode = async (studentId, period) => {
+    try {
+      const result = await bulletinService.generateBulletinCode(studentId, period);
+      
+      toast({
+        title: "Código generado",
+        description: `Código: ${result.code} - Válido hasta ${new Date(result.expires_at).toLocaleDateString()}`,
+      });
+      
+      return result;
+    } catch (error) {
+      const message = error.response?.data?.detail || 'Error al generar código';
+      toast({
+        title: "Error",
+        description: message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
   const studentsWinning = consolidatedData.filter(s => s.status === 'GANA').length;
   const studentsNeedHelp = consolidatedData.filter(s => s.status === 'REQUIERE AYUDA').length;
   const studentsLosing = consolidatedData.filter(s => s.status === 'PIERDE').length;
-
-  const docentes = MOCK_USERS.filter(u => u.role.includes('docente'));
-  const activeProjects = MOCK_PROJECTS.filter(p => p.status === 'Activo').length;
 
   return (
     <div className="space-y-6 pt-16">
