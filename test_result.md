@@ -107,11 +107,11 @@ user_problem_statement: "Corrige esto y espero que esté totalmente funcional el
 backend:
   - task: "Corrección de errores en sistema de autenticación"
     implemented: true
-    working: true
+    working: false
     file: "auth.py, database.py, server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "main"
@@ -122,6 +122,9 @@ backend:
       - working: true
         agent: "main"
         comment: "Corregido get_current_user para obtener db internamente, agregadas variables .env, backend funcionando"
+      - working: false
+        agent: "testing"
+        comment: "CRITICAL: JWT-protected endpoints failing. Login/register work (11/19 tests passed). Error: FastAPI expecting 'db' parameter in query for get_current_user dependency. Profile and logout endpoints return 422 error. Core auth works but protected resources inaccessible."
 
 frontend:
   - task: "Corrección de error de Calendar component"
