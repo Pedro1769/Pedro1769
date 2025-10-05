@@ -17,7 +17,8 @@ import {
   FolderOpen,
   BarChart3,
   Upload,
-  UserPlus
+  UserPlus,
+  Calendar
 } from 'lucide-react';
 import { studentService, adminService, gradeService, bulletinService } from '../../../services/api';
 import { useAuth } from '../../../contexts/AuthContext';
