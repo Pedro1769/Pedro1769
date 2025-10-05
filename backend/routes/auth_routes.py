@@ -197,8 +197,8 @@ async def test_profile():
     return {"message": "Test profile works", "user": "test"}
 
 @router.get("/profile")
-async def get_profile(request: Request):
-    """Obtener perfil del usuario actual"""
+async def get_profile_new(request: Request):
+    """Obtener perfil del usuario actual - nueva implementación"""
     from jose import jwt, JWTError
     import os
     
@@ -240,18 +240,17 @@ async def get_profile(request: Request):
             detail="Usuario no encontrado"
         )
     
-    user = User(**user_data)
-    
-    return UserResponse(
-        id=user.id,
-        username=user.username,
-        name=user.name,
-        role=user.role,
-        email=user.email,
-        phone=user.phone,
-        grade=user.grade,
-        grades=user.grades,
-        subjects=user.subjects,
-        is_active=user.is_active,
-        created_at=user.created_at
-    )
+    # Return simple dict instead of UserResponse model
+    return {
+        "id": user_data["_id"],
+        "username": user_data["username"],
+        "name": user_data["name"],
+        "role": user_data["role"],
+        "email": user_data["email"],
+        "phone": user_data.get("phone"),
+        "grade": user_data.get("grade"),
+        "grades": user_data.get("grades"),
+        "subjects": user_data.get("subjects"),
+        "is_active": user_data["is_active"],
+        "created_at": user_data["created_at"].isoformat()
+    }
