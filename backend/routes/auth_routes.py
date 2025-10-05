@@ -186,8 +186,29 @@ async def logout(current_user: User = Depends(get_current_user)):
     """Cerrar sesión"""
     return {"success": True, "message": "Sesión cerrada exitosamente"}
 
+async def get_current_user_direct(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
+    """Función directa para obtener usuario sin dependencias complejas"""
+    from database import get_database
+    from auth import verify_token
+    
+    # Verificar token
+    payload = verify_token(credentials)
+    
+    # Obtener usuario
+    user_id = payload.get("sub")
+    db = await get_database()
+    user_data = await db.users.find_one({"_id": user_id})
+    
+    if user_data is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Usuario no encontrado"
+        )
+    
+    return User(**user_data)
+
 @router.get("/profile", response_model=UserResponse)
-async def get_profile(current_user: User = Depends(get_current_user)):
+async def get_profile(current_user: User = Depends(get_current_user_direct)):
     """Obtener perfil del usuario actual"""
     return UserResponse(
         id=current_user.id,
