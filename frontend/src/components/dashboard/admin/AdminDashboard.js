@@ -117,10 +117,20 @@ const AdminDashboard = () => {
 
   return (
     <div className="space-y-6 pt-16">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel Administrativo</h1>
-        <p className="text-gray-600">Coordinación Académica - Pedro Hurtado</p>
+      {/* Header mejorado */}
+      <div className="mb-8 p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/20">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent mb-2">
+              Panel de Administración
+            </h1>
+            <p className="text-gray-600">Bienvenido, {user.name}</p>
+            <div className="mt-2 px-4 py-2 bg-green-100 text-green-800 rounded-lg inline-flex items-center space-x-2">
+              <Shield className="h-4 w-4" />
+              <span className="text-sm font-medium">ACCESO ADMINISTRATIVO COMPLETO ACTIVADO</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Stats Cards */}
