@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { USER_ROLES } from '../../mockData';
 import Sidebar from './Sidebar';
 import AdminDashboard from './admin/AdminDashboard';
 import DocentePrimariaDashboard from './docente/DocentePrimariaDashboard';
 import DocenteBachilleratoDashboard from './docente/DocenteBachilleratoDashboard';
 import ConvivenciaDashboard from './convivencia/ConvivenciaDashboard';
+import ParentDashboard from './parent/ParentDashboard';
+import StudentDashboard from './student/StudentDashboard';
 import Header from './Header';
 
 const Dashboard = () => {
@@ -14,21 +15,32 @@ const Dashboard = () => {
 
   const renderDashboard = () => {
     switch (user.role) {
-      case USER_ROLES.ADMIN:
+      case 'admin':
         return <AdminDashboard />;
-      case USER_ROLES.DOCENTE_PRIMARIA:
+      case 'docente_primaria':
         return <DocentePrimariaDashboard />;
-      case USER_ROLES.DOCENTE_BACHILLERATO:
+      case 'docente_bachillerato':
         return <DocenteBachilleratoDashboard />;
-      case USER_ROLES.COORDINADOR_CONVIVENCIA:
+      case 'coordinador_convivencia':
         return <ConvivenciaDashboard />;
+      case 'padre':
+        return <ParentDashboard />;
+      case 'estudiante':
+        return <StudentDashboard />;
       default:
-        return <div>Panel no configurado para este rol</div>;
+        return (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-center p-8 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg">
+              <h2 className="text-2xl font-bold text-gray-800 mb-4">Panel no configurado</h2>
+              <p className="text-gray-600">No se encontró un dashboard para el rol: {user.role}</p>
+            </div>
+          </div>
+        );
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-red-50/30">
       <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="flex">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
