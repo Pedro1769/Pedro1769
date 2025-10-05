@@ -118,16 +118,21 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6 pt-16">
       {/* Header mejorado */}
-      <div className="mb-8 p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/20">
+      <div className="mb-8 p-6 bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-red-500/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 animate-pulse">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent mb-2">
-              Panel de Administración
-            </h1>
-            <p className="text-gray-600">Bienvenido, {user.name}</p>
-            <div className="mt-2 px-4 py-2 bg-green-100 text-green-800 rounded-lg inline-flex items-center space-x-2">
-              <Shield className="h-4 w-4" />
-              <span className="text-sm font-medium">ACCESO ADMINISTRATIVO COMPLETO ACTIVADO</span>
+            <div className="flex items-center space-x-4 mb-2">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent">
+                Panel de Administración
+              </h1>
+              <div className="px-4 py-2 bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-xl text-lg font-bold shadow-lg animate-bounce">
+                GADA
+              </div>
+            </div>
+            <p className="text-gray-600 font-medium">Bienvenido, {user.name} - Coordinador Académico</p>
+            <div className="mt-3 px-6 py-3 bg-gradient-to-r from-green-400 to-emerald-600 text-white rounded-2xl inline-flex items-center space-x-2 shadow-lg transform hover:scale-105 transition-all duration-300">
+              <Shield className="h-5 w-5 animate-spin" />
+              <span className="font-bold">🔐 ACCESO ADMINISTRATIVO COMPLETO ACTIVADO</span>
             </div>
           </div>
         </div>
