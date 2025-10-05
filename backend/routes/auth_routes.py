@@ -222,19 +222,62 @@ async def get_current_user_direct(credentials: HTTPAuthorizationCredentials = De
     
     return User(**user_data)
 
-@router.get("/profile", response_model=UserResponse)
-async def get_profile(current_user: User = Depends(get_current_user_direct)):
-    """Obtener perfil del usuario actual"""
+@router.get("/profile")
+async def get_profile(request):
+    """Obtener perfil del usuario actual - versión manual"""
+    from jose import jwt, JWTError
+    import os
+    
+    SECRET_KEY = os.getenv("SECRET_KEY", "gimnasio_americano_atlantico_secret_key_2025")
+    ALGORITHM = "HS256"
+    
+    # Obtener header Authorization
+    auth_header = request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Bearer "):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token no proporcionado"
+        )
+    
+    token = auth_header.replace("Bearer ", "")
+    
+    # Verificar token
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token inválido"
+            )
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token inválido"
+        )
+    
+    # Obtener usuario
+    db = await get_database()
+    user_data = await db.users.find_one({"_id": user_id})
+    
+    if user_data is None:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Usuario no encontrado"
+        )
+    
+    user = User(**user_data)
+    
     return UserResponse(
-        id=current_user.id,
-        username=current_user.username,
-        name=current_user.name,
-        role=current_user.role,
-        email=current_user.email,
-        phone=current_user.phone,
-        grade=current_user.grade,
-        grades=current_user.grades,
-        subjects=current_user.subjects,
-        is_active=current_user.is_active,
-        created_at=current_user.created_at
+        id=user.id,
+        username=user.username,
+        name=user.name,
+        role=user.role,
+        email=user.email,
+        phone=user.phone,
+        grade=user.grade,
+        grades=user.grades,
+        subjects=user.subjects,
+        is_active=user.is_active,
+        created_at=user.created_at
     )
