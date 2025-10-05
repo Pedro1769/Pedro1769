@@ -223,7 +223,7 @@ async def get_current_user_direct(credentials: HTTPAuthorizationCredentials = De
     return User(**user_data)
 
 @router.get("/test-profile")
-async def get_profile(request):
+async def test_get_profile(request: Request):
     """Obtener perfil del usuario actual - versión manual"""
     from jose import jwt, JWTError
     import os
