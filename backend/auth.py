@@ -6,6 +6,7 @@ from typing import Optional, List
 import os
 import hashlib
 from models import User, UserRole
+from database import get_database
 
 # Configuración de seguridad
 SECRET_KEY = os.getenv("SECRET_KEY", "gimnasio_americano_atlantico_secret_key_2025")
