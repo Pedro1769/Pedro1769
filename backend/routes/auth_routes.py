@@ -189,13 +189,28 @@ async def logout(current_user: User = Depends(get_current_user)):
 async def get_current_user_direct(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
     """Función directa para obtener usuario sin dependencias complejas"""
     from database import get_database
-    from auth import verify_token
+    from jose import jwt, JWTError
+    import os
     
-    # Verificar token
-    payload = verify_token(credentials)
+    SECRET_KEY = os.getenv("SECRET_KEY", "gimnasio_americano_atlantico_secret_key_2025")
+    ALGORITHM = "HS256"
+    
+    # Verificar token directamente
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id = payload.get("sub")
+        if user_id is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token inválido"
+            )
+    except JWTError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token inválido"
+        )
     
     # Obtener usuario
-    user_id = payload.get("sub")
     db = await get_database()
     user_data = await db.users.find_one({"_id": user_id})
     
