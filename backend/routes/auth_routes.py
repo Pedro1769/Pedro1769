@@ -182,7 +182,7 @@ async def register(register_data: RegisterRequest):
         )
 
 @router.post("/logout")
-async def logout(current_user: User = Depends(get_current_user)):
+async def logout():
     """Cerrar sesión"""
     return {"success": True, "message": "Sesión cerrada exitosamente"}
 
