@@ -186,45 +186,9 @@ async def logout(current_user: User = Depends(get_current_user)):
     """Cerrar sesión"""
     return {"success": True, "message": "Sesión cerrada exitosamente"}
 
-async def get_current_user_direct(credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())):
-    """Función directa para obtener usuario sin dependencias complejas"""
-    from database import get_database
-    from jose import jwt, JWTError
-    import os
-    
-    SECRET_KEY = os.getenv("SECRET_KEY", "gimnasio_americano_atlantico_secret_key_2025")
-    ALGORITHM = "HS256"
-    
-    # Verificar token directamente
-    try:
-        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id = payload.get("sub")
-        if user_id is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Token inválido"
-            )
-    except JWTError:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token inválido"
-        )
-    
-    # Obtener usuario
-    db = await get_database()
-    user_data = await db.users.find_one({"_id": user_id})
-    
-    if user_data is None:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Usuario no encontrado"
-        )
-    
-    return User(**user_data)
-
-@router.get("/test-profile")
-async def test_get_profile(request: Request):
-    """Obtener perfil del usuario actual - versión manual"""
+@router.get("/profile", response_model=UserResponse)
+async def get_profile(request: Request):
+    """Obtener perfil del usuario actual"""
     from jose import jwt, JWTError
     import os
     
