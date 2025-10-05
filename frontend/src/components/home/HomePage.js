@@ -83,12 +83,17 @@ const HomePage = () => {
         <div className="container mx-auto text-center relative z-10">
           <div className="max-w-5xl mx-auto">
             <div className="mb-8 transform hover:scale-105 transition-transform duration-700">
-              <h2 className="text-6xl font-bold text-gray-800 mb-6 leading-tight">
-                Tradición Educativa de{' '}
-                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent animate-pulse">
-                  Excelencia
-                </span>
-              </h2>
+              <div className="flex items-center justify-center space-x-4 mb-6">
+                <h2 className="text-6xl font-bold text-gray-800 leading-tight">
+                  Tradición Educativa de{' '}
+                  <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent animate-pulse">
+                    Excelencia
+                  </span>
+                </h2>
+                <div className="px-6 py-3 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 text-white rounded-2xl text-2xl font-bold shadow-2xl animate-bounce">
+                  GADA
+                </div>
+              </div>
               <div className="h-1 w-32 bg-gradient-to-r from-blue-600 to-red-600 mx-auto mb-6 rounded-full"></div>
             </div>
             
