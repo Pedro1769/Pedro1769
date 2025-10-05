@@ -54,8 +54,6 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) 
 
 async def get_current_user(payload: dict = Depends(verify_token)) -> User:
     """Obtener usuario actual del token"""
-    from database import get_database
-    
     user_id = payload.get("sub")
     db = await get_database()
     user_data = await db.users.find_one({"_id": user_id})
