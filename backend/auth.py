@@ -1,10 +1,10 @@
 from fastapi import HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from passlib.context import CryptContext
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from typing import Optional, List
 import os
+import hashlib
 from models import User, UserRole
 
 # Configuración de seguridad
@@ -12,19 +12,15 @@ SECRET_KEY = os.getenv("SECRET_KEY", "gimnasio_americano_atlantico_secret_key_20
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 480  # 8 horas
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    """Verificar contraseña"""
-    return pwd_context.verify(plain_password, hashed_password)
+    """Verificar contraseña usando SHA256"""
+    return get_password_hash(plain_password) == hashed_password
 
 def get_password_hash(password: str) -> str:
-    """Hashear contraseña"""
-    # Limitar contraseña a 72 bytes para bcrypt
-    if len(password.encode('utf-8')) > 72:
-        password = password[:72]
-    return pwd_context.hash(password)
+    """Hashear contraseña usando SHA256"""
+    return hashlib.sha256((password + SECRET_KEY).encode()).hexdigest()
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """Crear token JWT"""
