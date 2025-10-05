@@ -50,9 +50,14 @@ const HomePage = () => {
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full animate-pulse"></div>
               </div>
               <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent">
-                  {INSTITUTIONAL_INFO.name}
-                </h1>
+                <div className="flex items-center space-x-3">
+                  <h1 className="text-xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent">
+                    {INSTITUTIONAL_INFO.name}
+                  </h1>
+                  <div className="px-3 py-1 bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full text-sm font-bold shadow-lg">
+                    GADA
+                  </div>
+                </div>
                 <p className="text-sm text-gray-600 font-medium">"ESTUDIO, FE Y PROGRESO"</p>
               </div>
             </div>
