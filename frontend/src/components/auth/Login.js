@@ -134,16 +134,6 @@ const Login = () => {
               </Button>
             </form>
 
-            {/* Demo credentials */}
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="text-sm font-medium text-blue-800 mb-2">Credenciales de demostración:</h3>
-              <div className="space-y-1 text-xs text-blue-700">
-                <p><strong>Admin:</strong> pedro.hurtado / gim123</p>
-                <p><strong>Docente:</strong> yocelyn.cabarcas / gim123</p>
-                <p><strong>Convivencia:</strong> coord.convivencia / gim123</p>
-              </div>
-            </div>
-
             {/* Enlace de registro */}
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
@@ -155,6 +145,16 @@ const Login = () => {
                 >
                   Regístrate aquí
                 </Button>
+              </p>
+            </div>
+
+            {/* Información de contacto para soporte */}
+            <div className="mt-6 text-center p-4 bg-gradient-to-r from-blue-50 to-red-50 rounded-lg border">
+              <p className="text-xs text-gray-600 mb-2">¿Problemas para acceder?</p>
+              <p className="text-xs text-gray-800 font-medium">
+                Contacta al Coordinador Académico:<br />
+                📧 pedro_12hurbe@hotmail.com<br />
+                📞 3011968877
               </p>
             </div>
           </CardContent>
