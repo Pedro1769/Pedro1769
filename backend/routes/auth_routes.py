@@ -191,6 +191,11 @@ async def debug_endpoint():
     """Endpoint simple para debug"""
     return {"message": "Debug endpoint works"}
 
+@router.get("/test-profile")
+async def test_profile():
+    """Test profile endpoint without any dependencies"""
+    return {"message": "Test profile works", "user": "test"}
+
 @router.get("/profile")
 async def get_profile(request: Request):
     """Obtener perfil del usuario actual"""
