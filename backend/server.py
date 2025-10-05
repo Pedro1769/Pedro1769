@@ -41,6 +41,7 @@ api_router.include_router(convivencia_router)
 api_router.include_router(project_router)
 api_router.include_router(bulletin_router)
 api_router.include_router(admin_router)
+api_router.include_router(test_auth_router)
 
 # Ruta de estado básica
 @api_router.get("/")
