@@ -159,3 +159,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Corregidos errores críticos: 1) get_current_user en auth.py ahora obtiene db internamente, 2) Creados archivos .env con MONGO_URL, DB_NAME, 3) Calendar import agregado a AdminDashboard.js. Sistema listo para testing completo."
+  - agent: "testing"
+    message: "TESTING COMPLETE: Created comprehensive backend_test.py and tested all auth endpoints. CRITICAL ISSUE FOUND: get_current_user dependency injection failing with 'db' parameter error. Login/register work perfectly, but JWT-protected endpoints (profile, logout) fail with 422 errors. 11/19 tests passed. Main agent needs to fix get_current_user function signature issue."
