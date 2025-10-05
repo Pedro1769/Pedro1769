@@ -3,6 +3,7 @@ from typing import Optional, List, Dict, Any
 from datetime import datetime
 import os
 from models import *
+from models import calculate_performance_level
 from auth import get_password_hash
 
 class Database:
