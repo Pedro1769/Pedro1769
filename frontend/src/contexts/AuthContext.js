@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { MOCK_USERS, USER_ROLES } from '../mockData';
+import { authService } from '../services/api';
 
 const AuthContext = createContext();
 
@@ -16,53 +16,92 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar si hay usuario guardado en localStorage
-    const savedUser = localStorage.getItem('gimamericano_user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
+    // Verificar si hay usuario guardado
+    const savedUser = localStorage.getItem('gaa_user');
+    const savedToken = localStorage.getItem('gaa_token');
+    
+    if (savedUser && savedToken) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (error) {
+        localStorage.removeItem('gaa_user');
+        localStorage.removeItem('gaa_token');
+      }
     }
     setLoading(false);
   }, []);
 
   const login = async (username, password) => {
     try {
-      // Simular validación con mock data
-      const foundUser = MOCK_USERS.find(u => u.username === username);
+      const response = await authService.login(username, password);
       
-      if (!foundUser) {
-        throw new Error('Usuario no encontrado');
+      if (response.success) {
+        setUser(response.user);
+        localStorage.setItem('gaa_user', JSON.stringify(response.user));
+        localStorage.setItem('gaa_token', response.token);
+        
+        return { success: true, user: response.user };
+      } else {
+        return { success: false, error: response.message };
       }
-
-      // En producción, aquí se validaría la contraseña
-      if (password !== 'gim123') {
-        throw new Error('Contraseña incorrecta');
-      }
-
-      setUser(foundUser);
-      localStorage.setItem('gimamericano_user', JSON.stringify(foundUser));
-      
-      return { success: true, user: foundUser };
     } catch (error) {
-      return { success: false, error: error.message };
+      const message = error.response?.data?.detail || 'Error de conexión';
+      return { success: false, error: message };
     }
   };
 
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('gimamericano_user');
+  const register = async (userData) => {
+    try {
+      const response = await authService.register(userData);
+      
+      if (response.success) {
+        setUser(response.user);
+        localStorage.setItem('gaa_user', JSON.stringify(response.user));
+        localStorage.setItem('gaa_token', response.token);
+        
+        return { success: true, user: response.user };
+      } else {
+        return { success: false, error: response.message };
+      }
+    } catch (error) {
+      const message = error.response?.data?.detail || 'Error al registrar usuario';
+      return { success: false, error: message };
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      // Ignorar errores del logout
+    } finally {
+      setUser(null);
+      localStorage.removeItem('gaa_user');
+      localStorage.removeItem('gaa_token');
+    }
+  };
+
+  const updateUser = (userData) => {
+    setUser(userData);
+    localStorage.setItem('gaa_user', JSON.stringify(userData));
   };
 
   const value = {
     user,
     login,
+    register,
     logout,
+    updateUser,
     loading,
-    isAdmin: user?.role === USER_ROLES.ADMIN,
-    isDocentePrimaria: user?.role === USER_ROLES.DOCENTE_PRIMARIA,
-    isDocenteBachillerato: user?.role === USER_ROLES.DOCENTE_BACHILLERATO,
-    isCoordinadorConvivencia: user?.role === USER_ROLES.COORDINADOR_CONVIVENCIA,
-    isPadre: user?.role === USER_ROLES.PADRE,
-    isEstudiante: user?.role === USER_ROLES.ESTUDIANTE,
+    // Helpers para roles
+    isAdmin: user?.role === 'admin',
+    isDocentePrimaria: user?.role === 'docente_primaria',
+    isDocenteBachillerato: user?.role === 'docente_bachillerato',
+    isCoordinadorConvivencia: user?.role === 'coordinador_convivencia',
+    isPadre: user?.role === 'padre',
+    isEstudiante: user?.role === 'estudiante',
+    isTeacher: user?.role?.includes('docente'),
+    canViewAllStudents: user?.role === 'admin' || user?.role === 'coordinador_convivencia'
   };
 
   return (
