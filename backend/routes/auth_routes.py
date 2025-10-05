@@ -191,7 +191,7 @@ async def debug_endpoint():
     """Endpoint simple para debug"""
     return {"message": "Debug endpoint works"}
 
-@router.get("/profile", response_model=UserResponse)
+@router.get("/profile")
 async def get_profile(request: Request):
     """Obtener perfil del usuario actual"""
     from jose import jwt, JWTError
