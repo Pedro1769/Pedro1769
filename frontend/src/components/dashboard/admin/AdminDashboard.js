@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { Badge } from '../../ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
 import { 
   Users, 
   GraduationCap, 
@@ -10,9 +11,18 @@ import {
   AlertCircle,
   FileText,
   Download,
-  Settings
+  Settings,
+  Shield,
+  UserCheck,
+  FolderOpen,
+  BarChart3,
+  Upload,
+  UserPlus
 } from 'lucide-react';
-import { MOCK_STUDENTS, MOCK_USERS, MOCK_PROJECTS, PERIODS, getPerformanceLevel } from '../../../mockData';
+import { studentService, adminService, gradeService, bulletinService } from '../../../services/api';
+import { useAuth } from '../../../contexts/AuthContext';
+import { useToast } from '../../../hooks/use-toast';
+import BulkStudentUpload from '../../admin/BulkStudentUpload';
 
 const AdminDashboard = () => {
   const [selectedPeriods, setSelectedPeriods] = useState(['I', 'II', 'III', 'IV']);
