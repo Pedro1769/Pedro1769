@@ -3,133 +3,133 @@
     "test": "Health Check",
     "success": true,
     "details": "Status: healthy",
-    "timestamp": "2025-10-05T23:14:09.598838",
+    "timestamp": "2025-10-05T23:34:48.806449",
     "response_data": null
   },
   {
     "test": "Login Success - admin",
     "success": true,
     "details": "User: Pedro Hurtado, Role: admin",
-    "timestamp": "2025-10-05T23:14:09.608322",
+    "timestamp": "2025-10-05T23:34:48.818517",
     "response_data": null
   },
   {
     "test": "Login Success - docente_primaria",
     "success": true,
     "details": "User: Yocelyn Cabarcas Navarro, Role: docente_primaria",
-    "timestamp": "2025-10-05T23:14:09.655439",
+    "timestamp": "2025-10-05T23:34:48.869343",
     "response_data": null
   },
   {
     "test": "Login Success - docente_bachillerato",
     "success": true,
     "details": "User: Carolina Sierra, Role: docente_bachillerato",
-    "timestamp": "2025-10-05T23:14:09.664958",
+    "timestamp": "2025-10-05T23:34:48.921317",
     "response_data": null
   },
   {
     "test": "Login Success - coordinadora",
     "success": true,
     "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
-    "timestamp": "2025-10-05T23:14:09.712350",
+    "timestamp": "2025-10-05T23:34:48.931441",
     "response_data": null
   },
   {
     "test": "Login Invalid Credentials",
     "success": true,
     "details": "Correctly rejected invalid credentials",
-    "timestamp": "2025-10-05T23:14:09.760371",
+    "timestamp": "2025-10-05T23:34:48.981475",
     "response_data": null
   },
   {
     "test": "Login Wrong Password",
     "success": true,
     "details": "Correctly rejected wrong password",
-    "timestamp": "2025-10-05T23:14:09.807477",
+    "timestamp": "2025-10-05T23:34:48.990945",
     "response_data": null
   },
   {
     "test": "Profile Access - admin",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:09.813733",
+    "timestamp": "2025-10-05T23:34:49.040426",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Profile Access - docente_primaria",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:09.859408",
+    "timestamp": "2025-10-05T23:34:49.090923",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Profile Access - docente_bachillerato",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:09.866152",
+    "timestamp": "2025-10-05T23:34:49.100177",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Profile Access - coordinadora",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:09.912471",
+    "timestamp": "2025-10-05T23:34:49.113378",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Profile No Auth",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-05T23:14:09.920138",
+    "timestamp": "2025-10-05T23:34:49.163326",
     "response_data": null
   },
   {
     "test": "Profile Invalid Token",
     "success": true,
     "details": "Correctly rejected invalid token",
-    "timestamp": "2025-10-05T23:14:09.967576",
+    "timestamp": "2025-10-05T23:34:49.176455",
     "response_data": null
   },
   {
     "test": "User Registration",
     "success": true,
     "details": "User registered: Padre de Prueba",
-    "timestamp": "2025-10-05T23:14:09.975366",
+    "timestamp": "2025-10-05T23:34:49.187294",
     "response_data": null
   },
   {
     "test": "Register Duplicate User",
     "success": true,
     "details": "Correctly rejected duplicate username",
-    "timestamp": "2025-10-05T23:14:09.981533",
+    "timestamp": "2025-10-05T23:34:49.195732",
     "response_data": null
   },
   {
     "test": "Logout - admin",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:10.027662",
+    "timestamp": "2025-10-05T23:34:49.245554",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Logout - docente_primaria",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:10.037701",
+    "timestamp": "2025-10-05T23:34:49.254526",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Logout - docente_bachillerato",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:10.043447",
+    "timestamp": "2025-10-05T23:34:49.263014",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   },
   {
     "test": "Logout - coordinadora",
     "success": false,
     "details": "Status code: 422",
-    "timestamp": "2025-10-05T23:14:10.090516",
+    "timestamp": "2025-10-05T23:34:49.312468",
     "response_data": "{\"detail\":[{\"type\":\"missing\",\"loc\":[\"query\",\"db\"],\"msg\":\"Field required\",\"input\":null,\"url\":\"https://errors.pydantic.dev/2.11/v/missing\"}]}"
   }
 ]
