@@ -143,6 +143,20 @@ const Login = () => {
                 <p><strong>Convivencia:</strong> coord.convivencia / gim123</p>
               </div>
             </div>
+
+            {/* Enlace de registro */}
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-600">
+                ¿No tienes cuenta?{' '}
+                <Button 
+                  variant="link" 
+                  onClick={() => navigate('/register')}
+                  className="text-blue-600 hover:text-blue-800 font-medium p-0 h-auto"
+                >
+                  Regístrate aquí
+                </Button>
+              </p>
+            </div>
           </CardContent>
         </Card>
 
