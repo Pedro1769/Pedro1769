@@ -180,137 +180,288 @@ const AdminDashboard = () => {
         </Card>
       </div>
 
-      {/* Consolidado Section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <BookOpen className="h-5 w-5" />
-            <span>Consolidado Académico</span>
-          </CardTitle>
-          <CardDescription>
-            Comparativo de rendimiento por períodos seleccionados
-          </CardDescription>
-          
-          {/* Period Selection */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            <span className="text-sm font-medium">Períodos:</span>
-            {PERIODS.map(period => (
-              <Badge
-                key={period}
-                variant={selectedPeriods.includes(period) ? "default" : "outline"}
-                className="cursor-pointer"
-                onClick={() => {
-                  setSelectedPeriods(prev => 
-                    prev.includes(period) 
-                      ? prev.filter(p => p !== period)
-                      : [...prev, period]
-                  );
+      {/* Tabs Navigation como en la referencia */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 bg-white/80 backdrop-blur-md">
+          <TabsTrigger value="resumen">Resumen</TabsTrigger>
+          <TabsTrigger value="usuarios">Usuarios</TabsTrigger>
+          <TabsTrigger value="permisos">Permisos</TabsTrigger>
+          <TabsTrigger value="codigos">Códigos Descarga</TabsTrigger>
+          <TabsTrigger value="estudiantes">Estudiantes</TabsTrigger>
+          <TabsTrigger value="profesores">Profesores</TabsTrigger>
+          <TabsTrigger value="academico">Académico</TabsTrigger>
+          <TabsTrigger value="boletines">Boletines</TabsTrigger>
+        </TabsList>
+
+        {/* Tab Resumen */}
+        <TabsContent value="resumen" className="space-y-6">
+          {/* Acciones Rápidas */}
+          <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2">
+                <Settings className="h-5 w-5" />
+                <span>Acciones Rápidas</span>
+              </CardTitle>
+              <CardDescription>
+                Funciones administrativas principales
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-blue-50"
+                  onClick={() => setActiveTab('usuarios')}
+                >
+                  <UserCheck className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Gestión de Usuarios Registrados</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-green-50"
+                  onClick={() => setShowBulkUpload(true)}
+                >
+                  <Upload className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Gestión Masiva de Estudiantes</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-purple-50"
+                  onClick={() => setActiveTab('academico')}
+                >
+                  <BookOpen className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Banco de Logros y Objetivos</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-orange-50"
+                  onClick={() => setActiveTab('academico')}
+                >
+                  <FileText className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Mallas Curriculares</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-red-50"
+                  onClick={() => setActiveTab('academico')}
+                >
+                  <FolderOpen className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Proyectos Institucionales</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-yellow-50"
+                  onClick={() => setActiveTab('permisos')}
+                >
+                  <Settings className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Gestionar Períodos Académicos</span>
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="h-20 flex flex-col items-center justify-center hover:bg-indigo-50"
+                  onClick={() => setActiveTab('permisos')}
+                >
+                  <Shield className="h-6 w-6 mb-2" />
+                  <span className="text-sm">Configuración</span>
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Actividad Reciente */}
+          <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
+            <CardHeader>
+              <CardTitle>Actividad Reciente</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                  <Badge variant="secondary">Período</Badge>
+                  <span className="text-sm">Se habilitó el período académico II</span>
+                  <span className="text-xs text-gray-500 ml-auto">Hace 2 horas</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                  <Badge variant="default">Nuevo</Badge>
+                  <span className="text-sm">Se registró un nuevo padre de familia</span>
+                  <span className="text-xs text-gray-500 ml-auto">Hace 1 día</span>
+                </div>
+                <div className="flex items-center space-x-3 p-3 bg-orange-50 rounded-lg">
+                  <Badge variant="outline">Actualizado</Badge>
+                  <span className="text-sm">Se actualizaron las mallas curriculares de 6°</span>
+                  <span className="text-xs text-gray-500 ml-auto">Hace 2 días</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* Tab Estudiantes */}
+        <TabsContent value="estudiantes" className="space-y-6">
+          {consolidatedData.length > 0 ? (
+            <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center justify-between">
+                  <span>Consolidado Académico ({consolidatedData.length} estudiantes)</span>
+                  <Button onClick={() => loadConsolidatedData()}>
+                    <BarChart3 className="h-4 w-4 mr-2" />
+                    Actualizar
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b">
+                        <th className="text-left p-2">Estudiante</th>
+                        <th className="text-left p-2">Grado</th>
+                        <th className="text-center p-2">Promedio</th>
+                        <th className="text-center p-2">Estado</th>
+                        <th className="text-center p-2">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {consolidatedData.slice(0, 10).map((student, index) => (
+                        <tr key={index} className="border-b hover:bg-gray-50">
+                          <td className="p-2 font-medium">{student.student.name}</td>
+                          <td className="p-2">{student.student.grade}</td>
+                          <td className="text-center p-2">
+                            <Badge variant={student.total_average >= 3.0 ? "default" : "destructive"}>
+                              {student.total_average}
+                            </Badge>
+                          </td>
+                          <td className="text-center p-2">
+                            <Badge 
+                              variant={
+                                student.status === 'GANA' ? 'default' : 
+                                student.status === 'REQUIERE AYUDA' ? 'secondary' : 
+                                'destructive'
+                              }
+                            >
+                              {student.status}
+                            </Badge>
+                          </td>
+                          <td className="text-center p-2">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => generateBulletinCode(student.student.id, 'I')}
+                            >
+                              <Download className="h-3 w-3 mr-1" />
+                              Código
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
+              <CardContent className="text-center py-16">
+                <GraduationCap className="h-16 w-16 mx-auto mb-4 text-gray-300" />
+                <h3 className="text-xl font-semibold text-gray-600 mb-2">No hay estudiantes registrados</h3>
+                <p className="text-gray-500 mb-4">Comience agregando estudiantes al sistema</p>
+                <Button onClick={() => setShowBulkUpload(true)}>
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Agregar Estudiantes
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
+        {/* Otros tabs - implementación básica */}
+        <TabsContent value="usuarios">
+          <Card>
+            <CardHeader>
+              <CardTitle>Gestión de Usuarios</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Funcionalidad de gestión de usuarios en desarrollo...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="permisos">
+          <Card>
+            <CardHeader>
+              <CardTitle>Permisos y Configuración</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Panel de permisos y configuración en desarrollo...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="codigos">
+          <Card>
+            <CardHeader>
+              <CardTitle>Códigos de Descarga</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Gestión de códigos de descarga en desarrollo...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="profesores">
+          <Card>
+            <CardHeader>
+              <CardTitle>Gestión de Profesores</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Panel de gestión de profesores en desarrollo...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="academico">
+          <Card>
+            <CardHeader>
+              <CardTitle>Gestión Académica</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Panel académico en desarrollo...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="boletines">
+          <Card>
+            <CardHeader>
+              <CardTitle>Gestión de Boletines</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>Panel de boletines en desarrollo...</p>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      {/* Modal de Carga Masiva */}
+      {showBulkUpload && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <BulkStudentUpload 
+                onClose={() => {
+                  setShowBulkUpload(false);
+                  loadDashboardData(); // Recargar datos después de la carga
                 }}
-              >
-                {period}
-              </Badge>
-            ))}
+              />
+            </div>
           </div>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b">
-                  <th className="text-left p-2">Estudiante</th>
-                  <th className="text-left p-2">Grado</th>
-                  {selectedPeriods.map(period => (
-                    <th key={period} className="text-center p-2">{period}</th>
-                  ))}
-                  <th className="text-center p-2">Promedio</th>
-                  <th className="text-center p-2">Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {consolidatedData.map((student, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="p-2 font-medium">{student.name}</td>
-                    <td className="p-2">{student.grade}</td>
-                    {student.periodGrades.map((pg, idx) => (
-                      <td key={idx} className="text-center p-2">
-                        <Badge variant={pg.average >= 3.0 ? "default" : "destructive"}>
-                          {pg.average || '--'}
-                        </Badge>
-                      </td>
-                    ))}
-                    <td className="text-center p-2">
-                      <Badge variant={student.totalAverage >= 3.0 ? "default" : "destructive"}>
-                        {student.totalAverage}
-                      </Badge>
-                    </td>
-                    <td className="text-center p-2">
-                      <Badge 
-                        variant={
-                          student.status === 'GANA' ? 'default' : 
-                          student.status === 'REQUIERE AYUDA' ? 'secondary' : 
-                          'destructive'
-                        }
-                      >
-                        {student.status}
-                      </Badge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Quick Actions */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Gestión Masiva</CardTitle>
-            <CardDescription>Administración de estudiantes en lote</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start">
-              <Users className="h-4 w-4 mr-2" />
-              Carga Masiva de Estudiantes
-            </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <FileText className="h-4 w-4 mr-2" />
-              Eliminar en Masa
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Códigos y Permisos</CardTitle>
-            <CardDescription>Gestión de accesos y descargas</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <Button variant="outline" className="w-full justify-start">
-              <Download className="h-4 w-4 mr-2" />
-              Generar Códigos Boletines
-            </Button>
-            <Button variant="outline" className="w-full justify-start">
-              <Settings className="h-4 w-4 mr-2" />
-              Habilitar Períodos
-            </Button>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Proyectos Institucionales</CardTitle>
-            <CardDescription>{activeProjects} proyectos activos</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Button variant="outline" className="w-full justify-start">
-              <BookOpen className="h-4 w-4 mr-2" />
-              Ver Todos los Proyectos
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
+        </div>
+      )}
     </div>
   );
 };
