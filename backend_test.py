@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 # Configuration
-BASE_URL = "https://gaa-eduportal.preview.emergentagent.com/api"
+BASE_URL = "http://localhost:8001/api"
 HEADERS = {"Content-Type": "application/json"}
 
 # Test users from contracts.md
