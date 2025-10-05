@@ -15,6 +15,7 @@ from routes.convivencia_routes import router as convivencia_router
 from routes.project_routes import router as project_router
 from routes.bulletin_routes import router as bulletin_router
 from routes.admin_routes import router as admin_router
+from test_auth import router as test_auth_router
 
 # Importar base de datos
 from database import connect_to_mongo, close_mongo_connection, init_database
