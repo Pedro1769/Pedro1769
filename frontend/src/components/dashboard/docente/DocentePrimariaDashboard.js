@@ -41,6 +41,8 @@ const DocentePrimariaDashboard = () => {
     grade: user.grade || '',
     level: user.grade && ['Transición', '1°', '2°', '3°', '4°', '5°'].includes(user.grade) ? 'BÁSICA PRIMARIA' : 'BÁSICA SECUNDARIA'
   });
+  const [savedGrades, setSavedGrades] = useState({}); // Para almacenar las notas guardadas
+  const [loadingGrades, setLoadingGrades] = useState(false);
   const { toast } = useToast();
 
   // Cargar estudiantes del grado asignado al docente
