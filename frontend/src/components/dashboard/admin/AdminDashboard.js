@@ -407,6 +407,69 @@ const AdminDashboard = () => {
 
         {/* Tab Estudiantes */}
         <TabsContent value="estudiantes" className="space-y-6">
+          {/* Lista de TODOS los estudiantes */}
+          <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <CardTitle className="text-xl font-bold text-green-700">
+                  📚 Lista Completa de Estudiantes ({students.length} estudiantes)
+                </CardTitle>
+                <div className="flex space-x-2">
+                  <Button onClick={() => downloadStudentList('csv')} size="sm" className="bg-green-600 hover:bg-green-700">
+                    <Download className="h-4 w-4 mr-2" />
+                    Descargar Lista Completa (.CSV)
+                  </Button>
+                </div>
+              </div>
+              <CardDescription>
+                Todos los estudiantes matriculados en la institución - ¡Datos reales cargados!
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b bg-gray-50">
+                      <th className="text-left p-3 font-semibold">Nombre Completo</th>
+                      <th className="text-left p-3 font-semibold">Grado</th>
+                      <th className="text-left p-3 font-semibold">Nivel</th>
+                      <th className="text-left p-3 font-semibold">Documento</th>
+                      <th className="text-center p-3 font-semibold">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {students.slice(0, 50).map((student, index) => (
+                      <tr key={student._id || index} className="border-b hover:bg-blue-50 transition-colors">
+                        <td className="p-3 font-medium text-blue-800">{student.name}</td>
+                        <td className="p-3">
+                          <Badge variant="outline" className="bg-blue-100 text-blue-800">
+                            {student.grade}
+                          </Badge>
+                        </td>
+                        <td className="p-3 text-gray-600">{student.level}</td>
+                        <td className="p-3 text-gray-600">{student.document_number || 'No registrado'}</td>
+                        <td className="text-center p-3">
+                          <Badge variant={student.is_active ? "default" : "secondary"}>
+                            {student.is_active ? 'Activo' : 'Inactivo'}
+                          </Badge>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {students.length > 50 && (
+                  <div className="mt-4 p-4 bg-blue-50 rounded-lg text-center">
+                    <p className="text-blue-700 font-semibold">
+                      Mostrando los primeros 50 de {students.length} estudiantes totales. 
+                      Descarga el CSV para ver la lista completa.
+                    </p>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Consolidado Académico */}
           {consolidatedData.length > 0 ? (
             <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
               <CardHeader>
