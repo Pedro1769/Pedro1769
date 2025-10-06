@@ -708,17 +708,17 @@ class StudentSystemTester:
 
 def main():
     """Main test execution"""
-    tester = AuthTester()
+    tester = StudentSystemTester()
     success = tester.run_all_tests()
     
     # Save detailed results
-    with open("/app/auth_test_results.json", "w") as f:
+    with open("/app/student_test_results.json", "w") as f:
         json.dump(tester.test_results, f, indent=2, default=str)
     
-    print(f"\n📄 Detailed results saved to: /app/auth_test_results.json")
+    print(f"\n📄 Detailed results saved to: /app/student_test_results.json")
     
     if success:
-        print("\n🎉 All authentication tests passed!")
+        print("\n🎉 All student system tests passed!")
         sys.exit(0)
     else:
         print("\n⚠️  Some tests failed. Check the details above.")
