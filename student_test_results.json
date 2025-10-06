@@ -1,0 +1,230 @@
+[
+  {
+    "test": "Health Check",
+    "success": true,
+    "details": "Status: healthy",
+    "timestamp": "2025-10-06T16:39:35.801459",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - admin",
+    "success": true,
+    "details": "User: Pedro Hurtado, Role: admin",
+    "timestamp": "2025-10-06T16:39:35.812797",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - docente_primaria",
+    "success": true,
+    "details": "User: Yocelyn Cabarcas Navarro, Role: docente_primaria",
+    "timestamp": "2025-10-06T16:39:35.861583",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - docente_bachillerato",
+    "success": true,
+    "details": "User: Carolina Sierra, Role: docente_bachillerato",
+    "timestamp": "2025-10-06T16:39:35.872647",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - coordinadora",
+    "success": true,
+    "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
+    "timestamp": "2025-10-06T16:39:35.922482",
+    "response_data": null
+  },
+  {
+    "test": "Students No Auth",
+    "success": true,
+    "details": "Correctly rejected unauthenticated request",
+    "timestamp": "2025-10-06T16:39:35.933171",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - admin",
+    "success": true,
+    "details": "Retrieved 384 students",
+    "timestamp": "2025-10-06T16:39:35.950405",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - docente_primaria",
+    "success": true,
+    "details": "Retrieved 2 students",
+    "timestamp": "2025-10-06T16:39:35.958945",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 3 students",
+    "timestamp": "2025-10-06T16:39:36.009797",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - coordinadora",
+    "success": true,
+    "details": "Retrieved 384 students",
+    "timestamp": "2025-10-06T16:39:36.025114",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (1\u00b0) - admin",
+    "success": true,
+    "details": "Retrieved 379 students for grade 1\u00b0",
+    "timestamp": "2025-10-06T16:39:36.040014",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (6\u00b0) - admin",
+    "success": true,
+    "details": "Retrieved 0 students for grade 6\u00b0",
+    "timestamp": "2025-10-06T16:39:36.090628",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (11\u00b0) - admin",
+    "success": true,
+    "details": "Retrieved 1 students for grade 11\u00b0",
+    "timestamp": "2025-10-06T16:39:36.140548",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (1\u00b0) - docente_primaria",
+    "success": true,
+    "details": "Retrieved 0 students for grade 1\u00b0",
+    "timestamp": "2025-10-06T16:39:36.149532",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (6\u00b0) - docente_primaria",
+    "success": true,
+    "details": "Retrieved 0 students for grade 6\u00b0",
+    "timestamp": "2025-10-06T16:39:36.198801",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (11\u00b0) - docente_primaria",
+    "success": true,
+    "details": "Retrieved 0 students for grade 11\u00b0",
+    "timestamp": "2025-10-06T16:39:36.248852",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (1\u00b0) - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 379 students for grade 1\u00b0",
+    "timestamp": "2025-10-06T16:39:36.263529",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (6\u00b0) - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 0 students for grade 6\u00b0",
+    "timestamp": "2025-10-06T16:39:36.313691",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (11\u00b0) - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 1 students for grade 11\u00b0",
+    "timestamp": "2025-10-06T16:39:36.323469",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (1\u00b0) - coordinadora",
+    "success": true,
+    "details": "Retrieved 379 students for grade 1\u00b0",
+    "timestamp": "2025-10-06T16:39:36.335934",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (6\u00b0) - coordinadora",
+    "success": true,
+    "details": "Retrieved 0 students for grade 6\u00b0",
+    "timestamp": "2025-10-06T16:39:36.383624",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (11\u00b0) - coordinadora",
+    "success": true,
+    "details": "Retrieved 1 students for grade 11\u00b0",
+    "timestamp": "2025-10-06T16:39:36.434750",
+    "response_data": null
+  },
+  {
+    "test": "POST Student - admin",
+    "success": false,
+    "details": "Missing required fields in response",
+    "timestamp": "2025-10-06T16:39:36.490755",
+    "response_data": {
+      "_id": "b03fd38d-7d33-4de9-946a-b5beb5eaff7f",
+      "name": "Mar\u00eda Alejandra Rodr\u00edguez P\u00e9rez",
+      "grade": "3\u00b0",
+      "level": "B\u00c1SICA PRIMARIA",
+      "teacher_id": null,
+      "parent_id": null,
+      "document_number": "1234567890",
+      "is_active": true,
+      "created_at": "2025-10-06T16:39:36.439952",
+      "updated_at": "2025-10-06T16:39:36.439953"
+    }
+  },
+  {
+    "test": "GET Student by ID - admin",
+    "success": false,
+    "details": "No token or student ID available",
+    "timestamp": "2025-10-06T16:39:36.490804",
+    "response_data": null
+  },
+  {
+    "test": "GET Student by ID - docente_primaria",
+    "success": false,
+    "details": "No token or student ID available",
+    "timestamp": "2025-10-06T16:39:36.490811",
+    "response_data": null
+  },
+  {
+    "test": "GET Student by ID - docente_bachillerato",
+    "success": false,
+    "details": "No token or student ID available",
+    "timestamp": "2025-10-06T16:39:36.490817",
+    "response_data": null
+  },
+  {
+    "test": "GET Student by ID - coordinadora",
+    "success": false,
+    "details": "No token or student ID available",
+    "timestamp": "2025-10-06T16:39:36.490822",
+    "response_data": null
+  },
+  {
+    "test": "Profile Access - admin",
+    "success": true,
+    "details": "Profile retrieved: Pedro Hurtado",
+    "timestamp": "2025-10-06T16:39:36.540472",
+    "response_data": null
+  },
+  {
+    "test": "Profile Access - docente_primaria",
+    "success": true,
+    "details": "Profile retrieved: Yocelyn Cabarcas Navarro",
+    "timestamp": "2025-10-06T16:39:36.549410",
+    "response_data": null
+  },
+  {
+    "test": "Profile Access - docente_bachillerato",
+    "success": true,
+    "details": "Profile retrieved: Carolina Sierra",
+    "timestamp": "2025-10-06T16:39:36.598614",
+    "response_data": null
+  },
+  {
+    "test": "Profile Access - coordinadora",
+    "success": true,
+    "details": "Profile retrieved: Coordinadora de Convivencia",
+    "timestamp": "2025-10-06T16:39:36.606620",
+    "response_data": null
+  }
+]
