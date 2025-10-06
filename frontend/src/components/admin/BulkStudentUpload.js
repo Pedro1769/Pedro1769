@@ -630,14 +630,24 @@ DIEGO ALEJANDRO RUIZ
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <span>Resumen de Carga ({students.length} estudiantes)</span>
-              <Button 
-                onClick={handleBulkUpload} 
-                disabled={loading}
-                className="bg-green-600 hover:bg-green-700"
-              >
-                <Upload className="h-4 w-4 mr-2" />
-                {loading ? 'Cargando...' : 'Crear Estudiantes'}
-              </Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={removeDuplicates} 
+                  variant="outline"
+                  size="sm"
+                >
+                  <Trash2 className="h-4 w-4 mr-2" />
+                  Eliminar Duplicados
+                </Button>
+                <Button 
+                  onClick={handleBulkUpload} 
+                  disabled={loading}
+                  className="bg-green-600 hover:bg-green-700"
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {loading ? 'Cargando...' : 'Crear Estudiantes'}
+                </Button>
+              </div>
             </CardTitle>
           </CardHeader>
           <CardContent>
