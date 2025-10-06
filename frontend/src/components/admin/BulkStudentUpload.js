@@ -314,12 +314,15 @@ const BulkStudentUpload = ({ onClose }) => {
         description: `Se crearon ${result.length} estudiantes exitosamente`,
       });
 
-      // Limpiar formulario después de 2 segundos
+      // Limpiar formulario y cerrar modal después de 3 segundos para que el usuario vea el resultado
       setTimeout(() => {
         setStudents([]);
         setCsvText('');
         setResults(null);
-      }, 2000);
+        if (onClose) {
+          onClose(); // Cerrar modal y recargar datos en el dashboard
+        }
+      }, 3000);
 
     } catch (error) {
       const message = error.response?.data?.detail || 'Error al crear estudiantes';
