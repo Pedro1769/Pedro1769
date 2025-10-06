@@ -329,7 +329,7 @@ const ConvivenciaDashboard = () => {
               ) : !filteredStudents || filteredStudents.length === 0 ? (
                 <div className="text-center py-8">
                   <p className="text-gray-500 mb-2">No se encontraron estudiantes</p>
-                  <p className="text-sm text-gray-400">Total de estudiantes cargados: {students.length}</p>
+                  <p className="text-sm text-gray-400">Total de estudiantes cargados: {students?.length || 0}</p>
                   <p className="text-sm text-gray-400">Filtro actual: {selectedGrade}</p>
                   <Button 
                     onClick={loadAllStudents} 
