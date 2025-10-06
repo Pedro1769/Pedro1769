@@ -350,11 +350,20 @@ const ConvivenciaDashboard = () => {
                 </div>
               ) : (
                 <>
-                  <div className="mb-4 p-3 bg-pink-50 rounded-lg">
-                    <p className="text-pink-700 font-semibold">
-                      ✅ {filteredStudents.length} estudiantes encontrados
-                      {selectedGrade !== 'Todos' ? ` en grado ${selectedGrade}` : ' en total'}
-                    </p>
+                  <div className="mb-4 p-4 bg-gradient-to-r from-pink-50 to-rose-50 rounded-lg border border-pink-200">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-pink-800 font-bold text-lg">
+                          ✅ {filteredStudents.length} ESTUDIANTES REALES
+                        </p>
+                        <p className="text-pink-600 text-sm">
+                          {selectedGrade !== 'Todos' ? `Grado ${selectedGrade}` : 'Todos los grados'} - Base de datos institucional
+                        </p>
+                      </div>
+                      <div className="px-4 py-2 bg-pink-600 text-white rounded-full font-bold text-xl">
+                        {filteredStudents.length}
+                      </div>
+                    </div>
                   </div>
                   <div className="space-y-3 max-h-96 overflow-y-auto">
                     {(filteredStudents || []).map((student, index) => (
