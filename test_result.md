@@ -148,6 +148,18 @@ frontend:
         agent: "testing"
         comment: "VERIFIED: Authentication system fully functional. Login successful with pedro.hurtado/gim123 credentials. Dashboard loads correctly with 'Panel de Administración' and all admin features. Fixed additional ReferenceError: Target is not defined by adding Target import. 24 lucide icons rendering correctly. No JavaScript errors. Calendar and Eye imports working properly."
 
+  - task: "Funcionalidad de carga masiva de estudiantes mejorada"
+    implemented: true
+    working: "NA"
+    file: "BulkStudentUpload.js, AdminDashboard.js"
+    stuck_count: 1
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "CRITICAL ISSUE: Cannot access login functionality to test bulk upload. Homepage loads correctly but 'Acceder al Sistema' and 'Portal Institucional' buttons are not clickable via Playwright selectors. This appears to be a frontend routing or JavaScript loading issue preventing access to the login form. Unable to test bulk upload functionality without login access."
+
 metadata:
   created_by: "main_agent"
   version: "1.0"
