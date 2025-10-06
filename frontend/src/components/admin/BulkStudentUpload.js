@@ -224,7 +224,7 @@ const BulkStudentUpload = ({ onClose }) => {
   const validateStudents = () => {
     const errors = [];
     const duplicateNames = [];
-    const names = new Set();
+    const names = new Map(); // Cambiar a Map para rastrear índices
 
     students.forEach((student, index) => {
       if (!student.name.trim()) {
@@ -237,20 +237,26 @@ const BulkStudentUpload = ({ onClose }) => {
         errors.push(`Fila ${index + 1}: Nivel requerido`);
       }
       
-      // Verificar duplicados
-      const nameLower = student.name.toLowerCase();
+      // Verificar duplicados exactos (solo advertir, no bloquear)
+      const nameLower = student.name.toLowerCase().trim();
       if (names.has(nameLower)) {
-        duplicateNames.push(student.name);
+        const firstIndex = names.get(nameLower);
+        duplicateNames.push(`${student.name} (filas ${firstIndex + 1} y ${index + 1})`);
       } else {
-        names.add(nameLower);
+        names.set(nameLower, index);
       }
     });
 
+    // Solo mostrar advertencia de duplicados, no bloquear el proceso
     if (duplicateNames.length > 0) {
-      errors.push(`Nombres duplicados: ${duplicateNames.join(', ')}`);
+      toast({
+        title: "⚠️ Nombres duplicados detectados",
+        description: `Se encontraron nombres duplicados: ${duplicateNames.join(', ')}. Puedes continuar de todas maneras.`,
+        variant: "warning",
+      });
     }
 
-    return errors;
+    return errors; // No incluir duplicados en errores críticos
   };
 
   const handleBulkUpload = async () => {
