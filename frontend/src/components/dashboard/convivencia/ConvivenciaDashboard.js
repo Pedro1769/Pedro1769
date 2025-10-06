@@ -6,6 +6,16 @@ import { Badge } from '../../ui/badge';
 import { Textarea } from '../../ui/textarea';
 import { useAuth } from '../../../contexts/AuthContext';
 import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../../ui/dialog';
+import { Label } from '../../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
+import { 
   Users, 
   Heart, 
   AlertCircle, 
