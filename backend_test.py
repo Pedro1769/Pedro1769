@@ -527,12 +527,13 @@ class StudentSystemTester:
             
             if response.status_code == 200:
                 data = response.json()
-                if data.get("id") and data.get("name"):
-                    self.created_student_id = data["id"]
+                student_id = data.get("id") or data.get("_id")
+                if student_id and data.get("name"):
+                    self.created_student_id = student_id
                     self.log_test(
                         f"POST Student - {user_type}",
                         True,
-                        f"Created student: {data['name']} (ID: {data['id']})"
+                        f"Created student: {data['name']} (ID: {student_id})"
                     )
                     return True
                 else:
