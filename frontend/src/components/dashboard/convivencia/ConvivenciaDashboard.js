@@ -26,9 +26,74 @@ const ConvivenciaDashboard = () => {
   const [selectedGrade, setSelectedGrade] = useState('Todos');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
+  // Cargar TODOS los estudiantes (coordinadora ve todos)
+  useEffect(() => {
+    const loadAllStudents = async () => {
+      try {
+        setLoading(true);
+        const allStudents = await studentService.getAll();
+        setStudents(allStudents);
+        toast({
+          title: "Estudiantes cargados",
+          description: `Se cargaron ${allStudents.length} estudiantes`,
+        });
+      } catch (error) {
+        console.error('Error loading students:', error);
+        // Fallback a datos mock
+        setStudents(MOCK_STUDENTS);
+        toast({
+          title: "Usando datos de prueba",
+          description: "No se pudieron cargar los estudiantes del servidor",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAllStudents();
+  }, []);
+
+  // Función para descargar lista completa de estudiantes
+  const downloadAllStudents = () => {
+    const studentsData = students.map(student => ({
+      'Nombre Completo': student.name,
+      'Grado': student.grade,
+      'Nivel': student.level,
+      'Documento': student.document_number || 'No registrado',
+      'Estado': student.is_active ? 'Activo' : 'Inactivo',
+      'Fecha de Registro': new Date(student.created_at).toLocaleDateString()
+    }));
+
+    const headers = Object.keys(studentsData[0]);
+    const csvContent = [
+      headers.join(','),
+      ...studentsData.map(row => 
+        headers.map(header => `"${row[header]}"`).join(',')
+      )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `todos_estudiantes_gaa_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Lista completa descargada",
+      description: `Se descargó el listado completo de ${studentsData.length} estudiantes`,
+    });
+  };
 
   // Filtrar estudiantes
-  const filteredStudents = MOCK_STUDENTS.filter(student => {
+  const filteredStudents = students.filter(student => {
     const matchesGrade = selectedGrade === 'Todos' || student.grade === selectedGrade;
     const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesGrade && matchesSearch;
