@@ -368,9 +368,11 @@ const ConvivenciaDashboard = () => {
                         <UserCheck className="h-4 w-4" />
                       </Button>
                     </div>
+                    </div>
+                  ))}
                   </div>
-                ))}
-              </div>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>
