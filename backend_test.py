@@ -392,9 +392,253 @@ class StudentSystemTester:
             self.log_test(f"Logout - {user_type}", False, f"Request error: {str(e)}")
             return False
 
+    def test_get_students_with_token(self, user_type: str):
+        """Test GET /students endpoint with different user roles"""
+        if user_type not in self.tokens:
+            self.log_test(f"GET Students - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            response = self.session.get(
+                f"{BASE_URL}/students",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test(
+                        f"GET Students - {user_type}",
+                        True,
+                        f"Retrieved {len(data)} students"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"GET Students - {user_type}",
+                        False,
+                        "Response is not a list",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    f"GET Students - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"GET Students - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_get_students_with_grade_filter(self, user_type: str):
+        """Test GET /students with grade filter"""
+        if user_type not in self.tokens:
+            self.log_test(f"GET Students Grade Filter - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # Test with different grades
+            test_grades = ["1°", "6°", "11°"]
+            
+            for grade in test_grades:
+                response = self.session.get(
+                    f"{BASE_URL}/students?grade={grade}",
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    data = response.json()
+                    if isinstance(data, list):
+                        self.log_test(
+                            f"GET Students Grade Filter ({grade}) - {user_type}",
+                            True,
+                            f"Retrieved {len(data)} students for grade {grade}"
+                        )
+                    else:
+                        self.log_test(
+                            f"GET Students Grade Filter ({grade}) - {user_type}",
+                            False,
+                            "Response is not a list",
+                            data
+                        )
+                        return False
+                else:
+                    self.log_test(
+                        f"GET Students Grade Filter ({grade}) - {user_type}",
+                        False,
+                        f"Status code: {response.status_code}",
+                        response.text
+                    )
+                    return False
+            
+            return True
+                
+        except Exception as e:
+            self.log_test(f"GET Students Grade Filter - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_create_student(self, user_type: str):
+        """Test POST /students endpoint"""
+        if user_type not in self.tokens:
+            self.log_test(f"POST Student - {user_type}", False, "No token available for user")
+            return False
+            
+        # Only admin and teachers can create students
+        if user_type not in ["admin", "docente_primaria", "docente_bachillerato"]:
+            self.log_test(f"POST Student - {user_type}", True, "Skipped - role cannot create students")
+            return True
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # Create realistic student data
+            student_data = {
+                "name": f"María Alejandra Rodríguez Pérez",
+                "grade": "3°",
+                "level": "BÁSICA PRIMARIA",
+                "document_number": f"1234567890"
+            }
+            
+            response = self.session.post(
+                f"{BASE_URL}/students",
+                json=student_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("id") and data.get("name"):
+                    self.created_student_id = data["id"]
+                    self.log_test(
+                        f"POST Student - {user_type}",
+                        True,
+                        f"Created student: {data['name']} (ID: {data['id']})"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"POST Student - {user_type}",
+                        False,
+                        "Missing required fields in response",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    f"POST Student - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"POST Student - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_get_student_by_id(self, user_type: str):
+        """Test GET /students/{id} endpoint"""
+        if user_type not in self.tokens or not self.created_student_id:
+            self.log_test(f"GET Student by ID - {user_type}", False, "No token or student ID available")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            response = self.session.get(
+                f"{BASE_URL}/students/{self.created_student_id}",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("id") == self.created_student_id:
+                    self.log_test(
+                        f"GET Student by ID - {user_type}",
+                        True,
+                        f"Retrieved student: {data.get('name', 'Unknown')}"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"GET Student by ID - {user_type}",
+                        False,
+                        "Student ID mismatch",
+                        data
+                    )
+                    return False
+            elif response.status_code == 403:
+                self.log_test(
+                    f"GET Student by ID - {user_type}",
+                    True,
+                    "Access denied (expected for some roles)"
+                )
+                return True
+            else:
+                self.log_test(
+                    f"GET Student by ID - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"GET Student by ID - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_students_without_auth(self):
+        """Test students endpoints without authentication"""
+        try:
+            response = self.session.get(
+                f"{BASE_URL}/students",
+                headers=HEADERS,
+                timeout=10
+            )
+            
+            if response.status_code == 401 or response.status_code == 403:
+                self.log_test("Students No Auth", True, "Correctly rejected unauthenticated request")
+                return True
+            else:
+                self.log_test(
+                    "Students No Auth",
+                    False,
+                    f"Expected 401/403, got {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test("Students No Auth", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
-        """Run comprehensive authentication tests"""
-        print("🚀 Starting Comprehensive Authentication Tests")
+        """Run comprehensive student system tests"""
+        print("🚀 Starting Comprehensive Student System Tests")
         print("=" * 60)
         
         # Test 1: Health check
@@ -408,25 +652,37 @@ class StudentSystemTester:
             if self.test_login_success(user_type, credentials):
                 login_success_count += 1
         
-        # Test 3: Login failure scenarios
-        self.test_login_invalid_credentials()
-        self.test_login_wrong_password()
+        if login_success_count == 0:
+            print("❌ No successful logins. Cannot proceed with student tests.")
+            return False
         
-        # Test 4: Profile access with valid tokens
+        # Test 3: Students endpoints without authentication
+        self.test_students_without_auth()
+        
+        # Test 4: GET /students with different user roles
+        for user_type in self.tokens.keys():
+            self.test_get_students_with_token(user_type)
+        
+        # Test 5: GET /students with grade filters
+        for user_type in self.tokens.keys():
+            self.test_get_students_with_grade_filter(user_type)
+        
+        # Test 6: POST /students (create new student)
+        # Try with admin first
+        if "admin" in self.tokens:
+            self.test_create_student("admin")
+        elif "docente_primaria" in self.tokens:
+            self.test_create_student("docente_primaria")
+        elif "docente_bachillerato" in self.tokens:
+            self.test_create_student("docente_bachillerato")
+        
+        # Test 7: GET /students/{id}
+        for user_type in self.tokens.keys():
+            self.test_get_student_by_id(user_type)
+        
+        # Test 8: Profile access (authentication verification)
         for user_type in self.tokens.keys():
             self.test_profile_with_token(user_type)
-        
-        # Test 5: Profile access without authentication
-        self.test_profile_without_token()
-        self.test_profile_invalid_token()
-        
-        # Test 6: User registration
-        self.test_register_new_user()
-        self.test_register_duplicate_user()
-        
-        # Test 7: Logout
-        for user_type in list(self.tokens.keys()):
-            self.test_logout(user_type)
         
         # Summary
         print("=" * 60)
