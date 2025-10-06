@@ -164,7 +164,7 @@ const DocentePrimariaDashboard = () => {
                 <Download className="h-4 w-4 mr-2" />
                 Descargar Lista
               </Button>
-              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+              <Button onClick={() => setShowAddStudent(true)} size="sm" className="bg-blue-600 hover:bg-blue-700">
                 <UserPlus className="h-4 w-4 mr-2" />
                 Agregar Estudiante
               </Button>
