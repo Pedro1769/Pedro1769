@@ -348,7 +348,7 @@ const ConvivenciaDashboard = () => {
                     </p>
                   </div>
                   <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {filteredStudents.map((student, index) => (
+                    {(filteredStudents || []).map((student, index) => (
                   <div 
                     key={index} 
                     className={`flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors ${
