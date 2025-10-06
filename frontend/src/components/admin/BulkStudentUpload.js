@@ -183,6 +183,44 @@ const BulkStudentUpload = ({ onClose }) => {
     });
   };
 
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    setSelectedFile(file);
+    const reader = new FileReader();
+    
+    reader.onload = (e) => {
+      try {
+        let content = e.target.result;
+        
+        // Si es un archivo Excel, intentar convertirlo a texto simple
+        if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
+          toast({
+            title: "Archivo Excel detectado",
+            description: "Por favor, copia y pega los datos desde Excel en lugar de subir el archivo directamente, o guarda como CSV.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        setCsvText(content);
+        toast({
+          title: "Archivo cargado",
+          description: `Archivo ${file.name} cargado. Haz clic en "Procesar Datos" para continuar.`,
+        });
+      } catch (error) {
+        toast({
+          title: "Error al leer archivo",
+          description: "No se pudo leer el contenido del archivo. Intenta con un archivo de texto o CSV.",
+          variant: "destructive",
+        });
+      }
+    };
+    
+    reader.readAsText(file, 'UTF-8');
+  };
+
   const validateStudents = () => {
     const errors = [];
     const duplicateNames = [];
