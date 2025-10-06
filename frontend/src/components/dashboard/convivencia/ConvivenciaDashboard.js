@@ -29,7 +29,7 @@ import {
   Download
 } from 'lucide-react';
 import { MOCK_STUDENTS, PERIODS, GRADES } from '../../../mockData';
-import { studentService } from '../../../services/api';
+import { studentService, gradeService } from '../../../services/api';
 import { useToast } from '../../../hooks/use-toast';
 
 const ConvivenciaDashboard = () => {
