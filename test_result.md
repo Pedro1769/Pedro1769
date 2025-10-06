@@ -168,11 +168,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Sistema de autenticación completo (login/register)"
-    - "Verificar funcionalidad de frontend sin errores de Calendar"
-  stuck_tasks: []
+    - "Funcionalidad de carga masiva de estudiantes mejorada"
+    - "Acceso a login desde homepage"
+  stuck_tasks:
+    - "Funcionalidad de carga masiva de estudiantes mejorada"
   test_all: false
-  test_priority: "high_first"
+  test_priority: "stuck_first"
 
 agent_communication:
   - agent: "main"
