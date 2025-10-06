@@ -21,9 +21,37 @@ const DocentePrimariaDashboard = () => {
   const { user } = useAuth();
   const [selectedPeriod, setSelectedPeriod] = useState('I');
   const [selectedSubject, setSelectedSubject] = useState('HUMANIDADES');
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Filtrar estudiantes del docente
-  const myStudents = MOCK_STUDENTS.filter(student => student.docente_id === user.id);
+  // Cargar estudiantes del grado asignado al docente
+  useEffect(() => {
+    const loadStudents = async () => {
+      try {
+        setLoading(true);
+        let gradeStudents = [];
+        
+        if (user.grade) {
+          // Filtrar estudiantes por el grado asignado al docente
+          const allStudents = await studentService.getAll();
+          gradeStudents = allStudents.filter(student => student.grade === user.grade);
+        }
+        
+        setStudents(gradeStudents);
+      } catch (error) {
+        console.error('Error loading students:', error);
+        // Fallback a datos mock
+        const myStudents = MOCK_STUDENTS.filter(student => student.grade === user.grade);
+        setStudents(myStudents);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStudents();
+  }, [user.grade]);
+
+  const myStudents = students;
   
   const getStudentGrade = (student, period, subject) => {
     return student.grades[period]?.[subject] || '';
