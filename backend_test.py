@@ -22,11 +22,12 @@ TEST_USERS = {
     "coordinadora": {"username": "coord.convivencia", "password": "gim123"}
 }
 
-class AuthTester:
+class StudentSystemTester:
     def __init__(self):
         self.session = requests.Session()
         self.tokens = {}
         self.test_results = []
+        self.created_student_id = None
         
     def log_test(self, test_name: str, success: bool, details: str = "", response_data: Any = None):
         """Log test results"""
