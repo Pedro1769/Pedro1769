@@ -159,10 +159,16 @@ const DocentePrimariaDashboard = () => {
               <Users className="h-5 w-5" />
               <span>Mis Estudiantes - Grado {user.grade}</span>
             </div>
-            <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Agregar Estudiante
-            </Button>
+            <div className="flex space-x-2">
+              <Button onClick={downloadMyStudentsList} size="sm" className="bg-green-600 hover:bg-green-700">
+                <Download className="h-4 w-4 mr-2" />
+                Descargar Lista
+              </Button>
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Agregar Estudiante
+              </Button>
+            </div>
           </CardTitle>
           <CardDescription>
             Gestiona tu lista de estudiantes del grado a cargo
