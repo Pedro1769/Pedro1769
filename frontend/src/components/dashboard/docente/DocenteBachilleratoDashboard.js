@@ -113,6 +113,89 @@ const DocenteBachilleratoDashboard = () => {
     document.body.removeChild(link);
   };
 
+  const handleAddStudent = async () => {
+    try {
+      if (!newStudent.name.trim()) {
+        toast({
+          title: "Error",
+          description: "El nombre del estudiante es obligatorio",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const studentData = {
+        ...newStudent,
+        name: newStudent.name.toUpperCase(),
+        is_active: true,
+        created_at: new Date().toISOString(),
+        level: ['6°', '7°', '8°', '9°', '10°', '11°'].includes(newStudent.grade) ? 'BÁSICA SECUNDARIA' : 'MEDIA'
+      };
+
+      await studentService.createStudent(studentData);
+      
+      // Recargar lista de estudiantes
+      loadStudents();
+      
+      // Limpiar formulario y cerrar modal
+      setNewStudent({
+        name: '',
+        document_number: '',
+        grade: selectedGrade,
+        level: 'BÁSICA SECUNDARIA'
+      });
+      setShowAddStudent(false);
+
+      toast({
+        title: "Estudiante agregado",
+        description: `${studentData.name} ha sido agregado exitosamente`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo agregar el estudiante. Intenta nuevamente.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const loadStudents = async () => {
+    try {
+      setLoading(true);
+      let gradeStudents = [];
+      
+      if (user.grades && user.grades.length > 0) {
+        // Filtrar estudiantes por los grados asignados al docente
+        const allStudents = await studentService.getAll();
+        gradeStudents = allStudents.filter(student => 
+          user.grades.includes(student.grade)
+        );
+      } else {
+        // Fallback: mostrar todos los estudiantes de bachillerato
+        const allStudents = await studentService.getAll();
+        gradeStudents = allStudents.filter(student => 
+          ['6°', '7°', '8°', '9°', '10°', '11°'].includes(student.grade)
+        );
+      }
+      
+      setStudents(gradeStudents);
+    } catch (error) {
+      console.error('Error loading students:', error);
+      toast({
+        title: "Error al cargar estudiantes",
+        description: "No se pudieron cargar los estudiantes reales. Usando datos de prueba.",
+        variant: "destructive",
+      });
+      // Fallback a datos mock
+      const myStudents = MOCK_STUDENTS.filter(student => 
+        user.grades ? user.grades.includes(student.grade) : ['6°', '7°', '8°', '9°', '10°', '11°'].includes(student.grade)
+      );
+      setStudents(myStudents);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
       {/* Elementos decorativos dinámicos */}
