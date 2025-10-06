@@ -102,6 +102,72 @@ const DocentePrimariaDashboard = () => {
     document.body.removeChild(link);
   };
 
+  const handleAddStudent = async () => {
+    try {
+      if (!newStudent.name.trim()) {
+        toast({
+          title: "Error",
+          description: "El nombre del estudiante es obligatorio",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const studentData = {
+        ...newStudent,
+        name: newStudent.name.toUpperCase(),
+        is_active: true,
+        created_at: new Date().toISOString()
+      };
+
+      await studentService.createStudent(studentData);
+      
+      // Recargar lista de estudiantes
+      loadStudents();
+      
+      // Limpiar formulario y cerrar modal
+      setNewStudent({
+        name: '',
+        document_number: '',
+        grade: user.grade || '',
+        level: user.grade && ['Transición', '1°', '2°', '3°', '4°', '5°'].includes(user.grade) ? 'BÁSICA PRIMARIA' : 'BÁSICA SECUNDARIA'
+      });
+      setShowAddStudent(false);
+
+      toast({
+        title: "Estudiante agregado",
+        description: `${studentData.name} ha sido agregado exitosamente`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo agregar el estudiante. Intenta nuevamente.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const loadStudents = async () => {
+    try {
+      setLoading(true);
+      const allStudents = await studentService.getAll();
+      const gradeStudents = allStudents.filter(student => student.grade === user.grade);
+      setStudents(gradeStudents);
+    } catch (error) {
+      console.error('Error loading students:', error);
+      toast({
+        title: "Error al cargar estudiantes",
+        description: "No se pudieron cargar los estudiantes reales. Usando datos de prueba.",
+        variant: "destructive",
+      });
+      // Fallback a datos mock solo si hay error
+      const myStudents = MOCK_STUDENTS.filter(student => student.grade === user.grade);
+      setStudents(myStudents);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden">
       {/* Elementos decorativos dinámicos */}
