@@ -52,7 +52,9 @@ const ConvivenciaDashboard = () => {
   const loadAllStudents = async () => {
     try {
       setLoading(true);
+      console.log('ConvivenciaDashboard - Cargando todos los estudiantes...');
       const allStudents = await studentService.getAll();
+      console.log('ConvivenciaDashboard - Total estudiantes recibidos:', allStudents.length);
       setStudents(allStudents);
       toast({
         title: "Estudiantes cargados",
