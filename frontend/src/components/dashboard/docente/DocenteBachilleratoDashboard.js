@@ -43,6 +43,8 @@ const DocenteBachilleratoDashboard = () => {
     grade: selectedGrade,
     level: 'BÁSICA SECUNDARIA'
   });
+  const [savedGrades, setSavedGrades] = useState({}); // Para almacenar las notas guardadas
+  const [loadingGrades, setLoadingGrades] = useState(false);
   const { toast } = useToast();
 
   // Cargar estudiantes según los grados asignados al docente
