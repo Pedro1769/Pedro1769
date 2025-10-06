@@ -375,13 +375,14 @@ const DocentePrimariaDashboard = () => {
                       </td>
                       <td className="text-center p-2">
                         <Input
+                          key={`${student._id || index}-${selectedSubject}-${selectedPeriod}`}
                           type="number"
                           min="1"
                           max="5"
                           step="0.1"
                           placeholder="0.0"
                           className="w-20 text-center"
-                          defaultValue={currentGrade}
+                          defaultValue={currentGrade || ''}
                         />
                       </td>
                       <td className="text-center p-2">
