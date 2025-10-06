@@ -577,7 +577,8 @@ class StudentSystemTester:
             
             if response.status_code == 200:
                 data = response.json()
-                if data.get("id") == self.created_student_id:
+                student_id = data.get("id") or data.get("_id")
+                if student_id == self.created_student_id:
                     self.log_test(
                         f"GET Student by ID - {user_type}",
                         True,
