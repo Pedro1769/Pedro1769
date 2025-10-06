@@ -267,6 +267,10 @@ const ConvivenciaDashboard = () => {
               </CardDescription>
             </div>
             <div className="flex space-x-2">
+              <Button onClick={() => setShowAddStudent(true)} size="sm" className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700">
+                <Plus className="h-4 w-4 mr-2" />
+                Agregar Estudiante
+              </Button>
               <Button onClick={downloadAllStudents} size="sm" className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700">
                 <Download className="h-4 w-4 mr-2" />
                 Descargar Lista Completa
