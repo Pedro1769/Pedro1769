@@ -195,10 +195,9 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Sistema de estudiantes reales completamente funcional"
     - "Mejoras visuales con fondos dinámicos y elementos animados"
-    - "Funcionalidad de carga masiva de estudiantes mejorada"
-  stuck_tasks:
-    - "Funcionalidad de carga masiva de estudiantes mejorada"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
