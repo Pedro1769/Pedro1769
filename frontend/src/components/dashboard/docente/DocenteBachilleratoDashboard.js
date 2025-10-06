@@ -50,6 +50,13 @@ const DocenteBachilleratoDashboard = () => {
     loadStudents();
   }, [user.grades, selectedGrade]);
 
+  useEffect(() => {
+    setNewStudent(prev => ({
+      ...prev,
+      grade: selectedGrade
+    }));
+  }, [selectedGrade]);
+
   // Filtrar estudiantes por grado seleccionado
   const gradeStudents = students.filter(student => student.grade === selectedGrade);
   
