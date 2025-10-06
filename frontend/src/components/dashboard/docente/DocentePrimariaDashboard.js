@@ -48,7 +48,7 @@ const DocentePrimariaDashboard = () => {
     loadStudents();
   }, [user.grade]);
 
-  const myStudents = students;
+  const myStudents = students || [];
   
   const getStudentGrade = (student, period, subject) => {
     // Verificar si el estudiante tiene estructura de notas
