@@ -128,9 +128,16 @@ const DocentePrimariaDashboard = () => {
   const loadStudents = async () => {
     try {
       setLoading(true);
+      console.log('Cargando estudiantes para grado:', user.grade);
       const allStudents = await studentService.getAll();
+      console.log('Total estudiantes recibidos:', allStudents.length);
       const gradeStudents = allStudents.filter(student => student.grade === user.grade);
+      console.log('Estudiantes filtrados para grado', user.grade, ':', gradeStudents.length);
       setStudents(gradeStudents);
+      toast({
+        title: "Estudiantes cargados",
+        description: `Se encontraron ${gradeStudents.length} estudiantes en grado ${user.grade}`,
+      });
     } catch (error) {
       console.error('Error loading students:', error);
       toast({
