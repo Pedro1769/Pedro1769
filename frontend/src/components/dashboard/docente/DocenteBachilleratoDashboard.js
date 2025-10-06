@@ -309,29 +309,51 @@ const DocenteBachilleratoDashboard = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {gradeStudents.length > 0 ? (
-              gradeStudents.map((student, index) => (
-                <div key={index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
-                  <div className="flex-1">
-                    <h3 className="font-medium text-gray-900">{student.name}</h3>
-                    <p className="text-sm text-gray-600">Grado {student.grade} - {student.level}</p>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Badge variant="outline">Activo</Badge>
-                    <Button variant="ghost" size="sm">
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-8 text-gray-500">
-                <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
-                <p>No hay estudiantes registrados para el grado {selectedGrade}</p>
+          {loading ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">Cargando estudiantes...</p>
+            </div>
+          ) : gradeStudents.length === 0 ? (
+            <div className="text-center py-8">
+              <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+              <p className="text-gray-500 mb-2">No se encontraron estudiantes en grado {selectedGrade}</p>
+              <p className="text-sm text-gray-400">Total de estudiantes cargados: {students.length}</p>
+              <Button 
+                onClick={loadStudents} 
+                size="sm" 
+                className="mt-3 bg-purple-600 hover:bg-purple-700"
+              >
+                Recargar Estudiantes
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="mb-4 p-3 bg-purple-50 rounded-lg">
+                <p className="text-purple-700 font-semibold">
+                  ✅ {gradeStudents.length} estudiantes encontrados en grado {selectedGrade}
+                </p>
               </div>
-            )}
-          </div>
+              <div className="space-y-4">
+                {gradeStudents.map((student, index) => (
+                  <div key={student._id || index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900">{student.name}</h3>
+                      <p className="text-sm text-gray-600">Grado {student.grade} - {student.level}</p>
+                      <p className="text-xs text-gray-400">Doc: {student.document_number || 'No registrado'}</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Badge variant={student.is_active ? "default" : "secondary"}>
+                        {student.is_active ? 'Activo' : 'Inactivo'}
+                      </Badge>
+                      <Button variant="ghost" size="sm">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </CardContent>
       </Card>
 
