@@ -184,6 +184,67 @@ const ConvivenciaDashboard = () => {
     }
   };
 
+  // Función para abrir modal de nota de convivencia
+  const openGradeModal = (student) => {
+    setSelectedStudentForGrade(student);
+    setConvivenciaGrade({
+      period: 'I',
+      grade: '',
+      observations: ''
+    });
+    setShowGradeModal(true);
+  };
+
+  // Función para asignar nota de convivencia
+  const handleAssignConvivenciaGrade = async () => {
+    try {
+      if (!convivenciaGrade.grade) {
+        toast({
+          title: "Error",
+          description: "Debes asignar una nota de convivencia",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const gradeValue = parseFloat(convivenciaGrade.grade);
+      if (isNaN(gradeValue) || gradeValue < 1 || gradeValue > 5) {
+        toast({
+          title: "Nota inválida",
+          description: "La nota debe estar entre 1.0 y 5.0",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      const gradeData = {
+        student_id: selectedStudentForGrade._id || selectedStudentForGrade.id,
+        subject: "CONVIVENCIA ESCOLAR",
+        period: convivenciaGrade.period,
+        grade: gradeValue,
+        teacher_notes: convivenciaGrade.observations
+      };
+
+      await gradeService.assignGrade(gradeData);
+
+      setShowGradeModal(false);
+      setSelectedStudentForGrade(null);
+
+      toast({
+        title: "Nota de convivencia asignada",
+        description: `Nota ${gradeValue} asignada a ${selectedStudentForGrade.name} en período ${convivenciaGrade.period}`,
+      });
+
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo asignar la nota de convivencia. Intenta nuevamente.",
+        variant: "destructive",
+      });
+      console.error('Error assigning convivencia grade:', error);
+    }
+  };
+
   // Filtrar estudiantes
   const filteredStudents = (students || []).filter(student => {
     const matchesGrade = selectedGrade === 'Todos' || student.grade === selectedGrade;
