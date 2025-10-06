@@ -275,10 +275,20 @@ const DocentePrimariaDashboard = () => {
             </div>
           ) : (
             <>
-              <div className="mb-4 p-3 bg-green-50 rounded-lg">
-                <p className="text-green-700 font-semibold">
-                  ✅ {myStudents.length} estudiantes encontrados en grado {user.grade}
-                </p>
+              <div className="mb-4 p-4 bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg border border-green-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-green-800 font-bold text-lg">
+                      ✅ {myStudents.length} ESTUDIANTES REALES
+                    </p>
+                    <p className="text-green-600 text-sm">
+                      Grado {user.grade} - Datos cargados desde la base de datos
+                    </p>
+                  </div>
+                  <div className="px-4 py-2 bg-green-600 text-white rounded-full font-bold text-xl">
+                    {myStudents.length}
+                  </div>
+                </div>
               </div>
               <div className="space-y-4">
                 {(myStudents || []).map((student, index) => (
