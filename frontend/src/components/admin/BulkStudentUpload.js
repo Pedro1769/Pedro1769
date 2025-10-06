@@ -176,30 +176,12 @@ const BulkStudentUpload = ({ onClose }) => {
       return;
     }
 
-    // Eliminar duplicados automáticamente durante el procesamiento
-    const uniqueStudents = [];
-    const seen = new Set();
-    
-    parsedStudents.forEach(student => {
-      const key = student.name.toLowerCase().trim();
-      if (!seen.has(key)) {
-        seen.add(key);
-        uniqueStudents.push(student);
-      }
-    });
-    
-    const duplicatesRemoved = parsedStudents.length - uniqueStudents.length;
-    
-    setStudents(uniqueStudents);
-    
-    let description = `Se procesaron ${uniqueStudents.length} estudiantes únicos.`;
-    if (duplicatesRemoved > 0) {
-      description += ` Se eliminaron automáticamente ${duplicatesRemoved} duplicados.`;
-    }
+    // Cargar TODOS los estudiantes sin eliminar duplicados
+    setStudents(parsedStudents);
     
     toast({
       title: "Datos Procesados",
-      description: description,
+      description: `Se procesaron ${parsedStudents.length} estudiantes. ¡Todos serán cargados!`,
     });
   };
 
