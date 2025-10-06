@@ -498,6 +498,73 @@ const DocenteBachilleratoDashboard = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modal Agregar Estudiante */}
+      <Dialog open={showAddStudent} onOpenChange={setShowAddStudent}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Agregar Nuevo Estudiante</DialogTitle>
+            <DialogDescription>
+              Agrega un estudiante de bachillerato
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Nombre Completo
+              </Label>
+              <Input
+                id="name"
+                value={newStudent.name}
+                onChange={(e) => setNewStudent({...newStudent, name: e.target.value})}
+                className="col-span-3"
+                placeholder="Ej: MARÍA LÓPEZ GÓMEZ"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="document" className="text-right">
+                Documento
+              </Label>
+              <Input
+                id="document"
+                value={newStudent.document_number}
+                onChange={(e) => setNewStudent({...newStudent, document_number: e.target.value})}
+                className="col-span-3"
+                placeholder="Número de documento (opcional)"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="grade" className="text-right">
+                Grado
+              </Label>
+              <Select
+                value={newStudent.grade}
+                onValueChange={(value) => setNewStudent({...newStudent, grade: value})}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Selecciona un grado" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="6°">6°</SelectItem>
+                  <SelectItem value="7°">7°</SelectItem>
+                  <SelectItem value="8°">8°</SelectItem>
+                  <SelectItem value="9°">9°</SelectItem>
+                  <SelectItem value="10°">10°</SelectItem>
+                  <SelectItem value="11°">11°</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setShowAddStudent(false)} variant="outline">
+              Cancelar
+            </Button>
+            <Button onClick={handleAddStudent} className="bg-green-600 hover:bg-green-700">
+              Agregar Estudiante
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       </div>
     </div>
   );
