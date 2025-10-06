@@ -68,7 +68,7 @@ const BulkStudentUpload = ({ onClose }) => {
     if (!csvText.trim()) {
       toast({
         title: "Error",
-        description: "Por favor ingrese el texto CSV",
+        description: "Por favor ingrese los datos",
         variant: "destructive",
       });
       return;
@@ -79,30 +79,97 @@ const BulkStudentUpload = ({ onClose }) => {
 
     lines.forEach((line, index) => {
       if (line.trim()) {
-        const columns = line.split(',').map(col => col.trim());
+        // Detectar automáticamente el separador (coma, punto y coma, tab, barra vertical)
+        let columns = [];
+        const separators = [',', ';', '\t', '|', ' '];
         
-        if (columns.length >= 3) {
-          const [name, grade, document] = columns;
-          
-          if (name && grade && grades.includes(grade)) {
-            parsedStudents.push({
-              id: Date.now() + index,
-              name: name.toUpperCase(),
-              grade: grade,
-              level: levels[grade] || 'BÁSICA PRIMARIA',
-              document_number: document || '',
-              teacher_id: null,
-              parent_id: null
-            });
+        for (let sep of separators) {
+          const testColumns = line.split(sep).map(col => col.trim()).filter(col => col);
+          if (testColumns.length >= columns.length) {
+            columns = testColumns;
           }
+        }
+
+        // Si no hay separadores, tratar toda la línea como nombre
+        if (columns.length === 0) {
+          columns = [line.trim()];
+        }
+
+        // Extraer información del estudiante de manera flexible
+        let name = '';
+        let grade = '';
+        let document = '';
+
+        // Buscar el nombre (primer campo no vacío que no sea un grado)
+        for (let col of columns) {
+          if (col && !grades.includes(col) && !/^\d+$/.test(col)) {
+            name = col;
+            break;
+          }
+        }
+
+        // Buscar el grado en cualquier posición
+        for (let col of columns) {
+          if (grades.includes(col)) {
+            grade = col;
+            break;
+          }
+        }
+
+        // Si no encuentra grado, intentar detectarlo por patrones
+        if (!grade) {
+          for (let col of columns) {
+            // Buscar patrones como "1°", "2do", "primero", "segundo", etc.
+            const normalized = col.toLowerCase().replace(/[°º]/, '').trim();
+            if (normalized.match(/^(1|primero|1ro|1er)$/)) grade = '1°';
+            else if (normalized.match(/^(2|segundo|2do)$/)) grade = '2°';
+            else if (normalized.match(/^(3|tercero|3ro|3er)$/)) grade = '3°';
+            else if (normalized.match(/^(4|cuarto|4to)$/)) grade = '4°';
+            else if (normalized.match(/^(5|quinto|5to)$/)) grade = '5°';
+            else if (normalized.match(/^(6|sexto|6to)$/)) grade = '6°';
+            else if (normalized.match(/^(7|septimo|séptimo|7mo)$/)) grade = '7°';
+            else if (normalized.match(/^(8|octavo|8vo)$/)) grade = '8°';
+            else if (normalized.match(/^(9|noveno|9no)$/)) grade = '9°';
+            else if (normalized.match(/^(10|decimo|décimo)$/)) grade = '10°';
+            else if (normalized.match(/^(11|once|undecimo|undécimo)$/)) grade = '11°';
+            else if (normalized.match(/^(transicion|transición|preescolar|kinder)$/)) grade = 'Transición';
+            
+            if (grade) break;
+          }
+        }
+
+        // Buscar documento (números)
+        for (let col of columns) {
+          if (/^\d{6,}$/.test(col.replace(/[-.\s]/g, ''))) {
+            document = col;
+            break;
+          }
+        }
+
+        // Si tenemos al menos un nombre, crear el estudiante
+        if (name) {
+          // Si no hay grado especificado, usar un grado por defecto
+          if (!grade) {
+            grade = '1°'; // Grado por defecto
+          }
+
+          parsedStudents.push({
+            id: Date.now() + index,
+            name: name.toUpperCase(),
+            grade: grade,
+            level: levels[grade] || 'BÁSICA PRIMARIA',
+            document_number: document || '',
+            teacher_id: null,
+            parent_id: null
+          });
         }
       }
     });
 
     if (parsedStudents.length === 0) {
       toast({
-        title: "Error",
-        description: "No se pudo parsear ningún estudiante válido del CSV",
+        title: "Sin datos válidos",
+        description: "No se pudo extraer información de estudiantes. Verifica que tengas al menos nombres en los datos.",
         variant: "destructive",
       });
       return;
@@ -110,8 +177,8 @@ const BulkStudentUpload = ({ onClose }) => {
 
     setStudents(parsedStudents);
     toast({
-      title: "CSV Procesado",
-      description: `Se procesaron ${parsedStudents.length} estudiantes`,
+      title: "Datos Procesados",
+      description: `Se procesaron ${parsedStudents.length} estudiantes. Revisa y ajusta la información antes de guardar.`,
     });
   };
 
