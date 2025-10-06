@@ -404,10 +404,28 @@ const AdminDashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>Consolidado Académico ({consolidatedData.length} estudiantes)</span>
-                  <Button onClick={() => loadConsolidatedData()}>
-                    <BarChart3 className="h-4 w-4 mr-2" />
-                    Actualizar
-                  </Button>
+                  <div className="flex space-x-2">
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => downloadStudentList('csv')}
+                    >
+                      <Download className="h-4 w-4 mr-2" />
+                      Lista Estudiantes
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={downloadConsolidatedReport}
+                    >
+                      <FileText className="h-4 w-4 mr-2" />
+                      Consolidado CSV
+                    </Button>
+                    <Button onClick={() => loadConsolidatedData()}>
+                      <BarChart3 className="h-4 w-4 mr-2" />
+                      Actualizar
+                    </Button>
+                  </div>
                 </CardTitle>
               </CardHeader>
               <CardContent>
