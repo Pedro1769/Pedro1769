@@ -371,7 +371,7 @@ CARLOS MARTÍNEZ RUIZ,6°,11223344`;
             />
             <Button onClick={parseCsvText} className="w-full">
               <FileText className="h-4 w-4 mr-2" />
-              Procesar CSV
+              Procesar Datos
             </Button>
           </CardContent>
         </Card>
