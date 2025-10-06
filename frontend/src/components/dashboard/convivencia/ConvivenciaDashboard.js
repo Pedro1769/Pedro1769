@@ -450,6 +450,15 @@ const ConvivenciaDashboard = () => {
                       <Badge variant="outline" className="text-xs">
                         {Math.floor(Math.random() * 3) + 1} seguimientos
                       </Badge>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => openGradeModal(student)}
+                        className="bg-pink-50 hover:bg-pink-100 text-pink-700"
+                      >
+                        <Heart className="h-4 w-4 mr-1" />
+                        Convivencia
+                      </Button>
                       <Button variant="ghost" size="sm">
                         <UserCheck className="h-4 w-4" />
                       </Button>
