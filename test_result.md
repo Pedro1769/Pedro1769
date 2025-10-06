@@ -183,12 +183,12 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Mejoras visuales con fondos dinámicos y elementos animados"
     - "Funcionalidad de carga masiva de estudiantes mejorada"
-    - "Acceso a login desde homepage"
   stuck_tasks:
     - "Funcionalidad de carga masiva de estudiantes mejorada"
   test_all: false
-  test_priority: "stuck_first"
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
