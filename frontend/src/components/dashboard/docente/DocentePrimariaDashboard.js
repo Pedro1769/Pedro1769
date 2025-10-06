@@ -34,6 +34,14 @@ const DocentePrimariaDashboard = () => {
   const [selectedSubject, setSelectedSubject] = useState('HUMANIDADES');
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAddStudent, setShowAddStudent] = useState(false);
+  const [newStudent, setNewStudent] = useState({
+    name: '',
+    document_number: '',
+    grade: user.grade || '',
+    level: user.grade && ['Transición', '1°', '2°', '3°', '4°', '5°'].includes(user.grade) ? 'BÁSICA PRIMARIA' : 'BÁSICA SECUNDARIA'
+  });
+  const { toast } = useToast();
 
   // Cargar estudiantes del grado asignado al docente
   useEffect(() => {
