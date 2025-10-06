@@ -36,6 +36,14 @@ const DocenteBachilleratoDashboard = () => {
   const [selectedSubject, setSelectedSubject] = useState(user.subjects?.[0] || 'MATEMÁTICA');
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAddStudent, setShowAddStudent] = useState(false);
+  const [newStudent, setNewStudent] = useState({
+    name: '',
+    document_number: '',
+    grade: selectedGrade,
+    level: 'BÁSICA SECUNDARIA'
+  });
+  const { toast } = useToast();
 
   // Cargar estudiantes según los grados asignados al docente
   useEffect(() => {
