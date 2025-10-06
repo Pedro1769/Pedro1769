@@ -69,6 +69,15 @@ const DocenteBachilleratoDashboard = () => {
   };
 
   const downloadMyGradeStudents = () => {
+    if (!gradeStudents || gradeStudents.length === 0) {
+      toast({
+        title: "Sin datos para descargar",
+        description: "No hay estudiantes para exportar",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const studentsData = gradeStudents.map(student => ({
       'Nombre Completo': student.name,
       'Grado': student.grade,
