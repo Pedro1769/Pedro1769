@@ -80,6 +80,15 @@ const ConvivenciaDashboard = () => {
 
   // Función para descargar lista completa de estudiantes
   const downloadAllStudents = () => {
+    if (!students || students.length === 0) {
+      toast({
+        title: "Sin datos para descargar",
+        description: "No hay estudiantes para exportar",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const studentsData = students.map(student => ({
       'Nombre Completo': student.name,
       'Grado': student.grade,
