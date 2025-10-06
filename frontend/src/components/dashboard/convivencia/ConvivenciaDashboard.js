@@ -419,6 +419,7 @@ const ConvivenciaDashboard = () => {
           </CardContent>
         </Card>
       </div>
+      </div>
     </div>
   );
 };
