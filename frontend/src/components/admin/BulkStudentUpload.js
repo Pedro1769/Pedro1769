@@ -444,6 +444,56 @@ DIEGO ALEJANDRO RUIZ
         </Card>
       )}
 
+      {/* Carga de archivo */}
+      {uploadMethod === 'file' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Subir Archivo</CardTitle>
+            <CardDescription>
+              Acepta archivos CSV, TXT o cualquier archivo de texto. También puedes subir datos copiados de Excel guardados como CSV.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+              <Input
+                type="file"
+                accept=".csv,.txt,.tsv"
+                onChange={handleFileUpload}
+                className="mb-4"
+              />
+              <p className="text-sm text-gray-600">
+                Formatos aceptados: CSV, TXT, TSV
+              </p>
+              {selectedFile && (
+                <p className="mt-2 text-sm font-medium text-green-600">
+                  Archivo seleccionado: {selectedFile.name}
+                </p>
+              )}
+            </div>
+            
+            {csvText && (
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">
+                  Vista previa del contenido:
+                </label>
+                <Textarea
+                  value={csvText}
+                  onChange={(e) => setCsvText(e.target.value)}
+                  rows={6}
+                  className="font-mono text-sm"
+                  placeholder="El contenido del archivo aparecerá aquí..."
+                />
+                <Button onClick={parseCsvText} className="w-full">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Procesar Datos del Archivo
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Formulario manual */}
       {uploadMethod === 'manual' && (
         <Card>
