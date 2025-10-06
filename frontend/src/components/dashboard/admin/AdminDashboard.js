@@ -717,21 +717,38 @@ const AdminDashboard = () => {
             </CardHeader>
             <CardContent className="p-6">
               <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { name: 'Transición', color: 'from-green-400 to-green-600', icon: '🌱' },
-                  { name: 'Primaria (1°-5°)', color: 'from-blue-400 to-blue-600', icon: '📚' },
-                  { name: 'Bachillerato (6°-10°)', color: 'from-purple-400 to-purple-600', icon: '🎓' },
-                  { name: 'Grado 11°', color: 'from-red-400 to-red-600', icon: '🏆' }
-                ].map((level, index) => (
-                  <div key={index} className={`p-6 bg-gradient-to-br ${level.color} rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300`}>
-                    <div className="text-4xl mb-3">{level.icon}</div>
-                    <h3 className="text-lg font-bold mb-2">{level.name}</h3>
-                    <p className="text-sm opacity-90 mb-4">Formato específico</p>
-                    <Button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md border-white/30">
-                      Configurar
-                    </Button>
-                  </div>
-                ))}
+                <div className="p-6 bg-gradient-to-br from-green-400 to-green-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+                  <div className="text-4xl mb-3">🌱</div>
+                  <h3 className="text-lg font-bold mb-2">Transición</h3>
+                  <p className="text-sm opacity-90 mb-4">Formato específico</p>
+                  <Button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md border-white/30">
+                    Configurar
+                  </Button>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+                  <div className="text-4xl mb-3">📚</div>
+                  <h3 className="text-lg font-bold mb-2">Primaria (1°-5°)</h3>
+                  <p className="text-sm opacity-90 mb-4">Formato específico</p>
+                  <Button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md border-white/30">
+                    Configurar
+                  </Button>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+                  <div className="text-4xl mb-3">🎓</div>
+                  <h3 className="text-lg font-bold mb-2">Bachillerato (6°-10°)</h3>
+                  <p className="text-sm opacity-90 mb-4">Formato específico</p>
+                  <Button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md border-white/30">
+                    Configurar
+                  </Button>
+                </div>
+                <div className="p-6 bg-gradient-to-br from-red-400 to-red-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
+                  <div className="text-4xl mb-3">🏆</div>
+                  <h3 className="text-lg font-bold mb-2">Grado 11°</h3>
+                  <p className="text-sm opacity-90 mb-4">Formato específico</p>
+                  <Button className="w-full bg-white/20 hover:bg-white/30 backdrop-blur-md border-white/30">
+                    Configurar
+                  </Button>
+                </div>
               </div>
               <div className="mt-6 p-4 bg-gradient-to-r from-cyan-100 to-blue-100 rounded-lg">
                 <h4 className="font-bold text-cyan-800 mb-2">🚀 Características Avanzadas:</h4>
