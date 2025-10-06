@@ -54,7 +54,7 @@ async def init_database():
             "name": "Yocelyn Cabarcas Navarro",
             "role": UserRole.DOCENTE_PRIMARIA,
             "email": "yocelyn.cabarcas@gimamericano.edu.co",
-            "grade": "2°",
+            "grade": "1°",
             "subjects": SUBJECTS_PRIMARIA,
             "is_active": True,
             "created_at": datetime.utcnow(),
