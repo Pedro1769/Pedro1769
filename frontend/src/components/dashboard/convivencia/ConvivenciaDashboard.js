@@ -169,9 +169,9 @@ const ConvivenciaDashboard = () => {
   };
 
   // Filtrar estudiantes
-  const filteredStudents = students.filter(student => {
+  const filteredStudents = (students || []).filter(student => {
     const matchesGrade = selectedGrade === 'Todos' || student.grade === selectedGrade;
-    const matchesSearch = student.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = student.name && student.name.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesGrade && matchesSearch;
   });
 
