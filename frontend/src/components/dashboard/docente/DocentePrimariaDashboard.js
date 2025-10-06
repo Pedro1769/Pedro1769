@@ -255,7 +255,7 @@ const DocentePrimariaDashboard = () => {
           ) : !myStudents || myStudents.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-gray-500 mb-2">No se encontraron estudiantes para el grado {user.grade}</p>
-              <p className="text-sm text-gray-400">Total de estudiantes cargados: {students.length}</p>
+              <p className="text-sm text-gray-400">Total de estudiantes cargados: {students?.length || 0}</p>
               <Button 
                 onClick={loadStudents} 
                 size="sm" 
