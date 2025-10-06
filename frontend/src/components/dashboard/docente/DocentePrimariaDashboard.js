@@ -272,7 +272,7 @@ const DocentePrimariaDashboard = () => {
                 </p>
               </div>
               <div className="space-y-4">
-                {myStudents.map((student, index) => (
+                {(myStudents || []).map((student, index) => (
                   <div key={student._id || index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
                     <div className="flex-1">
                       <h3 className="font-medium text-gray-900">{student.name}</h3>
