@@ -86,6 +86,86 @@ const AdminDashboard = () => {
     }
   };
 
+  const downloadStudentList = (format = 'csv') => {
+    const studentsData = students.map(student => ({
+      'Nombre Completo': student.name,
+      'Grado': student.grade,
+      'Nivel': student.level,
+      'Documento': student.document_number || 'No registrado',
+      'Estado': student.is_active ? 'Activo' : 'Inactivo',
+      'Fecha de Registro': new Date(student.created_at).toLocaleDateString()
+    }));
+
+    if (format === 'csv') {
+      const headers = Object.keys(studentsData[0]);
+      const csvContent = [
+        headers.join(','),
+        ...studentsData.map(row => 
+          headers.map(header => `"${row[header]}"`).join(',')
+        )
+      ].join('\n');
+
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `estudiantes_gaa_${new Date().toISOString().split('T')[0]}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    toast({
+      title: "Lista descargada",
+      description: `Se descargó el listado de ${studentsData.length} estudiantes`,
+    });
+  };
+
+  const downloadConsolidatedReport = () => {
+    if (consolidatedData.length === 0) {
+      toast({
+        title: "Sin datos",
+        description: "No hay consolidado académico para descargar",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const reportData = consolidatedData.map(record => ({
+      'Estudiante': record.student.name,
+      'Grado': record.student.grade,
+      'Nivel': record.student.level,
+      'Promedio General': record.total_average.toFixed(2),
+      'Estado Académico': record.status,
+      'Período I': record.periods.I || 'N/A',
+      'Período II': record.periods.II || 'N/A',
+      'Período III': record.periods.III || 'N/A',
+      'Período IV': record.periods.IV || 'N/A'
+    }));
+
+    const headers = Object.keys(reportData[0]);
+    const csvContent = [
+      headers.join(','),
+      ...reportData.map(row => 
+        headers.map(header => `"${row[header]}"`).join(',')
+      )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `consolidado_academico_gaa_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: "Reporte descargado",
+      description: `Se descargó el consolidado de ${reportData.length} estudiantes`,
+    });
+  };
+
   const generateBulletinCode = async (studentId, period) => {
     try {
       const result = await bulletinService.generateBulletinCode(studentId, period);
