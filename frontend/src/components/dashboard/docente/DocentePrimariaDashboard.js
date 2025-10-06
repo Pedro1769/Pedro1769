@@ -454,6 +454,63 @@ const DocentePrimariaDashboard = () => {
           </div>
         </CardContent>
       </Card>
+
+      {/* Modal Agregar Estudiante */}
+      <Dialog open={showAddStudent} onOpenChange={setShowAddStudent}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Agregar Nuevo Estudiante</DialogTitle>
+            <DialogDescription>
+              Agrega un estudiante a tu grado {user.grade}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Nombre Completo
+              </Label>
+              <Input
+                id="name"
+                value={newStudent.name}
+                onChange={(e) => setNewStudent({...newStudent, name: e.target.value})}
+                className="col-span-3"
+                placeholder="Ej: JUAN PÉREZ GARCÍA"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="document" className="text-right">
+                Documento
+              </Label>
+              <Input
+                id="document"
+                value={newStudent.document_number}
+                onChange={(e) => setNewStudent({...newStudent, document_number: e.target.value})}
+                className="col-span-3"
+                placeholder="Número de documento (opcional)"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="grade" className="text-right">
+                Grado
+              </Label>
+              <Input
+                id="grade"
+                value={newStudent.grade}
+                disabled
+                className="col-span-3 bg-gray-100"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setShowAddStudent(false)} variant="outline">
+              Cancelar
+            </Button>
+            <Button onClick={handleAddStudent} className="bg-green-600 hover:bg-green-700">
+              Agregar Estudiante
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       </div>
     </div>
   );
