@@ -19,9 +19,10 @@ import {
 } from 'lucide-react';
 
 const BulkStudentUpload = ({ onClose }) => {
-  const [uploadMethod, setUploadMethod] = useState('manual'); // 'manual', 'csv', 'paste'
+  const [uploadMethod, setUploadMethod] = useState('manual'); // 'manual', 'paste', 'file'
   const [students, setStudents] = useState([]);
   const [csvText, setCsvText] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const { toast } = useToast();
