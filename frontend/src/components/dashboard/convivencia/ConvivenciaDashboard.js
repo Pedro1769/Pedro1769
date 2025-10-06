@@ -322,8 +322,33 @@ const ConvivenciaDashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {filteredStudents.map((student, index) => (
+              {loading ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500">Cargando estudiantes...</p>
+                </div>
+              ) : filteredStudents.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 mb-2">No se encontraron estudiantes</p>
+                  <p className="text-sm text-gray-400">Total de estudiantes cargados: {students.length}</p>
+                  <p className="text-sm text-gray-400">Filtro actual: {selectedGrade}</p>
+                  <Button 
+                    onClick={loadAllStudents} 
+                    size="sm" 
+                    className="mt-3 bg-pink-600 hover:bg-pink-700"
+                  >
+                    Recargar Estudiantes
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-4 p-3 bg-pink-50 rounded-lg">
+                    <p className="text-pink-700 font-semibold">
+                      ✅ {filteredStudents.length} estudiantes encontrados
+                      {selectedGrade !== 'Todos' ? ` en grado ${selectedGrade}` : ' en total'}
+                    </p>
+                  </div>
+                  <div className="space-y-3 max-h-96 overflow-y-auto">
+                    {filteredStudents.map((student, index) => (
                   <div 
                     key={index} 
                     className={`flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors ${
