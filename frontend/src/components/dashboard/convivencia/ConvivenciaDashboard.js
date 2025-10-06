@@ -49,30 +49,30 @@ const ConvivenciaDashboard = () => {
   const { toast } = useToast();
 
   // Cargar TODOS los estudiantes (coordinadora ve todos)
-  useEffect(() => {
-    const loadAllStudents = async () => {
-      try {
-        setLoading(true);
-        const allStudents = await studentService.getAll();
-        setStudents(allStudents);
-        toast({
-          title: "Estudiantes cargados",
-          description: `Se cargaron ${allStudents.length} estudiantes`,
-        });
-      } catch (error) {
-        console.error('Error loading students:', error);
-        // Fallback a datos mock
-        setStudents(MOCK_STUDENTS);
-        toast({
-          title: "Usando datos de prueba",
-          description: "No se pudieron cargar los estudiantes del servidor",
-          variant: "destructive",
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadAllStudents = async () => {
+    try {
+      setLoading(true);
+      const allStudents = await studentService.getAll();
+      setStudents(allStudents);
+      toast({
+        title: "Estudiantes cargados",
+        description: `Se cargaron ${allStudents.length} estudiantes reales`,
+      });
+    } catch (error) {
+      console.error('Error loading students:', error);
+      // Fallback a datos mock
+      setStudents(MOCK_STUDENTS);
+      toast({
+        title: "Error al cargar datos",
+        description: "No se pudieron cargar los estudiantes reales. Usando datos de prueba.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     loadAllStudents();
   }, []);
 
