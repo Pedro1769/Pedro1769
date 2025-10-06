@@ -51,7 +51,11 @@ const DocentePrimariaDashboard = () => {
   const myStudents = students;
   
   const getStudentGrade = (student, period, subject) => {
-    return student.grades[period]?.[subject] || '';
+    // Verificar si el estudiante tiene estructura de notas
+    if (!student.grades || !student.grades[period]) {
+      return ''; // Retornar vacío si no hay notas
+    }
+    return student.grades[period][subject] || '';
   };
 
   const downloadMyStudentsList = () => {
