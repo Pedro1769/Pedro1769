@@ -762,6 +762,76 @@ const ConvivenciaDashboard = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        {/* Modal Asignar Nota de Convivencia */}
+        <Dialog open={showGradeModal} onOpenChange={setShowGradeModal}>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Asignar Nota de Convivencia</DialogTitle>
+              <DialogDescription>
+                {selectedStudentForGrade && `Asignar nota de convivencia a ${selectedStudentForGrade.name}`}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="period" className="text-right">
+                  Período
+                </Label>
+                <Select
+                  value={convivenciaGrade.period}
+                  onValueChange={(value) => setConvivenciaGrade({...convivenciaGrade, period: value})}
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Selecciona período" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PERIODS.map(period => (
+                      <SelectItem key={period} value={period}>Período {period}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="grade" className="text-right">
+                  Nota (1.0 - 5.0)
+                </Label>
+                <Input
+                  id="grade"
+                  type="number"
+                  min="1.0"
+                  max="5.0"
+                  step="0.1"
+                  value={convivenciaGrade.grade}
+                  onChange={(e) => setConvivenciaGrade({...convivenciaGrade, grade: e.target.value})}
+                  className="col-span-3"
+                  placeholder="Ej: 4.5"
+                />
+              </div>
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="observations" className="text-right">
+                  Observaciones
+                </Label>
+                <Textarea
+                  id="observations"
+                  value={convivenciaGrade.observations}
+                  onChange={(e) => setConvivenciaGrade({...convivenciaGrade, observations: e.target.value})}
+                  className="col-span-3"
+                  placeholder="Observaciones sobre la convivencia del estudiante..."
+                  rows={3}
+                />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button onClick={() => setShowGradeModal(false)} variant="outline">
+                Cancelar
+              </Button>
+              <Button onClick={handleAssignConvivenciaGrade} className="bg-pink-600 hover:bg-pink-700">
+                <Heart className="h-4 w-4 mr-2" />
+                Asignar Nota
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
       </div>
     </div>
