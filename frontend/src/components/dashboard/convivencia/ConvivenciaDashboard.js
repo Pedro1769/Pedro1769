@@ -182,13 +182,23 @@ const ConvivenciaDashboard = () => {
       {/* Filtros y Búsqueda */}
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Filter className="h-5 w-5" />
-            <span>Filtrar Estudiantes</span>
-          </CardTitle>
-          <CardDescription>
-            Busca y filtra estudiantes para gestión de convivencia
-          </CardDescription>
+          <div className="flex justify-between items-center">
+            <div>
+              <CardTitle className="flex items-center space-x-2">
+                <Filter className="h-5 w-5" />
+                <span>Filtrar Estudiantes</span>
+              </CardTitle>
+              <CardDescription>
+                Busca y filtra estudiantes para gestión de convivencia
+              </CardDescription>
+            </div>
+            <div className="flex space-x-2">
+              <Button onClick={downloadAllStudents} size="sm" className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700">
+                <Download className="h-4 w-4 mr-2" />
+                Descargar Lista Completa
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4 items-center">
