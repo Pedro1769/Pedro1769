@@ -39,6 +39,13 @@ const ConvivenciaDashboard = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAddStudent, setShowAddStudent] = useState(false);
+  const [newStudent, setNewStudent] = useState({
+    name: '',
+    document_number: '',
+    grade: 'Transición',
+    level: 'PREESCOLAR'
+  });
   const { toast } = useToast();
 
   // Cargar TODOS los estudiantes (coordinadora ve todos)
