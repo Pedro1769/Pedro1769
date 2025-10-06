@@ -392,6 +392,7 @@ const DocentePrimariaDashboard = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
