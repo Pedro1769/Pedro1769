@@ -399,6 +399,7 @@ const StudentDashboard = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
