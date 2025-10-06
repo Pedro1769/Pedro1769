@@ -51,7 +51,7 @@ const AdminDashboard = () => {
       // Cargar estadísticas del sistema
       const [statsData, studentsData, usersData] = await Promise.all([
         adminService.getStatistics(),
-        studentService.getStudents(),
+        studentService.getAll(),
         adminService.getUsers()
       ]);
       
