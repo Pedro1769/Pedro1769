@@ -55,9 +55,16 @@ const AdminDashboard = () => {
         adminService.getUsers()
       ]);
       
+      console.log('AdminDashboard - Total estudiantes cargados:', studentsData.length);
+      
       setStatistics(statsData);
       setStudents(studentsData);
       setUsers(usersData);
+      
+      toast({
+        title: "Dashboard cargado",
+        description: `Se cargaron ${studentsData.length} estudiantes en total`,
+      });
       
       // Cargar consolidado académico
       await loadConsolidatedData(studentsData);
