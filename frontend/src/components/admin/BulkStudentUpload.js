@@ -341,7 +341,7 @@ DIEGO ALEJANDRO RUIZ
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Button
               variant={uploadMethod === 'manual' ? 'default' : 'outline'}
               onClick={() => setUploadMethod('manual')}
@@ -357,7 +357,16 @@ DIEGO ALEJANDRO RUIZ
               className="h-20 flex flex-col items-center justify-center"
             >
               <FileText className="h-6 w-6 mb-2" />
-              <span>Pegar CSV</span>
+              <span>Pegar Datos</span>
+            </Button>
+            
+            <Button
+              variant={uploadMethod === 'file' ? 'default' : 'outline'}
+              onClick={() => setUploadMethod('file')}
+              className="h-20 flex flex-col items-center justify-center"
+            >
+              <Upload className="h-6 w-6 mb-2" />
+              <span>Subir Archivo</span>
             </Button>
             
             <Button
@@ -366,7 +375,7 @@ DIEGO ALEJANDRO RUIZ
               className="h-20 flex flex-col items-center justify-center"
             >
               <Download className="h-6 w-6 mb-2" />
-              <span>Descargar Plantilla</span>
+              <span>Plantilla</span>
             </Button>
           </div>
         </CardContent>
