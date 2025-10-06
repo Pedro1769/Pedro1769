@@ -259,6 +259,34 @@ const BulkStudentUpload = ({ onClose }) => {
     return errors; // No incluir duplicados en errores críticos
   };
 
+  const removeDuplicates = () => {
+    const uniqueStudents = [];
+    const seen = new Set();
+    
+    students.forEach(student => {
+      const key = student.name.toLowerCase().trim();
+      if (!seen.has(key)) {
+        seen.add(key);
+        uniqueStudents.push(student);
+      }
+    });
+    
+    const removedCount = students.length - uniqueStudents.length;
+    setStudents(uniqueStudents);
+    
+    if (removedCount > 0) {
+      toast({
+        title: "Duplicados eliminados",
+        description: `Se eliminaron ${removedCount} estudiantes duplicados. Quedan ${uniqueStudents.length} estudiantes únicos.`,
+      });
+    } else {
+      toast({
+        title: "Sin duplicados",
+        description: "No se encontraron duplicados para eliminar.",
+      });
+    }
+  };
+
   const handleBulkUpload = async () => {
     if (students.length === 0) {
       toast({
