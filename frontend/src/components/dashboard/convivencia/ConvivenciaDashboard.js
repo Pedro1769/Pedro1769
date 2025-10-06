@@ -35,13 +35,35 @@ const ConvivenciaDashboard = () => {
   const allGrades = ['Todos', ...GRADES.PREESCOLAR, ...GRADES.PRIMARIA, ...GRADES.BACHILLERATO];
 
   return (
-    <div className="space-y-6 pt-16">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Coordinación de Convivencia</h1>
-        <p className="text-gray-600">{user.name}</p>
-        <p className="text-sm text-purple-600">Gestión integral de convivencia escolar</p>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 relative overflow-hidden">
+      {/* Elementos decorativos dinámicos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-pink-400 to-rose-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 -right-4 w-96 h-96 bg-gradient-to-r from-rose-400 to-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-700"></div>
+        <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
       </div>
+
+      <div className="relative z-10 space-y-6 pt-20 px-6">
+        {/* Header mejorado */}
+        <div className="mb-8 p-8 bg-gradient-to-r from-pink-600/20 via-rose-600/15 to-purple-600/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center space-x-4 mb-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-800 to-purple-800 bg-clip-text text-transparent">
+                  Coordinación de Convivencia
+                </h1>
+                <div className="px-6 py-3 bg-gradient-to-r from-pink-600 to-rose-600 text-white rounded-2xl text-xl font-bold shadow-lg animate-bounce">
+                  💜 CONV
+                </div>
+              </div>
+              <p className="text-gray-700 font-medium text-lg">{user.name} - Coordinadora de Convivencia</p>
+              <div className="mt-3 px-6 py-3 bg-gradient-to-r from-rose-500 to-purple-600 text-white rounded-2xl inline-flex items-center space-x-2 shadow-lg">
+                <Heart className="h-5 w-5" />
+                <span className="font-bold">🌟 Gestión integral de convivencia escolar</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
