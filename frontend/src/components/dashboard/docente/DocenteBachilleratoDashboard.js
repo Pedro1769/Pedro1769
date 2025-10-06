@@ -21,10 +21,47 @@ const DocenteBachilleratoDashboard = () => {
   const { user } = useAuth();
   const [selectedPeriod, setSelectedPeriod] = useState('I');
   const [selectedGrade, setSelectedGrade] = useState('6°');
-  const [selectedSubject, setSelectedSubject] = useState(user.subjects[0]);
+  const [selectedSubject, setSelectedSubject] = useState(user.subjects?.[0] || 'MATEMÁTICA');
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // Filtrar estudiantes por grado seleccionado (docentes de bachillerato manejan todos los grados)
-  const gradeStudents = MOCK_STUDENTS.filter(student => student.grade === selectedGrade);
+  // Cargar estudiantes según los grados asignados al docente
+  useEffect(() => {
+    const loadStudents = async () => {
+      try {
+        setLoading(true);
+        let gradeStudents = [];
+        
+        if (user.grades && user.grades.length > 0) {
+          // Filtrar estudiantes por los grados asignados al docente
+          const allStudents = await studentService.getAll();
+          gradeStudents = allStudents.filter(student => 
+            user.grades.includes(student.grade)
+          );
+        } else {
+          // Fallback: mostrar estudiantes del grado seleccionado
+          const allStudents = await studentService.getAll();
+          gradeStudents = allStudents.filter(student => student.grade === selectedGrade);
+        }
+        
+        setStudents(gradeStudents);
+      } catch (error) {
+        console.error('Error loading students:', error);
+        // Fallback a datos mock
+        const myStudents = MOCK_STUDENTS.filter(student => 
+          user.grades ? user.grades.includes(student.grade) : student.grade === selectedGrade
+        );
+        setStudents(myStudents);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadStudents();
+  }, [user.grades, selectedGrade]);
+
+  // Filtrar estudiantes por grado seleccionado
+  const gradeStudents = students.filter(student => student.grade === selectedGrade);
   
   const getStudentGrade = (student, period, subject) => {
     return student.grades[period]?.[subject] || '';
