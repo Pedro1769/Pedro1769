@@ -15,6 +15,7 @@ import {
   Edit
 } from 'lucide-react';
 import { MOCK_STUDENTS, SUBJECTS, PERIODS, getPerformanceLevel } from '../../../mockData';
+import { studentService } from '../../../services/api';
 
 const DocentePrimariaDashboard = () => {
   const { user } = useAuth();
