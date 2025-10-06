@@ -356,17 +356,17 @@ CARLOS MARTÍNEZ RUIZ,6°,11223344`;
       {uploadMethod === 'paste' && (
         <Card>
           <CardHeader>
-            <CardTitle>Pegar Datos CSV</CardTitle>
+            <CardTitle>Pegar Datos de Estudiantes</CardTitle>
             <CardDescription>
-              Formato: Nombre Completo, Grado, Documento (opcional)
+              Acepta cualquier formato: CSV, tabla copiada de Excel, lista simple. El sistema detectará automáticamente nombres, grados y documentos.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <Textarea
-              placeholder="JUAN PÉREZ GARCÍA,1°,12345678&#10;MARÍA RODRÍGUEZ LÓPEZ,2°,87654321"
+              placeholder="Puedes pegar datos en cualquier formato, por ejemplo:&#10;&#10;JUAN PÉREZ GARCÍA,1°,12345678&#10;MARÍA RODRÍGUEZ LÓPEZ,2°&#10;CARLOS MARTÍNEZ 3° 87654321&#10;&#10;O simplemente una lista de nombres:&#10;JUAN PÉREZ GARCÍA&#10;MARÍA RODRÍGUEZ LÓPEZ&#10;CARLOS MARTÍNEZ RUIZ"
               value={csvText}
               onChange={(e) => setCsvText(e.target.value)}
-              rows={8}
+              rows={10}
               className="font-mono text-sm"
             />
             <Button onClick={parseCsvText} className="w-full">
