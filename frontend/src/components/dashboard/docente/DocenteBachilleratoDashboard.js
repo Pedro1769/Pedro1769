@@ -62,12 +62,89 @@ const DocenteBachilleratoDashboard = () => {
   // Filtrar estudiantes por grado seleccionado
   const gradeStudents = (students || []).filter(student => student.grade === selectedGrade);
   
+  // Función para obtener nota desde el estado guardado o datos del estudiante
   const getStudentGrade = (student, period, subject) => {
-    // Verificar si el estudiante tiene estructura de notas
-    if (!student.grades || !student.grades[period]) {
-      return ''; // Retornar vacío si no hay notas
+    const gradeKey = `${student._id || student.id}-${period}-${subject}`;
+    
+    // Primero verificar en las notas guardadas en el estado
+    if (savedGrades[gradeKey]) {
+      return savedGrades[gradeKey].grade;
     }
-    return student.grades[period][subject] || '';
+    
+    // Luego verificar en los datos del estudiante (mock data)
+    if (student.grades && student.grades[period] && student.grades[period][subject]) {
+      return student.grades[period][subject];
+    }
+    
+    return '';
+  };
+
+  // Función para cargar notas reales desde la base de datos
+  const loadStudentGrades = async (studentId) => {
+    try {
+      const grades = await gradeService.getStudentGrades(studentId);
+      const gradeMap = {};
+      
+      grades.forEach(grade => {
+        const gradeKey = `${studentId}-${grade.period}-${grade.subject}`;
+        gradeMap[gradeKey] = grade;
+      });
+      
+      setSavedGrades(prev => ({ ...prev, ...gradeMap }));
+    } catch (error) {
+      console.error('Error loading grades for student:', studentId, error);
+    }
+  };
+
+  // Función para guardar nota
+  const handleGradeChange = async (studentId, period, subject, gradeValue) => {
+    if (!gradeValue || gradeValue === '') return;
+    
+    const grade = parseFloat(gradeValue);
+    if (isNaN(grade) || grade < 1 || grade > 5) {
+      toast({
+        title: "Nota inválida",
+        description: "La nota debe estar entre 1.0 y 5.0",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setLoadingGrades(true);
+      
+      const gradeData = {
+        student_id: studentId,
+        subject: subject,
+        period: period,
+        grade: grade,
+        teacher_notes: ''
+      };
+
+      const savedGrade = await gradeService.assignGrade(gradeData);
+      
+      // Actualizar el estado local
+      const gradeKey = `${studentId}-${period}-${subject}`;
+      setSavedGrades(prev => ({
+        ...prev,
+        [gradeKey]: savedGrade
+      }));
+
+      toast({
+        title: "Nota guardada",
+        description: `Nota ${grade} asignada exitosamente en ${subject}`,
+      });
+
+    } catch (error) {
+      toast({
+        title: "Error al guardar nota",
+        description: "No se pudo guardar la nota. Intenta nuevamente.",
+        variant: "destructive",
+      });
+      console.error('Error saving grade:', error);
+    } finally {
+      setLoadingGrades(false);
+    }
   };
 
   const downloadMyGradeStudents = () => {
