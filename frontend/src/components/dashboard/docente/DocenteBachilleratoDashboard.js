@@ -58,7 +58,7 @@ const DocenteBachilleratoDashboard = () => {
   }, [selectedGrade]);
 
   // Filtrar estudiantes por grado seleccionado
-  const gradeStudents = students.filter(student => student.grade === selectedGrade);
+  const gradeStudents = (students || []).filter(student => student.grade === selectedGrade);
   
   const getStudentGrade = (student, period, subject) => {
     // Verificar si el estudiante tiene estructura de notas
