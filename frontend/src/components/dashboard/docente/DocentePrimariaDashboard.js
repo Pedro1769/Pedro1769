@@ -4,6 +4,16 @@ import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import { Badge } from '../../ui/badge';
 import { useAuth } from '../../../contexts/AuthContext';
+import { useToast } from '../../../hooks/use-toast';
+import { 
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '../../ui/dialog';
+import { Label } from '../../ui/label';
 import { 
   Users, 
   BookOpen, 
