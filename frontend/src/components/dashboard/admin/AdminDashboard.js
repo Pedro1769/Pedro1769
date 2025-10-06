@@ -18,7 +18,8 @@ import {
   BarChart3,
   Upload,
   UserPlus,
-  Calendar
+  Calendar,
+  Eye
 } from 'lucide-react';
 import { studentService, adminService, gradeService, bulletinService } from '../../../services/api';
 import { useAuth } from '../../../contexts/AuthContext';
