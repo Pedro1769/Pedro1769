@@ -30,18 +30,42 @@ const DocenteBachilleratoDashboard = () => {
   };
 
   return (
-    <div className="space-y-6 pt-16">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel Docente - Bachillerato</h1>
-        <p className="text-gray-600">{user.name}</p>
-        <div className="flex flex-wrap gap-2 mt-2">
-          <Badge variant="secondary">Tutor de Grupo</Badge>
-          {user.subjects.map(subject => (
-            <Badge key={subject} variant="outline">{subject}</Badge>
-          ))}
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
+      {/* Elementos decorativos dinámicos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 -right-4 w-96 h-96 bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-700"></div>
+        <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
       </div>
+
+      <div className="relative z-10 space-y-6 pt-20 px-6">
+        {/* Header mejorado */}
+        <div className="mb-8 p-8 bg-gradient-to-r from-purple-600/20 via-indigo-600/15 to-blue-600/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center space-x-4 mb-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-800 to-blue-800 bg-clip-text text-transparent">
+                  Panel Docente - Bachillerato
+                </h1>
+                <div className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl text-xl font-bold shadow-lg animate-bounce">
+                  🎓 BAC
+                </div>
+              </div>
+              <p className="text-gray-700 font-medium text-lg">{user.name}</p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                <div className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-xl font-bold">
+                  <GraduationCap className="h-4 w-4 inline mr-2" />
+                  Tutor de Grupo
+                </div>
+                {user.subjects && user.subjects.map(subject => (
+                  <div key={subject} className="px-3 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-gray-700 font-medium">
+                    {subject}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
