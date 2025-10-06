@@ -40,6 +40,13 @@ const ConvivenciaDashboard = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddStudent, setShowAddStudent] = useState(false);
+  const [showGradeModal, setShowGradeModal] = useState(false);
+  const [selectedStudentForGrade, setSelectedStudentForGrade] = useState(null);
+  const [convivenciaGrade, setConvivenciaGrade] = useState({
+    period: 'I',
+    grade: '',
+    observations: ''
+  });
   const [newStudent, setNewStudent] = useState({
     name: '',
     document_number: '',
