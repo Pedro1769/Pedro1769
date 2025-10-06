@@ -119,9 +119,17 @@ const AdminDashboard = () => {
   const studentsLosing = consolidatedData.filter(s => s.status === 'PIERDE').length;
 
   return (
-    <div className="space-y-6 pt-16">
-      {/* Header mejorado */}
-      <div className="mb-8 p-6 bg-gradient-to-r from-blue-500/10 via-purple-500/5 to-red-500/10 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 animate-pulse">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-red-50 relative overflow-hidden">
+      {/* Elementos decorativos dinámicos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 -right-4 w-96 h-96 bg-gradient-to-r from-purple-400 to-red-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-700"></div>
+        <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gradient-to-r from-red-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
+      </div>
+
+      <div className="relative z-10 space-y-6 pt-20 px-6">
+        {/* Header mejorado */}
+        <div className="mb-8 p-8 bg-gradient-to-r from-blue-600/20 via-purple-600/15 to-red-600/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30 hover:shadow-3xl transition-all duration-500">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center space-x-4 mb-2">
