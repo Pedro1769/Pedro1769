@@ -21,12 +21,16 @@ async def get_students(
     filter_query = {"is_active": True}
     
     if current_user.role == UserRole.DOCENTE_PRIMARIA:
-        # Docentes de primaria solo ven estudiantes de su grado
-        filter_query["teacher_id"] = current_user.id
+        # Docentes de primaria ven estudiantes de su grado asignado
+        if current_user.grade:
+            filter_query["grade"] = current_user.grade
     elif current_user.role == UserRole.DOCENTE_BACHILLERATO:
         # Docentes de bachillerato ven estudiantes de los grados que manejan
         if current_user.grades:
             filter_query["grade"] = {"$in": current_user.grades}
+        elif current_user.grade:
+            # Si no tiene grades pero sí grade, usar ese grado
+            filter_query["grade"] = current_user.grade
     elif current_user.role == UserRole.PADRE:
         # Padres solo ven a sus hijos
         filter_query["parent_id"] = current_user.id
