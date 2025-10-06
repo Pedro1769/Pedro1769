@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Comprehensive Backend Authentication Testing
-Sistema de Gestión Escolar GAA - Authentication Module Tests
+Comprehensive Backend Testing - Student System
+Sistema de Gestión Escolar GAA - Student Management Tests
 """
 
 import requests
@@ -10,8 +10,8 @@ import sys
 from datetime import datetime
 from typing import Dict, Any, Optional
 
-# Configuration
-BASE_URL = "https://gaa-eduportal.preview.emergentagent.com/api"
+# Configuration - Using environment variable from frontend/.env
+BASE_URL = "https://user-auth-fix-7.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 # Test users from contracts.md
