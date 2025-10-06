@@ -478,7 +478,23 @@ const DocentePrimariaDashboard = () => {
                           step="0.1"
                           placeholder="0.0"
                           className="w-20 text-center"
-                          defaultValue={currentGrade || ''}
+                          value={currentGrade || ''}
+                          onChange={(e) => {
+                            // Opcional: Guardar automáticamente después de un delay
+                            const value = e.target.value;
+                            if (value && !isNaN(parseFloat(value))) {
+                              setTimeout(() => {
+                                handleGradeChange(student._id || student.id, selectedPeriod, selectedSubject, value);
+                              }, 1000); // Esperar 1 segundo después de que el usuario deje de escribir
+                            }
+                          }}
+                          onBlur={(e) => {
+                            // Guardar cuando el usuario termine de editar
+                            const value = e.target.value;
+                            if (value && !isNaN(parseFloat(value))) {
+                              handleGradeChange(student._id || student.id, selectedPeriod, selectedSubject, value);
+                            }
+                          }}
                         />
                       </td>
                       <td className="text-center p-2">
