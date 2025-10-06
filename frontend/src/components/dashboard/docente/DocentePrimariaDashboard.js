@@ -59,6 +59,15 @@ const DocentePrimariaDashboard = () => {
   };
 
   const downloadMyStudentsList = () => {
+    if (!myStudents || myStudents.length === 0) {
+      toast({
+        title: "Sin datos para descargar",
+        description: "No hay estudiantes para exportar",
+        variant: "destructive",
+      });
+      return;
+    }
+
     const studentsData = myStudents.map(student => ({
       'Nombre Completo': student.name,
       'Grado': student.grade,
