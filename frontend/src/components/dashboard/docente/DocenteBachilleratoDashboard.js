@@ -212,12 +212,18 @@ const DocenteBachilleratoDashboard = () => {
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <Users className="h-5 w-5" />
-              <span>Estudiantes - Grado {selectedGrade}</span>
+              <span>Estudiantes - Grado {selectedGrade} ({gradeStudents.length})</span>
             </div>
-            <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Agregar Estudiante
-            </Button>
+            <div className="flex space-x-2">
+              <Button onClick={downloadMyGradeStudents} size="sm" className="bg-green-600 hover:bg-green-700">
+                <Download className="h-4 w-4 mr-2" />
+                Descargar Lista
+              </Button>
+              <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Agregar Estudiante
+              </Button>
+            </div>
           </CardTitle>
           <CardDescription>
             Gestiona estudiantes del grado seleccionado
