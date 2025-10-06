@@ -284,16 +284,35 @@ const BulkStudentUpload = ({ onClose }) => {
   };
 
   const downloadTemplate = () => {
-    const template = `Nombre Completo,Grado,Documento
+    const template = `# PLANTILLA FLEXIBLE PARA CARGA DE ESTUDIANTES
+# Acepta múltiples formatos:
+
+# Formato 1: CSV completo (recomendado)
+Nombre Completo,Grado,Documento
 JUAN PÉREZ GARCÍA,1°,12345678
 MARÍA RODRÍGUEZ LÓPEZ,2°,87654321
-CARLOS MARTÍNEZ RUIZ,6°,11223344`;
+CARLOS MARTÍNEZ RUIZ,6°,11223344
+
+# Formato 2: Con separador punto y coma
+ANA SOFÍA TORRES;3°;55667788
+LUIS ALBERTO GÓMEZ;4°;99887766
+
+# Formato 3: Con espacios o tabulación
+PEDRO ANTONIO SILVA	5°	44332211
+LAURA BEATRIZ MORA	Transición	88776655
+
+# Formato 4: Solo nombres (se asignará grado 1° por defecto)
+JOSÉ MIGUEL HERRERA
+CAROLINA ISABEL VEGA
+DIEGO ALEJANDRO RUIZ
+
+# Grados válidos: Transición, 1°, 2°, 3°, 4°, 5°, 6°, 7°, 8°, 9°, 10°, 11°`;
 
     const blob = new Blob([template], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', 'plantilla_estudiantes.csv');
+    link.setAttribute('download', 'plantilla_estudiantes_flexible.csv');
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
