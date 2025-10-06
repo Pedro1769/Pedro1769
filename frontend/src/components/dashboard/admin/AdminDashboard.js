@@ -411,9 +411,15 @@ const AdminDashboard = () => {
           <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
             <CardHeader>
               <div className="flex justify-between items-center">
-                <CardTitle className="text-xl font-bold text-green-700">
-                  📚 Lista Completa de Estudiantes ({students.length} estudiantes)
-                </CardTitle>
+                <div>
+                  <CardTitle className="text-xl font-bold text-green-700">
+                    📚 Lista Completa de Estudiantes 
+                  </CardTitle>
+                  <div className="mt-2 px-4 py-2 bg-green-100 rounded-lg inline-flex items-center">
+                    <span className="text-2xl font-bold text-green-800">{students?.length || 0}</span>
+                    <span className="ml-2 text-green-700 font-semibold">estudiantes reales cargados</span>
+                  </div>
+                </div>
                 <div className="flex space-x-2">
                   <Button onClick={() => downloadStudentList('csv')} size="sm" className="bg-green-600 hover:bg-green-700">
                     <Download className="h-4 w-4 mr-2" />
