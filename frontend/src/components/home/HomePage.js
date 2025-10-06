@@ -110,6 +110,7 @@ const HomePage = () => {
               <Button 
                 size="lg" 
                 onClick={() => navigate('/login')}
+                data-testid="acceder-sistema-btn"
                 className="group bg-gradient-to-r from-blue-600 via-blue-700 to-red-600 hover:from-blue-700 hover:via-blue-800 hover:to-red-700 text-white px-10 py-4 text-lg shadow-xl transition-all duration-300 transform hover:scale-105 hover:shadow-2xl"
               >
                 <GraduationCap className="w-5 h-5 mr-3 group-hover:rotate-12 transition-transform" />
