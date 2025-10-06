@@ -415,7 +415,7 @@ const DocenteBachilleratoDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {gradeStudents.map((student, index) => {
+                  {(gradeStudents || []).map((student, index) => {
                     const currentGrade = getStudentGrade(student, selectedPeriod, selectedSubject);
                     const performance = currentGrade ? getPerformanceLevel(currentGrade) : null;
                     
