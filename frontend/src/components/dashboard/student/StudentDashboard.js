@@ -138,18 +138,39 @@ const StudentDashboard = () => {
   const gradesVisible = canViewGrades();
 
   return (
-    <div className="space-y-6 pt-16 bg-gradient-to-br from-blue-50/30 via-white to-red-50/30 min-h-screen">
-      {/* Header */}
-      <div className="mb-8 p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/20">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent mb-2">
-          Portal del Estudiante
-        </h1>
-        <p className="text-gray-600">{user.name}</p>
-        <div className="flex items-center space-x-2 mt-2">
-          <Badge variant="secondary">{studentData.grade}</Badge>
-          <Badge variant="outline">{studentData.level}</Badge>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-cyan-50 via-sky-50 to-blue-50 relative overflow-hidden">
+      {/* Elementos decorativos dinámicos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-cyan-400 to-sky-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 -right-4 w-96 h-96 bg-gradient-to-r from-sky-400 to-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-700"></div>
+        <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
       </div>
+
+      <div className="relative z-10 space-y-6 pt-20 px-6">
+        {/* Header mejorado */}
+        <div className="mb-8 p-8 bg-gradient-to-r from-cyan-600/20 via-sky-600/15 to-blue-600/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center space-x-4 mb-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-cyan-800 to-blue-800 bg-clip-text text-transparent">
+                  Portal del Estudiante
+                </h1>
+                <div className="px-6 py-3 bg-gradient-to-r from-cyan-600 to-sky-600 text-white rounded-2xl text-xl font-bold shadow-lg animate-bounce">
+                  🎒 EST
+                </div>
+              </div>
+              <p className="text-gray-700 font-medium text-lg">{user.name}</p>
+              <div className="flex items-center space-x-3 mt-4">
+                <div className="px-4 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white rounded-xl font-bold">
+                  📚 {studentData.grade}
+                </div>
+                <div className="px-3 py-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-lg text-gray-700 font-medium">
+                  {studentData.level}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
       {/* Estadísticas del estudiante */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
