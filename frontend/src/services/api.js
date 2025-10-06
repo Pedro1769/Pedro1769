@@ -64,6 +64,11 @@ export const authService = {
 
 // Servicios de estudiantes
 export const studentService = {
+  getAll: async (params = {}) => {
+    const response = await api.get('/students', { params });
+    return response.data;
+  },
+  
   getStudents: async (params = {}) => {
     const response = await api.get('/students', { params });
     return response.data;
