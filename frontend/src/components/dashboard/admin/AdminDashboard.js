@@ -399,56 +399,6 @@ const AdminDashboard = () => {
 
         {/* Tab Estudiantes */}
         <TabsContent value="estudiantes" className="space-y-6">
-          {/* Estadísticas de Rendimiento Académico */}
-          {consolidatedData.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0 shadow-lg">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium flex items-center">
-                    <TrendingUp className="h-4 w-4 mr-2" />
-                    Estudiantes Ganando
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{studentsWinning}</div>
-                  <p className="text-xs text-green-100">
-                    {consolidatedData.length > 0 ? ((studentsWinning / consolidatedData.length) * 100).toFixed(1) : 0}% del total
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-yellow-500 to-orange-500 text-white border-0 shadow-lg">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium flex items-center">
-                    <AlertCircle className="h-4 w-4 mr-2" />
-                    Requieren Ayuda
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{studentsNeedHelp}</div>
-                  <p className="text-xs text-orange-100">
-                    {consolidatedData.length > 0 ? ((studentsNeedHelp / consolidatedData.length) * 100).toFixed(1) : 0}% del total
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-red-500 to-red-600 text-white border-0 shadow-lg">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-sm font-medium flex items-center">
-                    <AlertCircle className="h-4 w-4 mr-2" />
-                    Estudiantes Perdiendo
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{studentsLosing}</div>
-                  <p className="text-xs text-red-100">
-                    {consolidatedData.length > 0 ? ((studentsLosing / consolidatedData.length) * 100).toFixed(1) : 0}% del total
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
           {consolidatedData.length > 0 ? (
             <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
               <CardHeader>
