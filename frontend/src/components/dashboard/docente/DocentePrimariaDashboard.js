@@ -29,13 +29,35 @@ const DocentePrimariaDashboard = () => {
   };
 
   return (
-    <div className="space-y-6 pt-16">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Panel Docente - Primaria</h1>
-        <p className="text-gray-600">{user.name} - Grado {user.grade}</p>
-        <p className="text-sm text-blue-600">Docente de todas las asignaturas del grado</p>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden">
+      {/* Elementos decorativos dinámicos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 -right-4 w-96 h-96 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-700"></div>
+        <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gradient-to-r from-teal-400 to-green-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
       </div>
+
+      <div className="relative z-10 space-y-6 pt-20 px-6">
+        {/* Header mejorado */}
+        <div className="mb-8 p-8 bg-gradient-to-r from-green-600/20 via-emerald-600/15 to-teal-600/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center space-x-4 mb-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-green-800 to-teal-800 bg-clip-text text-transparent">
+                  Panel Docente - Primaria
+                </h1>
+                <div className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-2xl text-xl font-bold shadow-lg animate-bounce">
+                  📚 {user.grade}
+                </div>
+              </div>
+              <p className="text-gray-700 font-medium text-lg">{user.name} - Docente de Grado {user.grade}</p>
+              <div className="mt-3 px-6 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-2xl inline-flex items-center space-x-2 shadow-lg">
+                <BookOpen className="h-5 w-5" />
+                <span className="font-bold">🌟 Docente de todas las asignaturas del grado</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
