@@ -67,7 +67,11 @@ const HomePage = () => {
               <Link to="/academico" className="text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-105 font-medium">Académico</Link>
               <Link to="/contacto" className="text-gray-700 hover:text-blue-600 transition-all duration-300 hover:scale-105 font-medium">Contacto</Link>
               <Button 
-                onClick={() => navigate('/login')} 
+                type="button"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/login');
+                }} 
                 data-testid="portal-institucional-btn"
                 className="bg-gradient-to-r from-blue-600 via-blue-700 to-red-600 hover:from-blue-700 hover:via-blue-800 hover:to-red-700 text-white shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
               >
