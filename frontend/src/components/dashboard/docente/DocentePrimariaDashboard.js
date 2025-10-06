@@ -57,6 +57,32 @@ const DocentePrimariaDashboard = () => {
     return student.grades[period]?.[subject] || '';
   };
 
+  const downloadMyStudentsList = () => {
+    const studentsData = myStudents.map(student => ({
+      'Nombre Completo': student.name,
+      'Grado': student.grade,
+      'Documento': student.document_number || 'No registrado',
+      'Estado': student.is_active ? 'Activo' : 'Inactivo',
+    }));
+
+    const headers = Object.keys(studentsData[0]);
+    const csvContent = [
+      headers.join(','),
+      ...studentsData.map(row => 
+        headers.map(header => `"${row[header]}"`).join(',')
+      )
+    ].join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `mis_estudiantes_${user.grade}_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden">
       {/* Elementos decorativos dinámicos */}
