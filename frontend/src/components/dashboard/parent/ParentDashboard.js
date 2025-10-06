@@ -157,15 +157,35 @@ const ParentDashboard = () => {
   const childStats = selectedChild ? calculateChildStatistics(selectedChild) : null;
 
   return (
-    <div className="space-y-6 pt-16 bg-gradient-to-br from-blue-50/30 via-white to-red-50/30 min-h-screen">
-      {/* Header */}
-      <div className="mb-8 p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg border border-white/20">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent mb-2">
-          Panel de Padre/Acudiente
-        </h1>
-        <p className="text-gray-600">{user.name}</p>
-        <p className="text-sm text-blue-600">Seguimiento académico de sus hijos</p>
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 relative overflow-hidden">
+      {/* Elementos decorativos dinámicos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-4 -left-4 w-72 h-72 bg-gradient-to-r from-orange-400 to-amber-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-1/2 -right-4 w-96 h-96 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-700"></div>
+        <div className="absolute -bottom-8 left-1/2 w-80 h-80 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse delay-1000"></div>
       </div>
+
+      <div className="relative z-10 space-y-6 pt-20 px-6">
+        {/* Header mejorado */}
+        <div className="mb-8 p-8 bg-gradient-to-r from-orange-600/20 via-amber-600/15 to-yellow-600/20 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/30">
+          <div className="flex items-center justify-between">
+            <div>
+              <div className="flex items-center space-x-4 mb-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-orange-800 to-amber-800 bg-clip-text text-transparent">
+                  Panel de Padre/Acudiente
+                </h1>
+                <div className="px-6 py-3 bg-gradient-to-r from-orange-600 to-amber-600 text-white rounded-2xl text-xl font-bold shadow-lg animate-bounce">
+                  👨‍👩‍👧‍👦 FAM
+                </div>
+              </div>
+              <p className="text-gray-700 font-medium text-lg">{user.name}</p>
+              <div className="mt-3 px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-600 text-white rounded-2xl inline-flex items-center space-x-2 shadow-lg">
+                <Users className="h-5 w-5" />
+                <span className="font-bold">🌟 Seguimiento académico de sus hijos</span>
+              </div>
+            </div>
+          </div>
+        </div>
 
       {myChildren.length === 0 ? (
         <Card className="bg-white/80 backdrop-blur-md border-0 shadow-lg">
