@@ -396,6 +396,7 @@ const DocenteBachilleratoDashboard = () => {
           </div>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
