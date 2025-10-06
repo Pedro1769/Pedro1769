@@ -379,6 +379,7 @@ const ParentDashboard = () => {
           </Card>
         </>
       )}
+      </div>
     </div>
   );
 };
