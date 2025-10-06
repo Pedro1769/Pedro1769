@@ -226,9 +226,16 @@ const DocentePrimariaDashboard = () => {
       const gradeStudents = allStudents.filter(student => student.grade === user.grade);
       console.log('Estudiantes filtrados para grado', user.grade, ':', gradeStudents.length);
       setStudents(gradeStudents);
+      
+      // Cargar notas para todos los estudiantes
+      console.log('Cargando notas para todos los estudiantes...');
+      for (const student of gradeStudents) {
+        await loadStudentGrades(student._id || student.id);
+      }
+      
       toast({
-        title: "Estudiantes cargados",
-        description: `Se encontraron ${gradeStudents.length} estudiantes en grado ${user.grade}`,
+        title: "Estudiantes y notas cargados",
+        description: `Se encontraron ${gradeStudents.length} estudiantes con sus notas en grado ${user.grade}`,
       });
     } catch (error) {
       console.error('Error loading students:', error);
