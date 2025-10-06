@@ -317,7 +317,7 @@ const DocenteBachilleratoDashboard = () => {
             <div className="text-center py-8">
               <p className="text-gray-500">Cargando estudiantes...</p>
             </div>
-          ) : gradeStudents.length === 0 ? (
+          ) : !gradeStudents || gradeStudents.length === 0 ? (
             <div className="text-center py-8">
               <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
               <p className="text-gray-500 mb-2">No se encontraron estudiantes en grado {selectedGrade}</p>
