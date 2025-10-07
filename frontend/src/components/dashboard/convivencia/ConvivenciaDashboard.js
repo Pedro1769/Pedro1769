@@ -705,6 +705,24 @@ const ConvivenciaDashboard = () => {
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="subject" className="text-right">
+                  Tipo de Nota
+                </Label>
+                <Select
+                  value={convivenciaGrade.subject}
+                  onValueChange={(value) => setConvivenciaGrade({...convivenciaGrade, subject: value})}
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Selecciona tipo de nota" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="CONVIVENCIA ESCOLAR">CONVIVENCIA ESCOLAR</SelectItem>
+                    <SelectItem value="ACOMPAÑAMIENTO DE ACUDIENTE">ACOMPAÑAMIENTO DE ACUDIENTE</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="period" className="text-right">
                   Período
                 </Label>
@@ -774,6 +792,24 @@ const ConvivenciaDashboard = () => {
               </DialogDescription>
             </DialogHeader>
             <div className="grid gap-4 py-4">
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="subject" className="text-right">
+                  Tipo de Nota
+                </Label>
+                <Select
+                  value={convivenciaGrade.subject}
+                  onValueChange={(value) => setConvivenciaGrade({...convivenciaGrade, subject: value})}
+                >
+                  <SelectTrigger className="col-span-3">
+                    <SelectValue placeholder="Selecciona tipo de nota" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="CONVIVENCIA ESCOLAR">CONVIVENCIA ESCOLAR</SelectItem>
+                    <SelectItem value="ACOMPAÑAMIENTO DE ACUDIENTE">ACOMPAÑAMIENTO DE ACUDIENTE</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="period" className="text-right">
                   Período
