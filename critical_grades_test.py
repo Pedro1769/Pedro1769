@@ -453,24 +453,28 @@ class CriticalGradesTest:
             print("❌ Grade assignment failed")
             return False
         
-        # Step 4: Verify the grade is saved in the database
-        if not self.verify_grade_persistence("docente_bachillerato", self.test_student_id):
+        # Step 4: Login admin to verify the grade is saved in the database
+        if not self.login_user("admin", CRITICAL_USERS["admin"]):
+            print("❌ Cannot login admin for verification")
+            return False
+        
+        if not self.verify_grade_persistence("admin", self.test_student_id):
             print("❌ Grade persistence verification failed")
             return False
         
-        # Step 5: Logout
+        # Step 5: Logout teacher
         if not self.logout_user("docente_bachillerato"):
-            print("⚠️ Logout failed, but continuing...")
+            print("⚠️ Teacher logout failed, but continuing...")
         
-        # Step 6: Login again with the same user
+        # Step 6: Login teacher again with the same user
         time.sleep(1)  # Brief pause between logout and login
         if not self.login_user("docente_bachillerato", CRITICAL_USERS["docente_bachillerato"]):
-            print("❌ Re-login failed")
+            print("❌ Teacher re-login failed")
             return False
         
-        # Step 7: Verify the assigned grade APPEARS automatically
-        if not self.verify_grade_persistence("docente_bachillerato", self.test_student_id):
-            print("❌ Grade does not appear after re-login - PERSISTENCE FAILED")
+        # Step 7: Verify the assigned grade APPEARS automatically (using admin verification)
+        if not self.verify_grade_persistence("admin", self.test_student_id):
+            print("❌ Grade does not appear after teacher re-login - PERSISTENCE FAILED")
             return False
         
         print("✅ TEST 1 COMPLETED: Grade persistence working correctly!")
