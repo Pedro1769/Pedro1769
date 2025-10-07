@@ -225,7 +225,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "CRÍTICO: Corrección de rol de usuario bifencia.orozco"
     - "Sistema de notas completamente funcional (CRÍTICO)"
     - "Sistema de estudiantes reales completamente funcional"
   stuck_tasks: []
