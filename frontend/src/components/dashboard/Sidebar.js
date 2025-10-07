@@ -16,7 +16,7 @@ import {
   Heart
 } from 'lucide-react';
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
+const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
   const { user } = useAuth();
 
   const getMenuItems = () => {
