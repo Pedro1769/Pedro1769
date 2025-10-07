@@ -138,14 +138,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
             <ul className="space-y-2">
               {menuItems.map((item, index) => (
                 <li key={index}>
-                  <a
-                    href={item.href}
-                    className="group flex items-center space-x-3 px-4 py-3 text-white/90 hover:text-white hover:bg-white/20 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg backdrop-blur-sm"
-                    onClick={() => setSidebarOpen(false)}
+                  <button
+                    onClick={() => {
+                      if (onNavigationClick) {
+                        onNavigationClick(item.section || 'dashboard');
+                      }
+                      setSidebarOpen(false);
+                    }}
+                    className="w-full group flex items-center space-x-3 px-4 py-3 text-white/90 hover:text-white hover:bg-white/20 rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-lg backdrop-blur-sm"
                   >
                     <item.icon className="h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
                     <span className="font-medium">{item.label}</span>
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>
