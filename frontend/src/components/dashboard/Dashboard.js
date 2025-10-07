@@ -14,6 +14,9 @@ const Dashboard = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const renderDashboard = () => {
+    console.log('🔍 DASHBOARD ROUTING - Usuario actual:', user);
+    console.log('🔍 DASHBOARD ROUTING - Rol detectado:', user?.role);
+    
     switch (user.role) {
       case 'admin':
         return <AdminDashboard />;
