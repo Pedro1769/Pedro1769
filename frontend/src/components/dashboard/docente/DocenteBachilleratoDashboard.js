@@ -188,7 +188,13 @@ const DocenteBachilleratoDashboard = () => {
       }
       
       setSavedGrades(gradeMap);
-      console.log(`✅ Todas las notas cargadas:`, gradeMap);
+      console.log(`✅ TODAS LAS NOTAS CARGADAS (${Object.keys(gradeMap).length} notas):`, gradeMap);
+      
+      // Log detallado de cada nota cargada
+      Object.keys(gradeMap).forEach(key => {
+        const grade = gradeMap[key];
+        console.log(`   📝 ${key}: ${grade.grade} en ${grade.subject} (${grade.period})`);
+      });
       
       return gradeMap;
     } catch (error) {
