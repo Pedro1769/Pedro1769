@@ -375,6 +375,143 @@ const BancoLogros = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Modal Crear Logro */}
+      <Dialog open={showCreateLogro} onOpenChange={setShowCreateLogro}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Crear Nuevo Logro</DialogTitle>
+            <DialogDescription>
+              Registra un nuevo logro o reconocimiento para estudiantes
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="titulo" className="text-right">
+                Título *
+              </Label>
+              <Input
+                id="titulo"
+                value={newLogro.titulo}
+                onChange={(e) => setNewLogro({...newLogro, titulo: e.target.value})}
+                className="col-span-3"
+                placeholder="Ej: Excelencia Académica en Matemática"
+              />
+            </div>
+            
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="descripcion" className="text-right">
+                Descripción *
+              </Label>
+              <textarea
+                id="descripcion"
+                value={newLogro.descripcion}
+                onChange={(e) => setNewLogro({...newLogro, descripcion: e.target.value})}
+                className="col-span-3 border rounded-md px-3 py-2 text-sm min-h-[80px]"
+                placeholder="Describe el logro y los criterios para obtenerlo"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="tipo" className="text-right">
+                Categoría
+              </Label>
+              <select
+                id="tipo"
+                value={newLogro.tipo}
+                onChange={(e) => setNewLogro({...newLogro, tipo: e.target.value})}
+                className="col-span-3 border rounded-md px-3 py-2 text-sm"
+              >
+                <option value="academico">Académico</option>
+                <option value="convivencia">Convivencia</option>
+                <option value="deportivo">Deportivo</option>
+              </select>
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="periodo" className="text-right">
+                Período
+              </Label>
+              <select
+                id="periodo"
+                value={newLogro.periodo}
+                onChange={(e) => setNewLogro({...newLogro, periodo: e.target.value})}
+                className="col-span-3 border rounded-md px-3 py-2 text-sm"
+              >
+                {PERIODS.map(period => (
+                  <option key={period} value={period}>Período {period}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="grid grid-cols-4 items-start gap-4">
+              <Label className="text-right">
+                Estudiantes *
+              </Label>
+              <div className="col-span-3 space-y-2">
+                <div className="border rounded-md p-3 max-h-32 overflow-y-auto">
+                  {availableStudents.length > 0 ? (
+                    availableStudents.map(student => (
+                      <div key={student._id || student.id} className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          id={`student-${student._id || student.id}`}
+                          checked={selectedStudents.some(s => (s._id || s.id) === (student._id || student.id))}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedStudents(prev => [...prev, student]);
+                            } else {
+                              setSelectedStudents(prev => 
+                                prev.filter(s => (s._id || s.id) !== (student._id || student.id))
+                              );
+                            }
+                          }}
+                          className="rounded"
+                        />
+                        <label 
+                          htmlFor={`student-${student._id || student.id}`}
+                          className="text-sm cursor-pointer"
+                        >
+                          {student.name} - {student.grade}
+                        </label>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-sm text-gray-500">Cargando estudiantes...</p>
+                  )}
+                </div>
+                {selectedStudents.length > 0 && (
+                  <p className="text-sm text-green-600">
+                    {selectedStudents.length} estudiante(s) seleccionado(s)
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              onClick={() => {
+                setShowCreateLogro(false);
+                setNewLogro({
+                  titulo: '',
+                  descripcion: '',
+                  tipo: 'academico',
+                  estudiantes: [],
+                  periodo: 'I'
+                });
+                setSelectedStudents([]);
+              }} 
+              variant="outline"
+            >
+              Cancelar
+            </Button>
+            <Button onClick={handleCreateLogro} className="bg-yellow-600 hover:bg-yellow-700">
+              <Trophy className="h-4 w-4 mr-2" />
+              Crear Logro
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
