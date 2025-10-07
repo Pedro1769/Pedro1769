@@ -155,6 +155,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "COMPREHENSIVE TESTING COMPLETE: All 31/31 tests passed (100% success rate). ✅ GET /api/students working for all user roles with proper permission filtering (Admin: 385 students, Docente primaria: 2 students, Docente bachillerato: 3 students, Coordinadora: 385 students). ✅ POST /api/students working for admin and teachers - successfully created new student. ✅ Grade filtering working correctly for all grades (1°, 6°, 11°). ✅ Authentication working perfectly for all test users (pedro.hurtado, yocelyn.cabarcas, carolina.sierra, coord.convivencia). ✅ Role-based access control properly implemented. ✅ Database contains 385+ real students (not sample data). ✅ All endpoints protected against access. Student system is 100% functional."
+      - working: true
+        agent: "testing"
+        comment: "ROLE-BASED STUDENT ACCESS VERIFIED: ✅ DOCENTE PRIMARIA (yocelyn.cabarcas): Ve únicamente estudiantes de grado 1° (550 estudiantes), filtrado seguro que previene acceso a otros grados. ✅ DOCENTE BACHILLERATO (bifencia.orozco): Ve estudiantes de TODOS sus grados asignados (6° a 11°), actualmente 4 estudiantes en grados 10° y 11°. ✅ COORDINADORA CONVIVENCIA (coord.convivencia): Ve TODOS los estudiantes del sistema (556 estudiantes), acceso completo. Sistema de filtrado por rol funcionando perfectamente con medidas de seguridad implementadas."
 
   - task: "Sistema de notas completamente funcional (CRÍTICO)"
     implemented: true
