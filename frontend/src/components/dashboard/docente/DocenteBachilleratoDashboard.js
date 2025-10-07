@@ -311,14 +311,14 @@ const DocenteBachilleratoDashboard = () => {
       
       setStudents(gradeStudents);
       
-      // Cargar notas para todos los estudiantes
-      for (const student of gradeStudents) {
-        await loadStudentGrades(student._id || student.id);
+      // Cargar todas las notas de una vez
+      if (gradeStudents.length > 0) {
+        await loadAllStudentGradesSync(gradeStudents);
       }
       
       toast({
         title: "Estudiantes y notas cargados",
-        description: `Se cargaron estudiantes con sus notas de bachillerato`,
+        description: `Se cargaron ${gradeStudents.length} estudiantes con sus notas`,
       });
     } catch (error) {
       console.error('Error loading students:', error);
