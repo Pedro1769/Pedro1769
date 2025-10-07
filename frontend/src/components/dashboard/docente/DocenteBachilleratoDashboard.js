@@ -28,6 +28,9 @@ import {
 } from 'lucide-react';
 import { MOCK_STUDENTS, SUBJECTS, PERIODS, getPerformanceLevel } from '../../../mockData';
 import { studentService, gradeService } from '../../../services/api';
+import BancoLogros from '../sections/BancoLogros';
+import Boletines from '../sections/Boletines';
+import Proyectos from '../sections/Proyectos';
 
 const DocenteBachilleratoDashboard = () => {
   const { user } = useAuth();
