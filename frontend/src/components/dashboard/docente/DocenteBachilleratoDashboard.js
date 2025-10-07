@@ -98,19 +98,27 @@ const DocenteBachilleratoDashboard = () => {
     const studentId = student._id || student.id;
     const gradeKey = `${studentId}-${period}-${subject}`;
     
+    // Log de debug detallado
+    console.log(`🔍 Buscando nota: Estudiante=${student.name}, ID=${studentId}, Período=${period}, Materia=${subject}`);
+    console.log(`🔍 GradeKey generado: ${gradeKey}`);
+    console.log(`🔍 SavedGrades disponibles:`, Object.keys(savedGrades));
+    console.log(`🔍 Valor en savedGrades[${gradeKey}]:`, savedGrades[gradeKey]);
+    
     // Primero verificar en las notas guardadas en el estado (base de datos)
     if (savedGrades[gradeKey] && savedGrades[gradeKey].grade !== undefined) {
-      console.log(`Nota encontrada en BD para ${student.name} - ${subject}: ${savedGrades[gradeKey].grade}`);
-      return savedGrades[gradeKey].grade;
+      const grade = savedGrades[gradeKey].grade;
+      console.log(`✅ NOTA ENCONTRADA EN BD para ${student.name} - ${subject}: ${grade}`);
+      return grade;
     }
     
     // Luego verificar en los datos del estudiante (mock data - fallback)
     if (student.grades && student.grades[period] && student.grades[period][subject]) {
-      console.log(`Nota encontrada en mock para ${student.name} - ${subject}: ${student.grades[period][subject]}`);
-      return student.grades[period][subject];
+      const grade = student.grades[period][subject];
+      console.log(`✅ NOTA ENCONTRADA EN MOCK para ${student.name} - ${subject}: ${grade}`);
+      return grade;
     }
     
-    console.log(`Sin nota para ${student.name} - ${subject} - ${period}`);
+    console.log(`❌ SIN NOTA para ${student.name} - ${subject} - ${period}`);
     return '';
   };
 
