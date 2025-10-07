@@ -13,7 +13,8 @@ import {
   Shield,
   GraduationCap,
   Eye,
-  Heart
+  Heart,
+  Trophy
 } from 'lucide-react';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
