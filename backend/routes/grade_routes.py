@@ -296,13 +296,15 @@ async def delete_grade(
     return {"success": True, "message": "Nota eliminada exitosamente"}
 
 @router.get("/all")
-async def get_all_grades(current_user: dict = Depends(require_admin)):
+async def get_all_grades(current_user: User = Depends(require_admin)):
     """
     Obtener todas las notas del sistema (solo admin)
     """
     try:
+        db = await get_database()
+        
         # Obtener todas las notas
-        grades_cursor = grades_collection.find({})
+        grades_cursor = db.grades.find({})
         grades = []
         
         async for grade_doc in grades_cursor:
@@ -311,7 +313,7 @@ async def get_all_grades(current_user: dict = Depends(require_admin)):
             
             # Buscar información del estudiante
             try:
-                student = await students_collection.find_one({"_id": grade_data["student_id"]})
+                student = await db.students.find_one({"_id": grade_data["student_id"]})
                 if student:
                     grade_data["student_name"] = student.get("name", "Nombre no encontrado")
                     grade_data["student_grade"] = student.get("grade", "N/A")
@@ -327,7 +329,7 @@ async def get_all_grades(current_user: dict = Depends(require_admin)):
             
             # Buscar información del docente
             try:
-                teacher = await users_collection.find_one({"_id": grade_data["teacher_id"]})
+                teacher = await db.users.find_one({"_id": grade_data["teacher_id"]})
                 if teacher:
                     grade_data["teacher_name"] = teacher.get("name", "Docente no encontrado")
                 else:
