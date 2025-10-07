@@ -210,8 +210,8 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Sistema de notas completamente funcional (CRÍTICO)"
     - "Sistema de estudiantes reales completamente funcional"
-    - "Mejoras visuales con fondos dinámicos y elementos animados"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
