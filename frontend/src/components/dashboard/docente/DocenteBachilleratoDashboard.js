@@ -155,6 +155,39 @@ const DocenteBachilleratoDashboard = () => {
     }
   };
 
+  // Función sincronizada para cargar notas (llamada desde loadStudents)
+  const loadAllStudentGradesSync = async (studentsList) => {
+    try {
+      const gradeMap = {};
+      
+      console.log(`Iniciando carga de notas para ${studentsList.length} estudiantes...`);
+      
+      for (const student of studentsList) {
+        const studentId = student._id || student.id;
+        console.log(`Cargando notas para ${student.name} (${studentId})`);
+        
+        try {
+          const grades = await gradeService.getStudentGrades(studentId);
+          console.log(`${student.name} tiene ${grades.length} notas:`, grades);
+          
+          grades.forEach(grade => {
+            const gradeKey = `${studentId}-${grade.period}-${grade.subject}`;
+            gradeMap[gradeKey] = grade;
+          });
+        } catch (error) {
+          console.error(`Error loading grades for student ${student.name}:`, error);
+        }
+      }
+      
+      setSavedGrades(gradeMap);
+      console.log(`✅ Todas las notas cargadas:`, gradeMap);
+      
+      return gradeMap;
+    } catch (error) {
+      console.error('Error loading student grades sync:', error);
+    }
+  };
+
   // Función para guardar nota
   const handleGradeChange = async (studentId, period, subject, gradeValue) => {
     if (!gradeValue || gradeValue === '') return;
