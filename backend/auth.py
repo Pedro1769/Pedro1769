@@ -111,6 +111,15 @@ def require_admin_or_teacher():
         UserRole.DOCENTE_BACHILLERATO
     ])
 
+def require_grade_assignment_roles():
+    """Requiere roles que pueden asignar notas (admin, docentes, coordinadora)"""
+    return require_roles([
+        UserRole.ADMIN,
+        UserRole.DOCENTE_PRIMARIA,
+        UserRole.DOCENTE_BACHILLERATO,
+        UserRole.COORDINADOR_CONVIVENCIA
+    ])
+
 def require_parent_or_student():
     """Requiere padre o estudiante"""
     return require_roles([UserRole.PADRE, UserRole.ESTUDIANTE])
