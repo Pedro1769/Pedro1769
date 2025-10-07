@@ -1,0 +1,30 @@
+[
+  {
+    "test": "Login bifencia.orozco/gim123",
+    "success": true,
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
+    "timestamp": "2025-10-07T16:29:56.949744",
+    "response_data": null
+  },
+  {
+    "test": "Get First Student",
+    "success": true,
+    "details": "Student: GEOVANNY ERICK SALAS P\u00c1EZ, Grade: 11\u00b0, ID: est003",
+    "timestamp": "2025-10-07T16:29:57.037063",
+    "response_data": null
+  },
+  {
+    "test": "Assign Grade 4.3 MATEM\u00c1TICA",
+    "success": true,
+    "details": "Grade assigned: MATEM\u00c1TICA - 4.3 (Period: I)",
+    "timestamp": "2025-10-07T16:29:57.099426",
+    "response_data": null
+  },
+  {
+    "test": "Verify Grade in Database",
+    "success": false,
+    "details": "Status code: 403",
+    "timestamp": "2025-10-07T16:29:57.144641",
+    "response_data": "{\"detail\":\"No tiene permisos para ver las notas de este estudiante\"}"
+  }
+]
