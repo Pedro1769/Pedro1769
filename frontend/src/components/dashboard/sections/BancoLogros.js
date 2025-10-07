@@ -42,8 +42,91 @@ const BancoLogros = () => {
   const [availableStudents, setAvailableStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
-  // Datos mock de logros
-  const logros = {
+  // Cargar estudiantes disponibles
+  useEffect(() => {
+    loadAvailableStudents();
+  }, [user]);
+
+  const loadAvailableStudents = async () => {
+    try {
+      let studentsList = [];
+      
+      if (user.role === 'docente_bachillerato' && user.grades) {
+        const allStudents = await studentService.getAll();
+        studentsList = allStudents.filter(student => 
+          user.grades.includes(student.grade)
+        );
+      } else if (user.role === 'docente_primaria' && user.grade) {
+        const allStudents = await studentService.getAll();
+        studentsList = allStudents.filter(student => 
+          student.grade === user.grade
+        );
+      } else {
+        const allStudents = await studentService.getAll();
+        studentsList = allStudents;
+      }
+      
+      setAvailableStudents(studentsList);
+    } catch (error) {
+      console.error('Error loading students:', error);
+    }
+  };
+
+  const handleCreateLogro = () => {
+    if (!newLogro.titulo.trim() || !newLogro.descripcion.trim()) {
+      toast({
+        title: "Error",
+        description: "El título y descripción son obligatorios",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (selectedStudents.length === 0) {
+      toast({
+        title: "Error",
+        description: "Debe seleccionar al menos un estudiante",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const nuevoLogro = {
+      id: Date.now(),
+      titulo: newLogro.titulo,
+      descripcion: newLogro.descripcion,
+      tipo: newLogro.tipo,
+      periodo: newLogro.periodo,
+      fecha: new Date().toISOString().split('T')[0],
+      estudiantes: selectedStudents.map(s => s.name),
+      docente: user.name
+    };
+
+    // Agregar al estado local (en una app real se enviaría al backend)
+    setLogros(prev => ({
+      ...prev,
+      [newLogro.tipo + 's']: [...(prev[newLogro.tipo + 's'] || []), nuevoLogro]
+    }));
+
+    // Limpiar formulario
+    setNewLogro({
+      titulo: '',
+      descripcion: '',
+      tipo: 'academico',
+      estudiantes: [],
+      periodo: 'I'
+    });
+    setSelectedStudents([]);
+    setShowCreateLogro(false);
+
+    toast({
+      title: "Logro creado exitosamente",
+      description: `Logro "${nuevoLogro.titulo}" asignado a ${selectedStudents.length} estudiante(s)`,
+    });
+  };
+
+  // Datos de logros (ahora manejados por estado)
+  const [logros, setLogros] = useState({
     academicos: [
       {
         id: 1,
