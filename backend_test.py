@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Comprehensive Backend Testing - Student System
-Sistema de Gestión Escolar GAA - Student Management Tests
+Comprehensive Backend Testing - GAA Educational System
+Sistema de Gestión Escolar GAA - Complete Backend Tests
+Focus: Authentication, Students, and GRADES System (CRITICAL)
 """
 
 import requests
@@ -9,16 +10,16 @@ import json
 import sys
 from datetime import datetime
 from typing import Dict, Any, Optional
+import random
 
 # Configuration - Using environment variable from frontend/.env
 BASE_URL = "https://student-portal-88.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
-# Test users from contracts.md
+# Test users as specified in the review request
 TEST_USERS = {
     "admin": {"username": "pedro.hurtado", "password": "gim123"},
-    "docente_primaria": {"username": "yocelyn.cabarcas", "password": "gim123"},
-    "docente_bachillerato": {"username": "carolina.sierra", "password": "gim123"},
+    "docente_bachillerato": {"username": "bifencia.orozco", "password": "gim123"},
     "coordinadora": {"username": "coord.convivencia", "password": "gim123"}
 }
 
