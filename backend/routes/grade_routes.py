@@ -26,8 +26,32 @@ async def get_student_grades(
     
     student = Student(**student_data)
     
-    # Verificar permisos
-    if not can_view_student_data(current_user, student.teacher_id, student.parent_id):
+    # Verificar permisos (lógica mejorada para docentes de bachillerato)
+    if current_user.role == UserRole.ADMIN or current_user.role == UserRole.COORDINADOR_CONVIVENCIA:
+        # Admin y coordinador pueden ver todas las notas
+        pass
+    elif current_user.role == UserRole.DOCENTE_BACHILLERATO:
+        # Docentes de bachillerato pueden ver notas de estudiantes en sus grados asignados
+        if not (hasattr(current_user, 'grades') and current_user.grades and student.grade in current_user.grades):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"No tiene permisos para ver notas de estudiantes de grado {student.grade}"
+            )
+    elif current_user.role == UserRole.DOCENTE_PRIMARIA:
+        # Docentes de primaria pueden ver notas de estudiantes de su grado específico
+        if not (hasattr(current_user, 'grade') and current_user.grade == student.grade):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"No tiene permisos para ver notas de estudiantes de grado {student.grade}"
+            )
+    elif current_user.role == UserRole.PADRE:
+        # Padres solo ven notas de sus hijos
+        if current_user.id != student.parent_id:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="No tiene permisos para ver las notas de este estudiante"
+            )
+    else:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="No tiene permisos para ver las notas de este estudiante"
