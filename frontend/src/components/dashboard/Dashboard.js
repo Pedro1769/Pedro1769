@@ -43,7 +43,16 @@ const Dashboard = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50/30 via-white to-red-50/30">
       <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
       <div className="flex">
-        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+        <Sidebar 
+          sidebarOpen={sidebarOpen} 
+          setSidebarOpen={setSidebarOpen}
+          onNavigationClick={(section) => {
+            // Propagar navegación al dashboard específico según el rol
+            if (window.setActiveSection) {
+              window.setActiveSection(section);
+            }
+          }}
+        />
         <main className="flex-1 min-h-screen pl-0 lg:pl-64">
           <div className="p-6">
             {renderDashboard()}
