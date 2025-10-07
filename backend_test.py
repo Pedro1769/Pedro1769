@@ -23,7 +23,7 @@ TEST_USERS = {
     "coordinadora": {"username": "coord.convivencia", "password": "gim123"}
 }
 
-class StudentSystemTester:
+class GAABackendTester:
     def __init__(self):
         self.session = requests.Session()
         self.tokens = {}
