@@ -41,12 +41,15 @@ export const AuthProvider = ({ children }) => {
       const response = await authService.login(username, password);
       
       if (response.success) {
+        console.log('✅ AUTH CONTEXT - Login exitoso, usuario recibido:', response.user);
         setUser(response.user);
         localStorage.setItem('gaa_user', JSON.stringify(response.user));
         localStorage.setItem('gaa_token', response.token);
+        console.log('✅ AUTH CONTEXT - Usuario guardado en localStorage');
         
         return { success: true, user: response.user };
       } else {
+        console.log('❌ AUTH CONTEXT - Login fallido:', response.message);
         return { success: false, error: response.message };
       }
     } catch (error) {
