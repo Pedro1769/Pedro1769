@@ -548,24 +548,15 @@ const DocenteBachilleratoDashboard = () => {
                             min="1"
                             max="5"
                             step="0.1"
-                            placeholder="0.0"
+                            placeholder="1.0 - 5.0"
                             className="w-20 text-center"
-                            value={currentGrade || ''}
+                            value={tempGrades[`${student._id || student.id}-${selectedPeriod}-${selectedSubject}`] || currentGrade || ''}
                             onChange={(e) => {
-                              // Opcional: Guardar automáticamente después de un delay
-                              const value = e.target.value;
-                              if (value && !isNaN(parseFloat(value))) {
-                                setTimeout(() => {
-                                  handleGradeChange(student._id || student.id, selectedPeriod, selectedSubject, value);
-                                }, 1000);
-                              }
-                            }}
-                            onBlur={(e) => {
-                              // Guardar cuando el usuario termine de editar
-                              const value = e.target.value;
-                              if (value && !isNaN(parseFloat(value))) {
-                                handleGradeChange(student._id || student.id, selectedPeriod, selectedSubject, value);
-                              }
+                              const gradeKey = `${student._id || student.id}-${selectedPeriod}-${selectedSubject}`;
+                              setTempGrades(prev => ({
+                                ...prev,
+                                [gradeKey]: e.target.value
+                              }));
                             }}
                           />
                         </td>
