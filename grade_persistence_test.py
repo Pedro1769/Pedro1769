@@ -330,10 +330,11 @@ class GradePersistenceTester:
                     )
                     return True
                 else:
+                    found_grades = [f"{g.get('subject')}: {g.get('grade')}" for g in grades]
                     self.log_test(
                         "Verify Grade Persists After Re-login",
                         False,
-                        f"❌ PERSISTENCE FAILED: Grade 4.3 in MATEMÁTICA not found after re-login. Found: {[f\"{g.get('subject')}: {g.get('grade')}\" for g in grades]}",
+                        f"❌ PERSISTENCE FAILED: Grade 4.3 in MATEMÁTICA not found after re-login. Found: {found_grades}",
                         grades
                     )
                     return False
