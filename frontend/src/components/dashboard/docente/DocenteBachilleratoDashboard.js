@@ -54,10 +54,18 @@ const DocenteBachilleratoDashboard = () => {
   const [activeSection, setActiveSection] = useState('dashboard'); // Para navegación
   const { toast } = useToast();
 
-  // Cargar estudiantes según los grados asignados al docente
   useEffect(() => {
     loadStudents();
   }, [user.grades, selectedGrade]);
+
+  useEffect(() => {
+    // Escuchar cambios de navegación desde el sidebar
+    window.setActiveSection = setActiveSection;
+    
+    return () => {
+      delete window.setActiveSection;
+    };
+  }, []);
 
   useEffect(() => {
     setNewStudent(prev => ({
