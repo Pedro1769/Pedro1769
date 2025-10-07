@@ -280,6 +280,389 @@ const DocenteBachilleratoDashboard = () => {
     }
   };
 
+  // Renderizar sección según navegación
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case 'banco-logros':
+        return <BancoLogros />;
+      case 'boletines':
+        return <Boletines />;
+      case 'proyectos':
+        return <Proyectos />;
+      default:
+        return renderDashboardContent();
+    }
+  };
+
+  // Contenido principal del dashboard
+  const renderDashboardContent = () => (
+    <>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Grados a Cargo</CardTitle>
+            <School className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{user.grades.length}</div>
+            <p className="text-xs text-blue-100">{user.grades.join(', ')}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Asignaturas</CardTitle>
+            <BookOpen className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{user.subjects.length}</div>
+            <p className="text-xs text-green-100">Materias especializadas</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Estudiantes Actual</CardTitle>
+            <Users className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{gradeStudents.length}</div>
+            <p className="text-xs text-purple-100">Grado {selectedGrade}</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Períodos</CardTitle>
+            <FileText className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{PERIODS.length}</div>
+            <p className="text-xs text-orange-100">Período: {selectedPeriod}</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Selector de Grado */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <GraduationCap className="h-5 w-5" />
+            <span>Seleccionar Grado</span>
+          </CardTitle>
+          <CardDescription>
+            Elige el grado para gestionar estudiantes y calificaciones
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-2">
+            {user.grades.map(grade => (
+              <Button
+                key={grade}
+                variant={selectedGrade === grade ? "default" : "outline"}
+                onClick={() => setSelectedGrade(grade)}
+                className="min-w-[60px]"
+              >
+                {grade}
+              </Button>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Gestión de Estudiantes del Grado */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <Users className="h-5 w-5" />
+              <span>Estudiantes - Grado {selectedGrade} ({gradeStudents.length})</span>
+            </div>
+            <div className="flex space-x-2">
+              <Button onClick={downloadMyGradeStudents} size="sm" className="bg-green-600 hover:bg-green-700">
+                <Download className="h-4 w-4 mr-2" />
+                Descargar Lista
+              </Button>
+              <Button onClick={() => setShowAddStudent(true)} size="sm" className="bg-blue-600 hover:bg-blue-700">
+                <UserPlus className="h-4 w-4 mr-2" />
+                Agregar Estudiante
+              </Button>
+            </div>
+          </CardTitle>
+          <CardDescription>
+            Gestiona estudiantes del grado seleccionado
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500">Cargando estudiantes...</p>
+            </div>
+          ) : !gradeStudents || gradeStudents.length === 0 ? (
+            <div className="text-center py-8">
+              <Users className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+              <p className="text-gray-500 mb-2">No se encontraron estudiantes en grado {selectedGrade}</p>
+              <p className="text-sm text-gray-400">Total de estudiantes cargados: {students?.length || 0}</p>
+              <Button 
+                onClick={loadStudents} 
+                size="sm" 
+                className="mt-3 bg-purple-600 hover:bg-purple-700"
+              >
+                Recargar Estudiantes
+              </Button>
+            </div>
+          ) : (
+            <>
+              <div className="mb-4 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg border border-purple-200">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-purple-800 font-bold text-lg">
+                      ✅ {gradeStudents.length} ESTUDIANTES REALES
+                    </p>
+                    <p className="text-purple-600 text-sm">
+                      Grado {selectedGrade} - Datos cargados desde la base de datos
+                    </p>
+                  </div>
+                  <div className="px-4 py-2 bg-purple-600 text-white rounded-full font-bold text-xl">
+                    {gradeStudents.length}
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {(gradeStudents || []).map((student, index) => (
+                  <div key={student._id || index} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900">{student.name}</h3>
+                      <p className="text-sm text-gray-600">Grado {student.grade} - {student.level}</p>
+                      <p className="text-xs text-gray-400">Doc: {student.document_number || 'No registrado'}</p>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Badge variant={student.is_active ? "default" : "secondary"}>
+                        {student.is_active ? 'Activo' : 'Inactivo'}
+                      </Badge>
+                      <Button variant="ghost" size="sm">
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Asignación de Notas */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <BookOpen className="h-5 w-5" />
+            <span>Asignación de Notas - Grado {selectedGrade}</span>
+          </CardTitle>
+          <CardDescription>
+            Registra calificaciones para tus asignaturas
+          </CardDescription>
+          
+          {/* Filtros */}
+          <div className="flex flex-wrap gap-4 mt-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-medium">Período:</span>
+              {PERIODS.map(period => (
+                <Badge
+                  key={period}
+                  variant={selectedPeriod === period ? "default" : "outline"}
+                  className="cursor-pointer"
+                  onClick={() => setSelectedPeriod(period)}
+                >
+                  {period}
+                </Badge>
+              ))}
+            </div>
+          </div>
+          
+          <div className="mt-2">
+            <select 
+              value={selectedSubject}
+              onChange={(e) => setSelectedSubject(e.target.value)}
+              className="border rounded-md px-3 py-2 text-sm"
+            >
+              {user.subjects.map(subject => (
+                <option key={subject} value={subject}>{subject}</option>
+              ))}
+            </select>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {gradeStudents.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left p-2">Estudiante</th>
+                    <th className="text-center p-2">Nota Actual</th>
+                    <th className="text-center p-2">Nueva Nota</th>
+                    <th className="text-center p-2">Desempeño</th>
+                    <th className="text-center p-2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {(gradeStudents || []).map((student, index) => {
+                    const currentGrade = getStudentGrade(student, selectedPeriod, selectedSubject);
+                    const performance = currentGrade ? getPerformanceLevel(currentGrade) : null;
+                    
+                    return (
+                      <tr key={index} className="border-b hover:bg-gray-50">
+                        <td className="p-2 font-medium">{student.name}</td>
+                        <td className="text-center p-2">
+                          {currentGrade ? (
+                            <Badge variant={currentGrade >= 3.0 ? "default" : "destructive"}>
+                              {currentGrade}
+                            </Badge>
+                          ) : (
+                            <span className="text-gray-400">Sin nota</span>
+                          )}
+                        </td>
+                        <td className="text-center p-2">
+                          <Input
+                            key={`${student._id || index}-${selectedSubject}-${selectedPeriod}`}
+                            type="number"
+                            min="1"
+                            max="5"
+                            step="0.1"
+                            placeholder="1.0 - 5.0"
+                            className="w-20 text-center"
+                            value={tempGrades[`${student._id || student.id}-${selectedPeriod}-${selectedSubject}`] || currentGrade || ''}
+                            onChange={(e) => {
+                              const gradeKey = `${student._id || student.id}-${selectedPeriod}-${selectedSubject}`;
+                              setTempGrades(prev => ({
+                                ...prev,
+                                [gradeKey]: e.target.value
+                              }));
+                            }}
+                          />
+                        </td>
+                        <td className="text-center p-2">
+                          {performance && (
+                            <Badge 
+                              variant={
+                                performance.label.includes('SUPERIOR') ? 'default' :
+                                performance.label.includes('ALTO') ? 'secondary' :
+                                performance.label.includes('BÁSICO') ? 'outline' :
+                                'destructive'
+                              }
+                            >
+                              {performance.label.split(' ')[1]}
+                            </Badge>
+                          )}
+                        </td>
+                        <td className="text-center p-2">
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => {
+                              const gradeKey = `${student._id || student.id}-${selectedPeriod}-${selectedSubject}`;
+                              const gradeValue = tempGrades[gradeKey] || currentGrade;
+                              if (gradeValue) {
+                                handleGradeChange(student._id || student.id, selectedPeriod, selectedSubject, gradeValue);
+                                // Limpiar valor temporal después de guardar
+                                setTempGrades(prev => {
+                                  const newTemp = {...prev};
+                                  delete newTemp[gradeKey];
+                                  return newTemp;
+                                });
+                              }
+                            }}
+                            disabled={loadingGrades}
+                            className="bg-green-600 hover:bg-green-700 text-white border-green-600"
+                          >
+                            {loadingGrades ? 'Guardando...' : 'Guardar'}
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <BookOpen className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+              <p>Selecciona un grado con estudiantes para asignar notas</p>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Modal Agregar Estudiante */}
+      <Dialog open={showAddStudent} onOpenChange={setShowAddStudent}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Agregar Nuevo Estudiante</DialogTitle>
+            <DialogDescription>
+              Agrega un estudiante de bachillerato
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                Nombre Completo
+              </Label>
+              <Input
+                id="name"
+                value={newStudent.name}
+                onChange={(e) => setNewStudent({...newStudent, name: e.target.value})}
+                className="col-span-3"
+                placeholder="Ej: MARÍA LÓPEZ GÓMEZ"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="document" className="text-right">
+                Documento
+              </Label>
+              <Input
+                id="document"
+                value={newStudent.document_number}
+                onChange={(e) => setNewStudent({...newStudent, document_number: e.target.value})}
+                className="col-span-3"
+                placeholder="Número de documento (opcional)"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="grade" className="text-right">
+                Grado
+              </Label>
+              <Select
+                value={newStudent.grade}
+                onValueChange={(value) => setNewStudent({...newStudent, grade: value})}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Selecciona un grado" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="6°">6°</SelectItem>
+                  <SelectItem value="7°">7°</SelectItem>
+                  <SelectItem value="8°">8°</SelectItem>
+                  <SelectItem value="9°">9°</SelectItem>
+                  <SelectItem value="10°">10°</SelectItem>
+                  <SelectItem value="11°">11°</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button onClick={() => setShowAddStudent(false)} variant="outline">
+              Cancelar
+            </Button>
+            <Button onClick={handleAddStudent} className="bg-green-600 hover:bg-green-700">
+              Agregar Estudiante
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-indigo-50 to-blue-50 relative overflow-hidden">
       {/* Elementos decorativos dinámicos */}
