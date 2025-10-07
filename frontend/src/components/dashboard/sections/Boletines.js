@@ -111,51 +111,103 @@ const Boletines = () => {
     }
   };
 
-  const downloadBoletin = (student) => {
-    // Crear datos del boletín
-    const boletinData = {
-      estudiante: student.name,
-      grado: student.grade,
-      periodo: selectedPeriod,
-      institucion: "Gimnasio Americano Atlántico",
-      fecha: new Date().toLocaleDateString('es-CO'),
-      notas: user.subjects ? user.subjects.map(subject => ({
-        asignatura: subject,
-        nota: Math.random() * (5 - 3) + 3, // Nota aleatoria entre 3 y 5
-        desempeño: Math.random() > 0.5 ? 'SUPERIOR' : 'ALTO'
-      })) : []
-    };
+  const downloadBoletin = async (student) => {
+    try {
+      // Obtener notas reales del estudiante
+      const grades = await gradeService.getStudentGrades(student._id || student.id, selectedPeriod);
+      
+      // Crear datos del boletín con notas reales
+      const boletinData = {
+        estudiante: student.name,
+        grado: student.grade,
+        periodo: selectedPeriod,
+        institucion: "Gimnasio Americano Atlántico - GADA",
+        fecha: new Date().toLocaleDateString('es-CO'),
+        docente: user.name,
+        notas: grades.length > 0 ? grades.map(grade => ({
+          asignatura: grade.subject,
+          nota: grade.grade,
+          desempeño: grade.performance_level,
+          observaciones: grade.teacher_notes || 'Sin observaciones'
+        })) : user.subjects.map(subject => ({
+          asignatura: subject,
+          nota: 'Pendiente',
+          desempeño: 'SIN EVALUAR',
+          observaciones: 'Nota pendiente de asignar'
+        }))
+      };
 
-    const boletinContent = `
-BOLETÍN ACADÉMICO
-${boletinData.institucion}
+      const promedio = grades.length > 0 ? 
+        (grades.reduce((sum, grade) => sum + grade.grade, 0) / grades.length).toFixed(1) : 
+        'Pendiente';
 
-ESTUDIANTE: ${boletinData.estudiante}
-GRADO: ${boletinData.grado}
-PERÍODO: ${boletinData.periodo}
-FECHA: ${boletinData.fecha}
+      const boletinContent = `
+╔══════════════════════════════════════════════════════════════╗
+║                      BOLETÍN ACADÉMICO                       ║
+║                ${boletinData.institucion}                ║
+╚══════════════════════════════════════════════════════════════╝
 
-CALIFICACIONES:
-${boletinData.notas.map(nota => 
-  `${nota.asignatura}: ${nota.nota.toFixed(1)} - ${nota.desempeño}`
-).join('\n')}
+INFORMACIÓN DEL ESTUDIANTE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Nombre: ${boletinData.estudiante}
+• Grado: ${boletinData.grado}
+• Período: ${boletinData.periodo}
+• Docente: ${boletinData.docente}
+• Fecha de generación: ${boletinData.fecha}
 
-PROMEDIO GENERAL: ${(boletinData.notas.reduce((sum, nota) => sum + nota.nota, 0) / boletinData.notas.length).toFixed(1)}
-    `;
+CALIFICACIONES POR ASIGNATURA:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${boletinData.notas.map(nota => `
+• ${nota.asignatura}
+  Nota: ${nota.nota} | Desempeño: ${nota.desempeño}
+  Observaciones: ${nota.observaciones}
+`).join('')}
 
-    const blob = new Blob([boletinContent], { type: 'text/plain;charset=utf-8' });
-    const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
-    link.setAttribute('href', url);
-    link.setAttribute('download', `boletin_${student.name.replace(/\s+/g, '_')}_${selectedPeriod}.txt`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+RESUMEN ACADÉMICO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Promedio General: ${promedio}
+• Total Asignaturas: ${boletinData.notas.length}
+• Asignaturas Evaluadas: ${grades.length}
+• Estado: ${grades.length > 0 ? 'EVALUADO' : 'PENDIENTE DE EVALUACIÓN'}
 
-    toast({
-      title: "Boletín descargado",
-      description: `Boletín de ${student.name} descargado exitosamente`,
-    });
+OBSERVACIONES GENERALES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${grades.length > 0 ? 
+  'El estudiante presenta un desempeño acorde a las competencias trabajadas en el período académico.' : 
+  'Pendiente de completar evaluaciones para generar el consolidado académico.'}
+
+╔══════════════════════════════════════════════════════════════╗
+║   Este documento es oficial y certifica el rendimiento      ║
+║   académico del estudiante en el período indicado.          ║
+║                                                              ║
+║   Generado automáticamente por el Sistema GADA              ║
+║   ${new Date().toISOString()}                               ║
+╚══════════════════════════════════════════════════════════════╝
+      `;
+
+      const blob = new Blob([boletinContent], { type: 'text/plain;charset=utf-8' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `BOLETIN_${student.name.replace(/\s+/g, '_')}_${boletinData.grado}_${selectedPeriod}_${new Date().toISOString().split('T')[0]}.txt`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: "Boletín descargado exitosamente",
+        description: `Boletín completo de ${student.name} con ${grades.length} notas registradas`,
+      });
+      
+    } catch (error) {
+      console.error('Error generating bulletin:', error);
+      toast({
+        title: "Error al generar boletín",
+        description: "No se pudo acceder a las notas del estudiante",
+        variant: "destructive",
+      });
+    }
   };
 
   const filteredStudents = students.filter(student => {
