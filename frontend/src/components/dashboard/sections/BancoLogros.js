@@ -24,6 +24,8 @@ import {
   Calendar,
   Plus
 } from 'lucide-react';
+import { studentService } from '../../../services/api';
+import { PERIODS } from '../../../mockData';
 
 const BancoLogros = () => {
   const { user } = useAuth();
