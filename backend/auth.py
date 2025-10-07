@@ -141,5 +141,9 @@ def can_assign_grades(current_user: User, subject: str = None) -> bool:
     elif current_user.role == UserRole.DOCENTE_BACHILLERATO:
         # Docentes de bachillerato solo en sus materias específicas
         return subject in current_user.subjects if current_user.subjects else False
+    elif current_user.role == UserRole.COORDINADOR_CONVIVENCIA:
+        # Coordinadora de convivencia puede asignar notas de convivencia y acompañamiento
+        convivencia_subjects = ["CONVIVENCIA ESCOLAR", "ACOMPAÑAMIENTO DE ACUDIENTE", "ACOMPAÑAMIENTO DEL ACUDIENTE"]
+        return subject in convivencia_subjects if subject else True
     
     return False
