@@ -615,8 +615,7 @@ const DocenteBachilleratoDashboard = () => {
                     const currentGrade = getStudentGrade(student, selectedPeriod, selectedSubject);
                     const performance = currentGrade ? getPerformanceLevel(currentGrade) : null;
                     
-                    // Log para debug - TEMPORAL
-                    console.log(`🎯 Estudiante: ${student.name}, Nota actual: ${currentGrade}, Período: ${selectedPeriod}, Materia: ${selectedSubject}`);
+                    // Debugging para verificar notas
                     
                     return (
                       <tr key={index} className="border-b hover:bg-gray-50">
