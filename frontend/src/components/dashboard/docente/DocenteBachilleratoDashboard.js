@@ -181,6 +181,9 @@ const DocenteBachilleratoDashboard = () => {
         description: `Nota ${grade} asignada exitosamente en ${subject}`,
       });
 
+      // Recargar las notas para asegurar persistencia
+      await loadStudentGrades(studentId);
+
     } catch (error) {
       toast({
         title: "Error al guardar nota",
