@@ -22,11 +22,16 @@ export const AuthProvider = ({ children }) => {
     
     if (savedUser && savedToken) {
       try {
-        setUser(JSON.parse(savedUser));
+        const parsedUser = JSON.parse(savedUser);
+        console.log('🔍 AUTH CONTEXT - Usuario cargado desde localStorage:', parsedUser);
+        setUser(parsedUser);
       } catch (error) {
+        console.error('❌ AUTH CONTEXT - Error al parsear usuario guardado:', error);
         localStorage.removeItem('gaa_user');
         localStorage.removeItem('gaa_token');
       }
+    } else {
+      console.log('🔍 AUTH CONTEXT - No hay usuario/token guardado');
     }
     setLoading(false);
   }, []);
