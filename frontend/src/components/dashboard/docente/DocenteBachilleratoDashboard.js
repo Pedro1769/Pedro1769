@@ -575,8 +575,26 @@ const DocenteBachilleratoDashboard = () => {
                           )}
                         </td>
                         <td className="text-center p-2">
-                          <Button size="sm" variant="outline">
-                            Guardar
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => {
+                              const gradeKey = `${student._id || student.id}-${selectedPeriod}-${selectedSubject}`;
+                              const gradeValue = tempGrades[gradeKey] || currentGrade;
+                              if (gradeValue) {
+                                handleGradeChange(student._id || student.id, selectedPeriod, selectedSubject, gradeValue);
+                                // Limpiar valor temporal después de guardar
+                                setTempGrades(prev => {
+                                  const newTemp = {...prev};
+                                  delete newTemp[gradeKey];
+                                  return newTemp;
+                                });
+                              }
+                            }}
+                            disabled={loadingGrades}
+                            className="bg-green-600 hover:bg-green-700 text-white border-green-600"
+                          >
+                            {loadingGrades ? 'Guardando...' : 'Guardar'}
                           </Button>
                         </td>
                       </tr>
