@@ -639,6 +639,484 @@ class GAABackendTester:
             self.log_test("Students No Auth", False, f"Request error: {str(e)}")
             return False
 
+    # ==================== GRADES SYSTEM TESTING (CRITICAL) ====================
+    
+    def test_assign_grade_success(self, user_type: str, student_id: str):
+        """Test POST /grades - Assign grade to student (CRITICAL)"""
+        if user_type not in self.tokens:
+            self.log_test(f"Assign Grade - {user_type}", False, "No token available for user")
+            return False
+            
+        # Only admin and teachers can assign grades
+        if user_type not in ["admin", "docente_bachillerato"]:
+            self.log_test(f"Assign Grade - {user_type}", True, "Skipped - role cannot assign grades")
+            return True
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # Test grade data with realistic values
+            grade_data = {
+                "student_id": student_id,
+                "subject": "MATEMÁTICA",
+                "period": "I",
+                "grade": 4.2,
+                "teacher_notes": "Excelente desempeño en álgebra básica"
+            }
+            
+            response = self.session.post(
+                f"{BASE_URL}/grades",
+                json=grade_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("student_id") == student_id and data.get("grade") == 4.2:
+                    self.log_test(
+                        f"Assign Grade - {user_type}",
+                        True,
+                        f"Grade assigned successfully: {data.get('subject')} - {data.get('grade')}"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"Assign Grade - {user_type}",
+                        False,
+                        "Grade data mismatch in response",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    f"Assign Grade - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Assign Grade - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_assign_grade_invalid_range(self, user_type: str, student_id: str):
+        """Test grade assignment with invalid range (should be 1.0-5.0)"""
+        if user_type not in self.tokens or user_type not in ["admin", "docente_bachillerato"]:
+            self.log_test(f"Assign Grade Invalid Range - {user_type}", True, "Skipped - no token or invalid role")
+            return True
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # Test with grade outside valid range
+            invalid_grade_data = {
+                "student_id": student_id,
+                "subject": "MATEMÁTICA",
+                "period": "I",
+                "grade": 6.0,  # Invalid - above 5.0
+                "teacher_notes": "Test invalid grade"
+            }
+            
+            response = self.session.post(
+                f"{BASE_URL}/grades",
+                json=invalid_grade_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 422 or response.status_code == 400:
+                self.log_test(
+                    f"Assign Grade Invalid Range - {user_type}",
+                    True,
+                    "Correctly rejected invalid grade range"
+                )
+                return True
+            else:
+                self.log_test(
+                    f"Assign Grade Invalid Range - {user_type}",
+                    False,
+                    f"Expected 400/422, got {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Assign Grade Invalid Range - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_get_student_grades(self, user_type: str, student_id: str):
+        """Test GET /grades/student/{student_id} - Get student grades"""
+        if user_type not in self.tokens:
+            self.log_test(f"Get Student Grades - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            response = self.session.get(
+                f"{BASE_URL}/grades/student/{student_id}",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    self.log_test(
+                        f"Get Student Grades - {user_type}",
+                        True,
+                        f"Retrieved {len(data)} grades for student"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"Get Student Grades - {user_type}",
+                        False,
+                        "Response is not a list",
+                        data
+                    )
+                    return False
+            elif response.status_code == 403:
+                self.log_test(
+                    f"Get Student Grades - {user_type}",
+                    True,
+                    "Access denied (expected for some roles)"
+                )
+                return True
+            else:
+                self.log_test(
+                    f"Get Student Grades - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Get Student Grades - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_get_student_grades_with_period_filter(self, user_type: str, student_id: str):
+        """Test GET /grades/student/{student_id}?period=I - Get grades with period filter"""
+        if user_type not in self.tokens:
+            self.log_test(f"Get Student Grades Period Filter - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            response = self.session.get(
+                f"{BASE_URL}/grades/student/{student_id}?period=I",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if isinstance(data, list):
+                    # Verify all grades are for period I
+                    period_correct = all(grade.get("period") == "I" for grade in data)
+                    if period_correct:
+                        self.log_test(
+                            f"Get Student Grades Period Filter - {user_type}",
+                            True,
+                            f"Retrieved {len(data)} grades for period I"
+                        )
+                        return True
+                    else:
+                        self.log_test(
+                            f"Get Student Grades Period Filter - {user_type}",
+                            False,
+                            "Period filter not working correctly",
+                            data
+                        )
+                        return False
+                else:
+                    self.log_test(
+                        f"Get Student Grades Period Filter - {user_type}",
+                        False,
+                        "Response is not a list",
+                        data
+                    )
+                    return False
+            elif response.status_code == 403:
+                self.log_test(
+                    f"Get Student Grades Period Filter - {user_type}",
+                    True,
+                    "Access denied (expected for some roles)"
+                )
+                return True
+            else:
+                self.log_test(
+                    f"Get Student Grades Period Filter - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Get Student Grades Period Filter - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_update_existing_grade(self, user_type: str, student_id: str):
+        """Test updating an existing grade (should update, not create duplicate)"""
+        if user_type not in self.tokens or user_type not in ["admin", "docente_bachillerato"]:
+            self.log_test(f"Update Existing Grade - {user_type}", True, "Skipped - no token or invalid role")
+            return True
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # First assign a grade
+            initial_grade_data = {
+                "student_id": student_id,
+                "subject": "INGLÉS",
+                "period": "I",
+                "grade": 3.5,
+                "teacher_notes": "Initial grade"
+            }
+            
+            response1 = self.session.post(
+                f"{BASE_URL}/grades",
+                json=initial_grade_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response1.status_code != 200:
+                self.log_test(f"Update Existing Grade - {user_type}", False, "Failed to create initial grade")
+                return False
+            
+            # Now update the same grade (same student, subject, period)
+            updated_grade_data = {
+                "student_id": student_id,
+                "subject": "INGLÉS",
+                "period": "I",
+                "grade": 4.0,
+                "teacher_notes": "Updated grade - improved performance"
+            }
+            
+            response2 = self.session.post(
+                f"{BASE_URL}/grades",
+                json=updated_grade_data,
+                headers=headers,
+                timeout=10
+            )
+            
+            if response2.status_code == 200:
+                data = response2.json()
+                if data.get("grade") == 4.0 and "Updated grade" in data.get("teacher_notes", ""):
+                    self.log_test(
+                        f"Update Existing Grade - {user_type}",
+                        True,
+                        f"Grade updated successfully: {data.get('grade')}"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"Update Existing Grade - {user_type}",
+                        False,
+                        "Grade not updated correctly",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    f"Update Existing Grade - {user_type}",
+                    False,
+                    f"Status code: {response2.status_code}",
+                    response2.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Update Existing Grade - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_grades_permission_validation(self, user_type: str, student_id: str):
+        """Test that only authorized users can assign grades"""
+        if user_type not in self.tokens:
+            self.log_test(f"Grades Permission Validation - {user_type}", False, "No token available for user")
+            return False
+            
+        # Coordinadora should NOT be able to assign grades (only view)
+        if user_type == "coordinadora":
+            try:
+                headers = {
+                    **HEADERS,
+                    "Authorization": f"Bearer {self.tokens[user_type]}"
+                }
+                
+                grade_data = {
+                    "student_id": student_id,
+                    "subject": "MATEMÁTICA",
+                    "period": "I",
+                    "grade": 4.0,
+                    "teacher_notes": "Test unauthorized access"
+                }
+                
+                response = self.session.post(
+                    f"{BASE_URL}/grades",
+                    json=grade_data,
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 403:
+                    self.log_test(
+                        f"Grades Permission Validation - {user_type}",
+                        True,
+                        "Correctly denied grade assignment for coordinadora"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"Grades Permission Validation - {user_type}",
+                        False,
+                        f"Expected 403, got {response.status_code}",
+                        response.text
+                    )
+                    return False
+                    
+            except Exception as e:
+                self.log_test(f"Grades Permission Validation - {user_type}", False, f"Request error: {str(e)}")
+                return False
+        else:
+            self.log_test(f"Grades Permission Validation - {user_type}", True, "Skipped - user can assign grades")
+            return True
+
+    def test_grades_without_auth(self):
+        """Test grades endpoints without authentication"""
+        try:
+            # Test POST /grades without auth
+            grade_data = {
+                "student_id": "test_id",
+                "subject": "MATEMÁTICA",
+                "period": "I",
+                "grade": 4.0
+            }
+            
+            response = self.session.post(
+                f"{BASE_URL}/grades",
+                json=grade_data,
+                headers=HEADERS,
+                timeout=10
+            )
+            
+            if response.status_code == 401 or response.status_code == 403:
+                self.log_test("Grades No Auth (POST)", True, "Correctly rejected unauthenticated request")
+            else:
+                self.log_test(
+                    "Grades No Auth (POST)",
+                    False,
+                    f"Expected 401/403, got {response.status_code}",
+                    response.text
+                )
+                return False
+            
+            # Test GET /grades/student/{id} without auth
+            response2 = self.session.get(
+                f"{BASE_URL}/grades/student/test_id",
+                headers=HEADERS,
+                timeout=10
+            )
+            
+            if response2.status_code == 401 or response2.status_code == 403:
+                self.log_test("Grades No Auth (GET)", True, "Correctly rejected unauthenticated request")
+                return True
+            else:
+                self.log_test(
+                    "Grades No Auth (GET)",
+                    False,
+                    f"Expected 401/403, got {response2.status_code}",
+                    response2.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test("Grades No Auth", False, f"Request error: {str(e)}")
+            return False
+
+    def test_multiple_subjects_grades(self, user_type: str, student_id: str):
+        """Test assigning grades for multiple subjects"""
+        if user_type not in self.tokens or user_type not in ["admin", "docente_bachillerato"]:
+            self.log_test(f"Multiple Subjects Grades - {user_type}", True, "Skipped - no token or invalid role")
+            return True
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # Test subjects for bachillerato
+            subjects_to_test = ["MATEMÁTICA", "INGLÉS", "CIENCIAS NATURALES", "CIENCIAS SOCIALES"]
+            grades_assigned = 0
+            
+            for i, subject in enumerate(subjects_to_test):
+                grade_data = {
+                    "student_id": student_id,
+                    "subject": subject,
+                    "period": "I",
+                    "grade": round(3.0 + (i * 0.3), 1),  # Varying grades: 3.0, 3.3, 3.6, 3.9
+                    "teacher_notes": f"Grade for {subject}"
+                }
+                
+                response = self.session.post(
+                    f"{BASE_URL}/grades",
+                    json=grade_data,
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    grades_assigned += 1
+                else:
+                    self.log_test(
+                        f"Multiple Subjects Grades - {user_type}",
+                        False,
+                        f"Failed to assign grade for {subject}: {response.status_code}",
+                        response.text
+                    )
+                    return False
+            
+            if grades_assigned == len(subjects_to_test):
+                self.log_test(
+                    f"Multiple Subjects Grades - {user_type}",
+                    True,
+                    f"Successfully assigned grades for {grades_assigned} subjects"
+                )
+                return True
+            else:
+                self.log_test(
+                    f"Multiple Subjects Grades - {user_type}",
+                    False,
+                    f"Only assigned {grades_assigned}/{len(subjects_to_test)} grades"
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Multiple Subjects Grades - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run comprehensive student system tests"""
         print("🚀 Starting Comprehensive Student System Tests")
