@@ -42,6 +42,61 @@ const BancoLogros = () => {
   const [availableStudents, setAvailableStudents] = useState([]);
   const [selectedStudents, setSelectedStudents] = useState([]);
 
+  // Datos de logros (ahora manejados por estado)
+  const [logros, setLogros] = useState({
+    academicos: [
+      {
+        id: 1,
+        titulo: "Excelencia Académica",
+        descripcion: "Promedio superior a 4.5 en todas las asignaturas",
+        estudiantes: ["GUTIERREZ GENIETH", "OSPINO ANDRES"],
+        periodo: "I",
+        fecha: "2024-03-15",
+        tipo: "academico"
+      },
+      {
+        id: 2,
+        titulo: "Mejor Desempeño en Matemática",
+        descripcion: "Nota perfecta (5.0) en evaluaciones de matemática",
+        estudiantes: ["GUTIERREZ GENIETH"],
+        periodo: "I", 
+        fecha: "2024-03-20",
+        tipo: "academico"
+      }
+    ],
+    convivencia: [
+      {
+        id: 3,
+        titulo: "Líder Estudiantil",
+        descripcion: "Demostró excelentes habilidades de liderazgo",
+        estudiantes: ["OSPINO ANDRES"],
+        periodo: "I",
+        fecha: "2024-03-10",
+        tipo: "convivencia"
+      },
+      {
+        id: 4,
+        titulo: "Compañerismo Ejemplar",
+        descripcion: "Apoyo constante a compañeros de clase",
+        estudiantes: ["GUTIERREZ GENIETH", "OSPINO ANDRES"],
+        periodo: "I",
+        fecha: "2024-03-25",
+        tipo: "convivencia"
+      }
+    ],
+    deportivos: [
+      {
+        id: 5,
+        titulo: "Participación Deportiva",
+        descripcion: "Participación activa en eventos deportivos",
+        estudiantes: ["OSPINO ANDRES"],
+        periodo: "I",
+        fecha: "2024-03-18",
+        tipo: "deportivo"
+      }
+    ]
+  });
+
   // Cargar estudiantes disponibles
   useEffect(() => {
     loadAvailableStudents();
@@ -124,9 +179,6 @@ const BancoLogros = () => {
       description: `Logro "${nuevoLogro.titulo}" asignado a ${selectedStudents.length} estudiante(s)`,
     });
   };
-
-  // Datos de logros (ahora manejados por estado)
-  const [logros, setLogros] = useState({
     academicos: [
       {
         id: 1,
