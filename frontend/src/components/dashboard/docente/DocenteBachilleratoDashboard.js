@@ -118,6 +118,30 @@ const DocenteBachilleratoDashboard = () => {
     }
   };
 
+  // Función para cargar todas las notas de todos los estudiantes
+  const loadAllStudentGrades = async () => {
+    if (!students || students.length === 0) return;
+    
+    try {
+      const gradeMap = {};
+      
+      for (const student of students) {
+        const studentId = student._id || student.id;
+        const grades = await gradeService.getStudentGrades(studentId);
+        
+        grades.forEach(grade => {
+          const gradeKey = `${studentId}-${grade.period}-${grade.subject}`;
+          gradeMap[gradeKey] = grade;
+        });
+      }
+      
+      setSavedGrades(gradeMap);
+      console.log(`Notas cargadas para ${students.length} estudiantes:`, gradeMap);
+    } catch (error) {
+      console.error('Error loading all student grades:', error);
+    }
+  };
+
   // Función para guardar nota
   const handleGradeChange = async (studentId, period, subject, gradeValue) => {
     if (!gradeValue || gradeValue === '') return;
