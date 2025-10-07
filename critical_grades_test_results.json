@@ -1,0 +1,30 @@
+[
+  {
+    "test": "Login docente_bachillerato",
+    "success": true,
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
+    "timestamp": "2025-10-07T16:01:46.217520",
+    "response_data": null
+  },
+  {
+    "test": "Get Students for docente_bachillerato",
+    "success": true,
+    "details": "Found 3 students. Using: GEOVANNY ERICK SALAS P\u00c1EZ (Grade: 11\u00b0, ID: est003)",
+    "timestamp": "2025-10-07T16:01:46.253856",
+    "response_data": null
+  },
+  {
+    "test": "Assign Grade - docente_bachillerato",
+    "success": true,
+    "details": "Grade 4.5 assigned successfully to student est003 in MATEM\u00c1TICA, per\u00edodo I",
+    "timestamp": "2025-10-07T16:01:46.286458",
+    "response_data": null
+  },
+  {
+    "test": "Verify Grade Persistence - docente_bachillerato",
+    "success": false,
+    "details": "Status code: 403",
+    "timestamp": "2025-10-07T16:01:46.338652",
+    "response_data": "{\"detail\":\"No tiene permisos para ver las notas de este estudiante\"}"
+  }
+]
