@@ -44,7 +44,7 @@ async def get_student_grades(
 @router.post("", response_model=Grade)
 async def assign_grade(
     grade_data: GradeCreate,
-    current_user: User = Depends(require_admin_or_teacher)
+    current_user: User = Depends(require_admin_or_teacher())
 ):
     """Asignar nota a estudiante"""
     db = await get_database()
