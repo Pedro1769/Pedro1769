@@ -1275,20 +1275,24 @@ class GAABackendTester:
 
 def main():
     """Main test execution"""
-    tester = StudentSystemTester()
+    tester = GAABackendTester()
     success = tester.run_all_tests()
     
     # Save detailed results
-    with open("/app/student_test_results.json", "w") as f:
+    with open("/app/gaa_backend_test_results.json", "w") as f:
         json.dump(tester.test_results, f, indent=2, default=str)
     
-    print(f"\n📄 Detailed results saved to: /app/student_test_results.json")
+    print(f"\n📄 Detailed results saved to: /app/gaa_backend_test_results.json")
     
     if success:
-        print("\n🎉 All student system tests passed!")
+        print("\n🎉 All GAA backend tests passed!")
+        print("✅ Authentication system working")
+        print("✅ Students system working")
+        print("✅ GRADES system working (CRITICAL)")
         sys.exit(0)
     else:
         print("\n⚠️  Some tests failed. Check the details above.")
+        print("🔍 Focus on GRADES system failures if any - user reported issues with grade assignment")
         sys.exit(1)
 
 if __name__ == "__main__":
