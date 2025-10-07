@@ -293,7 +293,7 @@ const AdminDashboard = () => {
           <TabsTrigger value="codigos">Códigos Descarga</TabsTrigger>
           <TabsTrigger value="estudiantes">Estudiantes</TabsTrigger>
           <TabsTrigger value="profesores">Profesores</TabsTrigger>
-          <TabsTrigger value="academico">Académico</TabsTrigger>
+          <TabsTrigger value="notas">Gestión de Notas</TabsTrigger>
           <TabsTrigger value="boletines">Boletines</TabsTrigger>
         </TabsList>
 
