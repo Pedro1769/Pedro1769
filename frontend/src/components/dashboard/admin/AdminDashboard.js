@@ -26,6 +26,7 @@ import { studentService, adminService, gradeService, bulletinService } from '../
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../hooks/use-toast';
 import BulkStudentUpload from '../../admin/BulkStudentUpload';
+import GestionNotasAdmin from './GestionNotasAdmin';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
