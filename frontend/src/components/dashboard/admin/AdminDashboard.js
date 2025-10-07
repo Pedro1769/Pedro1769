@@ -334,7 +334,7 @@ const AdminDashboard = () => {
                 <Button 
                   variant="outline" 
                   className="h-20 flex flex-col items-center justify-center hover:bg-purple-50"
-                  onClick={() => setActiveTab('academico')}
+                  onClick={() => setActiveTab('notas')}
                 >
                   <BookOpen className="h-6 w-6 mb-2" />
                   <span className="text-sm">Banco de Logros y Objetivos</span>
@@ -343,7 +343,7 @@ const AdminDashboard = () => {
                 <Button 
                   variant="outline" 
                   className="h-20 flex flex-col items-center justify-center hover:bg-orange-50"
-                  onClick={() => setActiveTab('academico')}
+                  onClick={() => setActiveTab('notas')}
                 >
                   <FileText className="h-6 w-6 mb-2" />
                   <span className="text-sm">Mallas Curriculares</span>
@@ -352,7 +352,7 @@ const AdminDashboard = () => {
                 <Button 
                   variant="outline" 
                   className="h-20 flex flex-col items-center justify-center hover:bg-red-50"
-                  onClick={() => setActiveTab('academico')}
+                  onClick={() => setActiveTab('notas')}
                 >
                   <FolderOpen className="h-6 w-6 mb-2" />
                   <span className="text-sm">Proyectos Institucionales</span>
