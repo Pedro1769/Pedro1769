@@ -540,6 +540,41 @@ const Proyectos = () => {
                 ))}
               </select>
             </div>
+
+            {/* Subida de archivos */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="files" className="text-right">
+                Archivos
+              </Label>
+              <div className="col-span-3">
+                <input
+                  type="file"
+                  id="files"
+                  multiple
+                  onChange={handleFileUpload}
+                  className="border rounded-md px-3 py-2 text-sm w-full"
+                  accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.jpg,.png"
+                />
+                {selectedFiles.length > 0 && (
+                  <div className="mt-2 space-y-1">
+                    <p className="text-sm font-medium">Archivos seleccionados:</p>
+                    {selectedFiles.map((file, index) => (
+                      <div key={index} className="flex items-center justify-between text-xs bg-gray-50 p-2 rounded">
+                        <span>{file.name}</span>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-4 w-4 p-0 text-red-500"
+                          onClick={() => setSelectedFiles(prev => prev.filter((_, i) => i !== index))}
+                        >
+                          ×
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
           <DialogFooter>
             <Button onClick={() => setShowUpload(false)} variant="outline">
