@@ -224,10 +224,11 @@ class GradePersistenceTester:
                     )
                     return True
                 else:
+                    found_grades = [f"{g.get('subject')}: {g.get('grade')}" for g in grades]
                     self.log_test(
                         "Verify Grade in Database",
                         False,
-                        f"Grade 4.3 in MATEMÁTICA not found. Found grades: {[f\"{g.get('subject')}: {g.get('grade')}\" for g in grades]}",
+                        f"Grade 4.3 in MATEMÁTICA not found. Found grades: {found_grades}",
                         grades
                     )
                     return False
