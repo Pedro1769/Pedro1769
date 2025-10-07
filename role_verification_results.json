@@ -1,0 +1,42 @@
+{
+  "timestamp": "2025-10-07T04:13:35.447880",
+  "user_tested": "bifencia.orozco",
+  "expected_role": "docente_bachillerato",
+  "actual_role": "docente_bachillerato",
+  "verification_passed": true,
+  "user_data": {
+    "id": "doc002",
+    "username": "bifencia.orozco",
+    "name": "Bifencia Orozco Tordecilla",
+    "role": "docente_bachillerato",
+    "email": "bifencia.orozco@gimamericano.edu.co",
+    "phone": null,
+    "grade": null,
+    "grades": [
+      "6\u00b0",
+      "7\u00b0",
+      "8\u00b0",
+      "9\u00b0",
+      "10\u00b0",
+      "11\u00b0"
+    ],
+    "subjects": [
+      "HUMANIDADES",
+      "INGL\u00c9S",
+      "MATEM\u00c1TICA",
+      "GEOMETR\u00cdA",
+      "ESTAD\u00cdSTICA",
+      "CIENCIAS NATURALES",
+      "CIENCIAS SOCIALES",
+      "C\u00c1TEDRA DE LA PAZ",
+      "\u00c9TICA Y RELIGI\u00d3N",
+      "TECNOLOG\u00cdA",
+      "INFORM\u00c1TICA",
+      "EDUCACI\u00d3N F\u00cdSICA",
+      "CONVIVENCIA ESCOLAR",
+      "ACOMPA\u00d1AMIENTO DEL ACUDIENTE"
+    ],
+    "is_active": true,
+    "created_at": "2025-10-07T02:23:39.066000"
+  }
+}
