@@ -19,6 +19,16 @@ const BancoLogros = () => {
   const { user } = useAuth();
   const { toast } = useToast();
   const [selectedCategory, setSelectedCategory] = useState('academicos');
+  const [showCreateLogro, setShowCreateLogro] = useState(false);
+  const [newLogro, setNewLogro] = useState({
+    titulo: '',
+    descripcion: '',
+    tipo: 'academico',
+    estudiantes: [],
+    periodo: 'I'
+  });
+  const [availableStudents, setAvailableStudents] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([]);
 
   // Datos mock de logros
   const logros = {
