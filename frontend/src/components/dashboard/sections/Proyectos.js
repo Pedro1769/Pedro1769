@@ -413,15 +413,41 @@ const Proyectos = () => {
 
                   {/* Acciones */}
                   <div className="flex items-center justify-between pt-4 border-t">
-                    <Button size="sm" variant="outline" className="flex items-center space-x-1">
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="flex items-center space-x-1"
+                      onClick={() => {
+                        toast({
+                          title: "Detalles del proyecto",
+                          description: `Mostrando detalles completos de "${proyecto.title}"`,
+                        });
+                      }}
+                    >
                       <Eye className="h-3 w-3" />
                       <span>Ver Detalles</span>
                     </Button>
                     <div className="flex space-x-1">
-                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="h-8 w-8 p-0"
+                        onClick={() => handleEditProject(proyecto)}
+                        title="Editar proyecto"
+                      >
                         <Edit className="h-3 w-3" />
                       </Button>
-                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0 text-red-500 hover:text-red-700">
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="h-8 w-8 p-0 text-red-500 hover:text-red-700"
+                        onClick={() => {
+                          if (window.confirm(`¿Estás seguro de eliminar el proyecto "${proyecto.title}"?`)) {
+                            handleDeleteProject(proyecto.id);
+                          }
+                        }}
+                        title="Eliminar proyecto"
+                      >
                         <Trash2 className="h-3 w-3" />
                       </Button>
                     </div>
