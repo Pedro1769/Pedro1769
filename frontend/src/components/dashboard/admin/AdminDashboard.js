@@ -743,41 +743,9 @@ const AdminDashboard = () => {
           </Card>
         </TabsContent>
 
-        {/* Tab Académico - FUNCIONAL */}
-        <TabsContent value="academico" className="space-y-6">
-          <Card className="bg-gradient-to-br from-rose-500/10 via-pink-500/5 to-fuchsia-500/10 backdrop-blur-md border-0 shadow-2xl">
-            <CardHeader className="bg-gradient-to-r from-rose-600 to-pink-600 text-white rounded-t-lg">
-              <CardTitle className="flex items-center space-x-2">
-                <BookOpen className="h-6 w-6 animate-pulse" />
-                <span className="text-xl font-bold">📚 Gestión Académica</span>
-              </CardTitle>
-              <CardDescription className="text-rose-100">
-                Banco de logros, objetivos y mallas curriculares
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6">
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="p-6 bg-gradient-to-br from-rose-400 to-rose-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
-                  <Target className="h-12 w-12 mb-4 animate-spin" />
-                  <h3 className="text-lg font-bold mb-2">Logros Académicos</h3>
-                  <p className="text-rose-100">250+ objetivos configurados</p>
-                  <Button className="mt-4 bg-white text-rose-600 hover:bg-rose-50 w-full">Ver Banco</Button>
-                </div>
-                <div className="p-6 bg-gradient-to-br from-pink-400 to-pink-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
-                  <FolderOpen className="h-12 w-12 mb-4 animate-bounce" />
-                  <h3 className="text-lg font-bold mb-2">Mallas Curriculares</h3>
-                  <p className="text-pink-100">Todos los grados actualizados</p>
-                  <Button className="mt-4 bg-white text-pink-600 hover:bg-pink-50 w-full">Gestionar</Button>
-                </div>
-                <div className="p-6 bg-gradient-to-br from-fuchsia-400 to-fuchsia-600 rounded-xl text-white shadow-lg transform hover:scale-105 transition-all duration-300">
-                  <BarChart3 className="h-12 w-12 mb-4 animate-pulse" />
-                  <h3 className="text-lg font-bold mb-2">Reportes</h3>
-                  <p className="text-fuchsia-100">Estadísticas en tiempo real</p>
-                  <Button className="mt-4 bg-white text-fuchsia-600 hover:bg-fuchsia-50 w-full">Generar</Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+        {/* Tab Gestión de Notas - FUNCIONAL */}
+        <TabsContent value="notas" className="space-y-6">
+          <GestionNotasAdmin />
         </TabsContent>
 
         {/* Tab Boletines - FUNCIONAL */}
