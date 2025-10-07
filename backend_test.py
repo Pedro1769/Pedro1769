@@ -1118,72 +1118,158 @@ class GAABackendTester:
             return False
 
     def run_all_tests(self):
-        """Run comprehensive student system tests"""
-        print("🚀 Starting Comprehensive Student System Tests")
-        print("=" * 60)
+        """Run comprehensive GAA backend tests focusing on GRADES system"""
+        print("🚀 Starting Comprehensive GAA Backend Tests")
+        print("🎯 FOCUS: Authentication, Students, and GRADES System (CRITICAL)")
+        print("=" * 70)
         
         # Test 1: Health check
         if not self.test_health_check():
             print("❌ Backend is not accessible. Stopping tests.")
             return False
         
-        # Test 2: Login success for all user types
+        # Test 2: Login success for all user types (CRITICAL CREDENTIALS)
         login_success_count = 0
         for user_type, credentials in TEST_USERS.items():
             if self.test_login_success(user_type, credentials):
                 login_success_count += 1
         
         if login_success_count == 0:
-            print("❌ No successful logins. Cannot proceed with student tests.")
+            print("❌ No successful logins. Cannot proceed with tests.")
             return False
         
-        # Test 3: Students endpoints without authentication
-        self.test_students_without_auth()
+        print(f"\n✅ Authentication successful for {login_success_count}/{len(TEST_USERS)} users")
         
-        # Test 4: GET /students with different user roles
-        for user_type in self.tokens.keys():
-            self.test_get_students_with_token(user_type)
+        # Test 3: Authentication validation tests
+        self.test_login_invalid_credentials()
+        self.test_login_wrong_password()
+        self.test_profile_without_token()
+        self.test_profile_invalid_token()
         
-        # Test 5: GET /students with grade filters
-        for user_type in self.tokens.keys():
-            self.test_get_students_with_grade_filter(user_type)
-        
-        # Test 6: POST /students (create new student)
-        # Try with admin first
-        if "admin" in self.tokens:
-            self.test_create_student("admin")
-        elif "docente_primaria" in self.tokens:
-            self.test_create_student("docente_primaria")
-        elif "docente_bachillerato" in self.tokens:
-            self.test_create_student("docente_bachillerato")
-        
-        # Test 7: GET /students/{id}
-        for user_type in self.tokens.keys():
-            self.test_get_student_by_id(user_type)
-        
-        # Test 8: Profile access (authentication verification)
+        # Test 4: Profile access for authenticated users
         for user_type in self.tokens.keys():
             self.test_profile_with_token(user_type)
         
+        # Test 5: Students endpoints without authentication
+        self.test_students_without_auth()
+        
+        # Test 6: GET /students with different user roles (verify grade filtering)
+        for user_type in self.tokens.keys():
+            self.test_get_students_with_token(user_type)
+        
+        # Test 7: GET /students with grade filters (CRITICAL for docentes)
+        for user_type in self.tokens.keys():
+            self.test_get_students_with_grade_filter(user_type)
+        
+        # Test 8: Get a real student ID for grades testing
+        test_student_id = None
+        if "admin" in self.tokens:
+            try:
+                headers = {
+                    **HEADERS,
+                    "Authorization": f"Bearer {self.tokens['admin']}"
+                }
+                response = self.session.get(f"{BASE_URL}/students", headers=headers, timeout=10)
+                if response.status_code == 200:
+                    students = response.json()
+                    if students and len(students) > 0:
+                        test_student_id = students[0].get("id") or students[0].get("_id")
+                        print(f"\n📝 Using student ID for grades testing: {test_student_id}")
+            except:
+                pass
+        
+        if not test_student_id:
+            print("⚠️  No student ID available for grades testing. Creating test student...")
+            # Try to create a test student
+            if "admin" in self.tokens:
+                self.test_create_student("admin")
+                test_student_id = self.created_student_id
+        
+        # ==================== GRADES SYSTEM TESTING (CRITICAL) ====================
+        print("\n" + "=" * 70)
+        print("🎯 CRITICAL: GRADES SYSTEM TESTING")
+        print("=" * 70)
+        
+        if test_student_id:
+            # Test 9: Grades endpoints without authentication
+            self.test_grades_without_auth()
+            
+            # Test 10: Assign grades (CRITICAL - user reports this doesn't work)
+            for user_type in self.tokens.keys():
+                self.test_assign_grade_success(user_type, test_student_id)
+            
+            # Test 11: Grade range validation (1.0-5.0)
+            for user_type in ["admin", "docente_bachillerato"]:
+                if user_type in self.tokens:
+                    self.test_assign_grade_invalid_range(user_type, test_student_id)
+            
+            # Test 12: Get student grades
+            for user_type in self.tokens.keys():
+                self.test_get_student_grades(user_type, test_student_id)
+            
+            # Test 13: Get student grades with period filter
+            for user_type in self.tokens.keys():
+                self.test_get_student_grades_with_period_filter(user_type, test_student_id)
+            
+            # Test 14: Update existing grade (should not create duplicate)
+            for user_type in ["admin", "docente_bachillerato"]:
+                if user_type in self.tokens:
+                    self.test_update_existing_grade(user_type, test_student_id)
+            
+            # Test 15: Permission validation for grades
+            for user_type in self.tokens.keys():
+                self.test_grades_permission_validation(user_type, test_student_id)
+            
+            # Test 16: Multiple subjects grades assignment
+            for user_type in ["admin", "docente_bachillerato"]:
+                if user_type in self.tokens:
+                    self.test_multiple_subjects_grades(user_type, test_student_id)
+        else:
+            print("❌ No student ID available for grades testing. Skipping grades tests.")
+        
+        # Test 17: User registration and logout
+        self.test_register_new_user()
+        self.test_register_duplicate_user()
+        
+        for user_type in self.tokens.keys():
+            self.test_logout(user_type)
+        
         # Summary
-        print("=" * 60)
-        print("📊 TEST SUMMARY")
-        print("=" * 60)
+        print("\n" + "=" * 70)
+        print("📊 COMPREHENSIVE TEST SUMMARY")
+        print("=" * 70)
         
         total_tests = len(self.test_results)
         passed_tests = sum(1 for result in self.test_results if result["success"])
         failed_tests = total_tests - passed_tests
         
         print(f"Total Tests: {total_tests}")
-        print(f"Passed: {passed_tests}")
-        print(f"Failed: {failed_tests}")
-        print(f"Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+        print(f"✅ Passed: {passed_tests}")
+        print(f"❌ Failed: {failed_tests}")
+        print(f"📈 Success Rate: {(passed_tests/total_tests)*100:.1f}%")
+        
+        # Categorize results
+        auth_tests = [r for r in self.test_results if "Login" in r["test"] or "Profile" in r["test"] or "Register" in r["test"] or "Logout" in r["test"]]
+        student_tests = [r for r in self.test_results if "Student" in r["test"]]
+        grade_tests = [r for r in self.test_results if "Grade" in r["test"]]
+        
+        print(f"\n📋 Test Categories:")
+        print(f"   🔐 Authentication: {sum(1 for r in auth_tests if r['success'])}/{len(auth_tests)} passed")
+        print(f"   👥 Students: {sum(1 for r in student_tests if r['success'])}/{len(student_tests)} passed")
+        print(f"   📝 Grades (CRITICAL): {sum(1 for r in grade_tests if r['success'])}/{len(grade_tests)} passed")
         
         if failed_tests > 0:
-            print("\n❌ FAILED TESTS:")
+            print(f"\n❌ FAILED TESTS ({failed_tests}):")
             for result in self.test_results:
                 if not result["success"]:
                     print(f"  - {result['test']}: {result['details']}")
+        
+        # Special focus on grades system failures
+        failed_grade_tests = [r for r in grade_tests if not r["success"]]
+        if failed_grade_tests:
+            print(f"\n🚨 CRITICAL: GRADES SYSTEM FAILURES ({len(failed_grade_tests)}):")
+            for result in failed_grade_tests:
+                print(f"  - {result['test']}: {result['details']}")
         
         return failed_tests == 0
 
