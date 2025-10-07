@@ -45,6 +45,7 @@ const ConvivenciaDashboard = () => {
   const [convivenciaGrade, setConvivenciaGrade] = useState({
     period: 'I',
     grade: '',
+    subject: 'CONVIVENCIA ESCOLAR', // Nueva opción para elegir tipo de nota
     observations: ''
   });
   const [newStudent, setNewStudent] = useState({
