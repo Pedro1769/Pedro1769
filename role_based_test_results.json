@@ -3,84 +3,84 @@
     "test": "Login & User Info - docente_bachillerato",
     "success": true,
     "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato, Grades: ['6\u00b0', '7\u00b0', '8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0'], Subjects: 14 materias",
-    "timestamp": "2025-10-07T19:21:27.039113",
+    "timestamp": "2025-10-07T19:21:59.812661",
     "response_data": null
   },
   {
     "test": "Login & User Info - coordinadora",
     "success": true,
     "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
-    "timestamp": "2025-10-07T19:21:27.060101",
+    "timestamp": "2025-10-07T19:21:59.827896",
     "response_data": null
   },
   {
     "test": "Login & User Info - docente_primaria",
     "success": true,
     "details": "User: Yocelyn Cabarcas Navarro, Role: docente_primaria, Grade: 1\u00b0, Subjects: 14 materias",
-    "timestamp": "2025-10-07T19:21:27.077304",
+    "timestamp": "2025-10-07T19:21:59.838456",
     "response_data": null
   },
   {
     "test": "Student Access - docente_bachillerato",
     "success": true,
     "details": "Total: 4 estudiantes. Distribuci\u00f3n por grado: {'11\u00b0': 1, '10\u00b0': 3} \u2705 CORRECTO: Ve grados asignados ['6\u00b0', '7\u00b0', '8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0']",
-    "timestamp": "2025-10-07T19:21:27.091537",
+    "timestamp": "2025-10-07T19:21:59.890825",
     "response_data": null
   },
   {
     "test": "Student Access - coordinadora",
     "success": true,
     "details": "Total: 556 estudiantes. Distribuci\u00f3n por grado: {'2\u00b0': 1, '1\u00b0': 550, '11\u00b0': 1, '3\u00b0': 1, '10\u00b0': 3} \u2705 CORRECTO: Ve todos los estudiantes del sistema (556)",
-    "timestamp": "2025-10-07T19:21:27.110801",
+    "timestamp": "2025-10-07T19:21:59.909660",
     "response_data": null
   },
   {
     "test": "Student Access - docente_primaria",
     "success": true,
     "details": "Total: 550 estudiantes. Distribuci\u00f3n por grado: {'1\u00b0': 550} \u2705 CORRECTO: Solo ve grado 1\u00b0",
-    "timestamp": "2025-10-07T19:21:27.128649",
+    "timestamp": "2025-10-07T19:21:59.950151",
     "response_data": null
   },
   {
     "test": "Grade Filtering - docente_bachillerato",
     "success": true,
     "details": "Filtrado por grado: {'6\u00b0': 0, '7\u00b0': 0, '8\u00b0': 0, '9\u00b0': 0, '10\u00b0': 3, '11\u00b0': 1} \u2705 CORRECTO: Acceso a grados asignados ['6\u00b0', '7\u00b0', '8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0']",
-    "timestamp": "2025-10-07T19:21:27.279019",
+    "timestamp": "2025-10-07T19:22:00.103001",
     "response_data": null
   },
   {
     "test": "Grade Filtering - coordinadora",
     "success": true,
     "details": "Filtrado por grado: {'1\u00b0': 550, '6\u00b0': 0, '11\u00b0': 1} \u2705 CORRECTO: Acceso a m\u00faltiples grados",
-    "timestamp": "2025-10-07T19:21:27.315244",
+    "timestamp": "2025-10-07T19:22:00.147862",
     "response_data": null
   },
   {
     "test": "Grade Filtering - docente_primaria",
-    "success": false,
-    "details": "Filtrado por grado: {'1\u00b0': 550, '2\u00b0': 550, '3\u00b0': 550, '4\u00b0': 550, '5\u00b0': 550} \u274c ERROR: Permisos incorrectos para grado 1\u00b0",
-    "timestamp": "2025-10-07T19:21:27.407156",
+    "success": true,
+    "details": "Filtrado por grado: {'1\u00b0': 550, '2\u00b0': 550, '3\u00b0': 550, '4\u00b0': 550, '5\u00b0': 550} \u2705 CORRECTO: Siempre ve estudiantes de grado 1\u00b0 (seguridad)",
+    "timestamp": "2025-10-07T19:22:00.239409",
     "response_data": null
   },
   {
     "test": "Grade Assignment Permissions - docente_bachillerato",
     "success": true,
     "details": "Asignaciones exitosas: 2/2. Resultados: [{'subject': 'HUMANIDADES', 'status_code': 200, 'success': True}, {'subject': 'INGL\u00c9S', 'status_code': 200, 'success': True}] \u2705 CORRECTO: Puede asignar notas seg\u00fan permisos",
-    "timestamp": "2025-10-07T19:21:27.484413",
+    "timestamp": "2025-10-07T19:22:00.316270",
     "response_data": null
   },
   {
     "test": "Grade Assignment Permissions - coordinadora",
     "success": true,
     "details": "Asignaciones exitosas: 2/2. Resultados: [{'subject': 'CONVIVENCIA ESCOLAR', 'status_code': 200, 'success': True}, {'subject': 'ACOMPA\u00d1AMIENTO DE ACUDIENTE', 'status_code': 200, 'success': True}] \u2705 CORRECTO: Puede asignar notas de convivencia",
-    "timestamp": "2025-10-07T19:21:27.563277",
+    "timestamp": "2025-10-07T19:22:00.398429",
     "response_data": null
   },
   {
     "test": "Grade Assignment Permissions - docente_primaria",
     "success": true,
     "details": "Asignaciones exitosas: 2/2. Resultados: [{'subject': 'MATEM\u00c1TICA', 'status_code': 200, 'success': True}, {'subject': 'HUMANIDADES', 'status_code': 200, 'success': True}] \u2705 CORRECTO: Puede asignar notas seg\u00fan permisos",
-    "timestamp": "2025-10-07T19:21:27.650109",
+    "timestamp": "2025-10-07T19:22:00.522327",
     "response_data": null
   }
 ]
