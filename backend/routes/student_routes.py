@@ -21,25 +21,23 @@ async def get_students(
     filter_query = {"is_active": True}
     
     if current_user.role == UserRole.DOCENTE_PRIMARIA:
-        # Docentes de primaria ven estudiantes de su grado asignado
+        # Docentes de primaria ven estudiantes de su grado asignado únicamente
         if current_user.grade:
             filter_query["grade"] = current_user.grade
-            # Para docentes de primaria, ignorar el parámetro grade si no coincide con su grado asignado
-            if grade and grade != current_user.grade:
-                # No permitir ver otros grados
-                filter_query["grade"] = current_user.grade
+            # Para docentes de primaria, NUNCA permitir ver otros grados
+            # El parámetro grade se ignora si no coincide con su grado asignado
     elif current_user.role == UserRole.DOCENTE_BACHILLERATO:
         # Docentes de bachillerato ven estudiantes de los grados que manejan
         if current_user.grades:
-            filter_query["grade"] = {"$in": current_user.grades}
-            # Para docentes de bachillerato, solo permitir filtrar por grados asignados
+            # Si se especifica un grado y está en sus grados asignados, filtrar por ese grado
             if grade and grade in current_user.grades:
                 filter_query["grade"] = grade
+            else:
+                # Si no se especifica grado o no está asignado, mostrar todos sus grados
+                filter_query["grade"] = {"$in": current_user.grades}
         elif current_user.grade:
             # Si no tiene grades pero sí grade, usar ese grado
             filter_query["grade"] = current_user.grade
-            if grade and grade != current_user.grade:
-                filter_query["grade"] = current_user.grade
     elif current_user.role == UserRole.PADRE:
         # Padres solo ven a sus hijos
         filter_query["parent_id"] = current_user.id
