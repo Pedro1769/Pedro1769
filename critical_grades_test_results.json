@@ -3,28 +3,70 @@
     "test": "Login docente_bachillerato",
     "success": true,
     "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
-    "timestamp": "2025-10-07T16:01:46.217520",
+    "timestamp": "2025-10-07T16:03:09.409750",
     "response_data": null
   },
   {
     "test": "Get Students for docente_bachillerato",
     "success": true,
     "details": "Found 3 students. Using: GEOVANNY ERICK SALAS P\u00c1EZ (Grade: 11\u00b0, ID: est003)",
-    "timestamp": "2025-10-07T16:01:46.253856",
+    "timestamp": "2025-10-07T16:03:09.425598",
     "response_data": null
   },
   {
     "test": "Assign Grade - docente_bachillerato",
     "success": true,
     "details": "Grade 4.5 assigned successfully to student est003 in MATEM\u00c1TICA, per\u00edodo I",
-    "timestamp": "2025-10-07T16:01:46.286458",
+    "timestamp": "2025-10-07T16:03:09.475674",
     "response_data": null
   },
   {
-    "test": "Verify Grade Persistence - docente_bachillerato",
-    "success": false,
-    "details": "Status code: 403",
-    "timestamp": "2025-10-07T16:01:46.338652",
-    "response_data": "{\"detail\":\"No tiene permisos para ver las notas de este estudiante\"}"
+    "test": "Login admin",
+    "success": true,
+    "details": "User: Pedro Hurtado, Role: admin",
+    "timestamp": "2025-10-07T16:03:09.489116",
+    "response_data": null
+  },
+  {
+    "test": "Verify Grade Persistence - admin",
+    "success": true,
+    "details": "Grade 4.5 found in database for MATEM\u00c1TICA, per\u00edodo I (Student: GEOVANNY ERICK SALAS P\u00c1EZ)",
+    "timestamp": "2025-10-07T16:03:09.506379",
+    "response_data": null
+  },
+  {
+    "test": "Logout docente_bachillerato",
+    "success": true,
+    "details": "Successfully logged out",
+    "timestamp": "2025-10-07T16:03:09.512690",
+    "response_data": null
+  },
+  {
+    "test": "Login docente_bachillerato",
+    "success": true,
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
+    "timestamp": "2025-10-07T16:03:10.520285",
+    "response_data": null
+  },
+  {
+    "test": "Verify Grade Persistence - admin",
+    "success": true,
+    "details": "Grade 4.5 found in database for MATEM\u00c1TICA, per\u00edodo I (Student: GEOVANNY ERICK SALAS P\u00c1EZ)",
+    "timestamp": "2025-10-07T16:03:10.533240",
+    "response_data": null
+  },
+  {
+    "test": "Login admin",
+    "success": true,
+    "details": "User: Pedro Hurtado, Role: admin",
+    "timestamp": "2025-10-07T16:03:10.581642",
+    "response_data": null
+  },
+  {
+    "test": "Admin Grades Panel - admin",
+    "success": true,
+    "details": "Found 13 total grades. \u2705 Our assigned grade is visible. Data completeness: Student names: True, Teacher names: True, Subjects: True, Periods: True",
+    "timestamp": "2025-10-07T16:03:10.595344",
+    "response_data": null
   }
 ]
