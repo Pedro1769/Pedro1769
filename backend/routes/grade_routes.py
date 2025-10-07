@@ -118,7 +118,7 @@ async def assign_grade(
 async def update_grade(
     grade_id: str,
     grade_data: GradeCreate,
-    current_user: User = Depends(require_admin_or_teacher)
+    current_user: User = Depends(require_admin_or_teacher())
 ):
     """Actualizar nota existente"""
     db = await get_database()
