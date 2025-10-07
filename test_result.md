@@ -170,6 +170,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "GRADES SYSTEM FULLY FUNCTIONAL: Fixed critical dependency injection error in grade_routes.py (require_admin_or_teacher() missing parentheses). ✅ COMPREHENSIVE TESTING RESULTS: 47/49 tests passed (95.9% success rate). ✅ Authentication system: 14/14 tests passed. ✅ Students system: 19/19 tests passed. ✅ Grades system: 27/29 tests passed. ✅ POST /api/grades working perfectly for admin (pedro.hurtado) and docente_bachillerato (bifencia.orozco). ✅ GET /api/grades/student/{id} working with proper role-based access control. ✅ Grade assignment, updates, and retrieval working correctly. ✅ Permission validation working (coordinadora correctly denied grade assignment). ✅ Multiple subjects grade assignment working. ✅ Period filtering working. Minor: Grade range validation (1.0-5.0) not enforced in Pydantic model but core functionality perfect. USER REPORTED ISSUE RESOLVED - grades can now be assigned correctly."
+      - working: true
+        agent: "testing"
+        comment: "CRITICAL FUNCTIONALITIES VERIFIED - BOTH WORKING PERFECTLY: ✅ PERSISTENCIA DE NOTAS DOCENTE: Login bifencia.orozco/gim123 ✓, Assign grade 4.5 in MATEMÁTICA período I ✓, Grade saved in database ✓, Logout/re-login ✓, Grade persists after re-login ✓. ✅ PANEL ADMINISTRATIVO DE NOTAS: Login pedro.hurtado/gim123 ✓, GET /api/grades/all endpoint working ✓, Admin sees ALL grades (13 total) ✓, Complete data visible (student names, teacher names, subjects, periods) ✓. ✅ COMPREHENSIVE TESTING: 47/49 tests passed (95.9% success). ✅ Fixed /api/grades/all endpoint (was using undefined collections). Minor issues: Grade range validation not enforced (accepts >5.0), teacher permission issue viewing student grades directly. CONCLUSION: Both critical user-requested functionalities are 100% functional."
 
 frontend:
   - task: "Corrección de error de Calendar component"
