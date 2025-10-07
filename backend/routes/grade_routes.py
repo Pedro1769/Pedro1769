@@ -287,7 +287,7 @@ async def get_consolidated_grades(
 @router.delete("/{grade_id}")
 async def delete_grade(
     grade_id: str,
-    current_user: User = Depends(require_admin_or_teacher())
+    current_user: User = Depends(require_grade_assignment_roles())
 ):
     """Eliminar nota"""
     db = await get_database()
