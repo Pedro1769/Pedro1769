@@ -58,12 +58,21 @@ const DocenteBachilleratoDashboard = () => {
     loadStudents();
   }, [user.grades, selectedGrade]);
 
-  // Cargar notas cuando cambie el período o asignatura seleccionada
+  // Cargar notas cuando cambian los estudiantes, período o asignatura
   useEffect(() => {
-    if (students.length > 0) {
+    if (students && students.length > 0) {
+      console.log('Cargando notas para', students.length, 'estudiantes');
       loadAllStudentGrades();
     }
   }, [students, selectedPeriod, selectedSubject]);
+
+  // Cargar notas iniciales cuando se cargan estudiantes por primera vez
+  useEffect(() => {
+    if (students && students.length > 0 && Object.keys(savedGrades).length === 0) {
+      console.log('Carga inicial de notas');
+      loadAllStudentGrades();
+    }
+  }, [students]);
 
   useEffect(() => {
     // Escuchar cambios de navegación desde el sidebar
