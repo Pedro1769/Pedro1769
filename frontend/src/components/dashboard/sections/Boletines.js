@@ -111,39 +111,31 @@ const Boletines = () => {
     }
   };
 
-  const downloadBoletin = async (student) => {
-    try {
-      // Obtener notas reales del estudiante
-      const grades = await gradeService.getStudentGrades(student._id || student.id, selectedPeriod);
-      
-      // Crear datos del boletín con notas reales
-      const boletinData = {
-        estudiante: student.name,
-        grado: student.grade,
-        periodo: selectedPeriod,
-        institucion: "Gimnasio Americano Atlántico - GADA",
-        fecha: new Date().toLocaleDateString('es-CO'),
-        docente: user.name,
-        notas: grades.length > 0 ? grades.map(grade => ({
-          asignatura: grade.subject,
-          nota: grade.grade,
-          desempeño: grade.performance_level,
-          observaciones: grade.teacher_notes || 'Sin observaciones'
-        })) : user.subjects.map(subject => ({
-          asignatura: subject,
-          nota: 'Pendiente',
-          desempeño: 'SIN EVALUAR',
-          observaciones: 'Nota pendiente de asignar'
-        }))
-      };
+  // Función para determinar el nivel educativo
+  const determineEducationalLevel = (grade) => {
+    if (['TRANSICIÓN', 'TRANSICION'].includes(grade.toUpperCase())) {
+      return 'TRANSICION';
+    } else if (['1°', '2°', '3°', '4°', '5°'].includes(grade)) {
+      return 'PRIMARIA';
+    } else if (['6°', '7°', '8°', '9°', '10°', '11°'].includes(grade)) {
+      return 'BACHILLERATO';
+    }
+    return 'BACHILLERATO'; // default
+  };
 
-      const promedio = grades.length > 0 ? 
-        (grades.reduce((sum, grade) => sum + grade.grade, 0) / grades.length).toFixed(1) : 
-        'Pendiente';
+  // Función para generar boletín de Transición
+  const generateBoletinTransicion = (boletinData, grades) => {
+    const dimensiones = {
+      'DIMENSIÓN COGNITIVA': grades.filter(g => ['PRE-MATEMÁTICA', 'PRE-LECTOESCRITURA', 'EXPLORACIÓN DEL MEDIO'].includes(g.subject)),
+      'DIMENSIÓN COMUNICATIVA': grades.filter(g => ['EXPRESIÓN ORAL', 'COMPRENSIÓN LECTORA', 'INGLÉS BÁSICO'].includes(g.subject)),
+      'DIMENSIÓN ARTÍSTICA': grades.filter(g => ['ARTES PLÁSTICAS', 'MÚSICA Y MOVIMIENTO', 'EXPRESIÓN CORPORAL'].includes(g.subject)),
+      'DIMENSIÓN ÉTICA Y VALORES': grades.filter(g => ['CONVIVENCIA ESCOLAR', 'VALORES INSTITUCIONALES'].includes(g.subject)),
+      'DIMENSIÓN CORPORAL': grades.filter(g => ['PSICOMOTRICIDAD', 'EDUCACIÓN FÍSICA'].includes(g.subject))
+    };
 
-      const boletinContent = `
+    return `
 ╔══════════════════════════════════════════════════════════════╗
-║                      BOLETÍN ACADÉMICO                       ║
+║              BOLETÍN ACADÉMICO - TRANSICIÓN                  ║
 ║                ${boletinData.institucion}                ║
 ╚══════════════════════════════════════════════════════════════╝
 
@@ -152,59 +144,284 @@ INFORMACIÓN DEL ESTUDIANTE:
 • Nombre: ${boletinData.estudiante}
 • Grado: ${boletinData.grado}
 • Período: ${boletinData.periodo}
-• Docente: ${boletinData.docente}
-• Fecha de generación: ${boletinData.fecha}
+• Docente Titular: ${boletinData.docente}
+• Fecha: ${boletinData.fecha}
 
-CALIFICACIONES POR ASIGNATURA:
+EVALUACIÓN POR DIMENSIONES DEL DESARROLLO:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${boletinData.notas.map(nota => `
-• ${nota.asignatura}
-  Nota: ${nota.nota} | Desempeño: ${nota.desempeño}
-  Observaciones: ${nota.observaciones}
+
+${Object.keys(dimensiones).map(dimension => `
+🔸 ${dimension}:
+${dimensiones[dimension].length > 0 ? 
+  dimensiones[dimension].map(nota => `   • ${nota.subject}: ${nota.performance_level || 'EN PROCESO'}`).join('\n') :
+  '   • EN PROCESO DE EVALUACIÓN'
+}
 `).join('')}
 
-RESUMEN ACADÉMICO:
+PROCESO DE DESARROLLO:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-• Promedio General: ${promedio}
-• Total Asignaturas: ${boletinData.notas.length}
-• Asignaturas Evaluadas: ${grades.length}
-• Estado: ${grades.length > 0 ? 'EVALUADO' : 'PENDIENTE DE EVALUACIÓN'}
+• Adaptación al ambiente escolar: POSITIVA
+• Participación en actividades: ACTIVA
+• Relaciones interpersonales: EN DESARROLLO
+• Autonomía personal: PROGRESIVA
 
-OBSERVACIONES GENERALES:
+OBSERVACIONES PEDAGÓGICAS:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${grades.length > 0 ? 
-  'El estudiante presenta un desempeño acorde a las competencias trabajadas en el período académico.' : 
-  'Pendiente de completar evaluaciones para generar el consolidado académico.'}
+  'El estudiante muestra un desarrollo integral acorde a su edad y grado de madurez. Se evidencia progreso en las diferentes dimensiones del desarrollo.' : 
+  'El proceso de evaluación se centra en el desarrollo integral del niño/a, observando sus avances en las diferentes dimensiones.'}
+
+RECOMENDACIONES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Continuar fortaleciendo la rutina de estudio en casa
+• Fomentar la lectura de cuentos y actividades lúdicas
+• Mantener comunicación constante familia-colegio
+• Desarrollar actividades de motricidad fina y gruesa
 
 ╔══════════════════════════════════════════════════════════════╗
-║   Este documento es oficial y certifica el rendimiento      ║
-║   académico del estudiante en el período indicado.          ║
-║                                                              ║
-║   Generado automáticamente por el Sistema GADA              ║
-║   ${new Date().toISOString()}                               ║
+║   GIMNASIO AMERICANO ATLÁNTICO - GADA                       ║
+║   "Formando líderes integrales para el futuro"              ║
+║   Generado: ${new Date().toLocaleString('es-CO')}            ║
 ╚══════════════════════════════════════════════════════════════╝
-      `;
+    `;
+  };
 
+  // Función para generar boletín de Primaria
+  const generateBoletinPrimaria = (boletinData, grades) => {
+    const materiasPrimaria = [
+      'MATEMÁTICA', 'HUMANIDADES', 'CIENCIAS NATURALES', 'CIENCIAS SOCIALES', 
+      'INGLÉS', 'EDUCACIÓN FÍSICA', 'ARTES', 'ÉTICA Y VALORES', 'RELIGIÓN',
+      'CONVIVENCIA ESCOLAR', 'TECNOLOGÍA E INFORMÁTICA'
+    ];
+
+    const notasPorMateria = materiasPrimaria.map(materia => {
+      const nota = grades.find(g => g.subject === materia);
+      return {
+        asignatura: materia,
+        nota: nota ? nota.grade : 'Pendiente',
+        desempeño: nota ? nota.performance_level : 'SIN EVALUAR',
+        observaciones: nota ? nota.teacher_notes || 'Sin observaciones' : 'Pendiente de evaluación'
+      };
+    });
+
+    const promedio = grades.length > 0 ? 
+      (grades.reduce((sum, grade) => sum + grade.grade, 0) / grades.length).toFixed(1) : 
+      'Pendiente';
+
+    return `
+╔══════════════════════════════════════════════════════════════╗
+║              BOLETÍN ACADÉMICO - PRIMARIA                    ║
+║                ${boletinData.institucion}                ║
+╚══════════════════════════════════════════════════════════════╝
+
+INFORMACIÓN DEL ESTUDIANTE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Nombre: ${boletinData.estudiante}
+• Grado: ${boletinData.grado} - BÁSICA PRIMARIA
+• Período Académico: ${boletinData.periodo}
+• Docente Titular: ${boletinData.docente}
+• Fecha de Emisión: ${boletinData.fecha}
+
+ÁREAS DEL CONOCIMIENTO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${notasPorMateria.map(materia => `
+📚 ${materia.asignatura}
+   Calificación: ${materia.nota}
+   Desempeño: ${materia.desempeño}
+   Observaciones: ${materia.observaciones}
+`).join('')}
+
+CONSOLIDADO ACADÉMICO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Promedio General: ${promedio}
+• Áreas Evaluadas: ${grades.length}/${materiasPrimaria.length}
+• Nivel de Desempeño General: ${promedio >= 4.5 ? 'SUPERIOR' : promedio >= 4.0 ? 'ALTO' : promedio >= 3.0 ? 'BÁSICO' : 'BAJO'}
+
+COMPETENCIAS TRANSVERSALES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Trabajo en equipo: EN DESARROLLO
+• Comunicación efectiva: EN DESARROLLO  
+• Pensamiento crítico: EN DESARROLLO
+• Responsabilidad académica: EN DESARROLLO
+
+OBSERVACIONES DEL DOCENTE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${grades.length > 0 ? 
+  `El estudiante ${boletinData.estudiante} ha demostrado un desempeño ${promedio >= 4.0 ? 'destacado' : promedio >= 3.0 ? 'satisfactorio' : 'que requiere refuerzo'} durante este período académico. Se evidencian fortalezas en las áreas evaluadas y se recomienda continuar con el proceso de acompañamiento familiar.` : 
+  'El estudiante se encuentra en proceso de evaluación. Se requiere completar las actividades pendientes para generar el consolidado académico correspondiente.'}
+
+COMPROMISOS Y RECOMENDACIONES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Mantener rutinas de estudio diarias
+• Fomentar la lectura comprensiva
+• Participar activamente en clase
+• Cumplir con tareas y trabajos asignados
+
+╔══════════════════════════════════════════════════════════════╗
+║   GIMNASIO AMERICANO ATLÁNTICO - GADA                       ║
+║   NIT: 900.123.456-7 | Resolución 12345 de 2020           ║
+║   "Educación integral para la excelencia académica"         ║
+║   Generado: ${new Date().toLocaleString('es-CO')}            ║
+╚══════════════════════════════════════════════════════════════╝
+    `;
+  };
+
+  // Función para generar boletín de Bachillerato
+  const generateBoletinBachillerato = (boletinData, grades) => {
+    const materiasBachillerato = [
+      'MATEMÁTICA', 'FÍSICA', 'QUÍMICA', 'BIOLOGÍA', 'HUMANIDADES', 
+      'CIENCIAS SOCIALES', 'INGLÉS', 'EDUCACIÓN FÍSICA', 'ARTES',
+      'ÉTICA Y VALORES', 'RELIGIÓN', 'FILOSOFÍA', 'ECONOMÍA Y POLÍTICA',
+      'TECNOLOGÍA E INFORMÁTICA', 'CONVIVENCIA ESCOLAR'
+    ];
+
+    const notasPorMateria = materiasBachillerato.map(materia => {
+      const nota = grades.find(g => g.subject === materia);
+      return {
+        asignatura: materia,
+        nota: nota ? nota.grade : 'Pendiente',
+        desempeño: nota ? nota.performance_level : 'SIN EVALUAR',
+        observaciones: nota ? nota.teacher_notes || 'Sin observaciones' : 'Pendiente de evaluación',
+        intensidad: nota ? '4 horas semanales' : 'N/A'
+      };
+    });
+
+    const promedio = grades.length > 0 ? 
+      (grades.reduce((sum, grade) => sum + grade.grade, 0) / grades.length).toFixed(1) : 
+      'Pendiente';
+
+    const nivel = boletinData.grado.includes('10') || boletinData.grado.includes('11') ? 'EDUCACIÓN MEDIA' : 'BÁSICA SECUNDARIA';
+
+    return `
+╔══════════════════════════════════════════════════════════════╗
+║              BOLETÍN ACADÉMICO - BACHILLERATO                ║
+║                ${boletinData.institucion}                ║
+║                    EDUCACIÓN ${nivel}                        ║
+╚══════════════════════════════════════════════════════════════╝
+
+INFORMACIÓN DEL ESTUDIANTE:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Estudiante: ${boletinData.estudiante}
+• Grado: ${boletinData.grado} - ${nivel}
+• Período Académico: ${boletinData.periodo} / 2025
+• Fecha de Emisión: ${boletinData.fecha}
+
+ASIGNATURAS Y CALIFICACIONES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${notasPorMateria.map(materia => `
+📖 ${materia.asignatura} (${materia.intensidad})
+   ├─ Calificación Final: ${materia.nota}
+   ├─ Nivel de Desempeño: ${materia.desempeño}
+   └─ Observaciones: ${materia.observaciones}
+`).join('')}
+
+CONSOLIDADO ACADÉMICO PERÍODO ${boletinData.periodo}:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+┌─────────────────────────────────────────────────────────────┐
+│ PROMEDIO GENERAL: ${promedio}                                  │
+│ ASIGNATURAS CURSADAS: ${materiasBachillerato.length}                               │
+│ ASIGNATURAS EVALUADAS: ${grades.length}                                  │
+│ DESEMPEÑO GENERAL: ${promedio >= 4.6 ? 'SUPERIOR (96-100%)' : promedio >= 4.0 ? 'ALTO (80-95%)' : promedio >= 3.0 ? 'BÁSICO (60-79%)' : 'BAJO (<60%)'}         │
+└─────────────────────────────────────────────────────────────┘
+
+COMPETENCIAS DEL SIGLO XXI:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Pensamiento Crítico y Resolución de Problemas: EN DESARROLLO
+• Creatividad e Innovación: EN DESARROLLO
+• Comunicación y Colaboración: EN DESARROLLO
+• Alfabetización Tecnológica: EN DESARROLLO
+• Flexibilidad y Adaptabilidad: EN DESARROLLO
+
+OBSERVACIONES ACADÉMICAS:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+${grades.length > 0 ? 
+  `El/La estudiante ${boletinData.estudiante} presenta un rendimiento académico ${promedio >= 4.0 ? 'SOBRESALIENTE' : promedio >= 3.0 ? 'SATISFACTORIO' : 'QUE REQUIERE MEJORAMIENTO'} en el período evaluado. ${promedio >= 4.0 ? 'Se destaca su compromiso y dedicación en el proceso de aprendizaje.' : promedio >= 3.0 ? 'Cumple con los objetivos básicos de aprendizaje establecidos.' : 'Se requiere mayor compromiso y acompañamiento para alcanzar los logros esperados.'}` : 
+  'El estudiante se encuentra en proceso de evaluación continua. Se requiere completar las actividades académicas pendientes para la emisión del consolidado definitivo.'}
+
+PLAN DE MEJORAMIENTO Y PROYECCIÓN:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Fortalecer hábitos de estudio independiente
+• Desarrollar proyectos de investigación disciplinar
+• Participar en actividades de liderazgo estudiantil
+• Prepararse para la educación superior y/o mundo laboral
+
+COMPROMISOS INSTITUCIONALES:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Acompañamiento pedagógico personalizado
+• Orientación vocacional y profesional
+• Formación en valores y competencias ciudadanas
+• Preparación para pruebas de estado (ICFES)
+
+╔══════════════════════════════════════════════════════════════╗
+║   GIMNASIO AMERICANO ATLÁNTICO - GADA                       ║
+║   NIT: 900.123.456-7 | Licencia 12345 SED Atlántico       ║
+║   "Formando líderes transformadores del siglo XXI"          ║
+║                                                              ║
+║   Rector: [Nombre del Rector]                                ║
+║   Coordinadora Académica: [Nombre de la Coordinadora]       ║
+║   Generado automáticamente: ${new Date().toLocaleString('es-CO')} ║
+╚══════════════════════════════════════════════════════════════╝
+    `;
+  };
+
+  const downloadBoletin = async (student) => {
+    try {
+      // Obtener notas reales del estudiante para el período seleccionado
+      const grades = await gradeService.getStudentGrades(student._id || student.id, selectedPeriod);
+      
+      // Crear datos básicos del boletín
+      const boletinData = {
+        estudiante: student.name,
+        grado: student.grade,
+        periodo: selectedPeriod,
+        institucion: "Gimnasio Americano Atlántico - GADA",
+        fecha: new Date().toLocaleDateString('es-CO'),
+        docente: user.name
+      };
+
+      // Determinar el nivel educativo y generar boletín correspondiente
+      const nivel = determineEducationalLevel(student.grade);
+      let boletinContent = '';
+
+      switch (nivel) {
+        case 'TRANSICION':
+          boletinContent = generateBoletinTransicion(boletinData, grades);
+          break;
+        case 'PRIMARIA':
+          boletinContent = generateBoletinPrimaria(boletinData, grades);
+          break;
+        case 'BACHILLERATO':
+        default:
+          boletinContent = generateBoletinBachillerato(boletinData, grades);
+          break;
+      }
+
+      // Crear y descargar archivo
       const blob = new Blob([boletinContent], { type: 'text/plain;charset=utf-8' });
       const link = document.createElement('a');
       const url = URL.createObjectURL(blob);
+      
+      const fileName = `BOLETIN_${nivel}_${student.name.replace(/\s+/g, '_')}_${student.grade}_P${selectedPeriod}_${new Date().toISOString().split('T')[0]}.txt`;
+      
       link.setAttribute('href', url);
-      link.setAttribute('download', `BOLETIN_${student.name.replace(/\s+/g, '_')}_${boletinData.grado}_${selectedPeriod}_${new Date().toISOString().split('T')[0]}.txt`);
+      link.setAttribute('download', fileName);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
       toast({
-        title: "Boletín descargado exitosamente",
-        description: `Boletín completo de ${student.name} con ${grades.length} notas registradas`,
+        title: `Boletín de ${nivel} generado`,
+        description: `Boletín específico de ${student.name} con estructura de ${nivel} descargado exitosamente`,
       });
       
     } catch (error) {
       console.error('Error generating bulletin:', error);
       toast({
         title: "Error al generar boletín",
-        description: "No se pudo acceder a las notas del estudiante",
+        description: "No se pudo generar el boletín. Verifique la conexión y los permisos.",
         variant: "destructive",
       });
     }
