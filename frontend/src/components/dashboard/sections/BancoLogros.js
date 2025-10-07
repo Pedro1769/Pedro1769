@@ -220,7 +220,10 @@ const BancoLogros = () => {
             </div>
             <p className="text-gray-700 font-medium">Reconocimientos y logros estudiantiles</p>
           </div>
-          <Button className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600">
+          <Button 
+            onClick={() => setShowCreateLogro(true)}
+            className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600"
+          >
             <Plus className="h-4 w-4 mr-2" />
             Nuevo Logro
           </Button>
