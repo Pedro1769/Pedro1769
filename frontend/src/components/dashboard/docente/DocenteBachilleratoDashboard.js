@@ -701,6 +701,60 @@ const DocenteBachilleratoDashboard = () => {
           </div>
         </div>
 
+        {/* Navegación por pestañas */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Navegación del Panel</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant={activeSection === 'dashboard' ? "default" : "outline"}
+                onClick={() => setActiveSection('dashboard')}
+                className="flex items-center space-x-2"
+              >
+                <GraduationCap className="h-4 w-4" />
+                <span>Tutor de Grupo</span>
+              </Button>
+              {user.subjects && user.subjects.map(subject => (
+                <Button
+                  key={subject}
+                  variant={activeSection === subject ? "default" : "outline"}
+                  onClick={() => setActiveSection('dashboard')}
+                  className="flex items-center space-x-2"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span>{subject}</span>
+                </Button>
+              ))}
+              <Button
+                variant={activeSection === 'banco-logros' ? "default" : "outline"}
+                onClick={() => setActiveSection('banco-logros')}
+                className="flex items-center space-x-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white border-0 hover:from-yellow-600 hover:to-orange-600"
+              >
+                <Trophy className="h-4 w-4" />
+                <span>Banco de Logros</span>
+              </Button>
+              <Button
+                variant={activeSection === 'boletines' ? "default" : "outline"}
+                onClick={() => setActiveSection('boletines')}
+                className="flex items-center space-x-2 bg-gradient-to-r from-purple-500 to-blue-500 text-white border-0 hover:from-purple-600 hover:to-blue-600"
+              >
+                <FileText className="h-4 w-4" />
+                <span>Boletines</span>
+              </Button>
+              <Button
+                variant={activeSection === 'proyectos' ? "default" : "outline"}
+                onClick={() => setActiveSection('proyectos')}
+                className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-blue-500 text-white border-0 hover:from-green-600 hover:to-blue-600"
+              >
+                <FolderOpen className="h-4 w-4" />
+                <span>Proyectos</span>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
