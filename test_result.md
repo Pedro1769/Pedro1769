@@ -237,12 +237,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Sistema de notas completamente funcional (CRÍTICO)"
     - "Sistema de estudiantes reales completamente funcional"
-  stuck_tasks: 
-    - "Sistema de notas completamente funcional (CRÍTICO)"
+  stuck_tasks: []
   test_all: false
-  test_priority: "stuck_first"
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
