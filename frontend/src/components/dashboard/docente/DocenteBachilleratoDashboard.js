@@ -58,6 +58,13 @@ const DocenteBachilleratoDashboard = () => {
     loadStudents();
   }, [user.grades, selectedGrade]);
 
+  // Cargar notas cuando cambie el período o asignatura seleccionada
+  useEffect(() => {
+    if (students.length > 0) {
+      loadAllStudentGrades();
+    }
+  }, [students, selectedPeriod, selectedSubject]);
+
   useEffect(() => {
     // Escuchar cambios de navegación desde el sidebar
     window.setActiveSection = setActiveSection;
