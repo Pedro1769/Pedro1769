@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status, Query
 from typing import List, Optional, Dict, Any
 from models import Grade, GradeCreate, Student, User, UserRole, calculate_performance_level, calculate_student_status
 from database import get_database
-from auth import get_current_user, require_admin_or_teacher, can_assign_grades, can_view_student_data
+from auth import get_current_user, require_admin_or_teacher, can_assign_grades, can_view_student_data, require_admin
 from datetime import datetime
 
 router = APIRouter(prefix="/grades", tags=["Grades"])
