@@ -158,11 +158,11 @@ backend:
 
   - task: "Sistema de notas completamente funcional (CRÍTICO)"
     implemented: true
-    working: true
+    working: false
     file: "routes/grade_routes.py, models.py, auth.py"
-    stuck_count: 1
+    stuck_count: 2
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: false
         agent: "testing"
