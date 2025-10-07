@@ -1,0 +1,23 @@
+[
+  {
+    "verification": "Login con bifencia.orozco/gim123",
+    "success": true,
+    "details": "Usuario: Bifencia Orozco Tordecilla, Rol: docente_primaria",
+    "timestamp": "2025-10-07T04:09:48.390189",
+    "response_data": null
+  },
+  {
+    "verification": "Verificaci\u00f3n de rol docente_bachillerato",
+    "success": false,
+    "details": "\u274c ROL INCORRECTO: 'docente_primaria' - Usuario aparece como Docente Primaria cuando deber\u00eda ser Docente Bachillerato",
+    "timestamp": "2025-10-07T04:09:48.390224",
+    "response_data": null
+  },
+  {
+    "verification": "Verificaci\u00f3n de grados de bachillerato asignados",
+    "success": false,
+    "details": "\u274c PROBLEMA: Usuario tiene grados de PRIMARIA (['1\u00b0']) cuando deber\u00eda tener BACHILLERATO - Total estudiantes: 550",
+    "timestamp": "2025-10-07T04:09:48.411414",
+    "response_data": null
+  }
+]
