@@ -587,6 +587,113 @@ const Proyectos = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Modal Editar Proyecto */}
+      <Dialog open={showEdit} onOpenChange={setShowEdit}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Editar Proyecto</DialogTitle>
+            <DialogDescription>
+              Actualiza la información del proyecto "{editingProject?.title}"
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-title" className="text-right">
+                Título *
+              </Label>
+              <Input
+                id="edit-title"
+                value={newProject.title}
+                onChange={(e) => setNewProject({...newProject, title: e.target.value})}
+                className="col-span-3"
+                placeholder="Ej: Proyecto de Matemática Aplicada"
+              />
+            </div>
+            
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-description" className="text-right">
+                Descripción
+              </Label>
+              <textarea
+                id="edit-description"
+                value={newProject.description}
+                onChange={(e) => setNewProject({...newProject, description: e.target.value})}
+                className="col-span-3 border rounded-md px-3 py-2 text-sm min-h-[80px]"
+                placeholder="Describe el objetivo y alcance del proyecto"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-category" className="text-right">
+                Categoría
+              </Label>
+              <select
+                id="edit-category"
+                value={newProject.category}
+                onChange={(e) => setNewProject({...newProject, category: e.target.value})}
+                className="col-span-3 border rounded-md px-3 py-2 text-sm"
+              >
+                {categorias.slice(1).map(cat => (
+                  <option key={cat.key} value={cat.key}>{cat.label}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-grade" className="text-right">
+                Grado
+              </Label>
+              <Input
+                id="edit-grade"
+                value={newProject.grade}
+                onChange={(e) => setNewProject({...newProject, grade: e.target.value})}
+                className="col-span-3"
+                placeholder="Ej: 10°, 11°"
+              />
+            </div>
+
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="edit-subject" className="text-right">
+                Asignatura
+              </Label>
+              <select
+                id="edit-subject"
+                value={newProject.subject}
+                onChange={(e) => setNewProject({...newProject, subject: e.target.value})}
+                className="col-span-3 border rounded-md px-3 py-2 text-sm"
+              >
+                <option value="">Seleccionar asignatura</option>
+                {user.subjects && user.subjects.map(subject => (
+                  <option key={subject} value={subject}>{subject}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button 
+              onClick={() => {
+                setShowEdit(false);
+                setEditingProject(null);
+                setNewProject({
+                  title: '',
+                  description: '',
+                  category: 'pedagogico',
+                  grade: '',
+                  subject: ''
+                });
+              }} 
+              variant="outline"
+            >
+              Cancelar
+            </Button>
+            <Button onClick={handleUpdateProject} className="bg-blue-600 hover:bg-blue-700">
+              <Edit className="h-4 w-4 mr-2" />
+              Actualizar Proyecto
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
