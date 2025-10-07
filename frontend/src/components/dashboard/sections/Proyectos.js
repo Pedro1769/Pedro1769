@@ -93,6 +93,20 @@ const Proyectos = () => {
     { key: 'cultural', label: 'Culturales', color: 'orange' }
   ];
 
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [showEdit, setShowEdit] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
+
+  const handleFileUpload = (event) => {
+    const files = Array.from(event.target.files);
+    setSelectedFiles(prev => [...prev, ...files]);
+    
+    toast({
+      title: "Archivos seleccionados",
+      description: `${files.length} archivo(s) seleccionado(s) para subir`,
+    });
+  };
+
   const handleUploadProject = () => {
     if (!newProject.title.trim()) {
       toast({
@@ -110,7 +124,7 @@ const Proyectos = () => {
       date: new Date().toISOString().split('T')[0],
       status: "En desarrollo",
       participants: 0,
-      files: []
+      files: selectedFiles.map(file => file.name)
     };
 
     setProyectos(prev => [...prev, proyecto]);
@@ -121,11 +135,64 @@ const Proyectos = () => {
       grade: '',
       subject: ''
     });
+    setSelectedFiles([]);
     setShowUpload(false);
 
     toast({
-      title: "Proyecto creado",
-      description: `El proyecto "${proyecto.title}" ha sido creado exitosamente`,
+      title: "Proyecto creado exitosamente",
+      description: `El proyecto "${proyecto.title}" ha sido creado con ${proyecto.files.length} archivo(s)`,
+    });
+  };
+
+  const handleEditProject = (project) => {
+    setEditingProject(project);
+    setNewProject({
+      title: project.title,
+      description: project.description,
+      category: project.category,
+      grade: project.grade,
+      subject: project.subject
+    });
+    setShowEdit(true);
+  };
+
+  const handleUpdateProject = () => {
+    if (!newProject.title.trim()) {
+      toast({
+        title: "Error",
+        description: "El título del proyecto es obligatorio",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setProyectos(prev => prev.map(p => 
+      p.id === editingProject.id 
+        ? { ...p, ...newProject, updated_at: new Date().toISOString().split('T')[0] }
+        : p
+    ));
+
+    setNewProject({
+      title: '',
+      description: '',
+      category: 'pedagogico',
+      grade: '',
+      subject: ''
+    });
+    setEditingProject(null);
+    setShowEdit(false);
+
+    toast({
+      title: "Proyecto actualizado",
+      description: `El proyecto "${newProject.title}" ha sido actualizado exitosamente`,
+    });
+  };
+
+  const handleDeleteProject = (projectId) => {
+    setProyectos(prev => prev.filter(p => p.id !== projectId));
+    toast({
+      title: "Proyecto eliminado",
+      description: "El proyecto ha sido eliminado exitosamente",
     });
   };
 
