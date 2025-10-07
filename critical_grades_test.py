@@ -225,67 +225,129 @@ class CriticalGradesTest:
             self.log_test(f"Assign Grade - {user_type}", False, f"Request error: {str(e)}")
             return False
 
-    def verify_grade_persistence(self, user_type: str, student_id: str) -> bool:
-        """Verify that the assigned grade persists in the database"""
-        if user_type not in self.tokens or not self.assigned_grade_data:
+    def verify_grade_persistence(self, verification_user_type: str, student_id: str) -> bool:
+        """Verify that the assigned grade persists in the database using admin access"""
+        if verification_user_type not in self.tokens or not self.assigned_grade_data:
             return False
             
         try:
             headers = {
                 **HEADERS,
-                "Authorization": f"Bearer {self.tokens[user_type]}"
+                "Authorization": f"Bearer {self.tokens[verification_user_type]}"
             }
             
-            # Get student grades with period filter
-            response = self.session.get(
-                f"{BASE_URL}/grades/student/{student_id}?period=I",
-                headers=headers,
-                timeout=10
-            )
-            
-            if response.status_code == 200:
-                grades = response.json()
+            # Use admin endpoint to get all grades and find our specific grade
+            if verification_user_type == "admin":
+                response = self.session.get(
+                    f"{BASE_URL}/grades/all",
+                    headers=headers,
+                    timeout=10
+                )
                 
-                # Look for the specific grade we assigned
-                found_grade = None
-                for grade in grades:
-                    if (grade.get("subject") == "MATEMÁTICA" and 
-                        grade.get("period") == "I" and
-                        grade.get("student_id") == student_id):
-                        found_grade = grade
-                        break
-                
-                if found_grade:
-                    expected_grade = self.assigned_grade_data["grade"]
-                    actual_grade = found_grade.get("grade")
+                if response.status_code == 200:
+                    all_grades = response.json()
                     
-                    if actual_grade == expected_grade:
-                        self.log_test(
-                            f"Verify Grade Persistence - {user_type}",
-                            True,
-                            f"Grade {actual_grade} found in database for MATEMÁTICA, período I"
-                        )
-                        return True
+                    # Look for the specific grade we assigned
+                    found_grade = None
+                    for grade in all_grades:
+                        if (grade.get("subject") == "MATEMÁTICA" and 
+                            grade.get("period") == "I" and
+                            grade.get("student_id") == student_id):
+                            found_grade = grade
+                            break
+                    
+                    if found_grade:
+                        expected_grade = self.assigned_grade_data["grade"]
+                        actual_grade = found_grade.get("grade")
+                        
+                        if actual_grade == expected_grade:
+                            self.log_test(
+                                f"Verify Grade Persistence - {verification_user_type}",
+                                True,
+                                f"Grade {actual_grade} found in database for MATEMÁTICA, período I (Student: {found_grade.get('student_name', 'N/A')})"
+                            )
+                            return True
+                        else:
+                            self.log_test(
+                                f"Verify Grade Persistence - {verification_user_type}",
+                                False,
+                                f"Grade mismatch: expected {expected_grade}, found {actual_grade}"
+                            )
+                            return False
                     else:
+                        # Show available grades for debugging
+                        available_grades = []
+                        for grade in all_grades:
+                            if grade.get("student_id") == student_id:
+                                available_grades.append(f"{grade.get('subject', 'N/A')} - {grade.get('period', 'N/A')} - {grade.get('grade', 'N/A')}")
+                        
                         self.log_test(
-                            f"Verify Grade Persistence - {user_type}",
+                            f"Verify Grade Persistence - {verification_user_type}",
                             False,
-                            f"Grade mismatch: expected {expected_grade}, found {actual_grade}"
+                            f"Assigned grade not found in database. Available grades for student: {available_grades}"
                         )
                         return False
                 else:
-                    self.log_test(
-                        f"Verify Grade Persistence - {user_type}",
-                        False,
-                        f"Assigned grade not found in database. Available grades: {[g.get('subject') + ' - ' + g.get('period', 'N/A') for g in grades]}"
-                    )
+                    self.log_test(f"Verify Grade Persistence - {verification_user_type}", False, f"Status code: {response.status_code}", response.text)
                     return False
             else:
-                self.log_test(f"Verify Grade Persistence - {user_type}", False, f"Status code: {response.status_code}", response.text)
-                return False
+                # Try direct student grades endpoint for non-admin users
+                response = self.session.get(
+                    f"{BASE_URL}/grades/student/{student_id}?period=I",
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    grades = response.json()
+                    
+                    # Look for the specific grade we assigned
+                    found_grade = None
+                    for grade in grades:
+                        if (grade.get("subject") == "MATEMÁTICA" and 
+                            grade.get("period") == "I" and
+                            grade.get("student_id") == student_id):
+                            found_grade = grade
+                            break
+                    
+                    if found_grade:
+                        expected_grade = self.assigned_grade_data["grade"]
+                        actual_grade = found_grade.get("grade")
+                        
+                        if actual_grade == expected_grade:
+                            self.log_test(
+                                f"Verify Grade Persistence - {verification_user_type}",
+                                True,
+                                f"Grade {actual_grade} found in database for MATEMÁTICA, período I"
+                            )
+                            return True
+                        else:
+                            self.log_test(
+                                f"Verify Grade Persistence - {verification_user_type}",
+                                False,
+                                f"Grade mismatch: expected {expected_grade}, found {actual_grade}"
+                            )
+                            return False
+                    else:
+                        self.log_test(
+                            f"Verify Grade Persistence - {verification_user_type}",
+                            False,
+                            f"Assigned grade not found in database. Available grades: {[g.get('subject') + ' - ' + g.get('period', 'N/A') for g in grades]}"
+                        )
+                        return False
+                elif response.status_code == 403:
+                    self.log_test(
+                        f"Verify Grade Persistence - {verification_user_type}",
+                        False,
+                        "Permission denied - teacher cannot view student grades (permission system issue)"
+                    )
+                    return False
+                else:
+                    self.log_test(f"Verify Grade Persistence - {verification_user_type}", False, f"Status code: {response.status_code}", response.text)
+                    return False
                 
         except Exception as e:
-            self.log_test(f"Verify Grade Persistence - {user_type}", False, f"Request error: {str(e)}")
+            self.log_test(f"Verify Grade Persistence - {verification_user_type}", False, f"Request error: {str(e)}")
             return False
 
     def test_admin_grades_panel(self, user_type: str) -> bool:
