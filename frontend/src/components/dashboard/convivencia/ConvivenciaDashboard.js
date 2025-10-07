@@ -220,7 +220,7 @@ const ConvivenciaDashboard = () => {
 
       const gradeData = {
         student_id: selectedStudentForGrade._id || selectedStudentForGrade.id,
-        subject: "CONVIVENCIA ESCOLAR",
+        subject: convivenciaGrade.subject, // Usar el subject seleccionado
         period: convivenciaGrade.period,
         grade: gradeValue,
         teacher_notes: convivenciaGrade.observations
