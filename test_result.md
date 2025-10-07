@@ -130,8 +130,8 @@ backend:
         comment: "RESOLVED: Authentication system fully functional. All 19/19 tests pass via localhost. Issue was external URL routing/proxy, not backend code. Removed unused get_current_user import from auth_routes.py. Manual JWT implementation in /profile and /logout endpoints works perfectly. Login, register, profile access, logout, and all error handling working correctly."
 
   - task: "CRÍTICO: Corrección de rol de usuario bifencia.orozco"
-    implemented: false
-    working: false
+    implemented: true
+    working: true
     file: "database.py, models.py"
     stuck_count: 0
     priority: "high"
@@ -140,6 +140,9 @@ backend:
       - working: false
         agent: "testing"
         comment: "PROBLEMA CRÍTICO IDENTIFICADO: Usuario bifencia.orozco tiene rol 'docente_primaria' cuando debería ser 'docente_bachillerato'. Actualmente tiene acceso a grado 1° (550 estudiantes de primaria) cuando debería tener acceso a grados 6°, 7°, 8°, 9°, 10°, 11° de bachillerato. Login funciona correctamente (bifencia.orozco/gim123) pero el rol y grados asignados son incorrectos. ACCIÓN REQUERIDA: Cambiar rol en base de datos de 'docente_primaria' a 'docente_bachillerato' y asignar grados de bachillerato."
+      - working: true
+        agent: "testing"
+        comment: "VERIFICACIÓN COMPLETADA - PROBLEMA RESUELTO: ✅ Login bifencia.orozco/gim123 exitoso. ✅ Rol correcto: 'docente_bachillerato' (corregido desde 'docente_primaria'). ✅ Grados asignados correctos: ['6°', '7°', '8°', '9°', '10°', '11°'] - todos los grados de bachillerato. ✅ Acceso a 3 estudiantes de bachillerato (grados 10° y 11°). ✅ Materias asignadas: 14 materias de bachillerato incluyendo MATEMÁTICA, INGLÉS, CIENCIAS NATURALES, etc. RESULTADO: 4/4 pruebas exitosas. El usuario ahora tiene el rol y permisos correctos para docente de bachillerato."
 
   - task: "Sistema de estudiantes reales completamente funcional"
     implemented: true
