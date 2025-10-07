@@ -45,6 +45,8 @@ const DocenteBachilleratoDashboard = () => {
   });
   const [savedGrades, setSavedGrades] = useState({}); // Para almacenar las notas guardadas
   const [loadingGrades, setLoadingGrades] = useState(false);
+  const [tempGrades, setTempGrades] = useState({}); // Para manejar valores temporales
+  const [activeSection, setActiveSection] = useState('dashboard'); // Para navegación
   const { toast } = useToast();
 
   // Cargar estudiantes según los grados asignados al docente
