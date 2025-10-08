@@ -20,7 +20,10 @@ import {
   UserPlus,
   Calendar,
   Eye,
-  Target
+  Target,
+  Trash2,
+  Edit,
+  Check
 } from 'lucide-react';
 import { studentService, adminService, gradeService, bulletinService } from '../../../services/api';
 import { useAuth } from '../../../contexts/AuthContext';
