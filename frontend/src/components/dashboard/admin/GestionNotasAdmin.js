@@ -318,7 +318,7 @@ const GestionNotasAdmin = () => {
                     <SelectValue placeholder="Todos los grados" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos</SelectItem>
+                    <SelectItem value="ALL">Todos</SelectItem>
                     {[...new Set(allGrades.map(g => g.student_grade))].filter(Boolean).sort().map(grade => (
                       <SelectItem key={grade} value={grade}>{grade}</SelectItem>
                     ))}
@@ -334,7 +334,7 @@ const GestionNotasAdmin = () => {
                     <SelectValue placeholder="Todos los docentes" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos</SelectItem>
+                    <SelectItem value="ALL">Todos</SelectItem>
                     {teachers.map(teacherId => (
                       <SelectItem key={teacherId} value={teacherId}>{teacherId}</SelectItem>
                     ))}
