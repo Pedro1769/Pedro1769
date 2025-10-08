@@ -225,9 +225,9 @@ const GestionNotasAdmin = () => {
 
   const clearFilters = () => {
     setSelectedPeriod('I');
-    setSelectedGrade('');
-    setSelectedTeacher('');
-    setSelectedSubject('');
+    setSelectedGrade('ALL');
+    setSelectedTeacher('ALL');
+    setSelectedSubject('ALL_SUBJECTS');
     setSearchStudent('');
   };
 
