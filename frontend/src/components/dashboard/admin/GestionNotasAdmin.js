@@ -27,9 +27,9 @@ const GestionNotasAdmin = () => {
   
   // Estados para filtros
   const [selectedPeriod, setSelectedPeriod] = useState('I');
-  const [selectedGrade, setSelectedGrade] = useState('');
-  const [selectedTeacher, setSelectedTeacher] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState('');
+  const [selectedGrade, setSelectedGrade] = useState('ALL');
+  const [selectedTeacher, setSelectedTeacher] = useState('ALL');
+  const [selectedSubject, setSelectedSubject] = useState('ALL_SUBJECTS');
   const [searchStudent, setSearchStudent] = useState('');
   
   // Estados para datos
