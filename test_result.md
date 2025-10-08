@@ -158,6 +158,9 @@ backend:
       - working: true
         agent: "testing"
         comment: "ROLE-BASED STUDENT ACCESS VERIFIED: ✅ DOCENTE PRIMARIA (yocelyn.cabarcas): Ve únicamente estudiantes de grado 1° (550 estudiantes), filtrado seguro que previene acceso a otros grados. ✅ DOCENTE BACHILLERATO (bifencia.orozco): Ve estudiantes de TODOS sus grados asignados (6° a 11°), actualmente 4 estudiantes en grados 10° y 11°. ✅ COORDINADORA CONVIVENCIA (coord.convivencia): Ve TODOS los estudiantes del sistema (556 estudiantes), acceso completo. Sistema de filtrado por rol funcionando perfectamente con medidas de seguridad implementadas."
+      - working: true
+        agent: "testing"
+        comment: "INVESTIGACIÓN CRÍTICA COMPLETADA - PROBLEMA IDENTIFICADO Y EXPLICADO: ✅ BACKEND FUNCIONANDO CORRECTAMENTE: Endpoint GET /api/students retorna consistentemente 556 estudiantes reales (no mock data). Admin y coordinadora ven TODOS los estudiantes (556). Docente bachillerato ve correctamente solo sus estudiantes asignados (4 estudiantes de grados 10° y 11°). ❌ PROBLEMA REAL IDENTIFICADO: DATOS INCOMPLETOS EN BASE DE DATOS - Faltan estudiantes en 7 grados (Transición, 4°, 5°, 6°, 7°, 8°, 9°). Distribución actual: 1°(550), 2°(1), 3°(1), 10°(3), 11°(1). ✅ CONCLUSIÓN: El sistema funciona perfectamente, pero el admin NO subió estudiantes para todos los grados. Los dashboards muestran correctamente los estudiantes que SÍ existen en la base de datos. No es un problema de código sino de datos faltantes."
 
   - task: "Sistema de notas completamente funcional (CRÍTICO)"
     implemented: true
