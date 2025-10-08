@@ -1,0 +1,32 @@
+{
+  "total_students": 556,
+  "grade_distribution": {
+    "10\u00b0": 3,
+    "11\u00b0": 1,
+    "1\u00b0": 550,
+    "2\u00b0": 1,
+    "3\u00b0": 1
+  },
+  "missing_grades": [
+    "Transici\u00f3n",
+    "4\u00b0",
+    "5\u00b0",
+    "6\u00b0",
+    "7\u00b0",
+    "8\u00b0",
+    "9\u00b0"
+  ],
+  "inactive_students": 0,
+  "sample_student": {
+    "_id": "est001",
+    "name": "ANT\u00d3N ROSAN\u00cdA GABRIEL ESTEBAN",
+    "grade": "2\u00b0",
+    "level": "B\u00c1SICA PRIMARIA",
+    "teacher_id": "doc001",
+    "parent_id": "pad001",
+    "document_number": "1234567890",
+    "is_active": true,
+    "created_at": "2025-10-07 02:23:39.066000",
+    "updated_at": "2025-10-07 02:23:39.066000"
+  }
+}
