@@ -265,12 +265,26 @@ async def delete_student(
             detail="Estudiante no encontrado"
         )
     
-    # Verificar permisos
-    if (current_user.role != UserRole.ADMIN and 
-        existing_student["teacher_id"] != current_user.id):
+    # Verificar permisos mejorados  
+    can_delete = False
+    
+    if current_user.role == UserRole.ADMIN:
+        can_delete = True
+    elif current_user.role == UserRole.COORDINADOR_CONVIVENCIA:
+        can_delete = True  # Coordinadora puede eliminar cualquier estudiante
+    elif current_user.role == UserRole.DOCENTE_BACHILLERATO:
+        # Docente bachillerato puede eliminar estudiantes de sus grados asignados
+        if hasattr(current_user, 'grades') and current_user.grades:
+            can_delete = existing_student["grade"] in current_user.grades
+    elif current_user.role == UserRole.DOCENTE_PRIMARIA:
+        # Docente primaria puede eliminar estudiantes de su grado específico
+        if hasattr(current_user, 'grade') and current_user.grade:
+            can_delete = existing_student["grade"] == current_user.grade
+    
+    if not can_delete:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="No puede eliminar este estudiante"
+            detail=f"No tiene permisos para eliminar estudiantes de grado {existing_student['grade']}"
         )
     
     # Marcar como inactivo
