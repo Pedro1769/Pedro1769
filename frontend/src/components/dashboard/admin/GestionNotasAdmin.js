@@ -152,17 +152,17 @@ const GestionNotasAdmin = () => {
     }
 
     // Filtrar por grado
-    if (selectedGrade) {
+    if (selectedGrade && selectedGrade !== 'ALL') {
       filtered = filtered.filter(grade => grade.student_grade === selectedGrade);
     }
 
     // Filtrar por docente
-    if (selectedTeacher) {
+    if (selectedTeacher && selectedTeacher !== 'ALL') {
       filtered = filtered.filter(grade => grade.teacher_id === selectedTeacher);
     }
 
     // Filtrar por asignatura
-    if (selectedSubject) {
+    if (selectedSubject && selectedSubject !== 'ALL_SUBJECTS') {
       filtered = filtered.filter(grade => grade.subject === selectedSubject);
     }
 
