@@ -424,7 +424,37 @@ const AdminDashboard = () => {
                 <div className="flex space-x-2">
                   <Button onClick={() => downloadStudentList('csv')} size="sm" className="bg-green-600 hover:bg-green-700">
                     <Download className="h-4 w-4 mr-2" />
-                    Descargar Lista Completa (.CSV)
+                    Descargar CSV
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      if (selectedStudents.length === 0) {
+                        toast({
+                          title: "Ningún estudiante seleccionado",
+                          description: "Selecciona estudiantes para eliminar",
+                          variant: "destructive"
+                        });
+                        return;
+                      }
+                      if (window.confirm(`¿Estás seguro de eliminar ${selectedStudents.length} estudiante(s)?`)) {
+                        handleBulkDelete();
+                      }
+                    }}
+                    size="sm" 
+                    className="bg-red-600 hover:bg-red-700"
+                    disabled={selectedStudents.length === 0}
+                  >
+                    <Trash2 className="h-4 w-4 mr-2" />
+                    Eliminar Seleccionados ({selectedStudents.length})
+                  </Button>
+                  <Button 
+                    onClick={() => {
+                      setSelectedStudents(selectedStudents.length === students.length ? [] : students.map(s => s._id || s.id));
+                    }}
+                    size="sm" 
+                    variant="outline"
+                  >
+                    {selectedStudents.length === students.length ? 'Deseleccionar Todos' : 'Seleccionar Todos'}
                   </Button>
                 </div>
               </div>
