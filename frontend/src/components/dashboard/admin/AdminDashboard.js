@@ -40,6 +40,9 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showBulkUpload, setShowBulkUpload] = useState(false);
   const [consolidatedData, setConsolidatedData] = useState([]);
+  const [selectedStudents, setSelectedStudents] = useState([]);
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     loadDashboardData();
