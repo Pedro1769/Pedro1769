@@ -350,7 +350,7 @@ const GestionNotasAdmin = () => {
                     <SelectValue placeholder="Todas las materias" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todas</SelectItem>
+                    <SelectItem value="ALL_SUBJECTS">Todas</SelectItem>
                     {subjects.map(subject => (
                       <SelectItem key={subject} value={subject}>{subject}</SelectItem>
                     ))}
