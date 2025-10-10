@@ -506,13 +506,25 @@ DIEGO ALEJANDRO RUIZ
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Textarea
-              placeholder="Puedes pegar datos en cualquier formato, por ejemplo:&#10;&#10;JUAN PÉREZ GARCÍA,1°,12345678&#10;MARÍA RODRÍGUEZ LÓPEZ,2°&#10;CARLOS MARTÍNEZ 3° 87654321&#10;&#10;O simplemente una lista de nombres:&#10;JUAN PÉREZ GARCÍA&#10;MARÍA RODRÍGUEZ LÓPEZ&#10;CARLOS MARTÍNEZ RUIZ"
-              value={csvText}
-              onChange={(e) => setCsvText(e.target.value)}
-              rows={10}
-              className="font-mono text-sm"
-            />
+            <div className="space-y-2">
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm">
+                <p className="font-semibold text-blue-900 mb-1">✅ Cómo copiar desde Excel:</p>
+                <ol className="text-blue-800 ml-4 list-decimal space-y-1">
+                  <li>Selecciona las columnas: Nombre, Grado, Documento (o solo Nombre y Grado)</li>
+                  <li>Copia (Ctrl+C o Cmd+C)</li>
+                  <li>Pega aquí abajo (Ctrl+V o Cmd+V)</li>
+                  <li>Haz clic en "Procesar Datos"</li>
+                </ol>
+                <p className="mt-2 text-blue-700"><strong>Importante:</strong> Puedes incluir o no la fila de encabezados. El sistema detecta automáticamente.</p>
+              </div>
+              <Textarea
+                placeholder="Pega aquí los datos copiados desde Excel...&#10;&#10;Ejemplo:&#10;Josue David Blanco Martinez	0°	1043194902&#10;Mayli Alexandra Borrero Utria	0°	1047064870&#10;Brian De Jesus Castillo Pizarro	0°	1041779125&#10;&#10;O con 'Asignar' en documento:&#10;Charlotte Maria Carreño Millan	0°	Asignar&#10;Luciana Cervera Gonzalez	1°	Asignar"
+                value={csvText}
+                onChange={(e) => setCsvText(e.target.value)}
+                rows={12}
+                className="font-mono text-sm"
+              />
+            </div>
             <Button onClick={parseCsvText} className="w-full">
               <FileText className="h-4 w-4 mr-2" />
               Procesar Datos
