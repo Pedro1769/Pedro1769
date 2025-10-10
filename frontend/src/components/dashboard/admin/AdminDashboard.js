@@ -42,6 +42,7 @@ import { useToast } from '../../../hooks/use-toast';
 import BulkStudentUpload from '../../admin/BulkStudentUpload';
 import GestionNotasAdmin from './GestionNotasAdmin';
 import StudentEditForm from './StudentEditForm';
+import { sortStudentsByGrade } from '../../../utils/gradeUtils';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
