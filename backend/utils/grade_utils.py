@@ -5,7 +5,7 @@ Utilidades para ordenar y trabajar con grados escolares
 # Orden correcto de los grados
 GRADE_ORDER = {
     'Transición': 0,
-    '0°': 0,
+    '0°': 0,  # Preescolar/Transición
     '1°': 1,
     '2°': 2,
     '3°': 3,
