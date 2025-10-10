@@ -196,7 +196,7 @@ async def create_students_bulk(
 async def update_student(
     student_id: str,
     student_data: StudentCreate,
-    current_user: User = Depends(require_admin_or_teacher)
+    current_user: User = Depends(require_admin_or_teacher())
 ):
     """Actualizar estudiante"""
     db = await get_database()
