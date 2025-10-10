@@ -62,7 +62,9 @@ const Boletines = () => {
         }
       }
       
-      setStudents(studentsList);
+      // Ordenar estudiantes por grado
+      const sortedStudents = sortStudentsByGrade(studentsList);
+      setStudents(sortedStudents);
       
       if (studentsList.length > 0 && !selectedGrade) {
         setSelectedGrade(studentsList[0].grade);
