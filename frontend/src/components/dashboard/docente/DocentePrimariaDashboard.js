@@ -746,6 +746,19 @@ const DocentePrimariaDashboard = () => {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Modal Editar Estudiante */}
+      {showEditModal && editingStudent && (
+        <StudentEditForm
+          student={editingStudent}
+          isOpen={showEditModal}
+          onClose={() => {
+            setShowEditModal(false);
+            setEditingStudent(null);
+          }}
+          onSave={handleUpdateStudent}
+        />
+      )}
       </div>
     </div>
   );
