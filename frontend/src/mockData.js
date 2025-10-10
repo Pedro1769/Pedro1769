@@ -19,7 +19,7 @@ export const INSTITUTIONAL_INFO = {
 };
 
 export const GRADES = {
-  PREESCOLAR: ["Transición"],
+  PREESCOLAR: ["Transición", "0°"],
   PRIMARIA: ["1°", "2°", "3°", "4°", "5°"],
   BACHILLERATO: ["6°", "7°", "8°", "9°", "10°", "11°"]
 };
