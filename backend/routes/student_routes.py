@@ -252,7 +252,7 @@ async def update_student(
 @router.delete("/{student_id}")
 async def delete_student(
     student_id: str,
-    current_user: User = Depends(require_admin_or_teacher)
+    current_user: User = Depends(require_admin_or_teacher())
 ):
     """Eliminar estudiante (marcar como inactivo)"""
     db = await get_database()
