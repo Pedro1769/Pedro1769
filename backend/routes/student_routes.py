@@ -54,8 +54,10 @@ async def get_students(
     if teacher_id and current_user.role in [UserRole.ADMIN, UserRole.COORDINADOR_CONVIVENCIA]:
         filter_query["teacher_id"] = teacher_id
     
-    # Ordenar estudiantes por grado para que aparezcan organizados
-    students_data = await db.students.find(filter_query).sort("grade", 1).to_list(1000)
+    # Obtener estudiantes y ordenar por grado correctamente
+    students_data = await db.students.find(filter_query).to_list(1000)
+    # Ordenar usando la función de utilidad que respeta el orden escolar correcto
+    students_data = sort_students_by_grade(students_data)
     return [Student(**student) for student in students_data]
 
 @router.get("/by-teacher/{teacher_id}", response_model=List[Student])
