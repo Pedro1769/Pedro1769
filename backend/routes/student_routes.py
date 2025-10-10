@@ -172,7 +172,7 @@ async def create_student(
 @router.post("/bulk", response_model=List[Student])
 async def create_students_bulk(
     students_data: List[StudentCreate],
-    current_user: User = Depends(require_admin)
+    current_user: User = Depends(require_admin())
 ):
     """Crear estudiantes en lote (solo admin)"""
     db = await get_database()
