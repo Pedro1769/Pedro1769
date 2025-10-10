@@ -163,9 +163,12 @@ const BulkStudentUpload = ({ onClose }) => {
           }
         }
 
-        // Buscar documento (números)
+        // Buscar documento (números) - ignorar "Asignar" y palabras similares
         for (let col of columns) {
-          if (/^\d{6,}$/.test(col.replace(/[-.\s]/g, ''))) {
+          const colLower = col.toLowerCase();
+          const isIgnoreWord = ignoreWords.some(word => colLower === word || colLower.includes(word));
+          
+          if (!isIgnoreWord && /^\d{6,}$/.test(col.replace(/[-.\s]/g, ''))) {
             document = col;
             break;
           }
