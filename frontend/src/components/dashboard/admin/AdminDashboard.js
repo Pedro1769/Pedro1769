@@ -1008,6 +1008,47 @@ const AdminDashboard = () => {
         </div>
       )}
       </div>
+
+      {/* Modal de Edición de Estudiante */}
+      <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Editar Estudiante</DialogTitle>
+            <DialogDescription>
+              Modifica los datos del estudiante {editingStudent?.name}
+            </DialogDescription>
+          </DialogHeader>
+          {editingStudent && (
+            <StudentEditForm
+              student={editingStudent}
+              onSave={handleUpdateStudent}
+              onCancel={() => {
+                setShowEditModal(false);
+                setEditingStudent(null);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de Carga Masiva */}
+      <Dialog open={showBulkUpload} onOpenChange={setShowBulkUpload}>
+        <DialogContent className="sm:max-w-[600px]">
+          <DialogHeader>
+            <DialogTitle>Carga Masiva de Estudiantes</DialogTitle>
+            <DialogDescription>
+              Sube un archivo Excel (.xlsx) con los datos de los estudiantes
+            </DialogDescription>
+          </DialogHeader>
+          <BulkStudentUpload 
+            onClose={() => setShowBulkUpload(false)}
+            onSuccess={() => {
+              setShowBulkUpload(false);
+              loadDashboardData();
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
