@@ -936,6 +936,28 @@ const DocenteBachilleratoDashboard = () => {
 
         {/* Contenido dinámico */}
         {renderActiveSection()}
+
+        {/* Modal de Edición de Estudiante */}
+        <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader>
+              <DialogTitle>Editar Estudiante</DialogTitle>
+              <DialogDescription>
+                Modifica los datos del estudiante {editingStudent?.name}
+              </DialogDescription>
+            </DialogHeader>
+            {editingStudent && (
+              <StudentEditForm
+                student={editingStudent}
+                onSave={handleUpdateStudent}
+                onCancel={() => {
+                  setShowEditModal(false);
+                  setEditingStudent(null);
+                }}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
