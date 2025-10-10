@@ -3,98 +3,98 @@
     "test": "Health Check",
     "success": true,
     "details": "Status: healthy",
-    "timestamp": "2025-10-10T05:29:30.387881",
+    "timestamp": "2025-10-10T05:31:33.275243",
     "response_data": null
   },
   {
     "test": "Login Success - admin",
     "success": true,
     "details": "User: Pedro Hurtado, Role: admin",
-    "timestamp": "2025-10-10T05:29:30.397369",
+    "timestamp": "2025-10-10T05:31:33.282761",
     "response_data": null
   },
   {
     "test": "Login Success - docente_bachillerato",
     "success": true,
     "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
-    "timestamp": "2025-10-10T05:29:30.404096",
+    "timestamp": "2025-10-10T05:31:33.289620",
     "response_data": null
   },
   {
     "test": "Login Success - coordinadora",
     "success": true,
     "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
-    "timestamp": "2025-10-10T05:29:30.410752",
+    "timestamp": "2025-10-10T05:31:33.297338",
     "response_data": null
   },
   {
     "test": "Admin Delete Individual Student",
     "success": true,
-    "details": "Successfully deleted student 5c0c75c1-98f3-4d15-8116-8d61694cac0b",
-    "timestamp": "2025-10-10T05:29:30.469093",
+    "details": "Successfully deleted student 5b2d1b9d-d197-4489-8f6f-5c5e3bb97abf",
+    "timestamp": "2025-10-10T05:31:33.358162",
     "response_data": null
   },
   {
     "test": "Admin Bulk Delete Students",
     "success": true,
     "details": "Successfully deleted 3 students",
-    "timestamp": "2025-10-10T05:29:30.542244",
+    "timestamp": "2025-10-10T05:31:33.468574",
     "response_data": null
   },
   {
     "test": "Admin Edit Student",
     "success": true,
-    "details": "Successfully updated student: Estudiante Editado Admin 052930",
-    "timestamp": "2025-10-10T05:29:30.598313",
+    "details": "Successfully updated student: Estudiante Editado Admin 053133",
+    "timestamp": "2025-10-10T05:31:33.483813",
     "response_data": null
   },
   {
     "test": "Docente Bachillerato Edit Assigned Grade",
     "success": true,
-    "details": "Successfully updated student from grade 10\u00b0: Estudiante Editado Docente 052930",
-    "timestamp": "2025-10-10T05:29:30.655519",
+    "details": "Successfully updated student from grade 10\u00b0: Estudiante Editado Docente 053133",
+    "timestamp": "2025-10-10T05:31:33.495751",
     "response_data": null
   },
   {
     "test": "Docente Bachillerato Delete Assigned Grade",
     "success": true,
     "details": "Successfully deleted student from assigned grade",
-    "timestamp": "2025-10-10T05:29:30.670113",
+    "timestamp": "2025-10-10T05:31:33.551132",
     "response_data": null
   },
   {
     "test": "Docente Bachillerato Cannot Edit Other Grades",
     "success": true,
     "details": "Correctly denied access to edit student from non-assigned grade",
-    "timestamp": "2025-10-10T05:29:30.725610",
+    "timestamp": "2025-10-10T05:31:33.562857",
     "response_data": null
   },
   {
     "test": "Coordinadora Edit Any Student",
     "success": true,
-    "details": "Successfully updated student: Estudiante Editado Coordinadora 052930",
-    "timestamp": "2025-10-10T05:29:30.740084",
+    "details": "Successfully updated student: Estudiante Editado Coordinadora 053133",
+    "timestamp": "2025-10-10T05:31:33.620027",
     "response_data": null
   },
   {
     "test": "Coordinadora Delete Any Student",
     "success": true,
     "details": "Successfully deleted student",
-    "timestamp": "2025-10-10T05:29:30.793422",
+    "timestamp": "2025-10-10T05:31:33.633087",
     "response_data": null
   },
   {
     "test": "Unauthorized Delete Access",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-10T05:29:30.798366",
+    "timestamp": "2025-10-10T05:31:33.637639",
     "response_data": null
   },
   {
     "test": "Unauthorized Edit Access",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-10T05:29:30.802907",
+    "timestamp": "2025-10-10T05:31:33.642561",
     "response_data": null
   }
 ]
