@@ -216,6 +216,21 @@ backend:
         agent: "testing"
         comment: "PROBLEMA CRÍTICO IDENTIFICADO - BASE DE DATOS VACÍA: ✅ CONFIGURACIÓN DE USUARIOS CORRECTA: bifencia.orozco tiene rol 'docente_bachillerato' con grados ['8°', '9°', '10°', '11°'] según especificaciones. ✅ SISTEMA DE FILTRADO FUNCIONAL: Comprehensive testing (49/49 tests passed - 100% success) confirma que el sistema de filtrado por grados exactos funciona correctamente. Docente bachillerato ve solo estudiantes de sus grados asignados, docente primaria ve solo su grado específico, coordinadora ve todos los estudiantes. ❌ PROBLEMA CRÍTICO: Base de datos completamente vacía (0 estudiantes) cuando se esperan 592 estudiantes con distribución específica (8°: 4, 9°: 12, 10°: 3, 11°: 9 = 28 total para bifencia.orozco). ❌ IMPACTO: Imposible verificar las distribuciones exactas solicitadas en la review request sin datos de estudiantes. ✅ PRUEBA CON DATOS DE PRUEBA: Creé 5 estudiantes de prueba y confirmé que el filtrado funciona perfectamente - bifencia.orozco ve solo estudiantes de grados 8°, 9°, 10°, 11° (4 estudiantes), docente primaria ve solo grado 1° (1 estudiante), coordinadora ve todos (5 estudiantes). CONCLUSIÓN: El sistema de filtrado por grados exactos está implementado correctamente pero requiere que se carguen los 592 estudiantes esperados para verificación completa."
 
+  - task: "CRÍTICO: Corrección de ordenamiento de estudiantes por grado"
+    implemented: true
+    working: true
+    file: "routes/student_routes.py, utils/gradeUtils.js, AdminDashboard.js, DocenteBachilleratoDashboard.js, DocentePrimariaDashboard.js, ConvivenciaDashboard.js, Boletines.js, BancoLogros.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "PROBLEMA REPORTADO POR USUARIO: Al subir estudiantes con sus grados correspondientes, el sistema NO los está organizando/filtrando correctamente por grado. Los estudiantes de diferentes grados (0°, 1°, 2°, etc.) aparecen mezclados en lugar de estar organizados secuencialmente por grado. Video evidencia muestra que los datos se cargan con grados correctos pero la presentación está desordenada."
+      - working: true
+        agent: "main"
+        comment: "PROBLEMA IDENTIFICADO Y SOLUCIONADO: El backend retornaba estudiantes sin orden específico (orden de inserción en MongoDB). SOLUCIONES IMPLEMENTADAS: 1) BACKEND: Agregado .sort('grade', 1) a todas las consultas de estudiantes en /backend/routes/student_routes.py para ordenar por grado ascendente. 2) FRONTEND: Creado archivo de utilidad /frontend/src/utils/gradeUtils.js con función sortStudentsByGrade() que ordena correctamente según orden escolar (Transición, 1°, 2°, 3°... 11°). 3) APLICADO A TODOS LOS COMPONENTES: AdminDashboard, DocenteBachilleratoDashboard, DocentePrimariaDashboard, ConvivenciaDashboard, Boletines, BancoLogros ahora ordenan estudiantes automáticamente al cargarlos. RESULTADO: Ahora cuando se cargan estudiantes, aparecen organizados por grado en orden ascendente, y dentro de cada grado, ordenados por nombre alfabéticamente."
+
 frontend:
   - task: "Corrección de error de Calendar component"
     implemented: true
