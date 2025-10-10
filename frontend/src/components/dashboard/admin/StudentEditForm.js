@@ -59,7 +59,7 @@ const StudentEditForm = ({ student, onSave, onCancel }) => {
   };
 
   const gradeOptions = [
-    'TRANSICIÓN', '1°', '2°', '3°', '4°', '5°', 
+    '0°', 'TRANSICIÓN', '1°', '2°', '3°', '4°', '5°', 
     '6°', '7°', '8°', '9°', '10°', '11°'
   ];
 
