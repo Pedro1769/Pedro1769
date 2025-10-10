@@ -78,8 +78,10 @@ async def get_students_by_teacher(
     students_data = await db.students.find({
         "teacher_id": teacher_id,
         "is_active": True
-    }).sort("grade", 1).to_list(1000)
+    }).to_list(1000)
     
+    # Ordenar usando la función de utilidad que respeta el orden escolar correcto
+    students_data = sort_students_by_grade(students_data)
     return [Student(**student) for student in students_data]
 
 @router.get("/by-grade/{grade}", response_model=List[Student])
