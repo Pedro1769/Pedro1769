@@ -134,7 +134,7 @@ async def get_student(
 @router.post("", response_model=Student)
 async def create_student(
     student_data: StudentCreate,
-    current_user: User = Depends(require_admin_or_teacher)
+    current_user: User = Depends(require_admin_or_teacher())
 ):
     """Crear nuevo estudiante"""
     db = await get_database()
