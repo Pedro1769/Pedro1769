@@ -1,0 +1,345 @@
+[
+  {
+    "test": "Login admin",
+    "success": true,
+    "details": "User: Pedro Hurtado, Role: admin, Grade(s): None",
+    "timestamp": "2025-10-10T06:17:37.025789",
+    "response_data": null
+  },
+  {
+    "test": "Login docente_bachillerato",
+    "success": true,
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato, Grade(s): ['8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0']",
+    "timestamp": "2025-10-10T06:17:37.037293",
+    "response_data": null
+  },
+  {
+    "test": "Login docente_primaria",
+    "success": true,
+    "details": "User: Yocelyn Cabarcas Navarro, Role: docente_primaria, Grade(s): None",
+    "timestamp": "2025-10-10T06:17:37.086952",
+    "response_data": null
+  },
+  {
+    "test": "Login coordinadora",
+    "success": true,
+    "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia, Grade(s): None",
+    "timestamp": "2025-10-10T06:17:37.098726",
+    "response_data": null
+  },
+  {
+    "test": "Bifencia.orozco Role Configuration",
+    "success": true,
+    "details": "Role: docente_bachillerato (expected: docente_bachillerato), Grades: ['8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0'] (expected: ['8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0'])",
+    "timestamp": "2025-10-10T06:17:37.098775",
+    "response_data": null
+  },
+  {
+    "test": "Admin Configuration",
+    "success": true,
+    "details": "Role: admin, Grade(s): None",
+    "timestamp": "2025-10-10T06:17:37.098785",
+    "response_data": null
+  },
+  {
+    "test": "Docente_Primaria Configuration",
+    "success": true,
+    "details": "Role: docente_primaria, Grade(s): None",
+    "timestamp": "2025-10-10T06:17:37.098799",
+    "response_data": null
+  },
+  {
+    "test": "Coordinadora Configuration",
+    "success": true,
+    "details": "Role: coordinador_convivencia, Grade(s): None",
+    "timestamp": "2025-10-10T06:17:37.098814",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - admin",
+    "success": true,
+    "details": "Retrieved 0 students. Grade distribution: {}",
+    "timestamp": "2025-10-10T06:17:37.149539",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 0 students. Grade distribution: {}",
+    "timestamp": "2025-10-10T06:17:37.201264",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - docente_primaria",
+    "success": true,
+    "details": "Retrieved 0 students. Grade distribution: {}",
+    "timestamp": "2025-10-10T06:17:37.211293",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - coordinadora",
+    "success": true,
+    "details": "Retrieved 0 students. Grade distribution: {}",
+    "timestamp": "2025-10-10T06:17:37.223429",
+    "response_data": null
+  },
+  {
+    "test": "Create Test Student 1\u00b0",
+    "success": true,
+    "details": "Created: Test Student Grade 1",
+    "timestamp": "2025-10-10T06:17:37.277263",
+    "response_data": null
+  },
+  {
+    "test": "Create Test Student 8\u00b0",
+    "success": true,
+    "details": "Created: Test Student Grade 8",
+    "timestamp": "2025-10-10T06:17:37.287724",
+    "response_data": null
+  },
+  {
+    "test": "Create Test Student 9\u00b0",
+    "success": true,
+    "details": "Created: Test Student Grade 9",
+    "timestamp": "2025-10-10T06:17:37.338197",
+    "response_data": null
+  },
+  {
+    "test": "Create Test Student 10\u00b0",
+    "success": true,
+    "details": "Created: Test Student Grade 10",
+    "timestamp": "2025-10-10T06:17:37.350659",
+    "response_data": null
+  },
+  {
+    "test": "Create Test Student 11\u00b0",
+    "success": true,
+    "details": "Created: Test Student Grade 11",
+    "timestamp": "2025-10-10T06:17:37.360569",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - admin",
+    "success": true,
+    "details": "Retrieved 5 students. Grade distribution: {'1\u00b0': 1, '8\u00b0': 1, '9\u00b0': 1, '10\u00b0': 1, '11\u00b0': 1}",
+    "timestamp": "2025-10-10T06:17:37.368982",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 4 students. Grade distribution: {'8\u00b0': 1, '9\u00b0': 1, '10\u00b0': 1, '11\u00b0': 1}",
+    "timestamp": "2025-10-10T06:17:37.420226",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - docente_primaria",
+    "success": true,
+    "details": "Retrieved 1 students. Grade distribution: {'1\u00b0': 1}",
+    "timestamp": "2025-10-10T06:17:37.433048",
+    "response_data": null
+  },
+  {
+    "test": "Student Access - coordinadora",
+    "success": true,
+    "details": "Retrieved 5 students. Grade distribution: {'1\u00b0': 1, '8\u00b0': 1, '9\u00b0': 1, '10\u00b0': 1, '11\u00b0': 1}",
+    "timestamp": "2025-10-10T06:17:37.442520",
+    "response_data": null
+  },
+  {
+    "test": "Grade 1\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 1\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.494277",
+    "response_data": null
+  },
+  {
+    "test": "Grade 2\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 2\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.504551",
+    "response_data": null
+  },
+  {
+    "test": "Grade 3\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 3\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.514124",
+    "response_data": null
+  },
+  {
+    "test": "Grade 8\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 8\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.524050",
+    "response_data": null
+  },
+  {
+    "test": "Grade 9\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 9\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.533589",
+    "response_data": null
+  },
+  {
+    "test": "Grade 10\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 10\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.542281",
+    "response_data": null
+  },
+  {
+    "test": "Grade 11\u00b0 Access - admin",
+    "success": true,
+    "details": "Access to grade 11\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.593196",
+    "response_data": null
+  },
+  {
+    "test": "Grade 1\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 1\u00b0: 4 students",
+    "timestamp": "2025-10-10T06:17:37.602634",
+    "response_data": null
+  },
+  {
+    "test": "Grade 2\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 2\u00b0: 4 students",
+    "timestamp": "2025-10-10T06:17:37.612192",
+    "response_data": null
+  },
+  {
+    "test": "Grade 3\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 3\u00b0: 4 students",
+    "timestamp": "2025-10-10T06:17:37.662178",
+    "response_data": null
+  },
+  {
+    "test": "Grade 8\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 8\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.672347",
+    "response_data": null
+  },
+  {
+    "test": "Grade 9\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 9\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.681016",
+    "response_data": null
+  },
+  {
+    "test": "Grade 10\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 10\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.690481",
+    "response_data": null
+  },
+  {
+    "test": "Grade 11\u00b0 Access - docente_bachillerato",
+    "success": true,
+    "details": "Access to grade 11\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.739843",
+    "response_data": null
+  },
+  {
+    "test": "Grade 1\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 1\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.790806",
+    "response_data": null
+  },
+  {
+    "test": "Grade 2\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 2\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.802049",
+    "response_data": null
+  },
+  {
+    "test": "Grade 3\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 3\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.810978",
+    "response_data": null
+  },
+  {
+    "test": "Grade 8\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 8\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.860813",
+    "response_data": null
+  },
+  {
+    "test": "Grade 9\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 9\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.869713",
+    "response_data": null
+  },
+  {
+    "test": "Grade 10\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 10\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.919258",
+    "response_data": null
+  },
+  {
+    "test": "Grade 11\u00b0 Access - docente_primaria",
+    "success": true,
+    "details": "Access to grade 11\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.929523",
+    "response_data": null
+  },
+  {
+    "test": "Grade 1\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 1\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:37.940160",
+    "response_data": null
+  },
+  {
+    "test": "Grade 2\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 2\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:37.949441",
+    "response_data": null
+  },
+  {
+    "test": "Grade 3\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 3\u00b0: 0 students",
+    "timestamp": "2025-10-10T06:17:38.003018",
+    "response_data": null
+  },
+  {
+    "test": "Grade 8\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 8\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:38.012381",
+    "response_data": null
+  },
+  {
+    "test": "Grade 9\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 9\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:38.021072",
+    "response_data": null
+  },
+  {
+    "test": "Grade 10\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 10\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:38.029806",
+    "response_data": null
+  },
+  {
+    "test": "Grade 11\u00b0 Access - coordinadora",
+    "success": true,
+    "details": "Access to grade 11\u00b0: 1 students",
+    "timestamp": "2025-10-10T06:17:38.038180",
+    "response_data": null
+  }
+]
