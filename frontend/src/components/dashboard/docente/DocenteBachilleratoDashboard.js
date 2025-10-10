@@ -52,6 +52,8 @@ const DocenteBachilleratoDashboard = () => {
   const [loadingGrades, setLoadingGrades] = useState(false);
   const [tempGrades, setTempGrades] = useState({}); // Para manejar valores temporales
   const [activeSection, setActiveSection] = useState('dashboard'); // Para navegación
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
