@@ -1,0 +1,37 @@
+[
+  {
+    "test": "Login docente_bachillerato",
+    "success": true,
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato, Grades: ['8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0']",
+    "timestamp": "2025-10-10T06:14:48.071124",
+    "response_data": null
+  },
+  {
+    "test": "Login coordinadora",
+    "success": true,
+    "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia, Grades: None",
+    "timestamp": "2025-10-10T06:14:48.080478",
+    "response_data": null
+  },
+  {
+    "test": "Grade Filtering - docente_bachillerato",
+    "success": true,
+    "details": "User sees only expected grades. Missing grades (no students): ['8\u00b0', '11\u00b0', '10\u00b0', '9\u00b0']. Distribution: {}",
+    "timestamp": "2025-10-10T06:14:48.133700",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - docente_bachillerato",
+    "success": true,
+    "details": "Retrieved 0 students. Grade distribution: {}",
+    "timestamp": "2025-10-10T06:14:48.133732",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - coordinadora",
+    "success": true,
+    "details": "Retrieved 0 students. Grade distribution: {}",
+    "timestamp": "2025-10-10T06:14:48.183754",
+    "response_data": null
+  }
+]
