@@ -84,6 +84,7 @@ export const getGradeOrder = (grade) => {
  */
 export const ALL_GRADES = [
   'Transición',
+  '0°',
   '1°',
   '2°',
   '3°',
