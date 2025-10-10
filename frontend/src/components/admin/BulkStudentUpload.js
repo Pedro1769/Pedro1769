@@ -118,18 +118,29 @@ const BulkStudentUpload = ({ onClose }) => {
         let grade = '';
         let document = '';
 
-        // Buscar el nombre (primer campo no vacío que no sea un grado, número, o palabra a ignorar)
+        // Buscar el nombre - debe ser el primer campo que no sea grado ni "Asignar"
         for (let col of columns) {
           const colLower = col.toLowerCase();
-          const isIgnoreWord = ignoreWords.some(word => colLower === word || colLower.includes(word));
           
-          if (col && !grades.includes(col) && !/^\d+$/.test(col) && !isIgnoreWord) {
-            // Verificar que tenga al menos 2 palabras (nombre y apellido)
-            const words = col.split(' ').filter(w => w.length > 0);
-            if (words.length >= 2) {
-              name = col;
-              break;
-            }
+          // Ignorar si es un grado válido
+          if (grades.includes(col)) {
+            continue;
+          }
+          
+          // Ignorar si es solo "Asignar" o similar
+          if (colLower === 'asignar' || colLower === 'pendiente' || colLower === 'documento') {
+            continue;
+          }
+          
+          // Ignorar si es solo números (probablemente documento)
+          if (/^\d+$/.test(col)) {
+            continue;
+          }
+          
+          // Si tiene al menos 3 caracteres y contiene letras, es un nombre
+          if (col.length >= 3 && /[a-zA-ZáéíóúñÁÉÍÓÚÑ]/.test(col)) {
+            name = col;
+            break;
           }
         }
 
