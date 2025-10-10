@@ -3,343 +3,504 @@
     "test": "Health Check",
     "success": true,
     "details": "Status: healthy",
-    "timestamp": "2025-10-07T19:22:05.809668",
+    "timestamp": "2025-10-10T16:31:11.899319",
     "response_data": null
   },
   {
     "test": "Login Success - admin",
     "success": true,
     "details": "User: Pedro Hurtado, Role: admin",
-    "timestamp": "2025-10-07T19:22:05.860647",
+    "timestamp": "2025-10-10T16:31:11.956818",
     "response_data": null
   },
   {
     "test": "Login Success - docente_bachillerato",
     "success": true,
-    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
-    "timestamp": "2025-10-07T19:22:05.872077",
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_primaria",
+    "timestamp": "2025-10-10T16:31:11.971969",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - docente_primaria",
+    "success": true,
+    "details": "User: Yocelyn Cabarcas Navarro, Role: docente_primaria",
+    "timestamp": "2025-10-10T16:31:11.984926",
     "response_data": null
   },
   {
     "test": "Login Success - coordinadora",
     "success": true,
     "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
-    "timestamp": "2025-10-07T19:22:05.919503",
+    "timestamp": "2025-10-10T16:31:12.037581",
     "response_data": null
   },
   {
     "test": "Login Invalid Credentials",
     "success": true,
     "details": "Correctly rejected invalid credentials",
-    "timestamp": "2025-10-07T19:22:05.927940",
+    "timestamp": "2025-10-10T16:31:12.049064",
     "response_data": null
   },
   {
     "test": "Login Wrong Password",
     "success": true,
     "details": "Correctly rejected wrong password",
-    "timestamp": "2025-10-07T19:22:05.975550",
+    "timestamp": "2025-10-10T16:31:12.058580",
     "response_data": null
   },
   {
     "test": "Profile No Auth",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-07T19:22:05.983861",
+    "timestamp": "2025-10-10T16:31:12.106631",
     "response_data": null
   },
   {
     "test": "Profile Invalid Token",
     "success": true,
     "details": "Correctly rejected invalid token",
-    "timestamp": "2025-10-07T19:22:06.031978",
+    "timestamp": "2025-10-10T16:31:12.155696",
     "response_data": null
   },
   {
     "test": "Profile Access - admin",
     "success": true,
     "details": "Profile retrieved: Pedro Hurtado",
-    "timestamp": "2025-10-07T19:22:06.080723",
+    "timestamp": "2025-10-10T16:31:12.175975",
     "response_data": null
   },
   {
     "test": "Profile Access - docente_bachillerato",
     "success": true,
     "details": "Profile retrieved: Bifencia Orozco Tordecilla",
-    "timestamp": "2025-10-07T19:22:06.089640",
+    "timestamp": "2025-10-10T16:31:12.227772",
+    "response_data": null
+  },
+  {
+    "test": "Profile Access - docente_primaria",
+    "success": true,
+    "details": "Profile retrieved: Yocelyn Cabarcas Navarro",
+    "timestamp": "2025-10-10T16:31:12.236578",
     "response_data": null
   },
   {
     "test": "Profile Access - coordinadora",
     "success": true,
     "details": "Profile retrieved: Coordinadora de Convivencia",
-    "timestamp": "2025-10-07T19:22:06.096524",
+    "timestamp": "2025-10-10T16:31:12.285900",
     "response_data": null
   },
   {
     "test": "Students No Auth",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-07T19:22:06.107316",
+    "timestamp": "2025-10-10T16:31:12.336233",
     "response_data": null
   },
   {
     "test": "GET Students - admin",
     "success": true,
-    "details": "Retrieved 556 students",
-    "timestamp": "2025-10-07T19:22:06.121645",
+    "details": "Retrieved 4 students",
+    "timestamp": "2025-10-10T16:31:12.395294",
     "response_data": null
   },
   {
     "test": "GET Students - docente_bachillerato",
     "success": true,
-    "details": "Retrieved 4 students",
-    "timestamp": "2025-10-07T19:22:06.130334",
+    "details": "Retrieved 1 students",
+    "timestamp": "2025-10-10T16:31:12.446060",
+    "response_data": null
+  },
+  {
+    "test": "GET Students - docente_primaria",
+    "success": true,
+    "details": "Retrieved 1 students",
+    "timestamp": "2025-10-10T16:31:12.455527",
     "response_data": null
   },
   {
     "test": "GET Students - coordinadora",
     "success": true,
-    "details": "Retrieved 556 students",
-    "timestamp": "2025-10-07T19:22:06.145733",
+    "details": "Retrieved 4 students",
+    "timestamp": "2025-10-10T16:31:12.511388",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (1\u00b0) - admin",
     "success": true,
-    "details": "Retrieved 550 students for grade 1\u00b0",
-    "timestamp": "2025-10-07T19:22:06.162303",
+    "details": "Retrieved 1 students for grade 1\u00b0",
+    "timestamp": "2025-10-10T16:31:12.524571",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (6\u00b0) - admin",
     "success": true,
     "details": "Retrieved 0 students for grade 6\u00b0",
-    "timestamp": "2025-10-07T19:22:06.169655",
+    "timestamp": "2025-10-10T16:31:12.534396",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (11\u00b0) - admin",
     "success": true,
     "details": "Retrieved 1 students for grade 11\u00b0",
-    "timestamp": "2025-10-07T19:22:06.220483",
+    "timestamp": "2025-10-10T16:31:12.584138",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (1\u00b0) - docente_bachillerato",
     "success": true,
-    "details": "Retrieved 4 students for grade 1\u00b0",
-    "timestamp": "2025-10-07T19:22:06.228399",
+    "details": "Retrieved 1 students for grade 1\u00b0",
+    "timestamp": "2025-10-10T16:31:12.594922",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (6\u00b0) - docente_bachillerato",
     "success": true,
     "details": "Retrieved 0 students for grade 6\u00b0",
-    "timestamp": "2025-10-07T19:22:06.236165",
+    "timestamp": "2025-10-10T16:31:12.604160",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (11\u00b0) - docente_bachillerato",
     "success": true,
-    "details": "Retrieved 1 students for grade 11\u00b0",
-    "timestamp": "2025-10-07T19:22:06.285276",
+    "details": "Retrieved 0 students for grade 11\u00b0",
+    "timestamp": "2025-10-10T16:31:12.654179",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (1\u00b0) - docente_primaria",
+    "success": true,
+    "details": "Retrieved 1 students for grade 1\u00b0",
+    "timestamp": "2025-10-10T16:31:12.665474",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (6\u00b0) - docente_primaria",
+    "success": true,
+    "details": "Retrieved 0 students for grade 6\u00b0",
+    "timestamp": "2025-10-10T16:31:12.677225",
+    "response_data": null
+  },
+  {
+    "test": "GET Students Grade Filter (11\u00b0) - docente_primaria",
+    "success": true,
+    "details": "Retrieved 0 students for grade 11\u00b0",
+    "timestamp": "2025-10-10T16:31:12.689770",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (1\u00b0) - coordinadora",
     "success": true,
-    "details": "Retrieved 550 students for grade 1\u00b0",
-    "timestamp": "2025-10-07T19:22:06.299850",
+    "details": "Retrieved 1 students for grade 1\u00b0",
+    "timestamp": "2025-10-10T16:31:12.741575",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (6\u00b0) - coordinadora",
     "success": true,
     "details": "Retrieved 0 students for grade 6\u00b0",
-    "timestamp": "2025-10-07T19:22:06.307903",
+    "timestamp": "2025-10-10T16:31:12.750099",
     "response_data": null
   },
   {
     "test": "GET Students Grade Filter (11\u00b0) - coordinadora",
     "success": true,
     "details": "Retrieved 1 students for grade 11\u00b0",
-    "timestamp": "2025-10-07T19:22:06.315272",
+    "timestamp": "2025-10-10T16:31:12.800462",
     "response_data": null
   },
   {
     "test": "Grades No Auth (POST)",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-07T19:22:06.378233",
+    "timestamp": "2025-10-10T16:31:12.819151",
     "response_data": null
   },
   {
     "test": "Grades No Auth (GET)",
     "success": true,
     "details": "Correctly rejected unauthenticated request",
-    "timestamp": "2025-10-07T19:22:06.384558",
+    "timestamp": "2025-10-10T16:31:12.867714",
     "response_data": null
   },
   {
     "test": "Assign Grade - admin",
     "success": true,
     "details": "Grade assigned successfully: MATEM\u00c1TICA - 4.2",
-    "timestamp": "2025-10-07T19:22:06.393448",
+    "timestamp": "2025-10-10T16:31:12.879580",
     "response_data": null
   },
   {
     "test": "Assign Grade - docente_bachillerato",
     "success": true,
     "details": "Grade assigned successfully: MATEM\u00c1TICA - 4.2",
-    "timestamp": "2025-10-07T19:22:06.401340",
+    "timestamp": "2025-10-10T16:31:12.933618",
+    "response_data": null
+  },
+  {
+    "test": "Assign Grade - docente_primaria",
+    "success": true,
+    "details": "Skipped - role cannot assign grades",
+    "timestamp": "2025-10-10T16:31:12.933653",
     "response_data": null
   },
   {
     "test": "Assign Grade - coordinadora",
     "success": true,
     "details": "Skipped - role cannot assign grades",
-    "timestamp": "2025-10-07T19:22:06.401366",
+    "timestamp": "2025-10-10T16:31:12.933664",
     "response_data": null
   },
   {
     "test": "Assign Grade Invalid Range - admin",
     "success": false,
     "details": "Expected 400/422, got 200",
-    "timestamp": "2025-10-07T19:22:06.409057",
-    "response_data": "{\"_id\":\"grade002\",\"student_id\":\"est001\",\"teacher_id\":\"doc001\",\"subject\":\"MATEM\u00c1TICA\",\"period\":\"I\",\"grade\":6.0,\"teacher_notes\":\"Test invalid grade\",\"performance_level\":\"SUPERIOR\",\"created_at\":\"2025-10-07T02:23:39.090000\",\"updated_at\":\"2025-10-07T19:22:06.405000\"}"
+    "timestamp": "2025-10-10T16:31:12.944799",
+    "response_data": "{\"_id\":\"5d377858-a851-4aa3-ae4d-da8e7510fb31\",\"student_id\":\"est003\",\"teacher_id\":\"admin001\",\"subject\":\"MATEM\u00c1TICA\",\"period\":\"I\",\"grade\":6.0,\"teacher_notes\":\"Test invalid grade\",\"performance_level\":\"SUPERIOR\",\"created_at\":\"2025-10-10T16:31:12.876000\",\"updated_at\":\"2025-10-10T16:31:12.941000\"}"
   },
   {
     "test": "Assign Grade Invalid Range - docente_bachillerato",
     "success": false,
     "details": "Expected 400/422, got 200",
-    "timestamp": "2025-10-07T19:22:06.458432",
-    "response_data": "{\"_id\":\"grade002\",\"student_id\":\"est001\",\"teacher_id\":\"doc001\",\"subject\":\"MATEM\u00c1TICA\",\"period\":\"I\",\"grade\":6.0,\"teacher_notes\":\"Test invalid grade\",\"performance_level\":\"SUPERIOR\",\"created_at\":\"2025-10-07T02:23:39.090000\",\"updated_at\":\"2025-10-07T19:22:06.414000\"}"
+    "timestamp": "2025-10-10T16:31:12.955391",
+    "response_data": "{\"_id\":\"5d377858-a851-4aa3-ae4d-da8e7510fb31\",\"student_id\":\"est003\",\"teacher_id\":\"admin001\",\"subject\":\"MATEM\u00c1TICA\",\"period\":\"I\",\"grade\":6.0,\"teacher_notes\":\"Test invalid grade\",\"performance_level\":\"SUPERIOR\",\"created_at\":\"2025-10-10T16:31:12.876000\",\"updated_at\":\"2025-10-10T16:31:12.951000\"}"
   },
   {
     "test": "Get Student Grades - admin",
     "success": true,
-    "details": "Retrieved 7 grades for student",
-    "timestamp": "2025-10-07T19:22:06.466431",
+    "details": "Retrieved 1 grades for student",
+    "timestamp": "2025-10-10T16:31:12.965830",
     "response_data": null
   },
   {
     "test": "Get Student Grades - docente_bachillerato",
     "success": true,
     "details": "Access denied (expected for some roles)",
-    "timestamp": "2025-10-07T19:22:06.473738",
+    "timestamp": "2025-10-10T16:31:12.975169",
+    "response_data": null
+  },
+  {
+    "test": "Get Student Grades - docente_primaria",
+    "success": true,
+    "details": "Access denied (expected for some roles)",
+    "timestamp": "2025-10-10T16:31:13.026749",
     "response_data": null
   },
   {
     "test": "Get Student Grades - coordinadora",
     "success": true,
-    "details": "Retrieved 7 grades for student",
-    "timestamp": "2025-10-07T19:22:06.480604",
+    "details": "Retrieved 1 grades for student",
+    "timestamp": "2025-10-10T16:31:13.036617",
     "response_data": null
   },
   {
     "test": "Get Student Grades Period Filter - admin",
     "success": true,
-    "details": "Retrieved 7 grades for period I",
-    "timestamp": "2025-10-07T19:22:06.487730",
+    "details": "Retrieved 1 grades for period I",
+    "timestamp": "2025-10-10T16:31:13.087729",
     "response_data": null
   },
   {
     "test": "Get Student Grades Period Filter - docente_bachillerato",
     "success": true,
     "details": "Access denied (expected for some roles)",
-    "timestamp": "2025-10-07T19:22:06.537101",
+    "timestamp": "2025-10-10T16:31:13.098344",
+    "response_data": null
+  },
+  {
+    "test": "Get Student Grades Period Filter - docente_primaria",
+    "success": true,
+    "details": "Access denied (expected for some roles)",
+    "timestamp": "2025-10-10T16:31:13.108048",
     "response_data": null
   },
   {
     "test": "Get Student Grades Period Filter - coordinadora",
     "success": true,
-    "details": "Retrieved 7 grades for period I",
-    "timestamp": "2025-10-07T19:22:06.549648",
+    "details": "Retrieved 1 grades for period I",
+    "timestamp": "2025-10-10T16:31:13.118630",
     "response_data": null
   },
   {
     "test": "Update Existing Grade - admin",
     "success": true,
     "details": "Grade updated successfully: 4.0",
-    "timestamp": "2025-10-07T19:22:06.567097",
+    "timestamp": "2025-10-10T16:31:13.181981",
     "response_data": null
   },
   {
     "test": "Update Existing Grade - docente_bachillerato",
     "success": true,
     "details": "Grade updated successfully: 4.0",
-    "timestamp": "2025-10-07T19:22:06.623924",
+    "timestamp": "2025-10-10T16:31:13.245851",
     "response_data": null
   },
   {
     "test": "Grades Permission Validation - admin",
     "success": true,
     "details": "Skipped - user can assign grades",
-    "timestamp": "2025-10-07T19:22:06.623962",
+    "timestamp": "2025-10-10T16:31:13.245890",
     "response_data": null
   },
   {
     "test": "Grades Permission Validation - docente_bachillerato",
     "success": true,
     "details": "Skipped - user can assign grades",
-    "timestamp": "2025-10-07T19:22:06.623971",
+    "timestamp": "2025-10-10T16:31:13.245896",
+    "response_data": null
+  },
+  {
+    "test": "Grades Permission Validation - docente_primaria",
+    "success": true,
+    "details": "Skipped - user can assign grades",
+    "timestamp": "2025-10-10T16:31:13.245901",
     "response_data": null
   },
   {
     "test": "Grades Permission Validation - coordinadora",
     "success": true,
     "details": "Correctly denied grade assignment for coordinadora",
-    "timestamp": "2025-10-07T19:22:06.631293",
+    "timestamp": "2025-10-10T16:31:13.295493",
     "response_data": null
   },
   {
     "test": "Multiple Subjects Grades - admin",
     "success": true,
     "details": "Successfully assigned grades for 4 subjects",
-    "timestamp": "2025-10-07T19:22:06.705920",
+    "timestamp": "2025-10-10T16:31:13.381051",
     "response_data": null
   },
   {
     "test": "Multiple Subjects Grades - docente_bachillerato",
     "success": true,
     "details": "Successfully assigned grades for 4 subjects",
-    "timestamp": "2025-10-07T19:22:06.823653",
+    "timestamp": "2025-10-10T16:31:13.467666",
+    "response_data": null
+  },
+  {
+    "test": "Students Grade Ordering - admin",
+    "success": false,
+    "details": "Grade ordering issues: grades not in correct order. Grades found: ['11\u00b0', '1\u00b0', '2\u00b0', '3\u00b0']",
+    "timestamp": "2025-10-10T16:31:13.517649",
+    "response_data": null
+  },
+  {
+    "test": "Students Grade Ordering - docente_bachillerato",
+    "success": true,
+    "details": "Students correctly ordered by grade. Total: 1. Distribution: 1\u00b0: 1",
+    "timestamp": "2025-10-10T16:31:13.527210",
+    "response_data": null
+  },
+  {
+    "test": "Students Grade Ordering - docente_primaria",
+    "success": true,
+    "details": "Students correctly ordered by grade. Total: 1. Distribution: 1\u00b0: 1",
+    "timestamp": "2025-10-10T16:31:13.537931",
+    "response_data": null
+  },
+  {
+    "test": "Students Grade Ordering - coordinadora",
+    "success": false,
+    "details": "Grade ordering issues: grades not in correct order. Grades found: ['11\u00b0', '1\u00b0', '2\u00b0', '3\u00b0']",
+    "timestamp": "2025-10-10T16:31:13.589873",
+    "response_data": null
+  },
+  {
+    "test": "Grade Ordering Consistency - admin",
+    "success": true,
+    "details": "Grade ordering is consistent across 3 calls",
+    "timestamp": "2025-10-10T16:31:13.664508",
+    "response_data": null
+  },
+  {
+    "test": "Grade Ordering Consistency - docente_bachillerato",
+    "success": true,
+    "details": "Grade ordering is consistent across 3 calls",
+    "timestamp": "2025-10-10T16:31:13.735608",
+    "response_data": null
+  },
+  {
+    "test": "Grade Ordering Consistency - docente_primaria",
+    "success": true,
+    "details": "Grade ordering is consistent across 3 calls",
+    "timestamp": "2025-10-10T16:31:13.806052",
+    "response_data": null
+  },
+  {
+    "test": "Grade Ordering Consistency - coordinadora",
+    "success": true,
+    "details": "Grade ordering is consistent across 3 calls",
+    "timestamp": "2025-10-10T16:31:13.838487",
+    "response_data": null
+  },
+  {
+    "test": "Role Grade Access - admin",
+    "success": true,
+    "details": "Has access to all students. Total: 4. Grades: ['11\u00b0', '1\u00b0', '2\u00b0', '3\u00b0']",
+    "timestamp": "2025-10-10T16:31:13.847502",
+    "response_data": null
+  },
+  {
+    "test": "Role Grade Access - docente_bachillerato",
+    "success": false,
+    "details": "Has access to unexpected grades: {'1\u00b0'}. Expected only: ['6\u00b0', '7\u00b0', '8\u00b0', '9\u00b0', '10\u00b0', '11\u00b0']",
+    "timestamp": "2025-10-10T16:31:13.898935",
+    "response_data": null
+  },
+  {
+    "test": "Role Grade Access - docente_primaria",
+    "success": true,
+    "details": "Role not in specific test scope. Students: 1. Grades: ['1\u00b0']",
+    "timestamp": "2025-10-10T16:31:13.908430",
+    "response_data": null
+  },
+  {
+    "test": "Role Grade Access - coordinadora",
+    "success": true,
+    "details": "Has access to all students. Total: 4. Grades: ['11\u00b0', '1\u00b0', '2\u00b0', '3\u00b0']",
+    "timestamp": "2025-10-10T16:31:13.918063",
     "response_data": null
   },
   {
     "test": "User Registration",
     "success": true,
     "details": "User registered: Padre de Prueba",
-    "timestamp": "2025-10-07T19:22:06.831374",
+    "timestamp": "2025-10-10T16:31:13.927725",
     "response_data": null
   },
   {
     "test": "Register Duplicate User",
     "success": true,
     "details": "Correctly rejected duplicate username",
-    "timestamp": "2025-10-07T19:22:06.838593",
+    "timestamp": "2025-10-10T16:31:13.978170",
     "response_data": null
   },
   {
     "test": "Logout - admin",
     "success": true,
     "details": "Successfully logged out",
-    "timestamp": "2025-10-07T19:22:06.887338",
+    "timestamp": "2025-10-10T16:31:13.985685",
     "response_data": null
   },
   {
     "test": "Logout - docente_bachillerato",
     "success": true,
     "details": "Successfully logged out",
-    "timestamp": "2025-10-07T19:22:06.893659",
+    "timestamp": "2025-10-10T16:31:14.035031",
+    "response_data": null
+  },
+  {
+    "test": "Logout - docente_primaria",
+    "success": true,
+    "details": "Successfully logged out",
+    "timestamp": "2025-10-10T16:31:14.042588",
     "response_data": null
   },
   {
     "test": "Logout - coordinadora",
     "success": true,
     "details": "Successfully logged out",
-    "timestamp": "2025-10-07T19:22:06.940349",
+    "timestamp": "2025-10-10T16:31:14.050258",
     "response_data": null
   }
 ]
