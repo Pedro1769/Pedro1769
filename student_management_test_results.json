@@ -3,91 +3,98 @@
     "test": "Health Check",
     "success": true,
     "details": "Status: healthy",
-    "timestamp": "2025-10-10T05:27:06.434613",
+    "timestamp": "2025-10-10T05:28:38.942300",
     "response_data": null
   },
   {
     "test": "Login Success - admin",
     "success": true,
     "details": "User: Pedro Hurtado, Role: admin",
-    "timestamp": "2025-10-10T05:27:06.470822",
+    "timestamp": "2025-10-10T05:28:38.953253",
     "response_data": null
   },
   {
     "test": "Login Success - docente_bachillerato",
     "success": true,
     "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
-    "timestamp": "2025-10-10T05:27:06.480638",
+    "timestamp": "2025-10-10T05:28:38.961622",
     "response_data": null
   },
   {
     "test": "Login Success - coordinadora",
     "success": true,
     "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
-    "timestamp": "2025-10-10T05:27:06.486327",
+    "timestamp": "2025-10-10T05:28:39.009079",
     "response_data": null
   },
   {
     "test": "Admin Delete Individual Student",
-    "success": false,
-    "details": "Status code: 500",
-    "timestamp": "2025-10-10T05:27:06.557005",
-    "response_data": "Internal Server Error"
+    "success": true,
+    "details": "Successfully deleted student a0014bdf-647f-4f4f-b79c-60e66c9e2439",
+    "timestamp": "2025-10-10T05:28:39.111584",
+    "response_data": null
   },
   {
     "test": "Admin Bulk Delete Students",
     "success": true,
     "details": "Successfully deleted 3 students",
-    "timestamp": "2025-10-10T05:27:06.627989",
+    "timestamp": "2025-10-10T05:28:39.184981",
     "response_data": null
   },
   {
     "test": "Admin Edit Student",
-    "success": false,
-    "details": "Status code: 500",
-    "timestamp": "2025-10-10T05:27:06.642525",
-    "response_data": "Internal Server Error"
+    "success": true,
+    "details": "Successfully updated student: Estudiante Editado Admin 052839",
+    "timestamp": "2025-10-10T05:28:39.240252",
+    "response_data": null
   },
   {
     "test": "Docente Bachillerato Edit Assigned Grade",
-    "success": false,
-    "details": "Status code: 500",
-    "timestamp": "2025-10-10T05:27:06.665249",
-    "response_data": "Internal Server Error"
+    "success": true,
+    "details": "Successfully updated student from grade 10\u00b0: Estudiante Editado Docente 052839",
+    "timestamp": "2025-10-10T05:28:39.256830",
+    "response_data": null
   },
   {
     "test": "Docente Bachillerato Delete Assigned Grade",
-    "success": false,
-    "details": "Status code: 500",
-    "timestamp": "2025-10-10T05:27:06.678089",
-    "response_data": "Internal Server Error"
+    "success": true,
+    "details": "Successfully deleted student from assigned grade",
+    "timestamp": "2025-10-10T05:28:39.310824",
+    "response_data": null
   },
   {
     "test": "Docente Bachillerato Cannot Edit Other Grades",
-    "success": false,
-    "details": "Expected 403, got 500 - Security bypass detected!",
-    "timestamp": "2025-10-10T05:27:06.693239",
-    "response_data": "Internal Server Error"
+    "success": true,
+    "details": "Correctly denied access to edit student from non-assigned grade",
+    "timestamp": "2025-10-10T05:28:39.365236",
+    "response_data": null
   },
   {
     "test": "Coordinadora Edit Any Student",
     "success": false,
-    "details": "Status code: 500",
-    "timestamp": "2025-10-10T05:27:06.706461",
-    "response_data": "Internal Server Error"
+    "details": "Status code: 403",
+    "timestamp": "2025-10-10T05:28:39.379743",
+    "response_data": "{\"detail\":\"No tiene permisos para esta acci\u00f3n\"}"
   },
   {
     "test": "Coordinadora Delete Any Student",
     "success": false,
-    "details": "Status code: 500",
-    "timestamp": "2025-10-10T05:27:06.761675",
-    "response_data": "Internal Server Error"
+    "details": "Status code: 403",
+    "timestamp": "2025-10-10T05:28:39.394931",
+    "response_data": "{\"detail\":\"No tiene permisos para esta acci\u00f3n\"}"
   },
   {
     "test": "Unauthorized Delete Access",
-    "success": false,
-    "details": "Expected 401/403, got 404",
-    "timestamp": "2025-10-10T05:27:06.767913",
-    "response_data": "{\"detail\":\"Estudiante no encontrado\"}"
+    "success": true,
+    "details": "Correctly rejected unauthenticated request",
+    "timestamp": "2025-10-10T05:28:39.442114",
+    "response_data": null
+  },
+  {
+    "test": "Unauthorized Edit Access",
+    "success": true,
+    "details": "Correctly rejected unauthenticated request",
+    "timestamp": "2025-10-10T05:28:39.447264",
+    "response_data": null
   }
 ]
