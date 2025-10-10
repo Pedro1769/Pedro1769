@@ -75,7 +75,7 @@ async def get_students_by_teacher(
     students_data = await db.students.find({
         "teacher_id": teacher_id,
         "is_active": True
-    }).to_list(1000)
+    }).sort("grade", 1).to_list(1000)
     
     return [Student(**student) for student in students_data]
 
