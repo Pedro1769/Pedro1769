@@ -79,8 +79,24 @@ const BulkStudentUpload = ({ onClose }) => {
     const lines = csvText.trim().split('\n');
     const parsedStudents = [];
 
+    // Palabras comunes de encabezados a ignorar
+    const headerKeywords = ['nombre', 'grado', 'documento', 'estudiante', 'completo', 'cédula', 'id'];
+    
+    // Palabras a ignorar que no son nombres
+    const ignoreWords = ['asignar', 'pendiente', 'sin asignar', 'n/a', 'na'];
+
     lines.forEach((line, index) => {
       if (line.trim()) {
+        // Ignorar primera línea si parece ser encabezado
+        if (index === 0) {
+          const lowerLine = line.toLowerCase();
+          const isHeader = headerKeywords.some(keyword => lowerLine.includes(keyword));
+          if (isHeader) {
+            console.log('Saltando línea de encabezado:', line);
+            return; // Skip header line
+          }
+        }
+
         // Detectar automáticamente el separador (coma, punto y coma, tab, barra vertical)
         let columns = [];
         const separators = [',', ';', '\t', '|', ' '];
@@ -102,11 +118,18 @@ const BulkStudentUpload = ({ onClose }) => {
         let grade = '';
         let document = '';
 
-        // Buscar el nombre (primer campo no vacío que no sea un grado)
+        // Buscar el nombre (primer campo no vacío que no sea un grado, número, o palabra a ignorar)
         for (let col of columns) {
-          if (col && !grades.includes(col) && !/^\d+$/.test(col)) {
-            name = col;
-            break;
+          const colLower = col.toLowerCase();
+          const isIgnoreWord = ignoreWords.some(word => colLower === word || colLower.includes(word));
+          
+          if (col && !grades.includes(col) && !/^\d+$/.test(col) && !isIgnoreWord) {
+            // Verificar que tenga al menos 2 palabras (nombre y apellido)
+            const words = col.split(' ').filter(w => w.length > 0);
+            if (words.length >= 2) {
+              name = col;
+              break;
+            }
           }
         }
 
