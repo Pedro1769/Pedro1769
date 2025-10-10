@@ -234,6 +234,21 @@ backend:
         agent: "testing"
         comment: "VERIFICACIÓN ESPECÍFICA COMPLETADA - PROBLEMA COMPLETAMENTE RESUELTO: ✅ CORRECCIÓN CRÍTICA APLICADA: El problema de ordenamiento alfabético (.sort('grade', 1)) fue identificado y corregido. Creado /backend/utils/grade_utils.py con función sort_students_by_grade() que implementa el orden escolar correcto (Transición, 1°, 2°, 3°... 11°). Actualizado student_routes.py para usar la nueva función de ordenamiento. ✅ PRUEBAS EXHAUSTIVAS COMPLETADAS: Verificados todos los roles según review request: 1) ADMIN (pedro.hurtado): Ve TODOS los estudiantes ordenados correctamente (1°, 2°, 3°, 11°), 2) DOCENTE BACHILLERATO (bifencia.orozco): Ve estudiantes de grados 6°-11° ordenados (actualmente 1 estudiante de 11°), 3) DOCENTE PRIMARIA (yocelyn.cabarcas): Ve estudiantes de su grado específico (1 estudiante de 1°), 4) COORDINADORA (coord.convivencia): Ve TODOS los estudiantes ordenados correctamente. ✅ VALIDACIONES CONFIRMADAS: No hay mezcla de grados, orden consistente en múltiples llamadas, distribución correcta por grado, lista viene ordenada desde backend sin requerir ordenamiento adicional en frontend. ✅ CORRECCIÓN ADICIONAL: Corregido rol de usuario bifencia.orozco de 'docente_primaria' a 'docente_bachillerato' con grados ['6°', '7°', '8°', '9°', '10°', '11°'] según especificaciones. RESULTADO: El ordenamiento de estudiantes por grado funciona PERFECTAMENTE según todos los criterios del review request."
 
+  - task: "CRÍTICO: Soporte para grado '0°' (Preescolar) en carga masiva"
+    implemented: true
+    working: true
+    file: "BulkStudentUpload.js, utils/gradeUtils.js, utils/grade_utils.py, mockData.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: false
+        agent: "user"
+        comment: "PROBLEMA IDENTIFICADO POR USUARIO: Los estudiantes que se cargan con formato de datos usando '0°' para representar grado Preescolar/Transición NO son reconocidos correctamente por el sistema. Archivo compartido contiene 503 estudiantes con grados en formato '0°', '1°', '2°'... '11°', separados por tabulaciones. El sistema actual solo reconocía 'Transición' y del '1°' al '11°', causando que los 32 estudiantes de grado '0°' no se procesaran correctamente."
+      - working: true
+        agent: "main"
+        comment: "PROBLEMA COMPLETAMENTE SOLUCIONADO: El sistema no reconocía el grado '0°' como válido. CORRECCIONES APLICADAS: 1) FRONTEND BulkStudentUpload.js: Agregado '0°' al array de grados válidos y al objeto levels mapeándolo a 'PREESCOLAR'. Actualizada lógica de detección de patrones para reconocer '0°' como grado válido. 2) FRONTEND utils/gradeUtils.js: Agregado '0°' con orden 0 en GRADE_ORDER y ALL_GRADES para ordenamiento correcto. 3) BACKEND utils/grade_utils.py: Agregado '0°' con orden 0 en GRADE_ORDER y ALL_GRADES. 4) mockData.js: Agregado '0°' al array PREESCOLAR. RESULTADO: Ahora el sistema reconoce correctamente el grado '0°' al cargar estudiantes masivamente. Los 503 estudiantes del archivo del usuario (32 de grado 0°, 48 de 1°, 44 de 2°... 25 de 11°) se procesarán correctamente con sus grados asignados y aparecerán ordenados: 0°, 1°, 2°, 3°... 11°."
+
 frontend:
   - task: "Corrección de error de Calendar component"
     implemented: true
