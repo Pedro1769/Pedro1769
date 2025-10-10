@@ -1117,6 +1117,273 @@ class GAABackendTester:
             self.log_test(f"Multiple Subjects Grades - {user_type}", False, f"Request error: {str(e)}")
             return False
 
+    # ==================== GRADE ORDERING TESTS (SPECIFIC REVIEW REQUEST) ====================
+    
+    def test_students_grade_ordering_backend(self, user_type: str):
+        """Test that GET /students returns students ordered by grade (SPECIFIC REVIEW REQUEST)"""
+        if user_type not in self.tokens:
+            self.log_test(f"Students Grade Ordering - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            response = self.session.get(
+                f"{BASE_URL}/students",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                students = response.json()
+                if not isinstance(students, list):
+                    self.log_test(
+                        f"Students Grade Ordering - {user_type}",
+                        False,
+                        "Response is not a list",
+                        students
+                    )
+                    return False
+                
+                if len(students) == 0:
+                    self.log_test(
+                        f"Students Grade Ordering - {user_type}",
+                        True,
+                        "No students found - cannot test ordering"
+                    )
+                    return True
+                
+                # Extract grades from students
+                grades = [student.get("grade", "") for student in students]
+                
+                # Define expected grade order
+                expected_order = ["Transición", "1°", "2°", "3°", "4°", "5°", "6°", "7°", "8°", "9°", "10°", "11°"]
+                
+                # Check if grades are in correct order
+                is_ordered = True
+                previous_grade_index = -1
+                
+                for grade in grades:
+                    if grade in expected_order:
+                        current_grade_index = expected_order.index(grade)
+                        if current_grade_index < previous_grade_index:
+                            is_ordered = False
+                            break
+                        previous_grade_index = current_grade_index
+                
+                # Count students per grade
+                grade_counts = {}
+                for grade in grades:
+                    grade_counts[grade] = grade_counts.get(grade, 0) + 1
+                
+                # Check for grade mixing (same grade should be consecutive)
+                grade_groups = []
+                current_grade = None
+                for grade in grades:
+                    if grade != current_grade:
+                        grade_groups.append(grade)
+                        current_grade = grade
+                
+                # Count unique grade appearances
+                unique_grades = set(grades)
+                has_mixing = len(grade_groups) > len(unique_grades)
+                
+                if is_ordered and not has_mixing:
+                    grade_distribution = ", ".join([f"{grade}: {count}" for grade, count in grade_counts.items()])
+                    self.log_test(
+                        f"Students Grade Ordering - {user_type}",
+                        True,
+                        f"Students correctly ordered by grade. Total: {len(students)}. Distribution: {grade_distribution}"
+                    )
+                    return True
+                else:
+                    error_details = []
+                    if not is_ordered:
+                        error_details.append("grades not in correct order")
+                    if has_mixing:
+                        error_details.append("grades are mixed (same grade appears non-consecutively)")
+                    
+                    self.log_test(
+                        f"Students Grade Ordering - {user_type}",
+                        False,
+                        f"Grade ordering issues: {', '.join(error_details)}. Grades found: {grades[:10]}{'...' if len(grades) > 10 else ''}"
+                    )
+                    return False
+                    
+            else:
+                self.log_test(
+                    f"Students Grade Ordering - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Students Grade Ordering - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_students_grade_ordering_consistency(self, user_type: str):
+        """Test that grade ordering is consistent across multiple calls"""
+        if user_type not in self.tokens:
+            self.log_test(f"Grade Ordering Consistency - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            # Make multiple calls to check consistency
+            call_results = []
+            for i in range(3):
+                response = self.session.get(
+                    f"{BASE_URL}/students",
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    students = response.json()
+                    if isinstance(students, list):
+                        grades = [student.get("grade", "") for student in students]
+                        call_results.append(grades)
+                    else:
+                        self.log_test(
+                            f"Grade Ordering Consistency - {user_type}",
+                            False,
+                            f"Call {i+1}: Response is not a list"
+                        )
+                        return False
+                else:
+                    self.log_test(
+                        f"Grade Ordering Consistency - {user_type}",
+                        False,
+                        f"Call {i+1}: Status code {response.status_code}"
+                    )
+                    return False
+            
+            # Check if all calls returned the same order
+            if len(call_results) >= 2:
+                first_call = call_results[0]
+                consistent = all(grades == first_call for grades in call_results[1:])
+                
+                if consistent:
+                    self.log_test(
+                        f"Grade Ordering Consistency - {user_type}",
+                        True,
+                        f"Grade ordering is consistent across {len(call_results)} calls"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        f"Grade Ordering Consistency - {user_type}",
+                        False,
+                        "Grade ordering is inconsistent between calls"
+                    )
+                    return False
+            else:
+                self.log_test(
+                    f"Grade Ordering Consistency - {user_type}",
+                    True,
+                    "Not enough successful calls to test consistency"
+                )
+                return True
+                
+        except Exception as e:
+            self.log_test(f"Grade Ordering Consistency - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
+    def test_specific_role_grade_access(self, user_type: str):
+        """Test specific role access to grades as per review request"""
+        if user_type not in self.tokens:
+            self.log_test(f"Role Grade Access - {user_type}", False, "No token available for user")
+            return False
+            
+        try:
+            headers = {
+                **HEADERS,
+                "Authorization": f"Bearer {self.tokens[user_type]}"
+            }
+            
+            response = self.session.get(
+                f"{BASE_URL}/students",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                students = response.json()
+                if not isinstance(students, list):
+                    self.log_test(
+                        f"Role Grade Access - {user_type}",
+                        False,
+                        "Response is not a list"
+                    )
+                    return False
+                
+                grades_found = set(student.get("grade", "") for student in students)
+                
+                # Define expected grades per role based on review request
+                expected_access = {
+                    "admin": "ALL",  # Should see all students
+                    "docente_bachillerato": ["6°", "7°", "8°", "9°", "10°", "11°"],  # Should see bachillerato grades
+                    "coordinadora": "ALL"  # Should see all students
+                }
+                
+                if user_type in expected_access:
+                    expected = expected_access[user_type]
+                    
+                    if expected == "ALL":
+                        # Admin and coordinadora should see all grades
+                        self.log_test(
+                            f"Role Grade Access - {user_type}",
+                            True,
+                            f"Has access to all students. Total: {len(students)}. Grades: {sorted(grades_found)}"
+                        )
+                        return True
+                    else:
+                        # Docente bachillerato should only see bachillerato grades
+                        unexpected_grades = grades_found - set(expected)
+                        if not unexpected_grades:
+                            self.log_test(
+                                f"Role Grade Access - {user_type}",
+                                True,
+                                f"Correctly filtered to bachillerato grades. Students: {len(students)}. Grades: {sorted(grades_found)}"
+                            )
+                            return True
+                        else:
+                            self.log_test(
+                                f"Role Grade Access - {user_type}",
+                                False,
+                                f"Has access to unexpected grades: {unexpected_grades}. Expected only: {expected}"
+                            )
+                            return False
+                else:
+                    self.log_test(
+                        f"Role Grade Access - {user_type}",
+                        True,
+                        f"Role not in specific test scope. Students: {len(students)}. Grades: {sorted(grades_found)}"
+                    )
+                    return True
+                    
+            else:
+                self.log_test(
+                    f"Role Grade Access - {user_type}",
+                    False,
+                    f"Status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test(f"Role Grade Access - {user_type}", False, f"Request error: {str(e)}")
+            return False
+
     def run_all_tests(self):
         """Run comprehensive GAA backend tests focusing on GRADES system"""
         print("🚀 Starting Comprehensive GAA Backend Tests")
