@@ -270,8 +270,9 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Nuevas funcionalidades de gestión de estudiantes por rol"
-  stuck_tasks: []
+    - "VERIFICACIÓN ESPECÍFICA: Sistema de filtrado por grados exactos"
+  stuck_tasks: 
+    - "VERIFICACIÓN ESPECÍFICA: Sistema de filtrado por grados exactos"
   test_all: false
   test_priority: "high_first"
 
