@@ -35,6 +35,7 @@ import BancoLogros from '../sections/BancoLogros';
 import Boletines from '../sections/Boletines';
 import Proyectos from '../sections/Proyectos';
 import StudentEditForm from '../admin/StudentEditForm';
+import { sortStudentsByGrade } from '../../../utils/gradeUtils';
 
 const DocenteBachilleratoDashboard = () => {
   const { user } = useAuth();
