@@ -388,8 +388,26 @@ const DocentePrimariaDashboard = () => {
                       <Badge variant={student.is_active ? "default" : "secondary"}>
                         {student.is_active ? 'Activo' : 'Inactivo'}
                       </Badge>
-                      <Button variant="ghost" size="sm">
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => handleEditStudent(student)}
+                        title="Editar estudiante"
+                      >
                         <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => {
+                          if (window.confirm(`¿Estás seguro de eliminar a ${student.name}?`)) {
+                            handleDeleteStudent(student._id || student.id);
+                          }
+                        }}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        title="Eliminar estudiante"
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
