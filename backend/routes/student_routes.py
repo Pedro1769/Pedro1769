@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status, Query
 from typing import List, Optional
 from models import Student, StudentCreate, User, UserRole
 from database import get_database
-from auth import get_current_user, require_admin, require_teacher, require_admin_or_teacher, can_view_student_data
+from auth import get_current_user, require_admin, require_teacher, require_admin_or_teacher, require_student_management_roles, can_view_student_data
 from datetime import datetime
 import uuid
 
