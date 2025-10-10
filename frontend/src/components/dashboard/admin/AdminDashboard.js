@@ -152,8 +152,11 @@ const AdminDashboard = () => {
       
       console.log('AdminDashboard - Total estudiantes cargados:', studentsData.length);
       
+      // Ordenar estudiantes por grado
+      const sortedStudents = sortStudentsByGrade(studentsData);
+      
       setStatistics(statsData);
-      setStudents(studentsData);
+      setStudents(sortedStudents);
       setUsers(usersData);
       
       toast({
