@@ -1536,11 +1536,13 @@ class GAABackendTester:
         auth_tests = [r for r in self.test_results if "Login" in r["test"] or "Profile" in r["test"] or "Register" in r["test"] or "Logout" in r["test"]]
         student_tests = [r for r in self.test_results if "Student" in r["test"]]
         grade_tests = [r for r in self.test_results if "Grade" in r["test"]]
+        ordering_tests = [r for r in self.test_results if "Ordering" in r["test"] or "Role Grade Access" in r["test"]]
         
         print(f"\n📋 Test Categories:")
         print(f"   🔐 Authentication: {sum(1 for r in auth_tests if r['success'])}/{len(auth_tests)} passed")
         print(f"   👥 Students: {sum(1 for r in student_tests if r['success'])}/{len(student_tests)} passed")
         print(f"   📝 Grades (CRITICAL): {sum(1 for r in grade_tests if r['success'])}/{len(grade_tests)} passed")
+        print(f"   📊 Grade Ordering (REVIEW REQUEST): {sum(1 for r in ordering_tests if r['success'])}/{len(ordering_tests)} passed")
         
         if failed_tests > 0:
             print(f"\n❌ FAILED TESTS ({failed_tests}):")
