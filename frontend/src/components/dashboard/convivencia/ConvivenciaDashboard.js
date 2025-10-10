@@ -33,6 +33,7 @@ import {
 import { MOCK_STUDENTS, PERIODS, GRADES } from '../../../mockData';
 import { studentService, gradeService } from '../../../services/api';
 import { useToast } from '../../../hooks/use-toast';
+import StudentEditForm from '../admin/StudentEditForm';
 
 const ConvivenciaDashboard = () => {
   const { user } = useAuth();
