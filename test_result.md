@@ -162,6 +162,18 @@ backend:
         agent: "testing"
         comment: "INVESTIGACIÓN CRÍTICA COMPLETADA - PROBLEMA IDENTIFICADO Y EXPLICADO: ✅ BACKEND FUNCIONANDO CORRECTAMENTE: Endpoint GET /api/students retorna consistentemente 556 estudiantes reales (no mock data). Admin y coordinadora ven TODOS los estudiantes (556). Docente bachillerato ve correctamente solo sus estudiantes asignados (4 estudiantes de grados 10° y 11°). ❌ PROBLEMA REAL IDENTIFICADO: DATOS INCOMPLETOS EN BASE DE DATOS - Faltan estudiantes en 7 grados (Transición, 4°, 5°, 6°, 7°, 8°, 9°). Distribución actual: 1°(550), 2°(1), 3°(1), 10°(3), 11°(1). ✅ CONCLUSIÓN: El sistema funciona perfectamente, pero el admin NO subió estudiantes para todos los grados. Los dashboards muestran correctamente los estudiantes que SÍ existen en la base de datos. No es un problema de código sino de datos faltantes."
 
+  - task: "Nuevas funcionalidades de gestión de estudiantes por rol"
+    implemented: true
+    working: true
+    file: "routes/student_routes.py, auth.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "TESTING EXHAUSTIVO COMPLETADO - TODAS LAS FUNCIONALIDADES VERIFICADAS: ✅ Comprehensive testing of new student management functionalities completed with 100% success rate (14/14 tests passed). ✅ ADMINISTRATOR: DELETE /api/students/{id} working, DELETE /api/students/bulk working (deleted 3 students), PUT /api/students/{id} working. ✅ DOCENTE BACHILLERATO: Can edit/delete students from assigned grades (6° to 11°), correctly denied access to other grades (403 error). ✅ COORDINADORA CONVIVENCIA: Can edit/delete any student correctly. ✅ SECURITY: Role-based permissions working perfectly, no security bypass, endpoints protected against unauthorized access. ✅ CRITICAL FIXES APPLIED: Fixed dependency injection errors (missing parentheses), created require_student_management_roles() function, fixed grade filtering for docente_primaria. All new student management functionalities are fully functional with appropriate security controls."
+
   - task: "Sistema de notas completamente funcional (CRÍTICO)"
     implemented: true
     working: true
