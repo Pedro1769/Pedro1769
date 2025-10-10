@@ -258,7 +258,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Sistema de estudiantes reales completamente funcional"
+    - "Nuevas funcionalidades de gestión de estudiantes por rol"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
