@@ -460,8 +460,30 @@ const ConvivenciaDashboard = () => {
                         <Heart className="h-4 w-4 mr-1" />
                         Convivencia
                       </Button>
-                      <Button variant="ghost" size="sm">
-                        <UserCheck className="h-4 w-4" />
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleEditStudent(student);
+                        }}
+                        title="Editar estudiante"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (window.confirm(`¿Estás seguro de eliminar a ${student.name}?`)) {
+                            handleDeleteStudent(student._id || student.id);
+                          }
+                        }}
+                        className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                        title="Eliminar estudiante"
+                      >
+                        <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                     </div>
