@@ -79,19 +79,12 @@ const BulkStudentUpload = ({ onClose }) => {
     const lines = csvText.trim().split('\n');
     const parsedStudents = [];
 
-    // Palabras comunes de encabezados a ignorar
-    const headerKeywords = ['nombre', 'grado', 'documento', 'estudiante', 'completo', 'cédula', 'id'];
-    
-    // Palabras a ignorar que no son nombres
-    const ignoreWords = ['asignar', 'pendiente', 'sin asignar', 'n/a', 'na'];
-
     lines.forEach((line, index) => {
       if (line.trim()) {
-        // Ignorar primera línea si parece ser encabezado
+        // Ignorar SOLO si la primera línea contiene "Nombre completo" y "Grado" y "Documento"
         if (index === 0) {
           const lowerLine = line.toLowerCase();
-          const isHeader = headerKeywords.some(keyword => lowerLine.includes(keyword));
-          if (isHeader) {
+          if (lowerLine.includes('nombre completo') && lowerLine.includes('grado') && lowerLine.includes('documento')) {
             console.log('Saltando línea de encabezado:', line);
             return; // Skip header line
           }
