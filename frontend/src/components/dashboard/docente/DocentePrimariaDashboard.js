@@ -230,7 +230,10 @@ const DocentePrimariaDashboard = () => {
       console.log('Total estudiantes recibidos:', allStudents.length);
       const gradeStudents = allStudents.filter(student => student.grade === user.grade);
       console.log('Estudiantes filtrados para grado', user.grade, ':', gradeStudents.length);
-      setStudents(gradeStudents);
+      
+      // Ordenar estudiantes por nombre (ya están del mismo grado)
+      const sortedStudents = sortStudentsByGrade(gradeStudents);
+      setStudents(sortedStudents);
       
       // Cargar notas para todos los estudiantes
       console.log('Cargando notas para todos los estudiantes...');
