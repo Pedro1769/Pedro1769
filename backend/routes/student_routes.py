@@ -23,9 +23,11 @@ async def get_students(
     if current_user.role == UserRole.DOCENTE_PRIMARIA:
         # Docentes de primaria ven estudiantes de su grado asignado únicamente
         if current_user.grade:
-            filter_query["grade"] = current_user.grade
-            # Para docentes de primaria, NUNCA permitir ver otros grados
-            # El parámetro grade se ignora si no coincide con su grado asignado
+            # Si se especifica un grado y NO es el suyo, retornar vacío
+            if grade and grade != current_user.grade:
+                filter_query["grade"] = "INVALID_GRADE_NO_ACCESS"  # Forzar resultado vacío
+            else:
+                filter_query["grade"] = current_user.grade
     elif current_user.role == UserRole.DOCENTE_BACHILLERATO:
         # Docentes de bachillerato ven estudiantes de los grados que manejan
         if current_user.grades:
