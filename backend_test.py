@@ -20,6 +20,7 @@ HEADERS = {"Content-Type": "application/json"}
 TEST_USERS = {
     "admin": {"username": "pedro.hurtado", "password": "gim123"},
     "docente_bachillerato": {"username": "bifencia.orozco", "password": "gim123"},
+    "docente_primaria": {"username": "yocelyn.cabarcas", "password": "gim123"},
     "coordinadora": {"username": "coord.convivencia", "password": "gim123"}
 }
 
