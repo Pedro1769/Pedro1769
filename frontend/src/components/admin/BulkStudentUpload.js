@@ -78,6 +78,9 @@ const BulkStudentUpload = ({ onClose }) => {
 
     const lines = csvText.trim().split('\n');
     const parsedStudents = [];
+    
+    // Palabras a ignorar que no son nombres
+    const ignoreWords = ['asignar', 'pendiente', 'sin asignar', 'n/a', 'na', 'documento'];
 
     lines.forEach((line, index) => {
       if (line.trim()) {
