@@ -571,23 +571,68 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {students.slice(0, 50).map((student, index) => (
-                      <tr key={student._id || index} className="border-b hover:bg-blue-50 transition-colors">
-                        <td className="p-3 font-medium text-blue-800">{student.name}</td>
-                        <td className="p-3">
-                          <Badge variant="outline" className="bg-blue-100 text-blue-800">
-                            {student.grade}
-                          </Badge>
-                        </td>
-                        <td className="p-3 text-gray-600">{student.level}</td>
-                        <td className="p-3 text-gray-600">{student.document_number || 'No registrado'}</td>
-                        <td className="text-center p-3">
-                          <Badge variant={student.is_active ? "default" : "secondary"}>
-                            {student.is_active ? 'Activo' : 'Inactivo'}
-                          </Badge>
-                        </td>
-                      </tr>
-                    ))}
+                    {students.slice(0, 50).map((student, index) => {
+                      const studentId = student._id || student.id;
+                      const isSelected = selectedStudents.includes(studentId);
+                      
+                      return (
+                        <tr key={studentId || index} className="border-b hover:bg-blue-50 transition-colors">
+                          <td className="text-center p-3">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setSelectedStudents(prev => [...prev, studentId]);
+                                } else {
+                                  setSelectedStudents(prev => prev.filter(id => id !== studentId));
+                                }
+                              }}
+                              className="rounded"
+                            />
+                          </td>
+                          <td className="p-3 font-medium text-blue-800">{student.name}</td>
+                          <td className="p-3">
+                            <Badge variant="outline" className="bg-blue-100 text-blue-800">
+                              {student.grade}
+                            </Badge>
+                          </td>
+                          <td className="p-3 text-gray-600">{student.level}</td>
+                          <td className="p-3 text-gray-600">{student.document_number || 'No registrado'}</td>
+                          <td className="text-center p-3">
+                            <Badge variant={student.is_active ? "default" : "secondary"}>
+                              {student.is_active ? 'Activo' : 'Inactivo'}
+                            </Badge>
+                          </td>
+                          <td className="text-center p-3">
+                            <div className="flex items-center justify-center space-x-2">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleEditStudent(student)}
+                                className="h-8 w-8 p-0"
+                                title="Editar estudiante"
+                              >
+                                <Edit className="h-3 w-3" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  if (window.confirm(`¿Estás seguro de eliminar a ${student.name}?`)) {
+                                    handleDeleteStudent(studentId);
+                                  }
+                                }}
+                                className="h-8 w-8 p-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                                title="Eliminar estudiante"
+                              >
+                                <Trash2 className="h-3 w-3" />
+                              </Button>
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
                 {students.length > 50 && (
