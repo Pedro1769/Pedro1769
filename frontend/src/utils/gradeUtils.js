@@ -5,7 +5,7 @@
 // Orden correcto de los grados
 const GRADE_ORDER = {
   'Transición': 0,
-  '0°': 0,
+  '0°': 0,  // Preescolar/Transición
   '1°': 1,
   '2°': 2,
   '3°': 3,
