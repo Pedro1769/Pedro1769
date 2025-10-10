@@ -120,6 +120,15 @@ def require_grade_assignment_roles():
         UserRole.COORDINADOR_CONVIVENCIA
     ])
 
+def require_student_management_roles():
+    """Requiere roles que pueden gestionar estudiantes (admin, docentes, coordinadora)"""
+    return require_roles([
+        UserRole.ADMIN,
+        UserRole.DOCENTE_PRIMARIA,
+        UserRole.DOCENTE_BACHILLERATO,
+        UserRole.COORDINADOR_CONVIVENCIA
+    ])
+
 def require_parent_or_student():
     """Requiere padre o estudiante"""
     return require_roles([UserRole.PADRE, UserRole.ESTUDIANTE])
