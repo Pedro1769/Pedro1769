@@ -62,6 +62,7 @@ def sort_students_by_grade(students: list) -> list:
 # Lista de todos los grados disponibles en orden
 ALL_GRADES = [
     'Transición',
+    '0°',
     '1°',
     '2°',
     '3°',
