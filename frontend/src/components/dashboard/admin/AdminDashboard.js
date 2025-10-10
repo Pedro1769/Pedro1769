@@ -548,11 +548,26 @@ const AdminDashboard = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b bg-gray-50">
+                      <th className="text-center p-3 font-semibold w-12">
+                        <input
+                          type="checkbox"
+                          checked={selectedStudents.length === students.length && students.length > 0}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedStudents(students.map(s => s._id || s.id));
+                            } else {
+                              setSelectedStudents([]);
+                            }
+                          }}
+                          className="rounded"
+                        />
+                      </th>
                       <th className="text-left p-3 font-semibold">Nombre Completo</th>
                       <th className="text-left p-3 font-semibold">Grado</th>
                       <th className="text-left p-3 font-semibold">Nivel</th>
                       <th className="text-left p-3 font-semibold">Documento</th>
                       <th className="text-center p-3 font-semibold">Estado</th>
+                      <th className="text-center p-3 font-semibold">Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
