@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { studentService } from '../../../services/api';
 import { PERIODS } from '../../../mockData';
+import { sortStudentsByGrade } from '../../../utils/gradeUtils';
 
 const BancoLogros = () => {
   const { user } = useAuth();
