@@ -255,6 +255,58 @@ const DocentePrimariaDashboard = () => {
     }
   };
 
+  // Función para eliminar estudiante
+  const handleDeleteStudent = async (studentId) => {
+    try {
+      await studentService.deleteStudent(studentId);
+      
+      toast({
+        title: "Estudiante eliminado",
+        description: "El estudiante ha sido eliminado exitosamente",
+      });
+      
+      // Recargar estudiantes
+      await loadStudents();
+      
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo eliminar el estudiante. Verifica tus permisos.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Función para abrir modal de edición
+  const handleEditStudent = (student) => {
+    setEditingStudent(student);
+    setShowEditModal(true);
+  };
+
+  // Función para actualizar estudiante
+  const handleUpdateStudent = async (studentData) => {
+    try {
+      await studentService.updateStudent(editingStudent._id || editingStudent.id, studentData);
+      
+      toast({
+        title: "Estudiante actualizado",
+        description: "Los datos del estudiante se actualizaron exitosamente",
+      });
+      
+      // Recargar estudiantes y cerrar modal
+      await loadStudents();
+      setShowEditModal(false);
+      setEditingStudent(null);
+      
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo actualizar el estudiante. Verifica tus permisos.",
+        variant: "destructive"
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 relative overflow-hidden">
       {/* Elementos decorativos dinámicos */}
