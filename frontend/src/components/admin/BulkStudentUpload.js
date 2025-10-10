@@ -178,10 +178,11 @@ const BulkStudentUpload = ({ onClose }) => {
         if (name) {
           // Si no hay grado especificado, usar un grado por defecto
           if (!grade) {
+            console.warn(`Línea ${index + 1}: Grado no detectado, usando 1° por defecto. Nombre: ${name}`);
             grade = '1°'; // Grado por defecto
           }
 
-          parsedStudents.push({
+          const student = {
             id: Date.now() + index,
             name: name.toUpperCase(),
             grade: grade,
@@ -189,7 +190,16 @@ const BulkStudentUpload = ({ onClose }) => {
             document_number: document || '',
             teacher_id: null,
             parent_id: null
-          });
+          };
+          
+          parsedStudents.push(student);
+          
+          // Log para debugging
+          if (index < 5) {
+            console.log(`Estudiante ${index + 1} procesado:`, student);
+          }
+        } else {
+          console.warn(`Línea ${index + 1}: No se pudo extraer nombre. Línea: "${line.substring(0, 50)}..."`);
         }
       }
     });
