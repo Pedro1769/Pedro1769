@@ -122,7 +122,9 @@ const BancoLogros = () => {
         studentsList = allStudents;
       }
       
-      setAvailableStudents(studentsList);
+      // Ordenar estudiantes por grado
+      const sortedStudents = sortStudentsByGrade(studentsList);
+      setAvailableStudents(sortedStudents);
     } catch (error) {
       console.error('Error loading students:', error);
     }
