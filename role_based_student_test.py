@@ -18,7 +18,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional, List
 
 # Configuration
-BASE_URL = "https://student-portal-88.preview.emergentagent.com/api"
+BASE_URL = "https://grado-filter-fix.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 # Test users as specified in the review request

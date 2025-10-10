@@ -7,7 +7,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://student-portal-88.preview.emergentagent.com/api"
+BASE_URL = "https://grado-filter-fix.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 def login_admin():

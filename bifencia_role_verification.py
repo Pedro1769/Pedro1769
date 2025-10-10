@@ -16,7 +16,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 # Configuration - Using environment variable from frontend/.env
-BASE_URL = "https://student-portal-88.preview.emergentagent.com/api"
+BASE_URL = "https://grado-filter-fix.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 # Usuario específico a verificar

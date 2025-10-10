@@ -6,7 +6,7 @@ Debug Grade Filtering Issue
 import requests
 import json
 
-BASE_URL = "https://student-portal-88.preview.emergentagent.com/api"
+BASE_URL = "https://grado-filter-fix.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 DOCENTE_PRIMARIA = {"username": "yocelyn.cabarcas", "password": "gim123"}
