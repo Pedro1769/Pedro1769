@@ -65,10 +65,10 @@ async def init_database():
             "username": "bifencia.orozco",
             "password": get_password_hash("gim123"),
             "name": "Bifencia Orozco Tordecilla",
-            "role": UserRole.DOCENTE_PRIMARIA,
+            "role": UserRole.DOCENTE_BACHILLERATO,
             "email": "bifencia.orozco@gimamericano.edu.co",
-            "grade": "1°",
-            "subjects": SUBJECTS_PRIMARIA,
+            "grades": ["6°", "7°", "8°", "9°", "10°", "11°"],
+            "subjects": ["MATEMÁTICA", "INGLÉS", "CIENCIAS NATURALES", "CIENCIAS SOCIALES", "EDUCACIÓN FÍSICA", "EDUCACIÓN ARTÍSTICA", "EDUCACIÓN RELIGIOSA", "ÉTICA Y VALORES", "TECNOLOGÍA E INFORMÁTICA", "FILOSOFÍA", "FÍSICA", "QUÍMICA", "BIOLOGÍA", "CÁTEDRA DE LA PAZ"],
             "is_active": True,
             "created_at": datetime.utcnow(),
             "updated_at": datetime.utcnow()
