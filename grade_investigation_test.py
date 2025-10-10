@@ -273,76 +273,191 @@ class GradeInvestigator:
             if len(students_in_grade) > max_samples:
                 print(f"   ... y {len(students_in_grade) - max_samples} estudiantes más")
 
+    async def get_students_from_database_direct(self):
+        """Get students directly from MongoDB database"""
+        try:
+            from motor.motor_asyncio import AsyncIOMotorClient
+            
+            client = AsyncIOMotorClient('mongodb://localhost:27017/gaa_database')
+            db = client['gaa_database']
+            
+            # Get all students
+            students = await db.students.find({}).to_list(length=None)
+            
+            # Get grade distribution using aggregation
+            pipeline = [
+                {"$group": {"_id": "$grade", "count": {"$sum": 1}}},
+                {"$sort": {"_id": 1}}
+            ]
+            grade_distribution = await db.students.aggregate(pipeline).to_list(length=None)
+            
+            client.close()
+            
+            print(f"✅ Retrieved {len(students)} students directly from MongoDB")
+            
+            return students, grade_distribution
+            
+        except Exception as e:
+            print(f"❌ Error accessing database directly: {str(e)}")
+            return None, None
+
     def run_investigation(self):
         """Run the complete grade investigation"""
         print("🔍 INICIANDO INVESTIGACIÓN ESPECÍFICA DE GRADOS")
         print("🎯 OBJETIVO: Verificar EXACTAMENTE qué grados están en la columna 'grade'")
         print("=" * 80)
         
-        # Step 1: Authenticate
-        print("\n1️⃣ AUTENTICACIÓN:")
-        admin_auth = self.authenticate_admin()
-        coord_auth = self.authenticate_coordinadora()
+        # Step 1: Try direct database access first
+        print("\n1️⃣ ACCESO DIRECTO A BASE DE DATOS:")
         
-        if not admin_auth and not coord_auth:
-            print("❌ No se pudo autenticar con ningún usuario. Abortando investigación.")
-            return False
+        import asyncio
+        students, grade_distribution_raw = asyncio.run(self.get_students_from_database_direct())
         
-        # Step 2: Get all students (prefer admin for complete access)
-        print("\n2️⃣ OBTENCIÓN DE DATOS DE ESTUDIANTES:")
-        if admin_auth:
-            students = self.get_all_students("admin")
-        elif coord_auth:
-            students = self.get_all_students("coordinadora")
-        else:
-            students = None
-        
-        if not students:
-            print("❌ No se pudieron obtener datos de estudiantes. Abortando investigación.")
-            return False
-        
-        # Step 3: Analyze grade distribution
-        print("\n3️⃣ ANÁLISIS DE DISTRIBUCIÓN DE GRADOS:")
-        analysis_result = self.analyze_grades_distribution(students)
-        
-        # Step 4: Show sample students
-        print("\n4️⃣ MUESTRA DE ESTUDIANTES:")
-        self.show_sample_students_by_grade(students, max_samples=2)
-        
-        # Step 5: Summary and conclusions
-        print("\n" + "=" * 80)
-        print("📋 RESUMEN EJECUTIVO DE LA INVESTIGACIÓN")
-        print("=" * 80)
-        
-        if analysis_result:
-            print(f"✅ DATOS OBTENIDOS EXITOSAMENTE:")
-            print(f"   • Total estudiantes: {analysis_result['total_students']}")
-            print(f"   • Estudiantes con grado: {analysis_result['students_with_grade']}")
-            print(f"   • Grados únicos encontrados: {len(analysis_result['unique_grades'])}")
+        if students and grade_distribution_raw:
+            print("✅ Acceso directo a MongoDB exitoso")
             
-            print(f"\n📊 GRADOS PRESENTES EN LA BASE DE DATOS:")
-            for grade in analysis_result['unique_grades']:
-                count = analysis_result['grade_distribution'].get(grade, 0)
+            # Convert raw distribution to our format
+            grade_distribution = {}
+            for item in grade_distribution_raw:
+                grade_distribution[item["_id"]] = item["count"]
+            
+            # Step 2: Analyze grade distribution
+            print("\n2️⃣ ANÁLISIS DE DISTRIBUCIÓN DE GRADOS:")
+            analysis_result = self.analyze_grades_distribution(students)
+            
+            # Step 3: Show sample students
+            print("\n3️⃣ MUESTRA DE ESTUDIANTES:")
+            self.show_sample_students_by_grade(students, max_samples=2)
+            
+            # Step 4: MongoDB Aggregation Results
+            print("\n4️⃣ CONSULTA DIRECTA MONGODB (EQUIVALENTE A db.students.aggregate()):")
+            print("=" * 80)
+            print("📊 RESULTADO DE AGREGACIÓN MONGODB:")
+            print("   db.students.aggregate([")
+            print("     { $group: { _id: '$grade', count: { $sum: 1 } } },")
+            print("     { $sort: { '_id': 1 } }")
+            print("   ])")
+            print()
+            
+            # Sort grades for display
+            def sort_grade(grade_str):
+                try:
+                    if "°" in grade_str:
+                        return int(grade_str.replace("°", ""))
+                    else:
+                        return float('inf')
+                except:
+                    return float('inf')
+            
+            sorted_distribution = sorted(grade_distribution.items(), key=lambda x: sort_grade(x[0]))
+            
+            for grade, count in sorted_distribution:
                 print(f"   • {grade}: {count} estudiantes")
             
-            if analysis_result['unexpected_grades']:
-                print(f"\n⚠️  GRADOS NO ESTÁNDAR:")
-                for grade in analysis_result['unexpected_grades']:
+            # Step 5: Summary and conclusions
+            print("\n" + "=" * 80)
+            print("📋 RESUMEN EJECUTIVO DE LA INVESTIGACIÓN")
+            print("=" * 80)
+            
+            if analysis_result:
+                print(f"✅ DATOS OBTENIDOS EXITOSAMENTE:")
+                print(f"   • Total estudiantes: {analysis_result['total_students']}")
+                print(f"   • Estudiantes con grado: {analysis_result['students_with_grade']}")
+                print(f"   • Grados únicos encontrados: {len(analysis_result['unique_grades'])}")
+                
+                print(f"\n📊 GRADOS PRESENTES EN LA BASE DE DATOS:")
+                for grade in analysis_result['unique_grades']:
                     count = analysis_result['grade_distribution'].get(grade, 0)
                     print(f"   • {grade}: {count} estudiantes")
+                
+                if analysis_result['unexpected_grades']:
+                    print(f"\n⚠️  GRADOS NO ESTÁNDAR:")
+                    for grade in analysis_result['unexpected_grades']:
+                        count = analysis_result['grade_distribution'].get(grade, 0)
+                        print(f"   • {grade}: {count} estudiantes")
+                
+                # Save results to file
+                results_file = "/app/grade_investigation_results.json"
+                with open(results_file, "w", encoding="utf-8") as f:
+                    json.dump({
+                        "timestamp": datetime.now().isoformat(),
+                        "investigation_summary": analysis_result,
+                        "mongodb_aggregation_result": grade_distribution,
+                        "sample_students": students[:10] if students else []  # Save first 10 as sample
+                    }, f, indent=2, ensure_ascii=False, default=str)
+                
+                print(f"\n💾 Resultados guardados en: {results_file}")
+                
+            return True
+        
+        else:
+            # Fallback to API approach
+            print("⚠️  Acceso directo falló, intentando vía API...")
             
-            # Save results to file
-            results_file = "/app/grade_investigation_results.json"
-            with open(results_file, "w", encoding="utf-8") as f:
-                json.dump({
-                    "timestamp": datetime.now().isoformat(),
-                    "investigation_summary": analysis_result,
-                    "sample_students": students[:10] if students else []  # Save first 10 as sample
-                }, f, indent=2, ensure_ascii=False, default=str)
+            # Step 2: Authenticate
+            print("\n2️⃣ AUTENTICACIÓN:")
+            admin_auth = self.authenticate_admin()
+            coord_auth = self.authenticate_coordinadora()
             
-            print(f"\n💾 Resultados guardados en: {results_file}")
+            if not admin_auth and not coord_auth:
+                print("❌ No se pudo autenticar con ningún usuario. Abortando investigación.")
+                return False
             
-        return True
+            # Step 3: Get all students (prefer admin for complete access)
+            print("\n3️⃣ OBTENCIÓN DE DATOS DE ESTUDIANTES:")
+            if admin_auth:
+                students = self.get_all_students("admin")
+            elif coord_auth:
+                students = self.get_all_students("coordinadora")
+            else:
+                students = None
+            
+            if not students:
+                print("❌ No se pudieron obtener datos de estudiantes. Abortando investigación.")
+                return False
+            
+            # Step 4: Analyze grade distribution
+            print("\n4️⃣ ANÁLISIS DE DISTRIBUCIÓN DE GRADOS:")
+            analysis_result = self.analyze_grades_distribution(students)
+            
+            # Step 5: Show sample students
+            print("\n5️⃣ MUESTRA DE ESTUDIANTES:")
+            self.show_sample_students_by_grade(students, max_samples=2)
+            
+            # Step 6: Summary and conclusions
+            print("\n" + "=" * 80)
+            print("📋 RESUMEN EJECUTIVO DE LA INVESTIGACIÓN")
+            print("=" * 80)
+            
+            if analysis_result:
+                print(f"✅ DATOS OBTENIDOS EXITOSAMENTE:")
+                print(f"   • Total estudiantes: {analysis_result['total_students']}")
+                print(f"   • Estudiantes con grado: {analysis_result['students_with_grade']}")
+                print(f"   • Grados únicos encontrados: {len(analysis_result['unique_grades'])}")
+                
+                print(f"\n📊 GRADOS PRESENTES EN LA BASE DE DATOS:")
+                for grade in analysis_result['unique_grades']:
+                    count = analysis_result['grade_distribution'].get(grade, 0)
+                    print(f"   • {grade}: {count} estudiantes")
+                
+                if analysis_result['unexpected_grades']:
+                    print(f"\n⚠️  GRADOS NO ESTÁNDAR:")
+                    for grade in analysis_result['unexpected_grades']:
+                        count = analysis_result['grade_distribution'].get(grade, 0)
+                        print(f"   • {grade}: {count} estudiantes")
+                
+                # Save results to file
+                results_file = "/app/grade_investigation_results.json"
+                with open(results_file, "w", encoding="utf-8") as f:
+                    json.dump({
+                        "timestamp": datetime.now().isoformat(),
+                        "investigation_summary": analysis_result,
+                        "sample_students": students[:10] if students else []  # Save first 10 as sample
+                    }, f, indent=2, ensure_ascii=False, default=str)
+                
+                print(f"\n💾 Resultados guardados en: {results_file}")
+                
+            return True
 
 def main():
     """Main investigation execution"""
