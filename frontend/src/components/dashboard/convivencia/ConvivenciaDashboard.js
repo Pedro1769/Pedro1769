@@ -56,6 +56,8 @@ const ConvivenciaDashboard = () => {
     grade: 'Transición',
     level: 'PREESCOLAR'
   });
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const { toast } = useToast();
 
   // Cargar TODOS los estudiantes (coordinadora ve todos)
