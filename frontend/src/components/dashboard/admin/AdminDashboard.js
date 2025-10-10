@@ -41,6 +41,7 @@ import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../hooks/use-toast';
 import BulkStudentUpload from '../../admin/BulkStudentUpload';
 import GestionNotasAdmin from './GestionNotasAdmin';
+import StudentEditForm from './StudentEditForm';
 
 const AdminDashboard = () => {
   const { user } = useAuth();
