@@ -213,12 +213,29 @@ const BulkStudentUpload = ({ onClose }) => {
       return;
     }
 
+    // Contar estudiantes por grado para mostrar distribución
+    const gradeCount = {};
+    parsedStudents.forEach(student => {
+      gradeCount[student.grade] = (gradeCount[student.grade] || 0) + 1;
+    });
+    
+    const gradeDistribution = Object.entries(gradeCount)
+      .sort((a, b) => {
+        const orderA = grades.indexOf(a[0]);
+        const orderB = grades.indexOf(b[0]);
+        return orderA - orderB;
+      })
+      .map(([grade, count]) => `${grade}: ${count}`)
+      .join(', ');
+
+    console.log('Distribución por grado:', gradeDistribution);
+
     // Cargar TODOS los estudiantes sin eliminar duplicados
     setStudents(parsedStudents);
     
     toast({
-      title: "Datos Procesados",
-      description: `Se procesaron ${parsedStudents.length} estudiantes. ¡Todos serán cargados!`,
+      title: "Datos Procesados Exitosamente",
+      description: `Se procesaron ${parsedStudents.length} estudiantes. Distribución: ${gradeDistribution}`,
     });
   };
 
