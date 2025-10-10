@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { studentService, gradeService } from '../../../services/api';
 import { SUBJECTS, PERIODS } from '../../../mockData';
+import { sortStudentsByGrade } from '../../../utils/gradeUtils';
 
 const Boletines = () => {
   const { user } = useAuth();
