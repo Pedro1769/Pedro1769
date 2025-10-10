@@ -304,7 +304,7 @@ async def delete_student(
 @router.delete("/bulk/delete")
 async def delete_students_bulk(
     student_ids: List[str],
-    current_user: User = Depends(require_admin)
+    current_user: User = Depends(require_admin())
 ):
     """Eliminar estudiantes en lote (solo admin)"""
     db = await get_database()
