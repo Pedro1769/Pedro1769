@@ -525,10 +525,35 @@ DIEGO ALEJANDRO RUIZ
                 className="font-mono text-sm"
               />
             </div>
-            <Button onClick={parseCsvText} className="w-full">
-              <FileText className="h-4 w-4 mr-2" />
-              Procesar Datos
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={parseCsvText} className="flex-1">
+                <FileText className="h-4 w-4 mr-2" />
+                Procesar Datos
+              </Button>
+              <Button 
+                onClick={() => {
+                  const testData = `Josue David Blanco Martinez	0°	1043194902
+Mayli Alexandra Borrero Utria	0°	1047064870
+Brian De Jesus Castillo Pizarro	0°	Asignar
+Charlotte Maria Carreño Millan	1°	1048334300
+Luciana Cervera Gonzalez	1°	Asignar
+Adrian David Corredor Rodelo	2°	1242189977
+Valery Sofia De La Hoz Bolivar	3°	1043194957
+Angel Fabian Escalona Medina	4°	Asignar
+Andres Camilo Espitia Beltran	5°	1242190202
+Carlos Junior Frile Escorcia	6°	1045252007`;
+                  setCsvText(testData);
+                  toast({
+                    title: "Datos de prueba cargados",
+                    description: "10 estudiantes de ejemplo (grados 0° a 6°). Haz clic en 'Procesar Datos'.",
+                  });
+                }}
+                variant="outline"
+                className="px-4"
+              >
+                Cargar Ejemplo
+              </Button>
+            </div>
           </CardContent>
         </Card>
       )}
