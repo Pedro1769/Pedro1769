@@ -1494,7 +1494,24 @@ class GAABackendTester:
         else:
             print("❌ No student ID available for grades testing. Skipping grades tests.")
         
-        # Test 17: User registration and logout
+        # ==================== GRADE ORDERING TESTS (SPECIFIC REVIEW REQUEST) ====================
+        print("\n" + "=" * 70)
+        print("🎯 SPECIFIC REVIEW REQUEST: GRADE ORDERING VERIFICATION")
+        print("=" * 70)
+        
+        # Test 17: Students grade ordering in backend
+        for user_type in self.tokens.keys():
+            self.test_students_grade_ordering_backend(user_type)
+        
+        # Test 18: Grade ordering consistency
+        for user_type in self.tokens.keys():
+            self.test_students_grade_ordering_consistency(user_type)
+        
+        # Test 19: Specific role grade access verification
+        for user_type in self.tokens.keys():
+            self.test_specific_role_grade_access(user_type)
+        
+        # Test 20: User registration and logout
         self.test_register_new_user()
         self.test_register_duplicate_user()
         
