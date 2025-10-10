@@ -431,9 +431,15 @@ const DocenteBachilleratoDashboard = () => {
         variant: "destructive",
       });
       // Fallback a datos mock
-      const myStudents = MOCK_STUDENTS.filter(student => 
-        user.grades ? user.grades.includes(student.grade) : ['6°', '7°', '8°', '9°', '10°', '11°'].includes(student.grade)
-      );
+      // Filtrar usando EXACTAMENTE los grados asignados al docente en su perfil
+      const myStudents = MOCK_STUDENTS.filter(student => {
+        if (user.grades && user.grades.length > 0) {
+          // Usar los grados específicos asignados al docente
+          return user.grades.includes(student.grade);
+        }
+        // Si no tiene grados asignados, no mostrar estudiantes
+        return false;
+      });
       setStudents(myStudents);
     } finally {
       setLoading(false);
