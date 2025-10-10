@@ -413,7 +413,9 @@ const DocenteBachilleratoDashboard = () => {
         );
       }
       
-      setStudents(gradeStudents);
+      // Ordenar estudiantes por grado
+      const sortedStudents = sortStudentsByGrade(gradeStudents);
+      setStudents(sortedStudents);
       
       // Cargar todas las notas de una vez
       if (gradeStudents.length > 0) {
