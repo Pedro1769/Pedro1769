@@ -57,7 +57,7 @@ async def get_students(
 @router.get("/by-teacher/{teacher_id}", response_model=List[Student])
 async def get_students_by_teacher(
     teacher_id: str,
-    current_user: User = Depends(require_admin_or_teacher)
+    current_user: User = Depends(require_admin_or_teacher())
 ):
     """Obtener estudiantes por docente"""
     db = await get_database()
