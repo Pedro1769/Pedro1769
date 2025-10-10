@@ -23,7 +23,8 @@ import {
   MessageSquare,
   Plus,
   Edit,
-  Download
+  Download,
+  Trash2
 } from 'lucide-react';
 import { MOCK_STUDENTS, SUBJECTS, PERIODS, getPerformanceLevel } from '../../../mockData';
 import { studentService, gradeService } from '../../../services/api';
