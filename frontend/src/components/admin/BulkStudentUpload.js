@@ -27,9 +27,10 @@ const BulkStudentUpload = ({ onClose }) => {
   const [results, setResults] = useState(null);
   const { toast } = useToast();
 
-  const grades = ['Transición', '1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'];
+  const grades = ['Transición', '0°', '1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'];
   const levels = {
     'Transición': 'PREESCOLAR',
+    '0°': 'PREESCOLAR',
     '1°': 'BÁSICA PRIMARIA', '2°': 'BÁSICA PRIMARIA', '3°': 'BÁSICA PRIMARIA', '4°': 'BÁSICA PRIMARIA', '5°': 'BÁSICA PRIMARIA',
     '6°': 'BÁSICA SECUNDARIA', '7°': 'BÁSICA SECUNDARIA', '8°': 'BÁSICA SECUNDARIA', '9°': 'BÁSICA SECUNDARIA',
     '10°': 'MEDIA VOCACIONAL', '11°': 'MEDIA VOCACIONAL'
