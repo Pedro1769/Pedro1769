@@ -1,0 +1,93 @@
+[
+  {
+    "test": "Health Check",
+    "success": true,
+    "details": "Status: healthy",
+    "timestamp": "2025-10-10T05:27:06.434613",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - admin",
+    "success": true,
+    "details": "User: Pedro Hurtado, Role: admin",
+    "timestamp": "2025-10-10T05:27:06.470822",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - docente_bachillerato",
+    "success": true,
+    "details": "User: Bifencia Orozco Tordecilla, Role: docente_bachillerato",
+    "timestamp": "2025-10-10T05:27:06.480638",
+    "response_data": null
+  },
+  {
+    "test": "Login Success - coordinadora",
+    "success": true,
+    "details": "User: Coordinadora de Convivencia, Role: coordinador_convivencia",
+    "timestamp": "2025-10-10T05:27:06.486327",
+    "response_data": null
+  },
+  {
+    "test": "Admin Delete Individual Student",
+    "success": false,
+    "details": "Status code: 500",
+    "timestamp": "2025-10-10T05:27:06.557005",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Admin Bulk Delete Students",
+    "success": true,
+    "details": "Successfully deleted 3 students",
+    "timestamp": "2025-10-10T05:27:06.627989",
+    "response_data": null
+  },
+  {
+    "test": "Admin Edit Student",
+    "success": false,
+    "details": "Status code: 500",
+    "timestamp": "2025-10-10T05:27:06.642525",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Docente Bachillerato Edit Assigned Grade",
+    "success": false,
+    "details": "Status code: 500",
+    "timestamp": "2025-10-10T05:27:06.665249",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Docente Bachillerato Delete Assigned Grade",
+    "success": false,
+    "details": "Status code: 500",
+    "timestamp": "2025-10-10T05:27:06.678089",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Docente Bachillerato Cannot Edit Other Grades",
+    "success": false,
+    "details": "Expected 403, got 500 - Security bypass detected!",
+    "timestamp": "2025-10-10T05:27:06.693239",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Coordinadora Edit Any Student",
+    "success": false,
+    "details": "Status code: 500",
+    "timestamp": "2025-10-10T05:27:06.706461",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Coordinadora Delete Any Student",
+    "success": false,
+    "details": "Status code: 500",
+    "timestamp": "2025-10-10T05:27:06.761675",
+    "response_data": "Internal Server Error"
+  },
+  {
+    "test": "Unauthorized Delete Access",
+    "success": false,
+    "details": "Expected 401/403, got 404",
+    "timestamp": "2025-10-10T05:27:06.767913",
+    "response_data": "{\"detail\":\"Estudiante no encontrado\"}"
+  }
+]
