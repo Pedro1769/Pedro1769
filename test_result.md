@@ -219,10 +219,10 @@ backend:
   - task: "CRÍTICO: Corrección de ordenamiento de estudiantes por grado"
     implemented: true
     working: true
-    file: "routes/student_routes.py, utils/gradeUtils.js, AdminDashboard.js, DocenteBachilleratoDashboard.js, DocentePrimariaDashboard.js, ConvivenciaDashboard.js, Boletines.js, BancoLogros.js"
+    file: "routes/student_routes.py, utils/grade_utils.py, utils/gradeUtils.js, AdminDashboard.js, DocenteBachilleratoDashboard.js, DocentePrimariaDashboard.js, ConvivenciaDashboard.js, Boletines.js, BancoLogros.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: false
         agent: "user"
@@ -230,6 +230,9 @@ backend:
       - working: true
         agent: "main"
         comment: "PROBLEMA IDENTIFICADO Y SOLUCIONADO: El backend retornaba estudiantes sin orden específico (orden de inserción en MongoDB). SOLUCIONES IMPLEMENTADAS: 1) BACKEND: Agregado .sort('grade', 1) a todas las consultas de estudiantes en /backend/routes/student_routes.py para ordenar por grado ascendente. 2) FRONTEND: Creado archivo de utilidad /frontend/src/utils/gradeUtils.js con función sortStudentsByGrade() que ordena correctamente según orden escolar (Transición, 1°, 2°, 3°... 11°). 3) APLICADO A TODOS LOS COMPONENTES: AdminDashboard, DocenteBachilleratoDashboard, DocentePrimariaDashboard, ConvivenciaDashboard, Boletines, BancoLogros ahora ordenan estudiantes automáticamente al cargarlos. RESULTADO: Ahora cuando se cargan estudiantes, aparecen organizados por grado en orden ascendente, y dentro de cada grado, ordenados por nombre alfabéticamente."
+      - working: true
+        agent: "testing"
+        comment: "VERIFICACIÓN ESPECÍFICA COMPLETADA - PROBLEMA COMPLETAMENTE RESUELTO: ✅ CORRECCIÓN CRÍTICA APLICADA: El problema de ordenamiento alfabético (.sort('grade', 1)) fue identificado y corregido. Creado /backend/utils/grade_utils.py con función sort_students_by_grade() que implementa el orden escolar correcto (Transición, 1°, 2°, 3°... 11°). Actualizado student_routes.py para usar la nueva función de ordenamiento. ✅ PRUEBAS EXHAUSTIVAS COMPLETADAS: Verificados todos los roles según review request: 1) ADMIN (pedro.hurtado): Ve TODOS los estudiantes ordenados correctamente (1°, 2°, 3°, 11°), 2) DOCENTE BACHILLERATO (bifencia.orozco): Ve estudiantes de grados 6°-11° ordenados (actualmente 1 estudiante de 11°), 3) DOCENTE PRIMARIA (yocelyn.cabarcas): Ve estudiantes de su grado específico (1 estudiante de 1°), 4) COORDINADORA (coord.convivencia): Ve TODOS los estudiantes ordenados correctamente. ✅ VALIDACIONES CONFIRMADAS: No hay mezcla de grados, orden consistente en múltiples llamadas, distribución correcta por grado, lista viene ordenada desde backend sin requerir ordenamiento adicional en frontend. ✅ CORRECCIÓN ADICIONAL: Corregido rol de usuario bifencia.orozco de 'docente_primaria' a 'docente_bachillerato' con grados ['6°', '7°', '8°', '9°', '10°', '11°'] según especificaciones. RESULTADO: El ordenamiento de estudiantes por grado funciona PERFECTAMENTE según todos los criterios del review request."
 
 frontend:
   - task: "Corrección de error de Calendar component"
