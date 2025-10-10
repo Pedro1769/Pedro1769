@@ -69,7 +69,10 @@ const ConvivenciaDashboard = () => {
       console.log('ConvivenciaDashboard - Cargando todos los estudiantes...');
       const allStudents = await studentService.getAll();
       console.log('ConvivenciaDashboard - Total estudiantes recibidos:', allStudents.length);
-      setStudents(allStudents);
+      
+      // Ordenar estudiantes por grado
+      const sortedStudents = sortStudentsByGrade(allStudents);
+      setStudents(sortedStudents);
       toast({
         title: "Estudiantes cargados",
         description: `Se cargaron ${allStudents.length} estudiantes reales`,
