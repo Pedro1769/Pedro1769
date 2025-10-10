@@ -44,6 +44,8 @@ const DocentePrimariaDashboard = () => {
   });
   const [savedGrades, setSavedGrades] = useState({}); // Para almacenar las notas guardadas
   const [loadingGrades, setLoadingGrades] = useState(false);
+  const [editingStudent, setEditingStudent] = useState(null);
+  const [showEditModal, setShowEditModal] = useState(false);
   const { toast } = useToast();
 
   // Cargar estudiantes del grado asignado al docente
