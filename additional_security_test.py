@@ -15,7 +15,7 @@ HEADERS = {"Content-Type": "application/json"}
 DOCENTE_PRIMARIA = {"username": "yocelyn.cabarcas", "password": "gim123"}
 
 def test_docente_primaria_cannot_edit_bachillerato():
-    """Test that docente primaria cannot edit bachillerato students"""
+    """Test that docente primaria cannot access bachillerato students"""
     
     # Login as docente primaria
     response = requests.post(
@@ -34,7 +34,7 @@ def test_docente_primaria_cannot_edit_bachillerato():
         print("❌ No token received")
         return False
     
-    # Try to get a bachillerato student (should fail)
+    # Try to get a bachillerato student (should return empty)
     headers = {**HEADERS, "Authorization": f"Bearer {token}"}
     
     # Try to access grade 10° students (bachillerato)
@@ -47,10 +47,28 @@ def test_docente_primaria_cannot_edit_bachillerato():
     if response.status_code == 200:
         students = response.json()
         if len(students) == 0:
-            print("✅ Docente primaria correctly sees no bachillerato students")
-            return True
+            print("✅ Docente primaria correctly sees no bachillerato students (grade 10°)")
+            
+            # Also test grade 11°
+            response = requests.get(
+                f"{BASE_URL}/students?grade=11°",
+                headers=headers,
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                students_11 = response.json()
+                if len(students_11) == 0:
+                    print("✅ Docente primaria correctly sees no bachillerato students (grade 11°)")
+                    return True
+                else:
+                    print(f"❌ Security breach: Docente primaria can see {len(students_11)} grade 11° students")
+                    return False
+            else:
+                print(f"✅ Docente primaria correctly denied access to grade 11° students (status: {response.status_code})")
+                return True
         else:
-            print(f"❌ Security breach: Docente primaria can see {len(students)} bachillerato students")
+            print(f"❌ Security breach: Docente primaria can see {len(students)} grade 10° students")
             return False
     else:
         print(f"✅ Docente primaria correctly denied access to bachillerato students (status: {response.status_code})")
