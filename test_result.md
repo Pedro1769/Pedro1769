@@ -204,6 +204,18 @@ backend:
         agent: "testing"
         comment: "PERMISOS DE ASIGNACIÓN DE NOTAS CORREGIDOS: ✅ COORDINADORA CONVIVENCIA AHORA PUEDE ASIGNAR NOTAS: Fixed can_assign_grades function in auth.py to allow coordinador_convivencia role for CONVIVENCIA ESCOLAR and ACOMPAÑAMIENTO DE ACUDIENTE subjects. ✅ Created require_grade_assignment_roles function to include coordinadora in grade assignment permissions. ✅ Updated grade_routes.py to use new permission function. ✅ TESTING RESULTS: 47/49 comprehensive tests passed (95.9% success), coordinadora can now successfully assign convivencia grades. ✅ All role-based permissions working correctly: Admin (all subjects), Docente Primaria (all subjects for their grade), Docente Bachillerato (their assigned subjects), Coordinadora (convivencia subjects only). Sistema de notas completamente funcional para todos los roles."
 
+  - task: "VERIFICACIÓN ESPECÍFICA: Sistema de filtrado por grados exactos"
+    implemented: true
+    working: false
+    file: "routes/student_routes.py, auth.py, database.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "PROBLEMA CRÍTICO IDENTIFICADO - BASE DE DATOS VACÍA: ✅ CONFIGURACIÓN DE USUARIOS CORRECTA: bifencia.orozco tiene rol 'docente_bachillerato' con grados ['8°', '9°', '10°', '11°'] según especificaciones. ✅ SISTEMA DE FILTRADO FUNCIONAL: Comprehensive testing (49/49 tests passed - 100% success) confirma que el sistema de filtrado por grados exactos funciona correctamente. Docente bachillerato ve solo estudiantes de sus grados asignados, docente primaria ve solo su grado específico, coordinadora ve todos los estudiantes. ❌ PROBLEMA CRÍTICO: Base de datos completamente vacía (0 estudiantes) cuando se esperan 592 estudiantes con distribución específica (8°: 4, 9°: 12, 10°: 3, 11°: 9 = 28 total para bifencia.orozco). ❌ IMPACTO: Imposible verificar las distribuciones exactas solicitadas en la review request sin datos de estudiantes. ✅ PRUEBA CON DATOS DE PRUEBA: Creé 5 estudiantes de prueba y confirmé que el filtrado funciona perfectamente - bifencia.orozco ve solo estudiantes de grados 8°, 9°, 10°, 11° (4 estudiantes), docente primaria ve solo grado 1° (1 estudiante), coordinadora ve todos (5 estudiantes). CONCLUSIÓN: El sistema de filtrado por grados exactos está implementado correctamente pero requiere que se carguen los 592 estudiantes esperados para verificación completa."
+
 frontend:
   - task: "Corrección de error de Calendar component"
     implemented: true
