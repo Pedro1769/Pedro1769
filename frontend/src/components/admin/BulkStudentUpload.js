@@ -121,9 +121,10 @@ const BulkStudentUpload = ({ onClose }) => {
         // Si no encuentra grado, intentar detectarlo por patrones
         if (!grade) {
           for (let col of columns) {
-            // Buscar patrones como "1°", "2do", "primero", "segundo", etc.
+            // Buscar patrones como "0°", "1°", "2do", "primero", "segundo", etc.
             const normalized = col.toLowerCase().replace(/[°º]/, '').trim();
-            if (normalized.match(/^(1|primero|1ro|1er)$/)) grade = '1°';
+            if (normalized.match(/^(0|transicion|transición|preescolar|kinder)$/)) grade = '0°';
+            else if (normalized.match(/^(1|primero|1ro|1er)$/)) grade = '1°';
             else if (normalized.match(/^(2|segundo|2do)$/)) grade = '2°';
             else if (normalized.match(/^(3|tercero|3ro|3er)$/)) grade = '3°';
             else if (normalized.match(/^(4|cuarto|4to)$/)) grade = '4°';
@@ -134,7 +135,6 @@ const BulkStudentUpload = ({ onClose }) => {
             else if (normalized.match(/^(9|noveno|9no)$/)) grade = '9°';
             else if (normalized.match(/^(10|decimo|décimo)$/)) grade = '10°';
             else if (normalized.match(/^(11|once|undecimo|undécimo)$/)) grade = '11°';
-            else if (normalized.match(/^(transicion|transición|preescolar|kinder)$/)) grade = 'Transición';
             
             if (grade) break;
           }
