@@ -26,7 +26,9 @@ import {
   Filter,
   BarChart3,
   UserCheck,
-  Download
+  Download,
+  Edit,
+  Trash2
 } from 'lucide-react';
 import { MOCK_STUDENTS, PERIODS, GRADES } from '../../../mockData';
 import { studentService, gradeService } from '../../../services/api';
