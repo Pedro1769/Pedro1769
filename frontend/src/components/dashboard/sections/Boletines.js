@@ -111,16 +111,36 @@ const Boletines = () => {
     }
   };
 
-  // Función para determinar el nivel educativo
+  // Función para determinar el nivel educativo basado en el grado EXACTO
   const determineEducationalLevel = (grade) => {
-    if (['TRANSICIÓN', 'TRANSICION'].includes(grade.toUpperCase())) {
+    const gradeUpper = grade.toUpperCase();
+    
+    // Transición
+    if (['0°', 'TRANSICIÓN', 'TRANSICION', 'PREJARDÍN', 'JARDÍN'].includes(gradeUpper)) {
       return 'TRANSICION';
-    } else if (['1°', '2°', '3°', '4°', '5°'].includes(grade)) {
+    }
+    
+    // Primaria (1° a 5°)
+    if (['1°', '2°', '3°', '4°', '5°'].includes(grade)) {
       return 'PRIMARIA';
-    } else if (['6°', '7°', '8°', '9°', '10°', '11°'].includes(grade)) {
+    }
+    
+    // Bachillerato (6° a 11°)  
+    if (['6°', '7°', '8°', '9°', '10°', '11°'].includes(grade)) {
       return 'BACHILLERATO';
     }
-    return 'BACHILLERATO'; // default
+    
+    // Para grados no estándar, determinar por número
+    const gradeNumber = grade.replace('°', '');
+    if (!isNaN(gradeNumber)) {
+      const num = parseInt(gradeNumber);
+      if (num === 0) return 'TRANSICION';
+      if (num >= 1 && num <= 5) return 'PRIMARIA';
+      if (num >= 6 && num <= 11) return 'BACHILLERATO';
+    }
+    
+    // Default para grados no reconocidos
+    return 'PRIMARIA';
   };
 
   // Función para generar boletín de Transición
