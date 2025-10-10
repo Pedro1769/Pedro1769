@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { MOCK_STUDENTS, SUBJECTS, PERIODS, getPerformanceLevel } from '../../../mockData';
 import { studentService, gradeService } from '../../../services/api';
+import StudentEditForm from '../admin/StudentEditForm';
 
 const DocentePrimariaDashboard = () => {
   const { user } = useAuth();
