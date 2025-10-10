@@ -51,6 +51,81 @@ const AdminDashboard = () => {
     loadDashboardData();
   }, []);
 
+  // Función para eliminar estudiantes masivamente
+  const handleBulkDelete = async () => {
+    try {
+      await studentService.deleteBulkStudents(selectedStudents);
+      
+      toast({
+        title: "Estudiantes eliminados",
+        description: `Se eliminaron ${selectedStudents.length} estudiante(s) exitosamente`,
+      });
+      
+      // Recargar datos
+      await loadDashboardData();
+      setSelectedStudents([]);
+      
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudieron eliminar los estudiantes",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Función para eliminar un estudiante individual
+  const handleDeleteStudent = async (studentId) => {
+    try {
+      await studentService.deleteStudent(studentId);
+      
+      toast({
+        title: "Estudiante eliminado",
+        description: "Estudiante eliminado exitosamente",
+      });
+      
+      // Recargar datos
+      await loadDashboardData();
+      
+    } catch (error) {
+      toast({
+        title: "Error", 
+        description: "No se pudo eliminar el estudiante",
+        variant: "destructive"
+      });
+    }
+  };
+
+  // Función para abrir modal de edición
+  const handleEditStudent = (student) => {
+    setEditingStudent(student);
+    setShowEditModal(true);
+  };
+
+  // Función para actualizar estudiante
+  const handleUpdateStudent = async (studentData) => {
+    try {
+      await studentService.updateStudent(editingStudent._id || editingStudent.id, studentData);
+      
+      toast({
+        title: "Estudiante actualizado",
+        description: "Los datos del estudiante se actualizaron exitosamente",
+      });
+      
+      // Recargar datos y cerrar modal
+      await loadDashboardData();
+      setShowEditModal(false);
+      setEditingStudent(null);
+      
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "No se pudo actualizar el estudiante", 
+        variant: "destructive"
+      });
+    }
+  };
+
   const loadDashboardData = async () => {
     try {
       setLoading(true);
