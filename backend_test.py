@@ -267,13 +267,13 @@ class GAABackendTester:
             self.log_test("Profile Invalid Token", False, f"Request error: {str(e)}")
             return False
 
-    def test_register_new_user(self):
-        """Test user registration"""
+    def test_register_new_user_success(self):
+        """Test successful registration of new user (SPECIFIC REVIEW REQUEST)"""
         new_user_data = {
-            "username": f"test_parent_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
+            "username": "test_user_12345",
             "password": "test123",
-            "name": "Padre de Prueba",
-            "email": f"test_parent_{datetime.now().strftime('%Y%m%d_%H%M%S')}@test.com",
+            "name": "Usuario de Prueba",
+            "email": "test12345@test.com",
             "phone": "3001234567",
             "role": "padre"
         }
@@ -288,45 +288,67 @@ class GAABackendTester:
             
             if response.status_code == 200:
                 data = response.json()
-                if data.get("success") and data.get("token"):
+                if data.get("success") and data.get("token") and data.get("user"):
+                    user = data.get("user", {})
                     self.log_test(
-                        "User Registration",
+                        "Register New User Success",
                         True,
-                        f"User registered: {data.get('user', {}).get('name', 'Unknown')}"
+                        f"User registered successfully: {user.get('name')} (username: {user.get('username')}, email: {user.get('email')})"
                     )
                     return True
                 else:
                     self.log_test(
-                        "User Registration",
+                        "Register New User Success",
                         False,
-                        "Missing success flag or token in response",
+                        "Missing success flag, token, or user data in response",
                         data
                     )
                     return False
             else:
                 self.log_test(
-                    "User Registration",
+                    "Register New User Success",
                     False,
-                    f"Status code: {response.status_code}",
+                    f"Expected 200, got {response.status_code}",
                     response.text
                 )
                 return False
                 
         except Exception as e:
-            self.log_test("User Registration", False, f"Request error: {str(e)}")
+            self.log_test("Register New User Success", False, f"Request error: {str(e)}")
             return False
 
-    def test_register_duplicate_user(self):
-        """Test registration with existing username"""
-        duplicate_user_data = {
-            "username": "pedro.hurtado",  # Existing admin user
+    def test_register_duplicate_username(self):
+        """Test registration with duplicate username (SPECIFIC REVIEW REQUEST)"""
+        # First register a user
+        first_user_data = {
+            "username": "test_user_12345",
             "password": "test123",
-            "name": "Duplicate User",
-            "email": "duplicate@test.com",
+            "name": "First User",
+            "email": "first@test.com",
+            "phone": "3001234567",
+            "role": "padre"
+        }
+        
+        # Try to register the same username again
+        duplicate_user_data = {
+            "username": "test_user_12345",  # Same username
+            "password": "different123",
+            "name": "Second User",
+            "email": "second@test.com",
+            "phone": "3009876543",
             "role": "padre"
         }
         
         try:
+            # First registration (might already exist from previous test)
+            self.session.post(
+                f"{BASE_URL}/auth/register",
+                json=first_user_data,
+                headers=HEADERS,
+                timeout=10
+            )
+            
+            # Second registration with same username
             response = self.session.post(
                 f"{BASE_URL}/auth/register",
                 json=duplicate_user_data,
@@ -335,20 +357,180 @@ class GAABackendTester:
             )
             
             if response.status_code == 400:
-                self.log_test("Register Duplicate User", True, "Correctly rejected duplicate username")
-                return True
+                data = response.json() if response.content else {}
+                error_message = data.get("detail", "")
+                if "nombre de usuario ya está en uso" in error_message.lower():
+                    self.log_test(
+                        "Register Duplicate Username",
+                        True,
+                        f"Correctly rejected duplicate username with message: {error_message}"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "Register Duplicate Username",
+                        False,
+                        f"Got 400 but wrong error message: {error_message}",
+                        data
+                    )
+                    return False
             else:
                 self.log_test(
-                    "Register Duplicate User",
+                    "Register Duplicate Username",
                     False,
-                    f"Expected 400, got {response.status_code}",
+                    f"Expected 400 Bad Request, got {response.status_code}",
                     response.text
                 )
                 return False
                 
         except Exception as e:
-            self.log_test("Register Duplicate User", False, f"Request error: {str(e)}")
+            self.log_test("Register Duplicate Username", False, f"Request error: {str(e)}")
             return False
+
+    def test_register_duplicate_email(self):
+        """Test registration with duplicate email (SPECIFIC REVIEW REQUEST)"""
+        # First user data
+        first_user_data = {
+            "username": "unique_user_1",
+            "password": "test123",
+            "name": "First User",
+            "email": "shared@test.com",
+            "phone": "3001234567",
+            "role": "padre"
+        }
+        
+        # Second user with same email
+        duplicate_email_data = {
+            "username": "unique_user_2",  # Different username
+            "password": "test123",
+            "name": "Second User",
+            "email": "shared@test.com",  # Same email
+            "phone": "3009876543",
+            "role": "padre"
+        }
+        
+        try:
+            # First registration
+            self.session.post(
+                f"{BASE_URL}/auth/register",
+                json=first_user_data,
+                headers=HEADERS,
+                timeout=10
+            )
+            
+            # Second registration with same email
+            response = self.session.post(
+                f"{BASE_URL}/auth/register",
+                json=duplicate_email_data,
+                headers=HEADERS,
+                timeout=10
+            )
+            
+            if response.status_code == 400:
+                data = response.json() if response.content else {}
+                error_message = data.get("detail", "")
+                if "email ya está registrado" in error_message.lower():
+                    self.log_test(
+                        "Register Duplicate Email",
+                        True,
+                        f"Correctly rejected duplicate email with message: {error_message}"
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "Register Duplicate Email",
+                        False,
+                        f"Got 400 but wrong error message: {error_message}",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    "Register Duplicate Email",
+                    False,
+                    f"Expected 400 Bad Request, got {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except Exception as e:
+            self.log_test("Register Duplicate Email", False, f"Request error: {str(e)}")
+            return False
+
+    def test_register_missing_required_fields(self):
+        """Test registration with missing required fields (SPECIFIC REVIEW REQUEST)"""
+        test_cases = [
+            {
+                "name": "Missing Username",
+                "data": {
+                    "password": "test123",
+                    "name": "Test User",
+                    "email": "test@test.com"
+                }
+            },
+            {
+                "name": "Missing Password",
+                "data": {
+                    "username": "test_user",
+                    "name": "Test User",
+                    "email": "test@test.com"
+                }
+            },
+            {
+                "name": "Missing Name",
+                "data": {
+                    "username": "test_user",
+                    "password": "test123",
+                    "email": "test@test.com"
+                }
+            },
+            {
+                "name": "Missing Email",
+                "data": {
+                    "username": "test_user",
+                    "password": "test123",
+                    "name": "Test User"
+                }
+            }
+        ]
+        
+        all_passed = True
+        
+        for test_case in test_cases:
+            try:
+                response = self.session.post(
+                    f"{BASE_URL}/auth/register",
+                    json=test_case["data"],
+                    headers=HEADERS,
+                    timeout=10
+                )
+                
+                if response.status_code == 422:  # Validation error
+                    self.log_test(
+                        f"Register Validation - {test_case['name']}",
+                        True,
+                        "Correctly rejected missing required field"
+                    )
+                elif response.status_code == 400:  # Bad request
+                    self.log_test(
+                        f"Register Validation - {test_case['name']}",
+                        True,
+                        "Correctly rejected missing required field (400)"
+                    )
+                else:
+                    self.log_test(
+                        f"Register Validation - {test_case['name']}",
+                        False,
+                        f"Expected 422 or 400, got {response.status_code}",
+                        response.text
+                    )
+                    all_passed = False
+                    
+            except Exception as e:
+                self.log_test(f"Register Validation - {test_case['name']}", False, f"Request error: {str(e)}")
+                all_passed = False
+        
+        return all_passed
 
     def test_logout(self, user_type: str):
         """Test logout endpoint"""
