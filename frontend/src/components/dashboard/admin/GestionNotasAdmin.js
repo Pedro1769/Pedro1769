@@ -338,7 +338,7 @@ const GestionNotasAdmin = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="ALL">Todos</SelectItem>
-                    {teachers.map(teacherId => (
+                    {Array.isArray(teachers) && teachers.map(teacherId => (
                       <SelectItem key={teacherId} value={teacherId}>{teacherId}</SelectItem>
                     ))}
                   </SelectContent>
