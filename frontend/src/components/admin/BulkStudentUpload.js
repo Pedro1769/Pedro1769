@@ -549,7 +549,7 @@ const BulkStudentUpload = ({ onClose }) => {
       }, 3000);
 
     } catch (error) {
-      const message = error.response?.data?.detail || 'Error al crear estudiantes';
+      const message = getErrorMessage(error, 'Error al crear estudiantes');
       setResults({
         success: false,
         error: message
