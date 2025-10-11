@@ -1713,6 +1713,17 @@ class GAABackendTester:
         # CRITICAL TEST: Student distribution by role (REVIEW REQUEST)
         critical_results = self.test_critical_student_distribution_by_role()
         
+        # Additional verification tests for ordering and access control
+        print("\n" + "=" * 70)
+        print("🔍 ADDITIONAL VERIFICATION TESTS")
+        print("=" * 70)
+        
+        # Test grade ordering for each role
+        for user_type in self.tokens.keys():
+            self.test_students_grade_ordering_backend(user_type)
+            self.test_students_grade_ordering_consistency(user_type)
+            self.test_specific_role_grade_access(user_type)
+        
         # Test 3: Authentication validation tests
         self.test_login_invalid_credentials()
         self.test_login_wrong_password()
