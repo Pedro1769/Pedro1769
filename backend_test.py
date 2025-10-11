@@ -1567,10 +1567,130 @@ class GAABackendTester:
             self.log_test(f"Role Grade Access - {user_type}", False, f"Request error: {str(e)}")
             return False
 
+    def test_critical_student_distribution_by_role(self):
+        """CRITICAL TEST: Verify exact student distribution by role as per review request"""
+        print("\n" + "=" * 70)
+        print("🎯 CRITICAL REVIEW REQUEST: STUDENT DISTRIBUTION BY ROLE")
+        print("Expected: 555 students total distributed across grades 0° to 11°")
+        print("=" * 70)
+        
+        # Expected distribution from review request
+        expected_distribution = {
+            "0°": 31, "1°": 50, "2°": 40, "3°": 50, "4°": 52, "5°": 53,
+            "6°": 61, "7°": 50, "8°": 54, "9°": 39, "10°": 46, "11°": 25
+        }
+        expected_total = 555
+        
+        # Expected access per role
+        expected_bachillerato_total = 61 + 50 + 54 + 39 + 46 + 25  # 275 students for grades 6°-11°
+        
+        results = {}
+        
+        # Test each user role
+        for user_type, credentials in TEST_USERS.items():
+            if user_type not in self.tokens:
+                print(f"⚠️  Skipping {user_type} - no token available")
+                continue
+                
+            try:
+                headers = {
+                    **HEADERS,
+                    "Authorization": f"Bearer {self.tokens[user_type]}"
+                }
+                
+                response = self.session.get(
+                    f"{BASE_URL}/students",
+                    headers=headers,
+                    timeout=10
+                )
+                
+                if response.status_code == 200:
+                    students = response.json()
+                    if isinstance(students, list):
+                        total_students = len(students)
+                        
+                        # Count students by grade
+                        grade_counts = {}
+                        for student in students:
+                            grade = student.get("grade", "Unknown")
+                            grade_counts[grade] = grade_counts.get(grade, 0) + 1
+                        
+                        results[user_type] = {
+                            "total": total_students,
+                            "grades": grade_counts,
+                            "success": True
+                        }
+                        
+                        # Verify specific role expectations
+                        if user_type == "admin":
+                            expected = expected_total
+                            success = total_students == expected
+                            self.log_test(
+                                f"ADMIN Access (pedro.hurtado)",
+                                success,
+                                f"Expected {expected} students, got {total_students}. Distribution: {grade_counts}"
+                            )
+                            
+                        elif user_type == "docente_primaria":
+                            expected = 50  # Only grade 1°
+                            success = total_students == expected and all(grade == "1°" for grade in grade_counts.keys())
+                            self.log_test(
+                                f"DOCENTE PRIMARIA Access (yocelyn.cabarcas)",
+                                success,
+                                f"Expected {expected} students from grade 1°, got {total_students}. Grades: {list(grade_counts.keys())}"
+                            )
+                            
+                        elif user_type == "docente_bachillerato":
+                            expected_grades = ["6°", "7°", "8°", "9°", "10°", "11°"]
+                            actual_grades = list(grade_counts.keys())
+                            unexpected_grades = [g for g in actual_grades if g not in expected_grades]
+                            success = len(unexpected_grades) == 0
+                            self.log_test(
+                                f"DOCENTE BACHILLERATO Access (bifencia.orozco)",
+                                success,
+                                f"Expected grades 6°-11°, got {total_students} students. Grades: {actual_grades}. Unexpected: {unexpected_grades}"
+                            )
+                            
+                        elif user_type == "coordinadora":
+                            expected = expected_total
+                            success = total_students == expected
+                            self.log_test(
+                                f"COORDINADORA Access (coord.convivencia)",
+                                success,
+                                f"Expected {expected} students, got {total_students}. Distribution: {grade_counts}"
+                            )
+                            
+                    else:
+                        results[user_type] = {"success": False, "error": "Response not a list"}
+                        self.log_test(f"Student Access - {user_type}", False, "Response is not a list", students)
+                        
+                else:
+                    results[user_type] = {"success": False, "error": f"Status {response.status_code}"}
+                    self.log_test(f"Student Access - {user_type}", False, f"Status code: {response.status_code}", response.text)
+                    
+            except Exception as e:
+                results[user_type] = {"success": False, "error": str(e)}
+                self.log_test(f"Student Access - {user_type}", False, f"Request error: {str(e)}")
+        
+        # Summary of critical test
+        print("\n" + "=" * 70)
+        print("📊 CRITICAL TEST SUMMARY - STUDENT DISTRIBUTION BY ROLE")
+        print("=" * 70)
+        
+        for user_type, result in results.items():
+            if result.get("success"):
+                total = result.get("total", 0)
+                grades = result.get("grades", {})
+                print(f"✅ {user_type.upper()}: {total} students - Grades: {dict(sorted(grades.items()))}")
+            else:
+                print(f"❌ {user_type.upper()}: FAILED - {result.get('error', 'Unknown error')}")
+        
+        return results
+
     def run_all_tests(self):
-        """Run comprehensive GAA backend tests focusing on GRADES system"""
-        print("🚀 Starting Comprehensive GAA Backend Tests")
-        print("🎯 FOCUS: Authentication, Students, and GRADES System (CRITICAL)")
+        """Run comprehensive GAA backend tests focusing on CRITICAL REVIEW REQUEST"""
+        print("🚀 Starting CRITICAL STUDENT SYSTEM TESTING")
+        print("🎯 FOCUS: Student Distribution by Role (Review Request)")
         print("=" * 70)
         
         # Test 1: Health check
