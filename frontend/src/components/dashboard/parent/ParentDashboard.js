@@ -93,7 +93,7 @@ const ParentDashboard = () => {
       });
       setBulletinCode('');
     } catch (error) {
-      const message = error.response?.data?.detail || 'Error al descargar el boletín';
+      const message = getErrorMessage(error, 'Error al descargar el boletín');
       toast({
         title: "Error de descarga",
         description: message,
