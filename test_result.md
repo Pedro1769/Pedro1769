@@ -333,7 +333,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "CRÍTICO: Prueba completa del sistema de estudiantes por rol según review request"
+    - "Verificación de frontend con 555 estudiantes"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
