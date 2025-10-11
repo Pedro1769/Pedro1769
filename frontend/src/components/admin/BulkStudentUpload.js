@@ -158,22 +158,36 @@ const BulkStudentUpload = ({ onClose }) => {
         // Si no encuentra grado, intentar detectarlo por patrones
         if (!grade) {
           for (let col of columns) {
-            // Buscar patrones como "0°", "1°", "2do", "primero", "segundo", etc.
-            const normalized = col.toLowerCase().replace(/[°º]/, '').trim();
-            if (normalized.match(/^(0|transicion|transición|preescolar|kinder)$/)) grade = '0°';
-            else if (normalized.match(/^(1|primero|1ro|1er)$/)) grade = '1°';
-            else if (normalized.match(/^(2|segundo|2do)$/)) grade = '2°';
-            else if (normalized.match(/^(3|tercero|3ro|3er)$/)) grade = '3°';
-            else if (normalized.match(/^(4|cuarto|4to)$/)) grade = '4°';
-            else if (normalized.match(/^(5|quinto|5to)$/)) grade = '5°';
-            else if (normalized.match(/^(6|sexto|6to)$/)) grade = '6°';
-            else if (normalized.match(/^(7|septimo|séptimo|7mo)$/)) grade = '7°';
-            else if (normalized.match(/^(8|octavo|8vo)$/)) grade = '8°';
-            else if (normalized.match(/^(9|noveno|9no)$/)) grade = '9°';
-            else if (normalized.match(/^(10|decimo|décimo)$/)) grade = '10°';
-            else if (normalized.match(/^(11|once|undecimo|undécimo)$/)) grade = '11°';
+            const trimmedCol = col.trim();
             
-            if (grade) break;
+            // Buscar patrones como "0°", "1°", "2do", "primero", "segundo", etc.
+            // Eliminar el símbolo de grado si existe
+            const normalized = trimmedCol.toLowerCase().replace(/[°º]/g, '').trim();
+            
+            // Log para debugging
+            if (index < 3) {
+              console.log(`Línea ${index + 1}, Intentando detectar grado en: "${trimmedCol}" -> normalizado: "${normalized}"`);
+            }
+            
+            if (normalized === '0' || normalized === 'transicion' || normalized === 'transición' || normalized === 'preescolar' || normalized === 'kinder') grade = '0°';
+            else if (normalized === '1' || normalized === 'primero' || normalized === '1ro' || normalized === '1er') grade = '1°';
+            else if (normalized === '2' || normalized === 'segundo' || normalized === '2do') grade = '2°';
+            else if (normalized === '3' || normalized === 'tercero' || normalized === '3ro' || normalized === '3er') grade = '3°';
+            else if (normalized === '4' || normalized === 'cuarto' || normalized === '4to') grade = '4°';
+            else if (normalized === '5' || normalized === 'quinto' || normalized === '5to') grade = '5°';
+            else if (normalized === '6' || normalized === 'sexto' || normalized === '6to') grade = '6°';
+            else if (normalized === '7' || normalized === 'septimo' || normalized === 'séptimo' || normalized === '7mo') grade = '7°';
+            else if (normalized === '8' || normalized === 'octavo' || normalized === '8vo') grade = '8°';
+            else if (normalized === '9' || normalized === 'noveno' || normalized === '9no') grade = '9°';
+            else if (normalized === '10' || normalized === 'decimo' || normalized === 'décimo') grade = '10°';
+            else if (normalized === '11' || normalized === 'once' || normalized === 'undecimo' || normalized === 'undécimo') grade = '11°';
+            
+            if (grade) {
+              if (index < 3) {
+                console.log(`Línea ${index + 1}, ✅ Grado detectado: ${grade}`);
+              }
+              break;
+            }
           }
         }
 
