@@ -739,7 +739,7 @@ Carlos Junior Frile Escorcia	6°	1045252007`;
               <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
               <Input
                 type="file"
-                accept=".csv,.txt,.tsv"
+                accept=".xlsx,.xls,.csv,.txt,.tsv"
                 onChange={handleFileUpload}
                 className="mb-4"
               />
