@@ -6,6 +6,7 @@ import { Badge } from '../../ui/badge';
 import { useAuth } from '../../../contexts/AuthContext';
 import { studentService, gradeService, bulletinService } from '../../../services/api';
 import { useToast } from '../../../hooks/use-toast';
+import { getErrorMessage } from '../../../utils/errorHandler';
 import { 
   Users, 
   BookOpen, 
