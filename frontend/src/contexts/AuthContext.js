@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: response.message };
       }
     } catch (error) {
-      const message = error.response?.data?.detail || 'Error de conexión';
+      const message = getErrorMessage(error, 'Error de conexión');
       return { success: false, error: message };
     }
   };
