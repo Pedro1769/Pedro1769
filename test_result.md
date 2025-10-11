@@ -333,7 +333,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "PRUEBA ESPECÍFICA: Sistema de registro de usuarios"
+    - "CRÍTICO: Prueba completa del sistema de estudiantes por rol según review request"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
