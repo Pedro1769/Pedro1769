@@ -7,6 +7,7 @@ import { Badge } from '../ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { studentService, adminService } from '../../services/api';
 import { useToast } from '../../hooks/use-toast';
+import * as XLSX from 'xlsx';
 import { 
   Upload, 
   FileText, 
