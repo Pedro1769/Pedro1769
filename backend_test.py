@@ -1710,6 +1710,9 @@ class GAABackendTester:
         
         print(f"\n✅ Authentication successful for {login_success_count}/{len(TEST_USERS)} users")
         
+        # CRITICAL TEST: Student distribution by role (REVIEW REQUEST)
+        critical_results = self.test_critical_student_distribution_by_role()
+        
         # Test 3: Authentication validation tests
         self.test_login_invalid_credentials()
         self.test_login_wrong_password()
