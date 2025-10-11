@@ -142,8 +142,15 @@ const BulkStudentUpload = ({ onClose }) => {
 
         // Buscar el grado en cualquier posición
         for (let col of columns) {
-          if (grades.includes(col)) {
-            grade = col;
+          const trimmedCol = col.trim();
+          
+          // Log para debugging en las primeras 3 líneas
+          if (index < 3) {
+            console.log(`Línea ${index + 1}, Columna: "${col}" (trimmed: "${trimmedCol}"), ¿Es grado?: ${grades.includes(trimmedCol)}`);
+          }
+          
+          if (grades.includes(trimmedCol)) {
+            grade = trimmedCol;
             break;
           }
         }
