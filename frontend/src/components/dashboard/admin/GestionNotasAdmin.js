@@ -319,9 +319,12 @@ const GestionNotasAdmin = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="ALL">Todos</SelectItem>
-                    {[...new Set(allGrades.map(g => g.student_grade))].filter(Boolean).sort().map(grade => (
-                      <SelectItem key={grade} value={grade}>{grade}</SelectItem>
-                    ))}
+                    {Array.from(new Set(allGrades.map(g => g.student_grade)))
+                      .filter(Boolean)
+                      .sort()
+                      .map(grade => (
+                        <SelectItem key={grade} value={grade}>{grade}</SelectItem>
+                      ))}
                   </SelectContent>
                 </Select>
               </div>
