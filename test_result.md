@@ -318,9 +318,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "VERIFICACIÓN ESPECÍFICA: Sistema de filtrado por grados exactos"
-  stuck_tasks: 
-    - "VERIFICACIÓN ESPECÍFICA: Sistema de filtrado por grados exactos"
+    - "PRUEBA ESPECÍFICA: Sistema de registro de usuarios"
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
