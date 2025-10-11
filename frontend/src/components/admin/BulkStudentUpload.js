@@ -279,37 +279,171 @@ const BulkStudentUpload = ({ onClose }) => {
     if (!file) return;
 
     setSelectedFile(file);
+    
+    // Detectar si es Excel
+    const isExcel = file.name.endsWith('.xlsx') || file.name.endsWith('.xls');
+    
     const reader = new FileReader();
     
     reader.onload = (e) => {
       try {
-        let content = e.target.result;
-        
-        // Si es un archivo Excel, intentar convertirlo a texto simple
-        if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-          toast({
-            title: "Archivo Excel detectado",
-            description: "Por favor, copia y pega los datos desde Excel en lugar de subir el archivo directamente, o guarda como CSV.",
-            variant: "destructive",
+        if (isExcel) {
+          // Procesar archivo Excel
+          console.log('📊 Procesando archivo Excel:', file.name);
+          
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          
+          // Obtener la primera hoja
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          
+          // Convertir a JSON
+          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          
+          console.log('📋 Datos del Excel (primeras 5 filas):', jsonData.slice(0, 5));
+          
+          // Procesar los datos
+          const parsedStudents = [];
+          let headerRow = null;
+          
+          // Buscar la fila de encabezados
+          for (let i = 0; i < Math.min(3, jsonData.length); i++) {
+            const row = jsonData[i];
+            const rowStr = row.join('').toLowerCase();
+            if (rowStr.includes('nombre') || rowStr.includes('estudiante')) {
+              headerRow = i;
+              console.log('📌 Fila de encabezados encontrada en:', i, row);
+              break;
+            }
+          }
+          
+          const startRow = headerRow !== null ? headerRow + 1 : 0;
+          
+          for (let i = startRow; i < jsonData.length; i++) {
+            const row = jsonData[i];
+            
+            // Saltar filas vacías
+            if (!row || row.length === 0 || !row.some(cell => cell)) {
+              continue;
+            }
+            
+            // Extraer datos (asumiendo: Nombre, Grado, Documento)
+            const name = row[0] ? String(row[0]).trim() : '';
+            const gradeCell = row[1] ? String(row[1]).trim() : '';
+            const documentCell = row[2] ? String(row[2]).trim() : '';
+            
+            // Validar nombre
+            if (!name || name.length < 3) {
+              console.warn(`⚠️ Fila ${i + 1}: Nombre inválido o vacío`);
+              continue;
+            }
+            
+            // Procesar grado
+            let grade = '';
+            
+            // Primero intentar match exacto con el array de grados válidos
+            if (grades.includes(gradeCell)) {
+              grade = gradeCell;
+            } else {
+              // Normalizar y buscar
+              const normalized = gradeCell.toLowerCase().replace(/[°º]/g, '').trim();
+              
+              if (normalized === '0' || normalized === 'transicion' || normalized === 'transición') grade = '0°';
+              else if (normalized === '1') grade = '1°';
+              else if (normalized === '2') grade = '2°';
+              else if (normalized === '3') grade = '3°';
+              else if (normalized === '4') grade = '4°';
+              else if (normalized === '5') grade = '5°';
+              else if (normalized === '6') grade = '6°';
+              else if (normalized === '7') grade = '7°';
+              else if (normalized === '8') grade = '8°';
+              else if (normalized === '9') grade = '9°';
+              else if (normalized === '10') grade = '10°';
+              else if (normalized === '11') grade = '11°';
+            }
+            
+            if (!grade) {
+              console.warn(`⚠️ Fila ${i + 1}: Grado no detectado para "${name}". Valor: "${gradeCell}"`);
+              grade = '1°'; // Default
+            }
+            
+            // Procesar documento
+            let document = '';
+            if (documentCell && documentCell.toLowerCase() !== 'asignar' && /\d/.test(documentCell)) {
+              document = documentCell;
+            }
+            
+            const student = {
+              id: Date.now() + i,
+              name: name.toUpperCase(),
+              grade: grade,
+              level: levels[grade] || 'BÁSICA PRIMARIA',
+              document_number: document || '',
+              teacher_id: null,
+              parent_id: null
+            };
+            
+            parsedStudents.push(student);
+            
+            if (i < 5) {
+              console.log(`✅ Estudiante ${i + 1}:`, student);
+            }
+          }
+          
+          if (parsedStudents.length === 0) {
+            toast({
+              title: "Sin datos válidos",
+              description: "No se pudieron extraer estudiantes del archivo Excel.",
+              variant: "destructive",
+            });
+            return;
+          }
+          
+          // Contar por grado
+          const gradeCount = {};
+          parsedStudents.forEach(student => {
+            gradeCount[student.grade] = (gradeCount[student.grade] || 0) + 1;
           });
-          return;
+          
+          const gradeDistribution = Object.entries(gradeCount)
+            .sort((a, b) => grades.indexOf(a[0]) - grades.indexOf(b[0]))
+            .map(([grade, count]) => `${grade}: ${count}`)
+            .join(', ');
+          
+          console.log('📊 Distribución por grado:', gradeDistribution);
+          
+          setStudents(parsedStudents);
+          
+          toast({
+            title: "✅ Excel Procesado Correctamente",
+            description: `Se procesaron ${parsedStudents.length} estudiantes. ${gradeDistribution}`,
+          });
+          
+        } else {
+          // Procesar archivo CSV/TXT
+          const content = e.target.result;
+          setCsvText(content);
+          toast({
+            title: "Archivo cargado",
+            description: `Archivo ${file.name} cargado. Haz clic en "Procesar Datos" para continuar.`,
+          });
         }
-        
-        setCsvText(content);
-        toast({
-          title: "Archivo cargado",
-          description: `Archivo ${file.name} cargado. Haz clic en "Procesar Datos" para continuar.`,
-        });
       } catch (error) {
+        console.error('Error al procesar archivo:', error);
         toast({
           title: "Error al leer archivo",
-          description: "No se pudo leer el contenido del archivo. Intenta con un archivo de texto o CSV.",
+          description: error.message || "No se pudo leer el contenido del archivo.",
           variant: "destructive",
         });
       }
     };
     
-    reader.readAsText(file, 'UTF-8');
+    if (isExcel) {
+      reader.readAsArrayBuffer(file);
+    } else {
+      reader.readAsText(file, 'UTF-8');
+    }
   };
 
   const validateStudents = () => {
