@@ -1694,9 +1694,16 @@ class GAABackendTester:
         for user_type in self.tokens.keys():
             self.test_specific_role_grade_access(user_type)
         
-        # Test 20: User registration and logout
-        self.test_register_new_user()
-        self.test_register_duplicate_user()
+        # ==================== USER REGISTRATION TESTS (SPECIFIC REVIEW REQUEST) ====================
+        print("\n" + "=" * 70)
+        print("🎯 SPECIFIC REVIEW REQUEST: USER REGISTRATION TESTING")
+        print("=" * 70)
+        
+        # Test 20: User registration tests as per review request
+        self.test_register_new_user_success()
+        self.test_register_duplicate_username()
+        self.test_register_duplicate_email()
+        self.test_register_missing_required_fields()
         
         for user_type in self.tokens.keys():
             self.test_logout(user_type)
