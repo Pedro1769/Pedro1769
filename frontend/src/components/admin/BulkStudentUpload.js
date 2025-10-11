@@ -744,7 +744,9 @@ Carlos Junior Frile Escorcia	6°	1045252007`;
                 className="mb-4"
               />
               <p className="text-sm text-gray-600">
-                Formatos aceptados: CSV, TXT, TSV
+                <strong className="text-blue-600">📊 EXCEL (.xlsx, .xls)</strong> - Procesamiento automático
+                <br />
+                <span className="text-gray-500">También: CSV, TXT, TSV</span>
               </p>
               {selectedFile && (
                 <p className="mt-2 text-sm font-medium text-green-600">
