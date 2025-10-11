@@ -284,7 +284,7 @@ const AdminDashboard = () => {
       
       return result;
     } catch (error) {
-      const message = error.response?.data?.detail || 'Error al generar código';
+      const message = getErrorMessage(error, 'Error al generar código');
       toast({
         title: "Error",
         description: message,
