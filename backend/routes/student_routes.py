@@ -190,13 +190,28 @@ async def create_students_bulk(
         student = Student(**student_data.dict())
         created_students.append(student.dict(by_alias=True))
     
-    result = await db.students.insert_many(created_students)
+    # Procesar en lotes de 100 para evitar problemas con inserciones grandes
+    batch_size = 100
+    all_inserted_ids = []
     
-    if not result.inserted_ids:
+    for i in range(0, len(created_students), batch_size):
+        batch = created_students[i:i + batch_size]
+        try:
+            result = await db.students.insert_many(batch, ordered=False)
+            all_inserted_ids.extend(result.inserted_ids)
+            print(f"✅ Lote {i//batch_size + 1}: Insertados {len(result.inserted_ids)} estudiantes")
+        except Exception as e:
+            print(f"❌ Error en lote {i//batch_size + 1}: {str(e)}")
+            # Continuar con el siguiente lote incluso si hay error
+            continue
+    
+    if not all_inserted_ids:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error al crear estudiantes en lote"
         )
+    
+    print(f"✅ Total de estudiantes creados: {len(all_inserted_ids)} de {len(created_students)}")
     
     return [Student(**student) for student in created_students]
 
