@@ -206,8 +206,14 @@ const BulkStudentUpload = ({ onClose }) => {
         if (name) {
           // Si no hay grado especificado, usar un grado por defecto
           if (!grade) {
-            console.warn(`Línea ${index + 1}: Grado no detectado, usando 1° por defecto. Nombre: ${name}`);
+            console.warn(`❌ Línea ${index + 1}: Grado NO detectado. Nombre: ${name}`);
+            console.warn(`   Columnas analizadas:`, columns);
+            console.warn(`   Usando 1° por defecto`);
             grade = '1°'; // Grado por defecto
+          } else {
+            if (index < 10) {
+              console.log(`✅ Línea ${index + 1}: Nombre="${name}", Grado="${grade}"`);
+            }
           }
 
           const student = {
