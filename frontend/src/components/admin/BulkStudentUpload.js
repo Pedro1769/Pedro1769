@@ -727,9 +727,11 @@ Carlos Junior Frile Escorcia	6°	1045252007`;
       {uploadMethod === 'file' && (
         <Card>
           <CardHeader>
-            <CardTitle>Subir Archivo</CardTitle>
+            <CardTitle>Subir Archivo Excel o CSV</CardTitle>
             <CardDescription>
-              Acepta archivos CSV, TXT o cualquier archivo de texto. También puedes subir datos copiados de Excel guardados como CSV.
+              ✅ Acepta archivos Excel (.xlsx, .xls) directamente - RECOMENDADO
+              <br />
+              También acepta archivos CSV o TXT
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
