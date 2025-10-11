@@ -73,7 +73,7 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: response.message };
       }
     } catch (error) {
-      const message = error.response?.data?.detail || 'Error al registrar usuario';
+      const message = getErrorMessage(error, 'Error al registrar usuario');
       return { success: false, error: message };
     }
   };
