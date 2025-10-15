@@ -24,7 +24,8 @@ import {
   Plus,
   Edit,
   Download,
-  Trash2
+  Trash2,
+  FolderOpen
 } from 'lucide-react';
 import { MOCK_STUDENTS, SUBJECTS, PERIODS, getPerformanceLevel } from '../../../mockData';
 import { studentService, gradeService } from '../../../services/api';
