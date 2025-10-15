@@ -29,13 +29,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
       case 'admin':
         return [
           ...baseItems,
-          { icon: BarChart3, label: 'Consolidados', href: '#consolidados' },
-          { icon: Users, label: 'Gestión Estudiantes', href: '#estudiantes' },
-          { icon: UserCheck, label: 'Gestión Docentes', href: '#docentes' },
-          { icon: Shield, label: 'Permisos', href: '#permisos' },
-          { icon: Download, label: 'Códigos Boletines', href: '#codigos' },
-          { icon: FolderOpen, label: 'Proyectos', href: '#proyectos' },
-          { icon: Settings, label: 'Configuración', href: '#config' },
+          { icon: BarChart3, label: 'Consolidados', section: 'consolidados' },
+          { icon: Users, label: 'Gestión Estudiantes', section: 'estudiantes' },
+          { icon: UserCheck, label: 'Gestión Docentes', section: 'docentes' },
+          { icon: Shield, label: 'Permisos', section: 'permisos' },
+          { icon: Download, label: 'Códigos Boletines', section: 'codigos' },
+          { icon: FolderOpen, label: 'Proyectos', section: 'proyectos' },
+          { icon: Settings, label: 'Configuración', section: 'config' },
         ];
 
       case 'docente_primaria':
