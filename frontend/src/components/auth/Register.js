@@ -160,9 +160,14 @@ const Register = () => {
         });
         navigate('/dashboard');
       } else {
+        // Asegurarse de que el error sea un string
+        const errorMessage = typeof result.error === 'string' 
+          ? result.error 
+          : result.error?.message || 'Error al registrar usuario';
+        
         toast({
           title: "Error de registro",
-          description: result.error,
+          description: errorMessage,
           variant: "destructive",
         });
       }
