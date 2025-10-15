@@ -25,7 +25,7 @@ const Header = ({ sidebarOpen, setSidebarOpen }) => {
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-red-600 flex items-center justify-center">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_142a9560-64f7-45de-9e71-42aef7b2f85d/artifacts/a2p68uxj_LOGO%20GIM%20AMERICANO.jpeg"
-                  alt="Logo GAA"
+                  alt="Logo GADA"
                   className="w-9 h-9 rounded-full object-cover"
                 />
               </div>
