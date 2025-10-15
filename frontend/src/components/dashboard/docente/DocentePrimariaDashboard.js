@@ -738,6 +738,14 @@ const DocentePrimariaDashboard = () => {
               <FileText className="h-4 w-4" />
               <span>Boletines</span>
             </Button>
+            <Button
+              variant={activeSection === 'tareas' ? "default" : "outline"}
+              onClick={() => setActiveSection('tareas')}
+              className="flex items-center space-x-2 bg-gradient-to-r from-orange-500 to-red-500 text-white border-0 hover:from-orange-600 hover:to-red-600"
+            >
+              <BookOpen className="h-4 w-4" />
+              <span>Tareas y Actividades</span>
+            </Button>
           </div>
         </CardContent>
       </Card>
