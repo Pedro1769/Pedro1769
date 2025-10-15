@@ -810,41 +810,6 @@ const DocentePrimariaDashboard = () => {
         {renderActiveSection()}
 
       {/* Modales */}
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Mis Estudiantes</CardTitle>
-            <Users className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{myStudents.length}</div>
-            <p className="text-xs text-blue-100">Grado {user.grade}</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Asignaturas</CardTitle>
-            <BookOpen className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{SUBJECTS.PRIMARIA.length}</div>
-            <p className="text-xs text-green-100">Todas las materias</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Períodos</CardTitle>
-            <FileText className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{PERIODS.length}</div>
-            <p className="text-xs text-purple-100">Período actual: {selectedPeriod}</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Gestión de Estudiantes */}
-      <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
