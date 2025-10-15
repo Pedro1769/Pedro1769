@@ -124,7 +124,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
               <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-lg">
                 <img 
                   src="https://customer-assets.emergentagent.com/job_142a9560-64f7-45de-9e71-42aef7b2f85d/artifacts/a2p68uxj_LOGO%20GIM%20AMERICANO.jpeg"
-                  alt="Logo GAA"
+                  alt="Logo GADA"
                   className="w-10 h-10 rounded-full object-cover"
                 />
               </div>
