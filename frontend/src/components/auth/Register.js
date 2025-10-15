@@ -32,6 +32,7 @@ const Register = () => {
   // Opciones para roles
   const roles = [
     { value: 'padre', label: 'Padre/Acudiente' },
+    { value: 'estudiante', label: 'Estudiante' },
     { value: 'docente_primaria', label: 'Docente de Primaria' },
     { value: 'docente_bachillerato', label: 'Docente de Bachillerato' },
     { value: 'coordinador_convivencia', label: 'Coordinador de Convivencia' }
