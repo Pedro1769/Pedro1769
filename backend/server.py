@@ -59,7 +59,7 @@ async def health_check():
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow(),
-        "service": "GAA Academic Management System"
+        "service": "GADA Academic Management System"
     }
 
 # Incluir el router en la aplicación
