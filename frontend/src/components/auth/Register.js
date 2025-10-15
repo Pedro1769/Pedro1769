@@ -177,11 +177,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 flex items-center justify-center px-6 py-12 relative overflow-hidden">
-      {/* Elementos decorativos de fondo */}
-      <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-blue-400/10 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-red-400/10 to-transparent rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-500 to-red-500 flex items-center justify-center px-6 py-12 relative overflow-hidden">
+      {/* Fondo animado con círculos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-40 left-40 w-80 h-80 bg-red-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
       </div>
 
       <div className="w-full max-w-2xl relative z-10">
@@ -197,7 +198,7 @@ const Register = () => {
           <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
             GIMNASIO AMERICANO DEL ATLÁNTICO
           </h1>
-          <p className="text-white/90 drop-shadow">Registro de Usuario</p>
+          <p className="text-white/90 drop-shadow-md text-lg">Registro de Usuario</p>
         </div>
 
         <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-md">
