@@ -219,26 +219,30 @@ const Register = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Nombre Completo *
                   </label>
-                  <Input
-                    type="text"
-                    placeholder="Ingrese su nombre completo"
-                    value={formData.name}
-                    onChange={(e) => handleChange('name', e.target.value)}
-                    required
-                  />
+                  <div className="gradient-input">
+                    <input
+                      type="text"
+                      placeholder="Ingrese su nombre completo"
+                      value={formData.name}
+                      onChange={(e) => handleChange('name', e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Usuario *
                   </label>
-                  <Input
-                    type="text"
-                    placeholder="Nombre de usuario"
-                    value={formData.username}
-                    onChange={(e) => handleChange('username', e.target.value)}
-                    required
-                  />
+                  <div className="gradient-input">
+                    <input
+                      type="text"
+                      placeholder="Nombre de usuario"
+                      value={formData.username}
+                      onChange={(e) => handleChange('username', e.target.value)}
+                      required
+                    />
+                  </div>
                 </div>
               </div>
 
