@@ -167,9 +167,11 @@ const Register = () => {
         });
       }
     } catch (error) {
+      console.error('Error completo de registro:', error);
+      const errorMessage = error.response?.data?.detail || error.message || "Ha ocurrido un error inesperado";
       toast({
-        title: "Error",
-        description: "Ha ocurrido un error inesperado",
+        title: "Error de registro",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
