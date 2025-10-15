@@ -25,7 +25,7 @@ class RegisterRequest(BaseModel):
     name: str
     email: str
     phone: str = None
-    role: UserRole = UserRole.PADRE  # Por defecto padre
+    role: str = "padre"  # Aceptar como string para mayor flexibilidad
     grade: str = None
     grades: list = None
     subjects: list = None
