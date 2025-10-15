@@ -62,10 +62,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
       case 'coordinador_convivencia':
         return [
           ...baseItems,
-          { icon: Users, label: 'Todos los Estudiantes', href: '#estudiantes' },
-          { icon: Heart, label: 'Convivencia', href: '#convivencia' },
-          { icon: BarChart3, label: 'Reportes', href: '#reportes' },
-          { icon: FolderOpen, label: 'Proyectos', href: '#proyectos' },
+          { icon: Users, label: 'Todos los Estudiantes', section: 'estudiantes' },
+          { icon: Heart, label: 'Convivencia', section: 'convivencia' },
+          { icon: BarChart3, label: 'Reportes', section: 'reportes' },
+          { icon: FolderOpen, label: 'Proyectos', section: 'proyectos' },
         ];
 
       case 'padre':
