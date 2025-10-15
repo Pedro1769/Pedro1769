@@ -308,16 +308,17 @@ const Register = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Confirmar Contraseña *
                   </label>
-                  <div className="relative">
-                    <Input
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="Repita la contraseña"
-                      value={formData.confirmPassword}
-                      onChange={(e) => handleChange('confirmPassword', e.target.value)}
-                      className="pr-10"
-                      required
-                    />
-                    <button
+                  <div className="gradient-input">
+                    <div className="relative">
+                      <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder="Repita la contraseña"
+                        value={formData.confirmPassword}
+                        onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                        className="pr-10"
+                        required
+                      />
+                      <button
                       type="button"
                       onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                       className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
