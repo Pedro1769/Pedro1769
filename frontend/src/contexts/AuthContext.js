@@ -61,19 +61,26 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
+      console.log('🔵 AUTH CONTEXT - Iniciando registro con datos:', { ...userData, password: '***' });
       const response = await authService.register(userData);
+      console.log('🔵 AUTH CONTEXT - Respuesta de registro:', response);
       
       if (response.success) {
+        console.log('✅ AUTH CONTEXT - Registro exitoso, usuario recibido:', response.user);
         setUser(response.user);
         localStorage.setItem('gaa_user', JSON.stringify(response.user));
         localStorage.setItem('gaa_token', response.token);
+        console.log('✅ AUTH CONTEXT - Usuario guardado en localStorage');
         
         return { success: true, user: response.user };
       } else {
-        return { success: false, error: response.message };
+        console.log('❌ AUTH CONTEXT - Registro fallido:', response.message);
+        return { success: false, error: response.message || 'Error en el registro' };
       }
     } catch (error) {
-      const message = getErrorMessage(error, 'Error al registrar usuario');
+      console.error('❌ AUTH CONTEXT - Error en registro:', error);
+      console.error('❌ Detalles del error:', error.response?.data);
+      const message = error.response?.data?.detail || getErrorMessage(error, 'Error al registrar usuario');
       return { success: false, error: message };
     }
   };
