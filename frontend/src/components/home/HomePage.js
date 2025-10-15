@@ -43,7 +43,7 @@ const HomePage = () => {
                 <div className="w-16 h-16 rounded-full bg-gradient-to-br from-blue-600 via-blue-700 to-red-600 flex items-center justify-center shadow-lg">
                   <img 
                     src="https://customer-assets.emergentagent.com/job_142a9560-64f7-45de-9e71-42aef7b2f85d/artifacts/a2p68uxj_LOGO%20GIM%20AMERICANO.jpeg"
-                    alt="Logo GAA"
+                    alt="Logo GADA"
                     className="w-14 h-14 rounded-full object-cover"
                   />
                 </div>
