@@ -54,6 +54,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
           ...baseItems,
           { icon: GraduationCap, label: 'Mis Estudiantes', section: 'dashboard' },
           { icon: BookOpen, label: 'Asignar Notas', section: 'dashboard' },
+          { icon: FileText, label: 'Tareas y Actividades', section: 'tareas' },
           { icon: Heart, label: 'Convivencia', section: 'convivencia' },
           { icon: Trophy, label: 'Banco de Logros', section: 'banco-logros' },
           { icon: FolderOpen, label: 'Proyectos', section: 'proyectos' },
