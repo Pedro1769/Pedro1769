@@ -34,6 +34,7 @@ import { studentService, gradeService } from '../../../services/api';
 import BancoLogros from '../sections/BancoLogros';
 import Boletines from '../sections/Boletines';
 import Proyectos from '../sections/Proyectos';
+import ActividadesTareas from '../sections/ActividadesTareas';
 import StudentEditForm from '../admin/StudentEditForm';
 import { sortStudentsByGrade } from '../../../utils/gradeUtils';
 
