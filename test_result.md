@@ -357,7 +357,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Prueba específica de registro e inicio de sesión desde frontend"
+    - "CRÍTICO: Prueba específica del problema de estudiantes para docentes (Review Request)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
