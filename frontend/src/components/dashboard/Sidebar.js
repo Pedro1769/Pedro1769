@@ -71,9 +71,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
       case 'padre':
         return [
           ...baseItems,
-          { icon: Users, label: 'Mis Hijos', href: '#hijos' },
-          { icon: Eye, label: 'Seguimiento', href: '#seguimiento' },
-          { icon: Download, label: 'Boletines', href: '#boletines' },
+          { icon: Users, label: 'Mis Hijos', section: 'hijos' },
+          { icon: Eye, label: 'Seguimiento', section: 'seguimiento' },
+          { icon: Download, label: 'Boletines', section: 'boletines' },
         ];
 
       case 'estudiante':
