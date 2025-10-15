@@ -112,3 +112,68 @@ code {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Estilos personalizados para inputs con degradados */
+.gradient-input {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2px;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.gradient-input:hover {
+  background: linear-gradient(135deg, #667eea 0%, #f093fb 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.gradient-input:focus-within {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  box-shadow: 0 4px 20px rgba(79, 172, 254, 0.5);
+  transform: translateY(-2px);
+}
+
+.gradient-input input,
+.gradient-input select,
+.gradient-input textarea {
+  background: white;
+  border: none;
+  border-radius: calc(0.5rem - 2px);
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.gradient-input input:focus,
+.gradient-input select:focus,
+.gradient-input textarea:focus {
+  outline: none;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Animación de gradiente para el botón submit */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-button {
+  background: linear-gradient(270deg, #667eea, #764ba2, #f093fb);
+  background-size: 300% 300%;
+  animation: gradient-shift 3s ease infinite;
+  transition: all 0.3s ease;
+}
+
+.gradient-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
