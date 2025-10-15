@@ -61,12 +61,12 @@ async def generate_bulletin_code(
     while await db.bulletin_codes.find_one({"code": code}):
         code = generate_unique_code()
     
-    # Crear código con expiración de 30 días
+    # Crear código con expiración de 24 horas
     bulletin_code = BulletinCode(
         student_id=student_id,
         period=period,
         code=code,
-        expires_at=datetime.utcnow() + timedelta(days=30)
+        expires_at=datetime.utcnow() + timedelta(hours=24)
     )
     
     result = await db.bulletin_codes.insert_one(bulletin_code.dict(by_alias=True))
