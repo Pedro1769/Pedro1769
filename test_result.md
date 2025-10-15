@@ -333,7 +333,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Verificación de frontend con 555 estudiantes"
+    - "Prueba específica de registro e inicio de sesión desde frontend"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
