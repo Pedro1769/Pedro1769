@@ -59,19 +59,26 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 flex items-center justify-center px-6">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-500 to-red-500 flex items-center justify-center px-6 relative overflow-hidden">
+      {/* Fondo animado con círculos */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-40 left-40 w-80 h-80 bg-red-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+      </div>
+      
+      <div className="w-full max-w-md relative z-10">
         {/* Logo y título */}
         <div className="text-center mb-8">
-          <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-red-600 flex items-center justify-center mb-4">
+          <div className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 via-purple-600 to-red-600 flex items-center justify-center mb-4 shadow-2xl ring-4 ring-white/50">
             <img 
               src="https://customer-assets.emergentagent.com/job_142a9560-64f7-45de-9e71-42aef7b2f85d/artifacts/a2p68uxj_LOGO%20GIM%20AMERICANO.jpeg"
               alt="Logo GADA"
-              className="w-18 h-18 rounded-full object-cover"
+              className="w-20 h-20 rounded-full object-cover shadow-lg"
             />
           </div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">{INSTITUTIONAL_INFO.name}</h1>
-          <p className="text-gray-600">Portal Institucional</p>
+          <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">{INSTITUTIONAL_INFO.name}</h1>
+          <p className="text-white/90 drop-shadow">Portal Institucional</p>
         </div>
 
         <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
