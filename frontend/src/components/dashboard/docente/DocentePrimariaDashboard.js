@@ -806,6 +806,9 @@ const DocentePrimariaDashboard = () => {
           </div>
         </div>
 
+        {/* Contenido dinámico según sección activa */}
+        {renderActiveSection()}
+
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
