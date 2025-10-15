@@ -458,6 +458,8 @@ const DocenteBachilleratoDashboard = () => {
         return <Boletines />;
       case 'proyectos':
         return <Proyectos />;
+      case 'tareas':
+        return <ActividadesTareas />;
       case 'convivencia':
         return renderConvivenciaSection();
       default:
