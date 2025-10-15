@@ -41,16 +41,39 @@ const Login = () => {
         });
         navigate('/dashboard');
       } else {
+        // Asegurarse de que el error sea un string
+        const errorMessage = typeof result.error === 'string' 
+          ? result.error 
+          : result.error?.message || 'Credenciales inválidas';
+        
         toast({
           title: "Error de acceso",
-          description: result.error,
+          description: errorMessage,
           variant: "destructive",
         });
       }
     } catch (error) {
+      console.error('Error completo de login:', error);
+      
+      // Extraer mensaje de error de forma segura
+      let errorMessage = "Ha ocurrido un error inesperado";
+      
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        if (typeof detail === 'string') {
+          errorMessage = detail;
+        } else if (Array.isArray(detail)) {
+          errorMessage = detail.map(err => err.msg || 'Error de validación').join(', ');
+        } else if (typeof detail === 'object' && detail.msg) {
+          errorMessage = detail.msg;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
-        title: "Error",
-        description: "Ha ocurrido un error inesperado",
+        title: "Error de acceso",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
