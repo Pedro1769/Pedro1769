@@ -43,6 +43,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
           ...baseItems,
           { icon: GraduationCap, label: 'Mis Estudiantes', section: 'estudiantes' },
           { icon: BookOpen, label: 'Asignar Notas', section: 'notas' },
+          { icon: FileText, label: 'Tareas y Actividades', section: 'tareas' },
           { icon: Heart, label: 'Convivencia', section: 'convivencia' },
           { icon: FolderOpen, label: 'Proyectos', section: 'proyectos' },
           { icon: FileText, label: 'Boletines', section: 'boletines' },
