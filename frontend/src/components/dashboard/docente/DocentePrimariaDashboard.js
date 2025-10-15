@@ -336,6 +336,8 @@ const DocentePrimariaDashboard = () => {
         return <Boletines />;
       case 'proyectos':
         return <Proyectos />;
+      case 'tareas':
+        return <ActividadesTareas />;
       case 'convivencia':
         return renderConvivenciaSection();
       case 'estudiantes':
