@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Badge } from '../../ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card.jsx';
+import { Button } from '../../ui/button.jsx';
+import { Input } from '../../ui/input.jsx';
+import { Badge } from '../../ui/badge.jsx';
 import { useAuth } from '../../../contexts/AuthContext';
 import { useToast } from '../../../hooks/use-toast';
 import {
