@@ -160,7 +160,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
           {/* Footer del sidebar */}
           <div className="p-4 border-t border-white/20 bg-white/5 backdrop-blur-sm">
             <div className="text-center text-white/70 text-xs">
-              <p className="font-semibold">© 2025 GAA</p>
+              <p className="font-semibold">© 2025 GADA</p>
               <p>Sistema Académico v1.0</p>
               <div className="mt-2 h-1 bg-gradient-to-r from-blue-400 to-red-400 rounded-full"></div>
             </div>
