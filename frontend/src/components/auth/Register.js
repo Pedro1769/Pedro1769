@@ -187,17 +187,17 @@ const Register = () => {
       <div className="w-full max-w-2xl relative z-10">
         {/* Logo y título */}
         <div className="text-center mb-8">
-          <div className="mx-auto w-20 h-20 rounded-full bg-gradient-to-br from-blue-600 to-red-600 flex items-center justify-center mb-4 shadow-xl">
+          <div className="mx-auto w-24 h-24 rounded-full bg-gradient-to-br from-blue-600 via-purple-600 to-red-600 flex items-center justify-center mb-4 shadow-2xl ring-4 ring-white/50">
             <img 
               src="https://customer-assets.emergentagent.com/job_142a9560-64f7-45de-9e71-42aef7b2f85d/artifacts/a2p68uxj_LOGO%20GIM%20AMERICANO.jpeg"
               alt="Logo GADA"
-              className="w-18 h-18 rounded-full object-cover"
+              className="w-20 h-20 rounded-full object-cover shadow-lg"
             />
           </div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-800 to-red-800 bg-clip-text text-transparent mb-2">
+          <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
             GIMNASIO AMERICANO DEL ATLÁNTICO
           </h1>
-          <p className="text-gray-600">Registro de Usuario</p>
+          <p className="text-white/90 drop-shadow">Registro de Usuario</p>
         </div>
 
         <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-md">
