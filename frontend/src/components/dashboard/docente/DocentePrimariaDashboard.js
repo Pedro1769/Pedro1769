@@ -809,7 +809,7 @@ const DocentePrimariaDashboard = () => {
         {/* Contenido dinámico según sección activa */}
         {renderActiveSection()}
 
-      {/* Modales */}
+        {/* Modales */}
       {/* Modal Agregar Estudiante */}
       <Dialog open={showAddStudent} onOpenChange={setShowAddStudent}>
         <DialogContent className="sm:max-w-[425px]">
