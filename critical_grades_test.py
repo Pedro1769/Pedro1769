@@ -25,7 +25,7 @@ from typing import Dict, Any, Optional
 import time
 
 # Configuration - Using environment variable from frontend/.env
-BASE_URL = "https://user-permissions-2.preview.emergentagent.com/api"
+BASE_URL = "https://support-panels.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 # Critical test users as specified in the review request

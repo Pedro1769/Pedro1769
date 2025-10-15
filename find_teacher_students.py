@@ -7,7 +7,7 @@ import requests
 import json
 
 # Configuration
-BASE_URL = "https://user-permissions-2.preview.emergentagent.com/api"
+BASE_URL = "https://support-panels.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 def login_admin():

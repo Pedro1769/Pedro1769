@@ -8,7 +8,7 @@ import requests
 import json
 from datetime import datetime
 
-BASE_URL = "https://user-permissions-2.preview.emergentagent.com/api"
+BASE_URL = "https://support-panels.preview.emergentagent.com/api"
 HEADERS = {"Content-Type": "application/json"}
 
 # Additional test user
