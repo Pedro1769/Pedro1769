@@ -83,7 +83,7 @@ async def generate_bulletin_code(
         "student_name": student_data["name"],
         "period": period,
         "expires_at": bulletin_code.expires_at,
-        "message": "Código generado exitosamente"
+        "message": "Código generado exitosamente. Válido por 24 horas y un solo uso"
     }
 
 @router.get("/download/{code}")
