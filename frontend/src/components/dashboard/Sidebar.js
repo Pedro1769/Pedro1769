@@ -41,11 +41,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
       case 'docente_primaria':
         return [
           ...baseItems,
-          { icon: GraduationCap, label: 'Mis Estudiantes', href: '#estudiantes' },
-          { icon: BookOpen, label: 'Asignar Notas', href: '#notas' },
-          { icon: Heart, label: 'Convivencia', href: '#convivencia' },
-          { icon: FolderOpen, label: 'Proyectos', href: '#proyectos' },
-          { icon: FileText, label: 'Boletines', href: '#boletines' },
+          { icon: GraduationCap, label: 'Mis Estudiantes', section: 'estudiantes' },
+          { icon: BookOpen, label: 'Asignar Notas', section: 'notas' },
+          { icon: Heart, label: 'Convivencia', section: 'convivencia' },
+          { icon: FolderOpen, label: 'Proyectos', section: 'proyectos' },
+          { icon: FileText, label: 'Boletines', section: 'boletines' },
         ];
 
       case 'docente_bachillerato':
