@@ -117,6 +117,17 @@ async def register(register_data: RegisterRequest):
                 detail="El email ya está registrado"
             )
         
+        # Validar y normalizar rol
+        valid_roles = ["admin", "docente_primaria", "docente_bachillerato", "coordinador_convivencia", "padre", "estudiante"]
+        if register_data.role.lower() not in valid_roles:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Rol inválido. Roles válidos: {', '.join(valid_roles)}"
+            )
+        
+        # Convertir rol a UserRole enum
+        role_enum = UserRole(register_data.role.lower())
+        
         # Crear nuevo usuario
         user_create = UserCreate(
             username=register_data.username,
@@ -124,7 +135,7 @@ async def register(register_data: RegisterRequest):
             name=register_data.name,
             email=register_data.email,
             phone=register_data.phone,
-            role=register_data.role,
+            role=role_enum,
             grade=register_data.grade,
             grades=register_data.grades,
             subjects=register_data.subjects
