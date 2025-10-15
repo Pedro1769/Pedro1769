@@ -79,9 +79,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
       case 'estudiante':
         return [
           ...baseItems,
-          { icon: BookOpen, label: 'Mis Notas', href: '#notas' },
-          { icon: Eye, label: 'Mi Progreso', href: '#progreso' },
-          { icon: FileText, label: 'Información', href: '#info' },
+          { icon: BookOpen, label: 'Mis Notas', section: 'notas' },
+          { icon: Eye, label: 'Mi Progreso', section: 'progreso' },
+          { icon: FileText, label: 'Información', section: 'info' },
         ];
 
       default:
