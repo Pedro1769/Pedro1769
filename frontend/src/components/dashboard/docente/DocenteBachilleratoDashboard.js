@@ -458,10 +458,132 @@ const DocenteBachilleratoDashboard = () => {
         return <Boletines />;
       case 'proyectos':
         return <Proyectos />;
+      case 'convivencia':
+        return renderConvivenciaSection();
       default:
         return renderDashboardContent();
     }
   };
+
+  // Sección de Convivencia
+  const renderConvivenciaSection = () => (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 text-2xl">
+            <School className="h-6 w-6 text-red-500" />
+            <span>Convivencia Escolar</span>
+          </CardTitle>
+          <CardDescription>
+            Registra observaciones de convivencia para tus estudiantes de grados {user.grades?.join(', ')}
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      {/* Convivencia y Acompañamiento */}
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <School className="h-5 w-5 text-red-500" />
+              <span>Observaciones de Convivencia</span>
+            </CardTitle>
+            <CardDescription>
+              Registra observaciones de comportamiento y convivencia escolar
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {gradeStudents.slice(0, 5).map((student, index) => (
+              <div key={index} className="p-3 border rounded-lg bg-gray-50">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <span className="font-medium text-sm">{student.name}</span>
+                    <p className="text-xs text-gray-500">Grado {student.grade}</p>
+                  </div>
+                  <Badge variant="outline" className="text-xs">Convivencia</Badge>
+                </div>
+                <textarea
+                  placeholder="Observaciones de convivencia (comportamiento, actitud, participación)..."
+                  className="w-full p-2 text-sm border rounded resize-none"
+                  rows="2"
+                />
+                <Button size="sm" className="mt-2 w-full bg-red-500 hover:bg-red-600">
+                  <Plus className="h-3 w-3 mr-1" />
+                  Registrar Observación
+                </Button>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <Users className="h-5 w-5 text-blue-500" />
+              <span>Acompañamiento Familiar</span>
+            </CardTitle>
+            <CardDescription>
+              Registra actividades de acompañamiento de acudientes
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {gradeStudents.slice(0, 5).map((student, index) => (
+              <div key={index} className="p-3 border rounded-lg bg-blue-50">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <span className="font-medium text-sm">{student.name}</span>
+                    <p className="text-xs text-gray-500">Grado {student.grade}</p>
+                  </div>
+                  <Badge variant="secondary" className="text-xs">Acompañamiento</Badge>
+                </div>
+                <textarea
+                  placeholder="Seguimiento del acompañamiento familiar (reuniones, compromisos, avances)..."
+                  className="w-full p-2 text-sm border rounded resize-none"
+                  rows="2"
+                />
+                <Button size="sm" className="mt-2 w-full" variant="secondary">
+                  <Plus className="h-3 w-3 mr-1" />
+                  Registrar Seguimiento
+                </Button>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Resumen de Convivencia por Grado */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Resumen de Convivencia por Grado</CardTitle>
+          <CardDescription>
+            Vista general de observaciones registradas
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            {user.grades?.map(grade => (
+              <div key={grade} className="flex items-center justify-between p-4 border rounded-lg bg-gradient-to-r from-red-50 to-blue-50">
+                <div className="flex items-center space-x-4">
+                  <div className="h-12 w-12 rounded-full bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center text-white font-bold">
+                    {grade}
+                  </div>
+                  <div>
+                    <p className="font-semibold">Grado {grade}</p>
+                    <p className="text-sm text-gray-500">
+                      {students.filter(s => s.grade === grade).length} estudiantes
+                    </p>
+                  </div>
+                </div>
+                <Button variant="outline" size="sm">
+                  Ver Observaciones
+                </Button>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
 
   // Contenido principal del dashboard
   const renderDashboardContent = () => (
