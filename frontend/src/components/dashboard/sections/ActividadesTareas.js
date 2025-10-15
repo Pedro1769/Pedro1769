@@ -4,7 +4,7 @@ import { Button } from '../../ui/button';
 import { Input } from '../../ui/input';
 import { Badge } from '../../ui/badge';
 import { useAuth } from '../../../contexts/AuthContext';
-import { useToast } from '../../ui/use-toast';
+import { useToast } from '../../../hooks/use-toast';
 import {
   Plus,
   BookOpen,
