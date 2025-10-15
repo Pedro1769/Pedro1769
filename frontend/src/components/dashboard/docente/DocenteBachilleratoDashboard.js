@@ -1055,6 +1055,14 @@ const DocenteBachilleratoDashboard = () => {
                 <span>Boletines</span>
               </Button>
               <Button
+                variant={activeSection === 'convivencia' ? "default" : "outline"}
+                onClick={() => setActiveSection('convivencia')}
+                className="flex items-center space-x-2 bg-gradient-to-r from-red-500 to-pink-500 text-white border-0 hover:from-red-600 hover:to-pink-600"
+              >
+                <School className="h-4 w-4" />
+                <span>Convivencia</span>
+              </Button>
+              <Button
                 variant={activeSection === 'proyectos' ? "default" : "outline"}
                 onClick={() => setActiveSection('proyectos')}
                 className="flex items-center space-x-2 bg-gradient-to-r from-green-500 to-blue-500 text-white border-0 hover:from-green-600 hover:to-blue-600"
