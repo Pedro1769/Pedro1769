@@ -68,7 +68,7 @@ async def init_database():
             "role": UserRole.DOCENTE_BACHILLERATO,
             "email": "bifencia.orozco@gimamericano.edu.co",
             "grades": ["6°", "7°", "8°", "9°", "10°", "11°"],
-            "subjects": ["MATEMÁTICA", "INGLÉS", "CIENCIAS NATURALES", "CIENCIAS SOCIALES", "EDUCACIÓN FÍSICA", "EDUCACIÓN ARTÍSTICA", "EDUCACIÓN RELIGIOSA", "ÉTICA Y VALORES", "TECNOLOGÍA E INFORMÁTICA", "FILOSOFÍA", "FÍSICA", "QUÍMICA", "BIOLOGÍA", "CÁTEDRA DE LA PAZ"],
+            "subjects": ["MATEMÁTICA", "INGLÉS", "CIENCIAS NATURALES", "CIENCIAS SOCIALES", "EDUCACIÓN FÍSICA", "EDUCACIÓN ARTÍSTICA", "EDUCACIÓN RELIGIOSA", "ÉTICA Y VALORES", "TECNOLOGÍA E INFORMÁTICA", "FILOSOFÍA", "FÍSICA", "QUÍMICA", "BIOLOGÍA", "LENGUA CASTELLANA", "EMPRENDIMIENTO"],
             "is_active": True,
             "created_at": datetime.utcnow(),
             "updated_at": datetime.utcnow()
