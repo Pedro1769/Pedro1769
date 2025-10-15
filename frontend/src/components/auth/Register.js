@@ -414,7 +414,7 @@ const Register = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   type="submit"
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white py-3"
+                  className="flex-1 gradient-button text-white py-3 font-semibold text-base"
                   disabled={loading}
                 >
                   {loading ? 'Registrando...' : 'Crear Cuenta'}
