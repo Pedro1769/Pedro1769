@@ -173,7 +173,28 @@ const Register = () => {
       }
     } catch (error) {
       console.error('Error completo de registro:', error);
-      const errorMessage = error.response?.data?.detail || error.message || "Ha ocurrido un error inesperado";
+      
+      // Extraer mensaje de error de forma segura
+      let errorMessage = "Ha ocurrido un error inesperado";
+      
+      if (error.response?.data?.detail) {
+        const detail = error.response.data.detail;
+        // Si es string, usarlo directamente
+        if (typeof detail === 'string') {
+          errorMessage = detail;
+        }
+        // Si es array de errores de validación
+        else if (Array.isArray(detail)) {
+          errorMessage = detail.map(err => err.msg || 'Error de validación').join(', ');
+        }
+        // Si es objeto con mensaje
+        else if (typeof detail === 'object' && detail.msg) {
+          errorMessage = detail.msg;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error de registro",
         description: errorMessage,
