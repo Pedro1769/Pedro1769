@@ -67,6 +67,12 @@ async def health_check():
 # Incluir el router en la aplicación
 app.include_router(api_router)
 
+# Servir archivos subidos
+import os
+UPLOAD_DIR = "/app/uploads"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=UPLOAD_DIR), name="uploads")
+
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
