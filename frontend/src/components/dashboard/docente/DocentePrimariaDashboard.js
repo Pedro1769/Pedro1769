@@ -809,8 +809,9 @@ const DocentePrimariaDashboard = () => {
         {/* Contenido dinámico según sección activa */}
         {renderActiveSection()}
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Modales */}
+      {/* Modal Agregar Estudiante */}
+      <Dialog open={showAddStudent} onOpenChange={setShowAddStudent}>
         <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Mis Estudiantes</CardTitle>
