@@ -47,7 +47,7 @@ api_router.include_router(test_auth_router)
 @api_router.get("/")
 async def root():
     return {
-        "message": "Sistema de Gestión Escolar GAA API",
+        "message": "Sistema de Gestión Escolar GADA API",
         "version": "1.0.0",
         "institution": "Gimnasio Americano del Atlántico",
         "coordinator": "Pedro Hurtado",
