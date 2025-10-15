@@ -242,3 +242,78 @@ GRADES_PREESCOLAR = ["Transición"]
 GRADES_PRIMARIA = ["1°", "2°", "3°", "4°", "5°"]
 GRADES_BACHILLERATO = ["6°", "7°", "8°", "9°", "10°", "11°"]
 PERIODS = ["I", "II", "III", "IV"]
+
+# Enums para Actividades
+class ActivityType(str, Enum):
+    TAREA = "Tarea"
+    TALLER = "Taller"
+    ACTIVIDAD = "Actividad"
+    RECUPERACION = "Recuperación"
+    EVALUACION = "Evaluación"
+
+class SubmissionStatus(str, Enum):
+    PENDIENTE = "Pendiente"
+    ENVIADA = "Enviada"
+    CALIFICADA = "Calificada"
+    RETRASADA = "Retrasada"
+
+# Modelo de Actividad/Tarea
+class Activity(BaseModel):
+    id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
+    title: str
+    description: str
+    activity_type: ActivityType
+    teacher_id: str  # ID del docente que crea la actividad
+    teacher_name: str  # Nombre del docente
+    subject: str  # Materia
+    grade: str  # Grado al que se asigna
+    period: str  # Período académico
+    due_date: datetime  # Fecha límite de entrega
+    max_score: float = 5.0  # Calificación máxima
+    attachments: Optional[List[str]] = []  # URLs de archivos adjuntos del docente
+    instructions: Optional[str] = None  # Instrucciones adicionales
+    is_active: bool = True
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    class Config:
+        populate_by_name = True
+
+class ActivityCreate(BaseModel):
+    title: str
+    description: str
+    activity_type: ActivityType
+    subject: str
+    grade: str
+    period: str
+    due_date: datetime
+    max_score: float = 5.0
+    instructions: Optional[str] = None
+
+# Modelo de Entrega de Actividad por Estudiante
+class Submission(BaseModel):
+    id: Optional[str] = Field(default_factory=lambda: str(uuid.uuid4()), alias="_id")
+    activity_id: str  # ID de la actividad
+    student_id: str  # ID del estudiante
+    student_name: str  # Nombre del estudiante
+    status: SubmissionStatus = SubmissionStatus.PENDIENTE
+    submitted_at: Optional[datetime] = None  # Fecha de entrega
+    files: Optional[List[str]] = []  # URLs de archivos subidos por el estudiante
+    comments: Optional[str] = None  # Comentarios del estudiante
+    grade: Optional[float] = None  # Calificación asignada
+    teacher_feedback: Optional[str] = None  # Retroalimentación del docente
+    graded_at: Optional[datetime] = None  # Fecha de calificación
+    is_late: bool = False  # Si fue entregada tarde
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    class Config:
+        populate_by_name = True
+
+class SubmissionCreate(BaseModel):
+    activity_id: str
+    comments: Optional[str] = None
+
+class SubmissionGrade(BaseModel):
+    grade: float
+    teacher_feedback: Optional[str] = None
