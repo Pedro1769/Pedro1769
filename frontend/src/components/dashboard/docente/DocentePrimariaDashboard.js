@@ -34,6 +34,7 @@ import { sortStudentsByGrade } from '../../../utils/gradeUtils';
 import BancoLogros from '../sections/BancoLogros';
 import Boletines from '../sections/Boletines';
 import Proyectos from '../sections/Proyectos';
+import ActividadesTareas from '../sections/ActividadesTareas';
 
 const DocentePrimariaDashboard = () => {
   const { user } = useAuth();
