@@ -97,44 +97,47 @@ const Login = () => {
                 <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
                   Usuario
                 </label>
-                <Input
-                  id="username"
-                  type="text"
-                  placeholder="Ingrese su usuario"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="w-full"
-                  required
-                />
+                <div className="gradient-input">
+                  <input
+                    id="username"
+                    type="text"
+                    placeholder="Ingrese su usuario"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
               </div>
               
               <div>
                 <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
                   Contraseña
                 </label>
-                <div className="relative">
-                  <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Ingrese su contraseña"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pr-10"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                  >
-                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                  </button>
+                <div className="gradient-input">
+                  <div className="relative">
+                    <input
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      placeholder="Ingrese su contraseña"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="pr-10"
+                      required
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    </button>
+                  </div>
                 </div>
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-red-600 hover:from-blue-700 hover:to-red-700 text-white py-2"
+                className="w-full gradient-button text-white py-3 font-semibold text-base"
                 disabled={loading}
               >
                 {loading ? 'Accediendo...' : 'Ingresar'}
