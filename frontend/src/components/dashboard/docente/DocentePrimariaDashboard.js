@@ -30,6 +30,9 @@ import { MOCK_STUDENTS, SUBJECTS, PERIODS, getPerformanceLevel } from '../../../
 import { studentService, gradeService } from '../../../services/api';
 import StudentEditForm from '../admin/StudentEditForm';
 import { sortStudentsByGrade } from '../../../utils/gradeUtils';
+import BancoLogros from '../sections/BancoLogros';
+import Boletines from '../sections/Boletines';
+import Proyectos from '../sections/Proyectos';
 
 const DocentePrimariaDashboard = () => {
   const { user } = useAuth();
@@ -48,12 +51,22 @@ const DocentePrimariaDashboard = () => {
   const [loadingGrades, setLoadingGrades] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [activeSection, setActiveSection] = useState('dashboard'); // Para navegación
   const { toast } = useToast();
 
   // Cargar estudiantes del grado asignado al docente
   useEffect(() => {
     loadStudents();
   }, [user.grade]);
+
+  // Escuchar cambios de navegación desde el sidebar
+  useEffect(() => {
+    window.setActiveSection = setActiveSection;
+    
+    return () => {
+      delete window.setActiveSection;
+    };
+  }, []);
 
   const myStudents = students || [];
   
