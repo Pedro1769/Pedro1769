@@ -25,7 +25,7 @@ load_dotenv(ROOT_DIR / '.env')
 
 # Crear la aplicación FastAPI
 app = FastAPI(
-    title="Sistema de Gestión Escolar GAA",
+    title="Sistema de Gestión Escolar GADA",
     description="Gimnasio Americano del Atlántico - Sistema Integral de Gestión Académica",
     version="1.0.0"
 )
