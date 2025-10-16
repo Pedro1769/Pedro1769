@@ -723,8 +723,8 @@ const AdminDashboard = () => {
         </Card>
       </div>
 
-      {/* Tabs Navigation como en la referencia */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+      {/* Contenido dinámico según sección activa */}
+      {renderActiveSection()}
         <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8 bg-white/80 backdrop-blur-md">
           <TabsTrigger value="resumen">Resumen</TabsTrigger>
           <TabsTrigger value="usuarios">Usuarios</TabsTrigger>
