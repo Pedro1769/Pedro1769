@@ -44,6 +44,7 @@ api_router.include_router(project_router)
 api_router.include_router(bulletin_router)
 api_router.include_router(admin_router)
 api_router.include_router(activity_router)
+api_router.include_router(bulk_grades_router)
 api_router.include_router(test_auth_router)
 
 # Ruta de estado básica
