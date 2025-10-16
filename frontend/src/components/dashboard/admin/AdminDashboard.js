@@ -51,6 +51,7 @@ const AdminDashboard = () => {
   
   const [selectedPeriods, setSelectedPeriods] = useState(['I', 'II', 'III', 'IV']);
   const [activeTab, setActiveTab] = useState('resumen');
+  const [activeSection, setActiveSection] = useState('dashboard'); // Para navegación del sidebar
   const [statistics, setStatistics] = useState(null);
   const [students, setStudents] = useState([]);
   const [users, setUsers] = useState([]);
@@ -63,6 +64,15 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     loadDashboardData();
+  }, []);
+
+  // Escuchar cambios de navegación desde el sidebar
+  useEffect(() => {
+    window.setActiveSection = setActiveSection;
+    
+    return () => {
+      delete window.setActiveSection;
+    };
   }, []);
 
   // Función para eliminar estudiantes masivamente
