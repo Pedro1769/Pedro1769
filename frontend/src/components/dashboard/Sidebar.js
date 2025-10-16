@@ -32,6 +32,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
           { icon: BarChart3, label: 'Consolidados', section: 'consolidados' },
           { icon: Users, label: 'Gestión Estudiantes', section: 'estudiantes' },
           { icon: UserCheck, label: 'Gestión Docentes', section: 'docentes' },
+          { icon: Upload, label: 'Carga Masiva Notas', section: 'carga-masiva' },
           { icon: Shield, label: 'Permisos', section: 'permisos' },
           { icon: Download, label: 'Códigos Boletines', section: 'codigos' },
           { icon: FolderOpen, label: 'Proyectos', section: 'proyectos' },
