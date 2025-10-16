@@ -317,6 +317,334 @@ const AdminDashboard = () => {
   const studentsNeedHelp = consolidatedData.filter(s => s.status === 'REQUIERE AYUDA').length;
   const studentsLosing = consolidatedData.filter(s => s.status === 'PIERDE').length;
 
+  // Renderizar sección según navegación
+  const renderActiveSection = () => {
+    switch (activeSection) {
+      case 'consolidados':
+        return renderConsolidadosSection();
+      case 'estudiantes':
+        return renderEstudiantesSection();
+      case 'docentes':
+        return renderDocentesSection();
+      case 'permisos':
+        return renderPermisosSection();
+      case 'codigos':
+        return renderCodigosSection();
+      case 'proyectos':
+        return <Proyectos />;
+      case 'config':
+        return renderConfigSection();
+      case 'carga-masiva':
+        return <CargaMasivaNotas />;
+      case 'dashboard':
+      default:
+        return renderDashboardContent();
+    }
+  };
+
+  // Contenido principal del dashboard
+  const renderDashboardContent = () => (
+    <>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total Estudiantes</CardTitle>
+            <Users className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{students.length}</div>
+            <p className="text-xs text-blue-100">Todos los grados</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Docentes</CardTitle>
+            <GraduationCap className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {users.filter(u => u.role === 'docente_primaria' || u.role === 'docente_bachillerato').length}
+            </div>
+            <p className="text-xs text-green-100">Personal académico</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Padres</CardTitle>
+            <UserCheck className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">
+              {users.filter(u => u.role === 'padre').length}
+            </div>
+            <p className="text-xs text-purple-100">Acudientes registrados</p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Usuarios Total</CardTitle>
+            <Shield className="h-4 w-4" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{users.length}</div>
+            <p className="text-xs text-orange-100">Sistema completo</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Navegación rápida */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Acceso Rápido</CardTitle>
+          <CardDescription>Accede a las principales funciones administrativas</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('consolidados')}
+            >
+              <BarChart3 className="h-6 w-6" />
+              <span>Consolidados</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('estudiantes')}
+            >
+              <Users className="h-6 w-6" />
+              <span>Estudiantes</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('docentes')}
+            >
+              <UserCheck className="h-6 w-6" />
+              <span>Docentes</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('carga-masiva')}
+            >
+              <Upload className="h-6 w-6" />
+              <span>Carga Masiva</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('codigos')}
+            >
+              <Download className="h-6 w-6" />
+              <span>Códigos Boletines</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('proyectos')}
+            >
+              <FolderOpen className="h-6 w-6" />
+              <span>Proyectos</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('permisos')}
+            >
+              <Shield className="h-6 w-6" />
+              <span>Permisos</span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-24 flex-col space-y-2"
+              onClick={() => setActiveSection('config')}
+            >
+              <Settings className="h-6 w-6" />
+              <span>Configuración</span>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </>
+  );
+
+  // Sección de Consolidados
+  const renderConsolidadosSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          <BarChart3 className="h-5 w-5" />
+          <span>Consolidados Académicos</span>
+        </CardTitle>
+        <CardDescription>
+          Vista consolidada del rendimiento académico por períodos
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-500">Sección en desarrollo - Próximamente</p>
+      </CardContent>
+    </Card>
+  );
+
+  // Sección de Gestión de Estudiantes
+  const renderEstudiantesSection = () => (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center space-x-2">
+                <Users className="h-5 w-5" />
+                <span>Gestión de Estudiantes</span>
+              </CardTitle>
+              <CardDescription>
+                Administra estudiantes del sistema
+              </CardDescription>
+            </div>
+            <Button onClick={() => setShowBulkUpload(true)} className="bg-blue-600 hover:bg-blue-700">
+              <Upload className="h-4 w-4 mr-2" />
+              Carga Masiva
+            </Button>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <p className="text-center text-gray-500 py-8">Cargando estudiantes...</p>
+          ) : (
+            <div className="space-y-4">
+              {students.length === 0 ? (
+                <p className="text-center text-gray-500 py-8">No hay estudiantes registrados</p>
+              ) : (
+                <div className="space-y-2">
+                  {students.slice(0, 20).map((student) => (
+                    <div key={student._id || student.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50">
+                      <div>
+                        <p className="font-medium">{student.name}</p>
+                        <p className="text-sm text-gray-600">Grado {student.grade} - {student.level}</p>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Badge variant={student.is_active ? "default" : "secondary"}>
+                          {student.is_active ? 'Activo' : 'Inactivo'}
+                        </Badge>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            setEditingStudent(student);
+                            setShowEditModal(true);
+                          }}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+                  {students.length > 20 && (
+                    <p className="text-center text-sm text-gray-500 py-2">
+                      Y {students.length - 20} estudiantes más...
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  // Sección de Gestión de Docentes
+  const renderDocentesSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          <UserCheck className="h-5 w-5" />
+          <span>Gestión de Docentes</span>
+        </CardTitle>
+        <CardDescription>
+          Administra el personal docente
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-3">
+          {users.filter(u => u.role === 'docente_primaria' || u.role === 'docente_bachillerato').map((docente) => (
+            <div key={docente._id || docente.id} className="flex items-center justify-between p-3 border rounded-lg">
+              <div>
+                <p className="font-medium">{docente.name}</p>
+                <p className="text-sm text-gray-600">
+                  {docente.role === 'docente_primaria' ? 'Primaria' : 'Bachillerato'}
+                  {docente.grade && ` - Grado ${docente.grade}`}
+                  {docente.grades && ` - Grados: ${docente.grades.join(', ')}`}
+                </p>
+              </div>
+              <Badge variant="outline">{docente.email}</Badge>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  // Sección de Permisos
+  const renderPermisosSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          <Shield className="h-5 w-5" />
+          <span>Gestión de Permisos</span>
+        </CardTitle>
+        <CardDescription>
+          Configura roles y permisos de usuarios
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-500">Sección en desarrollo - Próximamente</p>
+      </CardContent>
+    </Card>
+  );
+
+  // Sección de Códigos para Boletines
+  const renderCodigosSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          <Download className="h-5 w-5" />
+          <span>Códigos de Descarga de Boletines</span>
+        </CardTitle>
+        <CardDescription>
+          Genera códigos únicos de 24 horas para descargar boletines
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-500">Sección en desarrollo - Próximamente</p>
+      </CardContent>
+    </Card>
+  );
+
+  // Sección de Configuración
+  const renderConfigSection = () => (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center space-x-2">
+          <Settings className="h-5 w-5" />
+          <span>Configuración del Sistema</span>
+        </CardTitle>
+        <CardDescription>
+          Ajustes generales de la plataforma
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-gray-500">Sección en desarrollo - Próximamente</p>
+      </CardContent>
+    </Card>
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-red-50 relative overflow-hidden">
       {/* Elementos decorativos dinámicos */}
