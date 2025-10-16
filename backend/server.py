@@ -16,6 +16,7 @@ from routes.project_routes import router as project_router
 from routes.bulletin_routes import router as bulletin_router
 from routes.admin_routes import router as admin_router
 from routes.activity_routes import router as activity_router
+from routes.bulk_grades_routes import router as bulk_grades_router
 from test_auth import router as test_auth_router
 
 # Importar base de datos
