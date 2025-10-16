@@ -676,55 +676,11 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Stats Cards mejoradas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white border-0 shadow-lg transform hover:scale-105 transition-all duration-300">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Estudiantes</CardTitle>
-            <Users className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{statistics?.students?.total || students.length}</div>
-            <p className="text-xs text-blue-100">Total registrados</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white border-0 shadow-lg transform hover:scale-105 transition-all duration-300">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Profesores</CardTitle>
-            <UserCheck className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{statistics?.users?.by_role?.docente_primaria + statistics?.users?.by_role?.docente_bachillerato || 0}</div>
-            <p className="text-xs text-green-100">Activos</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white border-0 shadow-lg transform hover:scale-105 transition-all duration-300">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Padres</CardTitle>
-            <Users className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{statistics?.users?.by_role?.padre || 0}</div>
-            <p className="text-xs text-purple-100">Registrados</p>
-          </CardContent>
-        </Card>
-
-        <Card className="bg-gradient-to-br from-orange-500 to-orange-600 text-white border-0 shadow-lg transform hover:scale-105 transition-all duration-300">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Usuarios Registrados</CardTitle>
-            <GraduationCap className="h-4 w-4" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{statistics?.users?.total || users.length}</div>
-            <p className="text-xs text-orange-100">(0 aprobados)</p>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Contenido dinámico según sección activa */}
       {renderActiveSection()}
+      </div>
+      
+      {/* Modales */}
       {/* Modal de Edición de Estudiante */}
       <Dialog open={showEditModal} onOpenChange={setShowEditModal}>
         <DialogContent className="sm:max-w-[500px]">
