@@ -14,7 +14,8 @@ import {
   GraduationCap,
   Eye,
   Heart,
-  Trophy
+  Trophy,
+  Upload
 } from 'lucide-react';
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen, onNavigationClick }) => {
