@@ -45,7 +45,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.modeCard}
-            onPress={() => {}}
+            onPress={() => router.push('/practice')}
           >
             <View style={[styles.modeIcon, { backgroundColor: '#4CAF50' }]}>
               <Ionicons name="school" size={32} color="#fff" />
@@ -61,7 +61,7 @@ export default function HomeScreen() {
 
           <TouchableOpacity
             style={styles.modeCard}
-            onPress={() => {}}
+            onPress={() => Alert.alert('Próximamente', 'El modo competencia estará disponible pronto')}
           >
             <View style={[styles.modeIcon, { backgroundColor: '#FF9800' }]}>
               <Ionicons name="flame" size={32} color="#fff" />
