@@ -12,7 +12,7 @@ import uuid
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
 from jose import JWTError, jwt
-from emergentintegrations import EmergentAI
+from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -32,7 +32,6 @@ security = HTTPBearer()
 
 # Emergent AI Integration
 EMERGENT_LLM_KEY = os.environ.get("EMERGENT_LLM_KEY", "")
-ai_client = EmergentAI(api_key=EMERGENT_LLM_KEY)
 
 # Create the main app
 app = FastAPI(title="Pedro Math Pro API")
