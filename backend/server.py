@@ -306,14 +306,26 @@ Formato de respuesta JSON:
 Responde SOLO con el array JSON, sin texto adicional.
 """
         
-        response = ai_client.completion(
-            model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
-            temperature=0.8
-        )
+        # Crear chat instance
+        chat = LlmChat(
+            api_key=EMERGENT_LLM_KEY,
+            session_id=f"gen-{uuid.uuid4()}",
+            system_message="Eres un experto en crear preguntas educativas de matemáticas."
+        ).with_model("openai", "gpt-4o-mini")
+        
+        # Enviar mensaje
+        user_msg = UserMessage(text=prompt)
+        response = await chat.send_message(user_msg)
         
         import json
-        questions_data = json.loads(response.choices[0].message.content)
+        # Limpiar respuesta (a veces viene con markdown)
+        content = response.strip()
+        if content.startswith("```json"):
+            content = content.replace("```json", "").replace("```", "").strip()
+        elif content.startswith("```"):
+            content = content.replace("```", "").strip()
+        
+        questions_data = json.loads(content)
         
         # Crear preguntas en la base de datos
         created_questions = []
