@@ -15,6 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 export default function HomeScreen() {
   const { user } = useAuth();
+  const router = useRouter();
 
   return (
     <SafeAreaView style={styles.container}>
